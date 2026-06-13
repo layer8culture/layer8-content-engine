@@ -1,0 +1,60 @@
+name: Generate Content (nightly)
+
+on:
+  schedule:
+    - cron: "0 2 * * *"   # 2:00 UTC nightly — adjust to taste
+  workflow_dispatch: {}     # manual trigger button
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Copilot CLI
+        run: npm install -g @github/copilot
+
+      - name: Generate posts with Copilot CLI
+        env:
+          GH_TOKEN: ${{ secrets.COPILOT_CLI_TOKEN }}
+        run: |
+          copilot -p "$(cat scripts/generation-prompt.md)" \
+            -s \
+            --allow-tool='read,write(queue/*)' \
+            --no-ask-user
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate visuals via Higgsfield
+        env:
+          HF_API_KEY: ${{ secrets.HF_API_KEY }}
+          HF_API_SECRET: ${{ secrets.HF_API_SECRET }}
+        run: |
+          pip install higgsfield-client requests pillow
+          QUEUE_FILE=$(ls queue/*.json | head -n 1)
+          python scripts/higgsfield_gen.py "$QUEUE_FILE"
+
+      - name: Open approval PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DATE=$(date -d tomorrow +%F)
+          BRANCH="posts/$DATE"
+          git config user.name "layer8-engine"
+          git config user.email "engine@layer8culture.io"
+          git checkout -b "$BRANCH"
+          git add queue/ assets/generated/
+          git commit -m "Posts for $DATE — ready for review"
+          git push origin "$BRANCH"
+          SUMMARY=$(cat queue/*.summary.md 2>/dev/null || echo "Generated posts for $DATE")
+          BODY=$(printf '%s\n\nReview, edit anything, then **merge to approve & schedule**.' "$SUMMARY")
+          gh pr create --title "Posts for $DATE" \
+                       --body "$BODY" \
+                       --base main --head "$BRANCH"

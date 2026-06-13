@@ -1,0 +1,51 @@
+name: Daily Report (morning)
+
+on:
+  schedule:
+    - cron: "0 12 * * *"   # 12:00 UTC ≈ 7-8am ET — adjust to taste
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Copilot CLI
+        run: npm install -g @github/copilot
+
+      - name: Build report with Copilot CLI
+        env:
+          GH_TOKEN: ${{ secrets.COPILOT_CLI_TOKEN }}
+        run: |
+          copilot -p "Read posted/log.json and any files in queue/. Write a short
+          daily report to report.md for Donville with: (1) what was scheduled or
+          published in the last 24h per account, (2) anything that failed or was
+          skipped (look for scheduled:false), (3) what's awaiting approval,
+          (4) one suggestion for this week's topics based on posted/log.json
+          patterns. Friendly, tight, under 200 words. Plain text, no headers." \
+            -s \
+            --allow-tool='read,write(report.md)' \
+            --no-ask-user
+
+      - name: Send report
+        env:
+          WEBHOOK: ${{ secrets.REPORT_WEBHOOK }}
+        run: |
+          if [ -n "$WEBHOOK" ]; then
+            python3 - <<'EOF'
+          import json, os, urllib.request
+          body = open("report.md").read()
+          req = urllib.request.Request(
+              os.environ["WEBHOOK"],
+              data=json.dumps({"content": body[:1900]}).encode(),
+              headers={"Content-Type": "application/json"})
+          urllib.request.urlopen(req)
+          EOF
+          else
+            echo "No REPORT_WEBHOOK set — printing report:"
+            cat report.md
+          fi

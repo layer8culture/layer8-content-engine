@@ -1,0 +1,10 @@
+# Normalize line endings: store text as LF in the repo so Linux CI runners
+# (and the bash heredocs in .github/workflows) work regardless of OS.
+* text=auto eol=lf
+
+# Treat brand image assets and binaries as binary (never line-ending munged).
+*.png binary
+*.jpg binary
+*.mp4 binary
+*.mov binary
+*.exe binary

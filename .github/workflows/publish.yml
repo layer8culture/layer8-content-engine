@@ -1,0 +1,37 @@
+name: Publish to Postiz (on approval merge)
+
+on:
+  push:
+    branches: [main]
+    paths: ["queue/**"]
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Schedule approved posts
+        env:
+          POSTIZ_URL: ${{ secrets.POSTIZ_URL }}
+          POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
+        run: |
+          pip install requests
+          QUEUE_FILE=$(ls queue/*.json 2>/dev/null | head -n 1)
+          if [ -z "$QUEUE_FILE" ]; then echo "No queue file."; exit 0; fi
+          python scripts/post_to_postiz.py "$QUEUE_FILE"
+
+      - name: Commit archive
+        run: |
+          git config user.name "layer8-engine"
+          git config user.email "engine@layer8culture.io"
+          git add posted/ queue/
+          git diff --cached --quiet || git commit -m "Archive published posts"
+          git push
