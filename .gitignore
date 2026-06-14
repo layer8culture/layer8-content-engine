@@ -27,3 +27,7 @@ venv/
 Thumbs.db
 .idea/
 .vscode/
+
+# --- Local ops helper (contains VM connection details; do not commit) ---
+set-instagram-creds.ps1
+set-postiz-apikey.ps1

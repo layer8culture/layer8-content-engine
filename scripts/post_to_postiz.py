@@ -16,8 +16,19 @@ import sys
 import pathlib
 import requests
 
-POSTIZ_URL = os.environ["POSTIZ_URL"].rstrip("/")
-HEADERS = {"Authorization": os.environ["POSTIZ_API_KEY"]}
+
+def _require_env(name: str) -> str:
+    val = os.environ.get(name)
+    if not val:
+        sys.exit(
+            f"Missing required env var {name}. Set the POSTIZ_URL and "
+            f"POSTIZ_API_KEY GitHub secrets before merging an approval PR."
+        )
+    return val
+
+
+POSTIZ_URL = _require_env("POSTIZ_URL").rstrip("/")
+HEADERS = {"Authorization": _require_env("POSTIZ_API_KEY")}
 
 # account+platform -> Postiz integration (channel) ID. FILL THESE IN.
 # Note: ("lofi", "tiktok") is provisioning-only — the lofi cadence currently
@@ -25,7 +36,7 @@ HEADERS = {"Authorization": os.environ["POSTIZ_API_KEY"]}
 # TikTok unless topics.md explicitly asks for it.
 INTEGRATIONS = {
     ("layer8culture", "tiktok"): "REPLACE_ME",
-    ("layer8culture", "instagram"): "REPLACE_ME",
+    ("layer8culture", "instagram"): "cmqd9915w0001o5717h436ivp",
     ("layer8culture", "x"): "REPLACE_ME",
     ("lofi", "instagram"): "REPLACE_ME",
     ("lofi", "x"): "REPLACE_ME",
@@ -34,10 +45,17 @@ INTEGRATIONS = {
 
 VIDEO_EXTS = (".mp4", ".mov")
 
+# Per-platform post settings required by the Postiz API. Only Instagram is
+# active right now; the others are placeholders for when those channels are
+# wired (each provider has its own required settings shape).
+PLATFORM_SETTINGS = {
+    "instagram": {"post_type": "post"},  # 'post' (feed) or 'story'
+}
+
 def upload_media(filepath: str) -> dict:
     with open(filepath, "rb") as f:
         r = requests.post(
-            f"{POSTIZ_URL}/public/v1/upload",
+            f"{POSTIZ_URL}/api/public/v1/upload",
             headers=HEADERS,
             files={"file": f},
             timeout=120,
@@ -86,12 +104,15 @@ def schedule(post: dict) -> bool:
     payload = {
         "type": "schedule",
         "date": post["schedule_time"],
+        "shortLink": False,
+        "tags": [],
         "posts": [{
             "integration": {"id": integration_id},
             "value": [{"content": text, "image": media}],
+            "settings": PLATFORM_SETTINGS.get(post["platform"], {}),
         }],
     }
-    r = requests.post(f"{POSTIZ_URL}/public/v1/posts",
+    r = requests.post(f"{POSTIZ_URL}/api/public/v1/posts",
                       headers={**HEADERS, "Content-Type": "application/json"},
                       json=payload, timeout=60)
     if r.ok:
