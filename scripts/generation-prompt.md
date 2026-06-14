@@ -50,10 +50,16 @@ Each post object must have exactly these fields:
     "quality": "low" | "medium" | "high". REQUIRED. Set exactly ONE post per day
                 to "high" (the day's hero); set every other post to "medium".
                 Every post gets a fresh image — do not reuse library assets.,
-    "style_reference": "OPTIONAL path under assets/library to a reference image
-                        that steers the generated style. layer8culture posts
-                        default to assets/library/layer8-style-reference-01.png.
-                        This keeps the account's look consistent.",
+    "style_reference": "OPTIONAL and OFF BY DEFAULT — normally OMIT this field.
+                        Brand consistency already comes from the BASE PROMPT in
+                        brand/visual-style.md, so prompt-only generation keeps the
+                        look on-brand while letting each post's scene vary. Setting
+                        this routes the post through OpenAI's images.edit endpoint,
+                        which anchors the output to that one reference image and
+                        makes every post look nearly identical — do NOT use it just
+                        to 'keep the style'. Only set it (to a path under
+                        assets/library) when a specific post genuinely needs to
+                        transform/edit that exact source image.",
     "aspect": "1:1" | "9:16" | "16:9",
     "logo_position": "OPTIONAL one of top-left | top-right | bottom-left |
                       bottom-right | center. Where openai_gen.py overlays the
@@ -79,6 +85,9 @@ CONTENT RULES:
   paraphrase in brand voice.
 - Every post uses "source": "openai" with a fresh image whose scene reflects
   that post's topic. Quality: exactly one "high" hero per day, the rest "medium".
+- Do NOT set "style_reference" on posts (omit it). The BASE PROMPT already keeps
+  the look on-brand; a shared reference makes every image come out the same. Each
+  post's "openai_prompt" scene specifics must differ so images vary day to day.
 - IG caption ≤ 2200 chars. Use aspect "1:1" or "9:16" (Instagram-native).
 - Output valid JSON only in the file. No markdown fences inside the file.
 

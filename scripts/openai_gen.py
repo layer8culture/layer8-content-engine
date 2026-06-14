@@ -130,6 +130,12 @@ def generate(client: OpenAI, post: dict, out_dir: pathlib.Path) -> str | None:
         image_bytes: bytes | None = None
 
         # Optional reference image: steer the look via the image edit endpoint.
+        # NOTE: images.edit anchors the output to this exact reference, so reusing
+        # one shared reference across posts makes every image come out nearly
+        # identical. Style consistency should come from the BASE PROMPT in
+        # brand/visual-style.md instead; only set style_reference when a post
+        # genuinely needs to transform that specific source image. When it's
+        # absent we use images.generate (below) for varied, topic-specific output.
         style_reference = visual.get("style_reference")
         if style_reference:
             ref_path = pathlib.Path(style_reference)
