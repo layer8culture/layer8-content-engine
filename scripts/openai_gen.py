@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 """Generate visuals for queued posts via the OpenAI Images API (gpt-image-2).
 
-Reads today's queue/<date>.json, finds posts with visual.source == "openai",
-submits each prompt, decodes the returned image, writes it into
-assets/generated/<post_id>.png, and writes the local path back into the post
-object as visual.file.
+Reads today's queue/<date>.json and renders a branded image for every post whose
+visual.source == "openai", dispatching on the post's "format" field:
+
+  * single  -> one image at assets/generated/<id>.png (visual.file)
+  * story   -> one 9:16 frame (defaults to vertical) at the same path
+  * reel    -> one 9:16 base still; scripts/reel_gen.py later animates it to mp4
+  * carousel-> one image per visual.slides[] entry at assets/generated/<id>-<n>.png
+               (visual.files is the ordered list; visual.file is the cover)
 
 gpt-image-2 was chosen over the previous Higgsfield backend for its consistency
 across this brand's cinematic, Afrofuturistic visual system. Prompts are still
@@ -287,8 +291,15 @@ def _decode_b64_image(result) -> bytes:
     return base64.b64decode(b64)
 
 
-def generate(client: OpenAI, post: dict, out_dir: pathlib.Path) -> str | None:
-    visual = post["visual"]
+def _render_image(client: OpenAI, image_id: str, visual: dict,
+                  account: str | None, out_dir: pathlib.Path) -> str | None:
+    """Render one OpenAI image for ``visual``, composite the branded headline
+    typography + wordmark, and return the written path (or None on API failure).
+
+    Shared by every format: single posts, story frames, reel base stills, and each
+    individual carousel slide. ``image_id`` becomes the output filename stem, so
+    carousels pass ``<post_id>-<n>`` to write one file per slide.
+    """
     prompt = visual.get("openai_prompt")
     if not prompt:
         return None
@@ -296,10 +307,10 @@ def generate(client: OpenAI, post: dict, out_dir: pathlib.Path) -> str | None:
     size = ASPECT_SIZE.get(aspect, DEFAULT_SIZE)
     quality = visual.get("quality", IMAGE_QUALITY)
     if quality not in VALID_QUALITIES:
-        print(f"  ! {post['id']}: invalid quality {quality!r}, "
+        print(f"  ! {image_id}: invalid quality {quality!r}, "
               f"using {IMAGE_QUALITY!r}")
         quality = IMAGE_QUALITY
-    out_path = out_dir / f"{post['id']}.png"
+    out_path = out_dir / f"{image_id}.png"
     try:
         image_bytes: bytes | None = None
 
@@ -324,17 +335,17 @@ def generate(client: OpenAI, post: dict, out_dir: pathlib.Path) -> str | None:
                             quality=quality,
                         )
                     image_bytes = _decode_b64_image(result)
-                    print(f"  > {post['id']}: used reference {ref_path} via images.edit "
+                    print(f"  > {image_id}: used reference {ref_path} via images.edit "
                           f"(quality={quality})")
                 except OpenAIError as e:
                     # The edit call failed (e.g. unsupported reference). Retry as
                     # a plain prompt-driven generation so the branded image still
                     # renders.
-                    print(f"  ! {post['id']}: reference edit failed ({e}); "
+                    print(f"  ! {image_id}: reference edit failed ({e}); "
                           f"retrying without reference")
                     image_bytes = None
             else:
-                print(f"  ! {post['id']}: style_reference {ref_path} not found, "
+                print(f"  ! {image_id}: style_reference {ref_path} not found, "
                       f"generating without reference")
 
         if image_bytes is None:
@@ -362,17 +373,16 @@ def generate(client: OpenAI, post: dict, out_dir: pathlib.Path) -> str | None:
                     visual.get("accent"),
                 )
                 if applied:
-                    print(f"  > {post['id']}: headline composited "
+                    print(f"  > {image_id}: headline composited "
                           f"({headline[:48]!r})")
                 else:
-                    print(f"  ! {post['id']}: fonts missing under assets/fonts, "
+                    print(f"  ! {image_id}: fonts missing under assets/fonts, "
                           f"headline overlay skipped")
             except Exception as e:  # noqa: BLE001 - never lose a good image over text
-                print(f"  ! {post['id']}: headline overlay skipped ({e})")
+                print(f"  ! {image_id}: headline overlay skipped ({e})")
 
         # Overlay the official wordmark (models are prompted not to render text).
         try:
-            account = post.get("account")
             position = visual.get(
                 "logo_position",
                 ACCOUNT_LOGO_POSITION.get(account, DEFAULT_LOGO_POSITION),
@@ -387,21 +397,67 @@ def generate(client: OpenAI, post: dict, out_dir: pathlib.Path) -> str | None:
                 opacity = DEFAULT_LOGO_OPACITY
             applied = composite_wordmark(out_path, aspect, position, opacity)
             if applied:
-                print(f"  > {post['id']}: wordmark composited "
+                print(f"  > {image_id}: wordmark composited "
                       f"(position={position}, opacity={opacity:.2f})")
             else:
-                print(f"  > {post['id']}: wordmark asset missing, "
+                print(f"  > {image_id}: wordmark asset missing, "
                       f"no overlay (would use position={position}, "
                       f"opacity={opacity:.2f})")
         except Exception as e:  # noqa: BLE001 - never lose a good image over branding
-            print(f"  ! {post['id']}: wordmark overlay skipped ({e})")
-        print(f"  + {post['id']} -> {out_path}")
+            print(f"  ! {image_id}: wordmark overlay skipped ({e})")
+        print(f"  + {image_id} -> {out_path}")
         return str(out_path)
     except OpenAIError as e:
         # e.g. rate limit, billing, or other API errors — don't crash the whole
-        # queue; let main() fall back to the library for this post.
-        print(f"  x {post['id']}: OpenAI error ({e}), falling back to library")
+        # queue; let the caller fall back to the library for this post.
+        print(f"  x {image_id}: OpenAI error ({e}), falling back to library")
         return None
+
+
+def generate(client: OpenAI, post: dict, out_dir: pathlib.Path) -> str | None:
+    """Render the single base still for a non-carousel post (single / story / reel).
+
+    Stories and reels are vertical by nature, so default them to 9:16 when the
+    generator didn't pin an aspect. For reels this still becomes the frame that
+    scripts/reel_gen.py later animates into an mp4. Returns the written path.
+    """
+    visual = post["visual"]
+    fmt = post.get("format", "single")
+    if fmt in ("story", "reel") and "aspect" not in visual:
+        visual = {**visual, "aspect": "9:16"}
+    return _render_image(client, post["id"], visual, post.get("account"), out_dir)
+
+
+def render_carousel(client: OpenAI, post: dict, out_dir: pathlib.Path) -> list[str] | None:
+    """Render each slide of a carousel post as its own branded image.
+
+    Returns the ordered list of written paths (``<post_id>-1.png`` …) or None if
+    no slide produced an image. Each slide inherits the post-level visual defaults
+    it doesn't override (aspect, quality, overlay/logo placement).
+    """
+    visual = post["visual"]
+    slides = visual.get("slides") or []
+    if not slides:
+        print(f"  ! {post['id']}: carousel format but no visual.slides — skipping")
+        return None
+    base = {
+        "aspect": visual.get("aspect", "1:1"),
+        "quality": visual.get("quality", IMAGE_QUALITY),
+        "overlay_position": visual.get("overlay_position", DEFAULT_OVERLAY_POSITION),
+    }
+    for k in ("logo_position", "logo_subtle", "logo_opacity"):
+        if visual.get(k) is not None:
+            base[k] = visual[k]
+    paths: list[str] = []
+    for i, slide in enumerate(slides, 1):
+        merged = {**base, **{k: v for k, v in slide.items() if v is not None}}
+        path = _render_image(client, f"{post['id']}-{i}", merged,
+                             post.get("account"), out_dir)
+        if path:
+            paths.append(path)
+        else:
+            print(f"  ! {post['id']}: slide {i} failed to render")
+    return paths or None
 
 
 def main(queue_file: str) -> None:
@@ -413,14 +469,23 @@ def main(queue_file: str) -> None:
     client = OpenAI()
 
     for post in posts:
-        if post.get("visual", {}).get("source") == "openai":
+        if post.get("visual", {}).get("source") != "openai":
+            continue
+        if post.get("format") == "carousel":
+            paths = render_carousel(client, post, out_dir)
+            if paths:
+                post["visual"]["files"] = paths
+                post["visual"]["file"] = paths[0]  # primary/cover for the publisher
+                continue
+        else:
             path = generate(client, post, out_dir)
             if path:
                 post["visual"]["file"] = path
-            else:
-                # Fall back to the library so the post isn't blocked.
-                post["visual"]["source"] = "library"
-                post["visual"].setdefault("library_hint", "default branded graphic")
+                continue
+        # Either format failed to render — fall back to the library so the post
+        # isn't blocked. (Reels overwrite visual.file with their mp4 later.)
+        post["visual"]["source"] = "library"
+        post["visual"].setdefault("library_hint", "default branded graphic")
 
     qpath.write_text(json.dumps(posts, indent=2), encoding="utf-8")
     print("Queue updated with generated visual paths.")

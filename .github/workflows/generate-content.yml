@@ -37,7 +37,10 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Generate visuals via OpenAI
+      - name: Install ffmpeg (for Reels)
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Generate visuals via OpenAI + Reels via ffmpeg
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
@@ -46,8 +49,11 @@ jobs:
           # Fall back to the newest queue file if the dated one is missing.
           QUEUE_FILE="queue/$(date -d tomorrow +%F).json"
           [ -f "$QUEUE_FILE" ] || QUEUE_FILE=$(ls -t queue/*.json | head -n 1)
-          echo "Generating visuals for $QUEUE_FILE"
+          echo "Generating images for $QUEUE_FILE"
           python scripts/openai_gen.py "$QUEUE_FILE"
+          # Animate any format:"reel" posts into mp4s (uses the stills above).
+          echo "Rendering reels for $QUEUE_FILE"
+          python scripts/reel_gen.py "$QUEUE_FILE"
 
       - name: Open approval PR
         # The org disables "Allow GitHub Actions to create pull requests", so the
@@ -63,10 +69,11 @@ jobs:
           git config user.name "layer8-engine"
           git config user.email "engine@layer8culture.io"
           git checkout -b "$BRANCH"
-          # -f on assets/generated so the freshly rendered images are included in
+          # -f on assets/generated so the freshly rendered media are included in
           # the approval PR for review (the dir is .gitignored for local hygiene).
+          # Captures images, carousel slides, reel mp4s and their cover frames.
           git add queue/
-          git add -f assets/generated/*.png
+          git add -f assets/generated
           git commit -m "Posts for $DATE — ready for review"
           git push origin "$BRANCH"
           SUMMARY=$(cat queue/*.summary.md 2>/dev/null || echo "Generated posts for $DATE")

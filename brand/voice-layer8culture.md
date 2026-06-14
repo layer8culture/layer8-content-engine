@@ -15,6 +15,22 @@ culturally aware, direct, reflective, premium, authentic.
 4. Make technology feel human — always connect tools back to people, creativity, culture.
 5. Show the work. Tie copy to real builds and public experimentation.
 
+## Hooks & CTAs (growth — every post)
+The first line decides whether anyone stops. Open with a HOOK, never a warm-up:
+- A bold claim or belief ("Most people will spend the AI era as spectators.")
+- Tension / a contrarian truth ("Nobody tells you the hard part isn't the model.")
+- A number or list promise ("3 ways we automated our content engine.")
+- A real question ("What would you build if the tool could build with you?")
+Stay in voice — cinematic and calm, never clickbait, hype, or fake urgency.
+
+Close with ONE clear CTA that earns a growth action, matched to the format:
+- Carousel → "Save this." / "Keep this for your next build."
+- Reel → "Follow @layer8culture for the build." / "Share this with a builder."
+- Story → a poll, a this-or-that, or "reply and tell us."
+- Single → a genuine question that invites comments.
+Write keyword-rich first lines too (Instagram is searchable): name the tool/topic
+plainly so the post surfaces in search. One CTA per post — don't stack asks.
+
 ## Secondary lines (rotate, don't repeat within a week)
 - The human layer of technology.
 - Build the future. Don't just consume it.

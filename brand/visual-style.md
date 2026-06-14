@@ -48,6 +48,21 @@ Keep the top-right corner clear for the wordmark."
 #   is overlaid top-right. Because the message lives in the typography, the
 #   generated background should be atmospheric and varied, not literal.
 
+## PER-FORMAT VISUAL NOTES (single / carousel / reel / story)
+# Same color system, BASE PROMPT, and NEGATIVE PROMPT apply to every format.
+# - single: one image. Reserve lower-left negative space for the headline,
+#   top-right for the wordmark (as above).
+# - carousel: every slide is its own generation with its own headline. Keep the
+#   look cohesive (same palette/energy) but give each slide a DISTINCT scene so the
+#   set doesn't look like one image repeated. Slide 1 (cover) = the boldest, most
+#   scroll-stopping frame; the final slide = a clean CTA frame.
+# - reel: the openai_prompt makes the BASE STILL that gets animated (Ken Burns +
+#   on-screen beats). Compose it 9:16 with the LOWER THIRD kept clean for the
+#   headline AND the UPPER THIRD kept calm/simple — animated text "beats" are
+#   composited there, so avoid faces or fine detail up top.
+# - story: 9:16, single frame, simple and legible at a glance; leave room for the
+#   interactive sticker/question. Treat it as a quick daily touchpoint, not a hero.
+
 ## LOFI BASE PROMPT (prepend to every lofi generation — use INSTEAD of the main BASE PROMPT)
 # Per Section 20 of brand-guidelines-v2.md. Illustrated, not photorealistic.
 "Create a cinematic anime-inspired, illustrated Layer8Culture LoFi scene (not

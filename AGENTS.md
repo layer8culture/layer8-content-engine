@@ -19,12 +19,20 @@ Afrofuturistic LoFi stream.
 
 ## Repo conventions
 - Generated posts go in queue/ as YYYY-MM-DD.json (schema in
-  scripts/generation-prompt.md). Published posts archive to posted/.
-- OpenAI image outputs land in assets/generated/, named by post ID.
+  scripts/generation-prompt.md). Each post has a "format": single | carousel |
+  reel | story. Published posts archive to posted/.
+- Media outputs land in assets/generated/, named by post ID: <id>.png (single/
+  story), <id>-N.png (carousel slides), <id>.mp4 + <id>-cover.png (reels).
+- Reels are rendered by scripts/reel_gen.py with ffmpeg (a CI system tool, not a
+  Python dep); it animates the still from openai_gen.py.
+- Performance data lives in analytics/ (insights.json, followers.json,
+  insights-digest.md), produced by scripts/fetch_insights.py from Instagram
+  Insights. The digest steers generation — keep it in the prompt's READ FIRST list.
 - File naming for brand assets follows Section 27 of the guidelines.
 - Don't edit posted/log.json history; only append.
 
 ## When asked to modify the engine itself
-- Keep scripts dependency-light (openai + requests + pillow only).
+- Keep scripts dependency-light (Python: openai + requests + pillow only; ffmpeg is
+  a system tool for video).
 - Workflow changes must preserve the human approval gate: nothing publishes
   without a merged PR.

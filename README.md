@@ -11,22 +11,27 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
   Copilot CLI researches the day's AI news + generates posts + visual prompts
         │
         ▼
-  OpenAI API generates a fresh topical image per post
+  OpenAI generates fresh visuals per post (image / carousel slides),
+  ffmpeg renders Reels (video) from the stills
         │
         ▼
   Pull Request opened  ──►  YOU review/edit/merge (GitHub mobile)
         │
         ▼  (merge to main)
-  Posts + media pushed to Postiz → scheduled
+  Posts + media pushed to Postiz → scheduled (feed / carousel / Reel / story)
         │
         ▼  (every morning)
-  Daily report: what posted, what's queued, what needs you
+  Daily report + Instagram Insights feedback loop steers the next day
 ```
 
-> **Current focus:** the engine generates 3-4 **layer8culture Instagram** posts
-> per day (X, TikTok, and lofi are paused). Each post gets a fresh OpenAI image
-> tied to that day's AI news — one high-quality hero per day, the rest medium.
-> Flip the focus back on by editing `scripts/generation-prompt.md`.
+> **Current focus:** the engine generates **layer8culture Instagram** posts per day
+> (X, TikTok, and lofi are paused) across a deliberate format mix — **Reels** (reach),
+> **carousels** (saves), **Stories** (daily engagement), and the occasional single
+> static post. Each post gets fresh OpenAI visuals tied to that day's AI news, one
+> high-quality hero per day. A nightly **analytics** job pulls Instagram Insights into
+> `analytics/insights-digest.md`, which feeds back into generation to double down on
+> what's working and grow toward 4k+ followers. Flip channels/cadence in
+> `scripts/generation-prompt.md` and `calendar/topics.md`.
 
 ## Setup (one-time)
 
@@ -51,6 +56,8 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
    | `OPENAI_API_KEY` | From platform.openai.com (image generation) |
    | `POSTIZ_URL` | e.g. `https://post.layer8culture.io` |
    | `POSTIZ_API_KEY` | From your Postiz instance |
+   | `IG_USER_ID` | Instagram **Business** account user id (for the insights loop) |
+   | `IG_GRAPH_TOKEN` | Long-lived Instagram Graph API token with `instagram_basic`, `instagram_manage_insights`, `pages_read_engagement` (reuses your Meta app) |
    | `REPORT_WEBHOOK` | Discord/Slack webhook for the daily report (optional) |
 4. **Map your Instagram channel** — in Postiz, connect the Layer8Culture
    Instagram account (an IG **Business/Creator** account linked to a Facebook
@@ -77,6 +84,12 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
 - `transcripts/` — Tech Thursday transcripts (pillar content).
 - `queue/` — generated posts awaiting approval (the PR contents).
 - `posted/` — archive of published posts (feeds the report + dedupe).
-- `assets/library/` — your existing branded graphics (fallback pool).
-- `assets/generated/` — OpenAI image outputs, named by post ID.
-- `scripts/` — the machinery. `.github/workflows/` — the schedule.
+- `analytics/` — Instagram Insights pulled back in (`insights.json`,
+  `followers.json`, `insights-digest.md`); the digest steers next-day generation.
+- `assets/library/` — your existing branded graphics + optional lofi audio bed
+  (`lofi-bed.mp3`) and Tech Thursday recordings (for clip Reels).
+- `assets/generated/` — OpenAI/ffmpeg outputs, named by post ID (images, carousel
+  slides, reel mp4s + covers).
+- `scripts/` — the machinery (`openai_gen.py` images, `reel_gen.py` video,
+  `post_to_postiz.py` publishing, `fetch_insights.py` analytics).
+  `.github/workflows/` — the schedule (generate, publish, analytics, daily-report).
