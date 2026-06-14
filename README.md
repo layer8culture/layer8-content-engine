@@ -1,27 +1,32 @@
 # Layer8Culture Content Engine
 
-An automated social media pipeline: **Copilot CLI** (brain) → **Higgsfield** (visuals) → **PR approval** (you) → **Postiz** (posting) → **daily report** (back to you).
+An automated social media pipeline: **Copilot CLI** (brain) → **OpenAI** (visuals) → **PR approval** (you) → **Postiz** (posting) → **daily report** (back to you).
 
 ## How it works
 
 ```
-transcripts/ + calendar/topics.md + brand/
+transcripts/ + calendar/topics.md + brand/ + live AI-news research
         │
         ▼  (nightly GitHub Action)
-  Copilot CLI generates posts + visual prompts
+  Copilot CLI researches the day's AI news + generates posts + visual prompts
         │
         ▼
-  Higgsfield API generates images/animations
+  OpenAI API generates a fresh topical image per post
         │
         ▼
   Pull Request opened  ──►  YOU review/edit/merge (GitHub mobile)
         │
         ▼  (merge to main)
-  Posts + media pushed to Postiz → scheduled to all platforms
+  Posts + media pushed to Postiz → scheduled
         │
         ▼  (every morning)
   Daily report: what posted, what's queued, what needs you
 ```
+
+> **Current focus:** the engine generates 3-4 **layer8culture Instagram** posts
+> per day (X, TikTok, and lofi are paused). Each post gets a fresh OpenAI image
+> tied to that day's AI news — one high-quality hero per day, the rest medium.
+> Flip the focus back on by editing `scripts/generation-prompt.md`.
 
 ## Setup (one-time)
 
@@ -37,7 +42,7 @@ transcripts/ + calendar/topics.md + brand/
    | Secret | What it is |
    |---|---|
    | `COPILOT_CLI_TOKEN` | GitHub PAT with Copilot access (your FTE account) |
-   | `HF_API_KEY` / `HF_API_SECRET` | From cloud.higgsfield.ai |
+   | `OPENAI_API_KEY` | From platform.openai.com (image generation) |
    | `POSTIZ_URL` | e.g. `https://post.layer8culture.io` |
    | `POSTIZ_API_KEY` | From your Postiz instance |
    | `REPORT_WEBHOOK` | Discord/Slack webhook for the daily report (optional) |
@@ -61,5 +66,5 @@ transcripts/ + calendar/topics.md + brand/
 - `queue/` — generated posts awaiting approval (the PR contents).
 - `posted/` — archive of published posts (feeds the report + dedupe).
 - `assets/library/` — your existing branded graphics (fallback pool).
-- `assets/generated/` — Higgsfield outputs, named by post ID.
+- `assets/generated/` — OpenAI image outputs, named by post ID.
 - `scripts/` — the machinery. `.github/workflows/` — the schedule.

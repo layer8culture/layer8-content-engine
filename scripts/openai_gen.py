@@ -1,62 +1,47 @@
 #!/usr/bin/env python3
-"""Generate visuals for queued posts via the Higgsfield API.
+"""Generate visuals for queued posts via the OpenAI Images API (gpt-image-2).
 
-Reads today's queue/<date>.json, finds posts with visual.source == "higgsfield",
-submits each prompt, polls until complete, downloads the result into
-assets/generated/<post_id>.png (or .mp4), and writes the local path back into
-the post object as visual.file.
+Reads today's queue/<date>.json, finds posts with visual.source == "openai",
+submits each prompt, decodes the returned image, writes it into
+assets/generated/<post_id>.png, and writes the local path back into the post
+object as visual.file.
 
-Requires: pip install higgsfield-client requests pillow
-Env vars: HF_API_KEY, HF_API_SECRET
+gpt-image-2 was chosen over the previous Higgsfield backend for its consistency
+across this brand's cinematic, Afrofuturistic visual system. Prompts are still
+composed per brand/visual-style.md (base prompt + add-on + scene + negative
+prompt) by the generation step before this script runs.
+
+Requires: pip install openai requests pillow
+Env vars: OPENAI_API_KEY
 """
+import base64
 import json
 import os
 import sys
 import pathlib
-import requests
 from PIL import Image
-import higgsfield_client as hf
+from openai import OpenAI, OpenAIError
 
 # ---------------------------------------------------------------------------
-# Higgsfield model slugs — DO NOT GUESS.
+# OpenAI image model.
 #
-# There is NO programmatic catalog: the SDK exposes no list/models method
-# (dir(higgsfield_client) has only submit/subscribe/cancel/status/result/
-# upload*), and the REST API has no list endpoint — `GET /models` (and every
-# variant) returns 405/404 because `https://platform.higgsfield.ai/{model_id}`
-# is POST-only. The only browseable catalog is the Models Gallery web UI at
-# https://cloud.higgsfield.ai (requires a logged-in dashboard session, not the
-# API key/secret). Confirmed against docs.higgsfield.ai on 2026-06-12.
-#
-# VERIFIED-REAL slugs (named in official docs.higgsfield.ai, 2026-06-12):
-#   text-to-image:   higgsfield-ai/soul/standard   (flagship; all doc examples)
-#                    reve/text-to-image
-#   image-to-video:  higgsfield-ai/dop/standard
-#                    higgsfield-ai/dop/preview
-#                    bytedance/seedance/v1/pro/image-to-video
-#                    kling-video/v2.1/pro/image-to-video
-#
-# CONFIRMED-INVALID slugs (returned "Model not found" from the live API — never
-# reuse these): bytedance/seedream/v4/text-to-image, nano-banana/text-to-image
-#
-# To verify NEW slugs / reference (input_images) support: browse the gallery UI
-# and/or run scripts/verify_models.py with valid HF credentials. The docs do
-# not publish which models accept input_images, so reference support must be
-# confirmed against the live account before hardcoding a different slug here.
+# gpt-image-2 returns base64-encoded PNG bytes (result.data[0].b64_json), NOT a
+# URL. It supports a fixed set of canvas sizes; we map the brand aspect ratios
+# to the closest supported portrait/landscape/square size below.
 # ---------------------------------------------------------------------------
-ASPECT_RES = {"1:1": "1080x1080", "9:16": "1080x1920", "16:9": "1920x1080"}
-# higgsfield-ai/soul/standard is the documented standard-tier text-to-image
-# model (cost-effective; supports 720p/1080p).
-IMAGE_MODEL = "higgsfield-ai/soul/standard"
-# soul/standard accepts "720p" | "1080p" (not "2K"). 720p = lowest credit cost.
-IMAGE_RESOLUTION = "720p"
-# Model used when a post supplies visual.style_reference (passed as input_images).
-# Defaults to the verified-real flagship slug so we never submit a nonexistent
-# model. Override with HF_REFERENCE_MODEL once a reference/edit-capable slug is
-# confirmed in the gallery UI for this account (e.g. a Soul/Flux-Kontext edit
-# model). If the chosen model rejects input_images, generate() retries without
-# the reference before falling back to the library.
-REFERENCE_IMAGE_MODEL = os.environ.get("HF_REFERENCE_MODEL", IMAGE_MODEL)
+IMAGE_MODEL = os.environ.get("OPENAI_IMAGE_MODEL", "gpt-image-2")
+# Quality tier: "low" (drafts), "medium", "high" (hero assets). The module
+# default is "medium" (cost-safe); a post sets visual.quality per item, and the
+# generator marks exactly one daily hero as "high".
+IMAGE_QUALITY = os.environ.get("OPENAI_IMAGE_QUALITY", "medium")
+VALID_QUALITIES = {"low", "medium", "high"}
+# Brand aspect ratio -> gpt-image-2 supported canvas size.
+ASPECT_SIZE = {
+    "1:1": "1024x1024",
+    "9:16": "1024x1536",   # portrait
+    "16:9": "1536x1024",   # landscape
+}
+DEFAULT_SIZE = "1024x1024"
 
 # --- Branding composite -----------------------------------------------------
 # After each image is generated, overlay the official Layer8Culture wordmark so
@@ -122,55 +107,67 @@ def composite_wordmark(
     return True
 
 
-def generate(post: dict, out_dir: pathlib.Path) -> str | None:
+def _decode_b64_image(result) -> bytes:
+    """Extract and decode the base64 PNG bytes from an OpenAI images response."""
+    b64 = result.data[0].b64_json
+    return base64.b64decode(b64)
+
+
+def generate(client: OpenAI, post: dict, out_dir: pathlib.Path) -> str | None:
     visual = post["visual"]
-    prompt = visual.get("higgsfield_prompt")
+    prompt = visual.get("openai_prompt")
     if not prompt:
         return None
     aspect = visual.get("aspect", "1:1")
-    model = IMAGE_MODEL
-    arguments = {"prompt": prompt, "resolution": IMAGE_RESOLUTION, "aspect_ratio": aspect}
-    used_reference = False
+    size = ASPECT_SIZE.get(aspect, DEFAULT_SIZE)
+    quality = visual.get("quality", IMAGE_QUALITY)
+    if quality not in VALID_QUALITIES:
+        print(f"  ! {post['id']}: invalid quality {quality!r}, "
+              f"using {IMAGE_QUALITY!r}")
+        quality = IMAGE_QUALITY
+    out_path = out_dir / f"{post['id']}.png"
     try:
-        # Optional reference image: upload the local file and pass it as a
-        # reference, switching to the reference-capable model.
+        image_bytes: bytes | None = None
+
+        # Optional reference image: steer the look via the image edit endpoint.
         style_reference = visual.get("style_reference")
         if style_reference:
             ref_path = pathlib.Path(style_reference)
             if ref_path.exists():
-                ref_url = hf.upload_file(ref_path)
-                model = REFERENCE_IMAGE_MODEL
-                arguments["input_images"] = [ref_url]
-                used_reference = True
-                print(f"  > {post['id']}: using reference {ref_path} via {model}")
+                try:
+                    with ref_path.open("rb") as ref_file:
+                        result = client.images.edit(
+                            model=IMAGE_MODEL,
+                            image=ref_file,
+                            prompt=prompt,
+                            size=size,
+                            quality=quality,
+                        )
+                    image_bytes = _decode_b64_image(result)
+                    print(f"  > {post['id']}: used reference {ref_path} via images.edit "
+                          f"(quality={quality})")
+                except OpenAIError as e:
+                    # The edit call failed (e.g. unsupported reference). Retry as
+                    # a plain prompt-driven generation so the branded image still
+                    # renders.
+                    print(f"  ! {post['id']}: reference edit failed ({e}); "
+                          f"retrying without reference")
+                    image_bytes = None
             else:
                 print(f"  ! {post['id']}: style_reference {ref_path} not found, "
                       f"generating without reference")
 
-        try:
-            controller = hf.submit(model, arguments=arguments)
-        except hf.HiggsfieldClientError as e:
-            if used_reference:
-                # The chosen model likely doesn't accept input_images for this
-                # account. Retry as a plain prompt-driven generation on the
-                # verified base model so the branded image still renders.
-                print(f"  ! {post['id']}: reference submit failed ({e}); "
-                      f"retrying without reference on {IMAGE_MODEL}")
-                arguments.pop("input_images", None)
-                model = IMAGE_MODEL
-                controller = hf.submit(model, arguments=arguments)
-            else:
-                raise
-        for status in controller.poll_request_status():
-            if isinstance(status, (hf.Failed, hf.NSFW, hf.Cancelled)):
-                print(f"  x {post['id']}: generation failed ({type(status).__name__})")
-                return None
-            if isinstance(status, hf.Completed):
-                break
-        result = controller.get()
-        url = result["images"][0]["url"]
-        out_path = out_dir / f"{post['id']}.png"
-        out_path.write_bytes(requests.get(url, timeout=120).content)
+        if image_bytes is None:
+            result = client.images.generate(
+                model=IMAGE_MODEL,
+                prompt=prompt,
+                size=size,
+                quality=quality,
+            )
+            image_bytes = _decode_b64_image(result)
+
+        out_path.write_bytes(image_bytes)
+
         # Overlay the official wordmark (models are prompted not to render text).
         try:
             account = post.get("account")
@@ -198,11 +195,12 @@ def generate(post: dict, out_dir: pathlib.Path) -> str | None:
             print(f"  ! {post['id']}: wordmark overlay skipped ({e})")
         print(f"  + {post['id']} -> {out_path}")
         return str(out_path)
-    except hf.HiggsfieldClientError as e:
-        # e.g. not_enough_credits or other API errors — don't crash the whole
+    except OpenAIError as e:
+        # e.g. rate limit, billing, or other API errors — don't crash the whole
         # queue; let main() fall back to the library for this post.
-        print(f"  x {post['id']}: Higgsfield error ({e}), falling back to library")
+        print(f"  x {post['id']}: OpenAI error ({e}), falling back to library")
         return None
+
 
 def main(queue_file: str) -> None:
     qpath = pathlib.Path(queue_file)
@@ -210,9 +208,11 @@ def main(queue_file: str) -> None:
     out_dir = pathlib.Path("assets/generated")
     out_dir.mkdir(parents=True, exist_ok=True)
 
+    client = OpenAI()
+
     for post in posts:
-        if post.get("visual", {}).get("source") == "higgsfield":
-            path = generate(post, out_dir)
+        if post.get("visual", {}).get("source") == "openai":
+            path = generate(client, post, out_dir)
             if path:
                 post["visual"]["file"] = path
             else:
@@ -222,6 +222,7 @@ def main(queue_file: str) -> None:
 
     qpath.write_text(json.dumps(posts, indent=2), encoding="utf-8")
     print("Queue updated with generated visual paths.")
+
 
 if __name__ == "__main__":
     main(sys.argv[1])

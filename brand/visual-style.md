@@ -1,6 +1,6 @@
 # Layer8Culture — Visual Style for AI Image Generation
 # Encodes Sections 13 (color), 14 (type), 16 (imagery), 26 (AI prompting) of brand-guidelines-v2.md
-# The engine MUST build every Higgsfield prompt from these blocks.
+# The engine MUST build every image prompt from these blocks.
 
 ## Color system (reference in prompts)
 - Deep Black #000000 (backgrounds, negative space)

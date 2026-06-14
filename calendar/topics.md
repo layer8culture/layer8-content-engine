@@ -17,5 +17,6 @@
 - (nothing yet)
 
 ## Posting cadence targets
-- layer8culture: 2-4 posts/day (IG, X, TikTok)
-- lofi: 1 post/day (IG, X) + stream promo Fridays
+- CURRENT FOCUS: layer8culture Instagram only — 3-4 posts/day, every post a
+  fresh topical OpenAI image (1 high-quality hero/day, the rest medium).
+- Paused for now: layer8culture X & TikTok, and the lofi account.

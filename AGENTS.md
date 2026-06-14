@@ -20,11 +20,11 @@ Afrofuturistic LoFi stream.
 ## Repo conventions
 - Generated posts go in queue/ as YYYY-MM-DD.json (schema in
   scripts/generation-prompt.md). Published posts archive to posted/.
-- Higgsfield outputs land in assets/generated/, named by post ID.
+- OpenAI image outputs land in assets/generated/, named by post ID.
 - File naming for brand assets follows Section 27 of the guidelines.
 - Don't edit posted/log.json history; only append.
 
 ## When asked to modify the engine itself
-- Keep scripts dependency-light (requests + higgsfield-client + pillow only).
+- Keep scripts dependency-light (openai + requests + pillow only).
 - Workflow changes must preserve the human approval gate: nothing publishes
   without a merged PR.

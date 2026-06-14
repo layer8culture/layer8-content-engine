@@ -21,10 +21,15 @@ jobs:
       - name: Generate posts with Copilot CLI
         env:
           GH_TOKEN: ${{ secrets.COPILOT_CLI_TOKEN }}
+        # web-fetch + --allow-all-urls let the agent research the day's AI news.
+        # Writes stay scoped to queue/* (the agent only reads the web). For a
+        # stricter setup, replace --allow-all-urls with one or more
+        # --allow-url=<domain> flags for a curated source allow-list.
         run: |
           copilot -p "$(cat scripts/generation-prompt.md)" \
             -s \
-            --allow-tool='read,write(queue/*)' \
+            --allow-tool='read,write(queue/*),web-fetch' \
+            --allow-all-urls \
             --no-ask-user
 
       - name: Set up Python
@@ -32,14 +37,13 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Generate visuals via Higgsfield
+      - name: Generate visuals via OpenAI
         env:
-          HF_API_KEY: ${{ secrets.HF_API_KEY }}
-          HF_API_SECRET: ${{ secrets.HF_API_SECRET }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          pip install higgsfield-client requests pillow
+          pip install openai requests pillow
           QUEUE_FILE=$(ls queue/*.json | head -n 1)
-          python scripts/higgsfield_gen.py "$QUEUE_FILE"
+          python scripts/openai_gen.py "$QUEUE_FILE"
 
       - name: Open approval PR
         env:
