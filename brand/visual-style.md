@@ -16,14 +16,37 @@
 electric blue accent lighting, premium creator-tech atmosphere, late-night
 builder energy, documentary realism, human-centered AI themes, Black tech
 futurism, minimal composition, strong negative space, warm practical lighting,
-and high contrast. The scene is a built-out premium broadcast studio (not a
-makeshift setup): a blank neon sign panel on the wall (an unlit, lettering-free
-glowing panel — do NOT render any text or letters; the wordmark is composited in
-afterward), the standalone 8 motif on a hoodie or mug, a branded mic flag, a
-stream deck on a dark wood desk, and a bookshelf washed in blue accent lighting.
-A confident Black creator/host is present and engaged — direct-to-camera or
-actively presenting, never anonymous side profiles. The image should feel like a
-premium technology documentary and creative studio brand."
+and high contrast. Vary the composition from post to post so the feed does not
+repeat — the SCENE SPECIFICS for THIS post decide the subject. Draw from a range
+of premium looks (do NOT default to the same person-at-a-desk shot every time),
+for example: a confident Black creator/host presenting direct-to-camera; a close
+detail of premium creator gear (mic, stream deck, dark walnut desk, the
+standalone 8 motif on a hoodie or mug); an over-the-shoulder build session; an
+abstract Afrofuturistic tech or data-visualization environment with glowing
+electric-blue nodes and grids; or an atmospheric branded studio space. Recurring
+brand cues when a scene fits: a blank neon sign panel on the wall (an unlit,
+lettering-free glowing panel — do NOT render any text or letters; the wordmark is
+composited in afterward), the standalone 8 motif, a bookshelf washed in blue
+accent lighting. When a person appears they are a confident Black creator,
+engaged and intentional, never anonymous side profiles. The image should feel
+like a premium technology documentary and creative studio brand.
+
+COMPOSITION FOR TYPOGRAPHY: leave the LOWER-LEFT / lower third of the frame as
+clean, uncluttered negative space (a dark, simple area with no faces, fine
+detail, or busy elements there) so a branded headline can be composited over it.
+Keep the top-right corner clear for the wordmark."
+
+## TYPOGRAPHY OVERLAY (composited after generation — do NOT ask the model to render it)
+# The image models render garbled text, so openai_gen.py composites clean brand
+# type onto each image, infographic / title-card style. The generation step
+# supplies the words via the post's visual.headline / visual.subtext fields.
+# - Headline: Space Grotesk Bold, UPPERCASE, wide tracking, large and cinematic.
+#   Soft White #F5F5F5, with an optional single Electric Blue #0047FF accent word
+#   (visual.accent). Keep it SHORT — ideally 2–5 words, max ~7.
+# - Subtext: Inter, one short supporting line (optional), Soft White.
+# - A deep-black bottom scrim is added automatically for legibility; the wordmark
+#   is overlaid top-right. Because the message lives in the typography, the
+#   generated background should be atmospheric and varied, not literal.
 
 ## LOFI BASE PROMPT (prepend to every lofi generation — use INSTEAD of the main BASE PROMPT)
 # Per Section 20 of brand-guidelines-v2.md. Illustrated, not photorealistic.

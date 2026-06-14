@@ -10,8 +10,11 @@ queue/*.png
 # Never commit large binaries / installers (GitHub rejects >100MB)
 *.exe
 
-# Keep the brand reference files in assets/library/ (NOT ignored):
-#   layer8-wordmark.png, layer8-style-reference-01.png, lofi-style-reference-01.png
+# Keep brand assets in assets/library/ and assets/fonts/ (NOT ignored):
+#   library: layer8-wordmark.png
+#   fonts:   SpaceGrotesk-Variable.ttf, Inter-Variable.ttf (+ OFL licenses)
+# Style-reference images were removed — generation relies on the prompt, and
+# branded headline typography is composited per brand/visual-style.md.
 
 # --- Python ---
 __pycache__/

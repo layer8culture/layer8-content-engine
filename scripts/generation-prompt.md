@@ -45,21 +45,29 @@ Each post object must have exactly these fields:
                           relevant) + scene specifics + NEGATIVE PROMPT. Composed
                           exactly per brand/visual-style.md. The scene specifics
                           MUST visually reflect THIS post's concrete topic / news
-                          subject so the image and the copy are about the same
-                          thing.",
+                          subject AND must differ noticeably from the other posts
+                          (vary the composition — person, gear detail, abstract
+                          tech/data-viz, environment — do not repeat the same
+                          person-at-a-desk shot). The background is atmospheric, NOT
+                          literal text — the message is carried by the headline
+                          below. Leave the lower-left / lower third as clean, dark
+                          negative space for the composited headline, and keep the
+                          top-right clear for the wordmark.",
+    "headline": "REQUIRED. The short, punchy headline composited onto the image in
+                 brand type (Space Grotesk, UPPERCASE). 2–5 words ideal, max ~7.
+                 This is the visual hook — make it land on its own. Do NOT restate
+                 the full caption; distill the core idea (e.g. 'Builders over
+                 consumers', 'Agents are the new interface').",
+    "subtext": "OPTIONAL one short supporting line composited under the headline in
+                Inter (≤ ~8 words). Omit if the headline stands alone.",
+    "accent": "OPTIONAL a single word (or two) taken verbatim from the headline to
+               render in Electric Blue for emphasis (e.g. 'Builders'). Must appear
+               in the headline. Omit for no accent.",
+    "overlay_position": "OPTIONAL 'lower-left' (default) or 'lower-center' — where
+                         the headline block sits.",
     "quality": "low" | "medium" | "high". REQUIRED. Set exactly ONE post per day
                 to "high" (the day's hero); set every other post to "medium".
                 Every post gets a fresh image — do not reuse library assets.,
-    "style_reference": "OPTIONAL and OFF BY DEFAULT — normally OMIT this field.
-                        Brand consistency already comes from the BASE PROMPT in
-                        brand/visual-style.md, so prompt-only generation keeps the
-                        look on-brand while letting each post's scene vary. Setting
-                        this routes the post through OpenAI's images.edit endpoint,
-                        which anchors the output to that one reference image and
-                        makes every post look nearly identical — do NOT use it just
-                        to 'keep the style'. Only set it (to a path under
-                        assets/library) when a specific post genuinely needs to
-                        transform/edit that exact source image.",
     "aspect": "1:1" | "9:16" | "16:9",
     "logo_position": "OPTIONAL one of top-left | top-right | bottom-left |
                       bottom-right | center. Where openai_gen.py overlays the
@@ -85,9 +93,12 @@ CONTENT RULES:
   paraphrase in brand voice.
 - Every post uses "source": "openai" with a fresh image whose scene reflects
   that post's topic. Quality: exactly one "high" hero per day, the rest "medium".
-- Do NOT set "style_reference" on posts (omit it). The BASE PROMPT already keeps
-  the look on-brand; a shared reference makes every image come out the same. Each
-  post's "openai_prompt" scene specifics must differ so images vary day to day.
+- NEVER set "style_reference" — those reference images were removed. Brand look
+  comes from the BASE PROMPT; variety comes from each post's distinct scene.
+- Every post MUST include a "headline" (and may include "subtext"/"accent"). The
+  headline is composited onto the image like an infographic title card, so it has
+  to be short and self-contained. Make each post's scene AND headline visibly
+  different from the others — no two posts should look or read alike.
 - IG caption ≤ 2200 chars. Use aspect "1:1" or "9:16" (Instagram-native).
 - Output valid JSON only in the file. No markdown fences inside the file.
 
