@@ -24,9 +24,14 @@ jobs:
           POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
         run: |
           pip install requests
-          QUEUE_FILE=$(ls queue/*.json 2>/dev/null | head -n 1)
-          if [ -z "$QUEUE_FILE" ]; then echo "No queue file."; exit 0; fi
-          python scripts/post_to_postiz.py "$QUEUE_FILE"
+          shopt -s nullglob
+          files=(queue/*.json)
+          if [ ${#files[@]} -eq 0 ]; then echo "No queue file."; exit 0; fi
+          # Publish every approved queue file; the script archives each to posted/.
+          for QUEUE_FILE in "${files[@]}"; do
+            echo "Publishing $QUEUE_FILE"
+            python scripts/post_to_postiz.py "$QUEUE_FILE"
+          done
 
       - name: Commit archive
         run: |
