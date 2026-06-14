@@ -31,13 +31,18 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
 ## Setup (one-time)
 
 1. **Create a private GitHub repo** and push this folder to it.
-2. **Deploy Postiz** on your Azure VM:
-   ```bash
-   git clone https://github.com/gitroomhq/postiz-app
-   # use their docker-compose; set up HTTPS with Caddy
-   # connect your social accounts in the Postiz UI
-   # create an API key in Postiz settings
-   ```
+2. **Deploy Postiz** (already provisioned on Azure for this project):
+   - Runs via `docker compose` on an Ubuntu VM (`rg-postiz` / `postiz-vm`),
+     fronted by Caddy for automatic HTTPS at a `sslip.io` domain tied to the
+     VM's static IP (swap in a custom domain like `post.layer8culture.io` later
+     by pointing an A record at the IP and editing `/opt/postiz/Caddyfile`).
+   - **Register** the first account in the Postiz UI (it becomes admin), then
+     **create an API key** under Settings → API.
+   - **Instagram requires a Meta app** (Instagram Graph API): put its
+     `INSTAGRAM_APP_ID` / `INSTAGRAM_APP_SECRET` (and/or `FACEBOOK_APP_ID` /
+     `FACEBOOK_APP_SECRET`) in `/opt/postiz/social.env` on the VM, then
+     `sudo docker compose up -d`. Connection details are kept out of git in the
+     session's `files/postiz-deployment.md`.
 3. **Add GitHub repo secrets** (Settings → Secrets → Actions):
    | Secret | What it is |
    |---|---|
