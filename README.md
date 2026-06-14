@@ -41,7 +41,8 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
 3. **Add GitHub repo secrets** (Settings → Secrets → Actions):
    | Secret | What it is |
    |---|---|
-   | `COPILOT_CLI_TOKEN` | **Fine-grained** PAT with the **Copilot Requests** permission, from your Copilot-seat (FTE) account. Classic PATs (`ghp_`) are NOT supported by Copilot CLI. |
+   | `COPILOT_CLI_TOKEN` | A token the Copilot CLI accepts for authentication. A **fine-grained** PAT with the **Copilot Requests** permission works only if your account/enterprise policy allows PAT-based Copilot access. If that's blocked, use the OAuth token the CLI stores after you run `copilot` → `/login` with your Copilot-seat account (a `gho_` token; classic `ghp_` PATs are NOT supported). |
+   | `ENGINE_PR_TOKEN` | A user PAT with `repo` scope, used **only** to open the nightly approval PR. Required because the org disables "Allow GitHub Actions to create pull requests", so the built-in `GITHUB_TOKEN` can't create it — a PR authored by a real user can. |
    | `OPENAI_API_KEY` | From platform.openai.com (image generation) |
    | `POSTIZ_URL` | e.g. `https://post.layer8culture.io` |
    | `POSTIZ_API_KEY` | From your Postiz instance |
