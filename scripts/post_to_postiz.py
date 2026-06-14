@@ -16,8 +16,19 @@ import sys
 import pathlib
 import requests
 
-POSTIZ_URL = os.environ["POSTIZ_URL"].rstrip("/")
-HEADERS = {"Authorization": os.environ["POSTIZ_API_KEY"]}
+
+def _require_env(name: str) -> str:
+    val = os.environ.get(name)
+    if not val:
+        sys.exit(
+            f"Missing required env var {name}. Set the POSTIZ_URL and "
+            f"POSTIZ_API_KEY GitHub secrets before merging an approval PR."
+        )
+    return val
+
+
+POSTIZ_URL = _require_env("POSTIZ_URL").rstrip("/")
+HEADERS = {"Authorization": _require_env("POSTIZ_API_KEY")}
 
 # account+platform -> Postiz integration (channel) ID. FILL THESE IN.
 # Note: ("lofi", "tiktok") is provisioning-only — the lofi cadence currently

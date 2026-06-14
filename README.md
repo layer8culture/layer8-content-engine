@@ -47,8 +47,14 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
    | `POSTIZ_URL` | e.g. `https://post.layer8culture.io` |
    | `POSTIZ_API_KEY` | From your Postiz instance |
    | `REPORT_WEBHOOK` | Discord/Slack webhook for the daily report (optional) |
-4. **Customize the brand files** in `brand/` — this is what makes output sound like you.
-5. **Enable the workflows** in the Actions tab.
+4. **Map your Instagram channel** — in Postiz, connect the Layer8Culture
+   Instagram account (an IG **Business/Creator** account linked to a Facebook
+   Page), then open **Settings → API** to copy that channel's **integration ID**.
+   Paste it into `scripts/post_to_postiz.py` → `INTEGRATIONS[("layer8culture",
+   "instagram")]`, replacing `REPLACE_ME`. The other entries stay `REPLACE_ME`
+   while X / TikTok / lofi are paused — unmapped posts are skipped, not errored.
+5. **Customize the brand files** in `brand/` — this is what makes output sound like you.
+6. **Enable the workflows** in the Actions tab.
 
 ## Weekly rhythm
 
