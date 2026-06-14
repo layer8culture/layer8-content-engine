@@ -36,7 +36,7 @@ HEADERS = {"Authorization": _require_env("POSTIZ_API_KEY")}
 # TikTok unless topics.md explicitly asks for it.
 INTEGRATIONS = {
     ("layer8culture", "tiktok"): "REPLACE_ME",
-    ("layer8culture", "instagram"): "REPLACE_ME",
+    ("layer8culture", "instagram"): "cmqd9915w0001o5717h436ivp",
     ("layer8culture", "x"): "REPLACE_ME",
     ("lofi", "instagram"): "REPLACE_ME",
     ("lofi", "x"): "REPLACE_ME",
