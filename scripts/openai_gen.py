@@ -11,15 +11,23 @@ across this brand's cinematic, Afrofuturistic visual system. Prompts are still
 composed per brand/visual-style.md (base prompt + add-on + scene + negative
 prompt) by the generation step before this script runs.
 
+After each image renders, the script composites branded typography onto it
+(infographic / title-card style): a Space Grotesk headline + optional Inter
+supporting line from the post's visual.headline / visual.subtext fields, plus
+the Layer8Culture wordmark. The image models are prompted NOT to render text
+(theirs is garbled), so all on-image type is laid down here with bundled fonts
+under assets/fonts/.
+
 Requires: pip install openai requests pillow
 Env vars: OPENAI_API_KEY
 """
 import base64
 import json
 import os
+import string
 import sys
 import pathlib
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 from openai import OpenAI, OpenAIError
 
 # ---------------------------------------------------------------------------
@@ -107,6 +115,172 @@ def composite_wordmark(
     return True
 
 
+# --- Infographic typography overlay -----------------------------------------
+# The image models are prompted NOT to render text (their typography is garbled);
+# instead we composite clean, on-brand headline typography onto each image so the
+# post reads like a branded infographic / title card. Headlines use Space Grotesk
+# (uppercase, wide tracking per brand/visual-style.md), supporting copy uses
+# Inter. Colors follow the brand system (Soft White text, Electric Blue accent on
+# a deep-black scrim). Both fonts are OFL-licensed and bundled under assets/fonts.
+FONTS_DIR = pathlib.Path("assets/fonts")
+SPACE_GROTESK_PATH = FONTS_DIR / "SpaceGrotesk-Variable.ttf"
+INTER_PATH = FONTS_DIR / "Inter-Variable.ttf"
+SOFT_WHITE = (245, 245, 245, 255)
+ELECTRIC_BLUE = (0, 71, 255, 255)
+# Where the headline block sits. "lower-left" reads like a title card; the prompt
+# is told to keep that region as clean negative space.
+DEFAULT_OVERLAY_POSITION = "lower-left"
+
+
+def _load_font(path: pathlib.Path, size: int, instance: str) -> ImageFont.FreeTypeFont:
+    font = ImageFont.truetype(str(path), size)
+    try:
+        font.set_variation_by_name(instance)
+    except Exception:  # noqa: BLE001 - static fallback if no named instance
+        pass
+    return font
+
+
+def _line_width(draw: ImageDraw.ImageDraw, text: str, font, tracking: float) -> float:
+    if not text:
+        return 0.0
+    return sum(draw.textlength(ch, font=font) for ch in text) + tracking * (len(text) - 1)
+
+
+def _wrap(draw, text: str, font, max_w: float, tracking: float) -> list[str]:
+    lines: list[str] = []
+    current = ""
+    for word in text.split():
+        trial = word if not current else f"{current} {word}"
+        if not current or _line_width(draw, trial, font, tracking) <= max_w:
+            current = trial
+        else:
+            lines.append(current)
+            current = word
+    if current:
+        lines.append(current)
+    return lines
+
+
+def _fit_headline(draw, text, max_w, start_size, min_size, max_lines):
+    """Shrink the headline font until it wraps to <= max_lines within max_w."""
+    size = start_size
+    while size >= min_size:
+        font = _load_font(SPACE_GROTESK_PATH, size, "Bold")
+        tracking = size * 0.03
+        lines = _wrap(draw, text, font, max_w, tracking)
+        if len(lines) <= max_lines:
+            return font, size, tracking, lines
+        size -= 2
+    font = _load_font(SPACE_GROTESK_PATH, min_size, "Bold")
+    tracking = min_size * 0.03
+    return font, min_size, tracking, _wrap(draw, text, font, max_w, tracking)
+
+
+def _bottom_scrim(base: Image.Image, frac: float = 0.6, max_alpha: int = 205) -> Image.Image:
+    """Composite a transparent-to-dark vertical gradient over the bottom of the
+    image so overlaid text stays legible on any background."""
+    w, h = base.size
+    start = int(h * (1 - frac))
+    column = Image.new("L", (1, h), 0)
+    for y in range(start, h):
+        column.putpixel((0, y), int(max_alpha * (y - start) / max(1, h - start)))
+    alpha = column.resize((w, h))
+    scrim = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    scrim.putalpha(alpha)
+    return Image.alpha_composite(base, scrim)
+
+
+def _draw_tracked_line(draw, x, y, line, font, tracking, default_fill,
+                       accent_tokens, accent_fill):
+    """Draw a single line with letter tracking; words whose normalized form is in
+    accent_tokens are rendered in the accent color."""
+    cx = x
+    space_w = draw.textlength(" ", font=font)
+    words = line.split(" ")
+    for wi, word in enumerate(words):
+        norm = word.strip(string.punctuation).lower()
+        fill = accent_fill if norm and norm in accent_tokens else default_fill
+        for ch in word:
+            draw.text((cx, y), ch, font=font, fill=fill)
+            cx += draw.textlength(ch, font=font) + tracking
+        if wi != len(words) - 1:
+            cx += space_w + tracking
+
+
+def render_infographic(image_path: pathlib.Path, headline: str,
+                       subtext: str | None = None,
+                       position: str = DEFAULT_OVERLAY_POSITION,
+                       accent: str | None = None) -> bool:
+    """Composite a branded headline (and optional supporting line) onto an image,
+    infographic / title-card style. Returns False if the fonts are missing so
+    generation never depends on the overlay."""
+    if not (SPACE_GROTESK_PATH.exists() and INTER_PATH.exists()):
+        return False
+    base = Image.open(image_path).convert("RGBA")
+    w, h = base.size
+    base = _bottom_scrim(base)
+    draw = ImageDraw.Draw(base)
+
+    margin = int(w * 0.07)
+    max_w = w - 2 * margin
+    centered = position == "lower-center"
+
+    accent_tokens = {t.strip(string.punctuation).lower()
+                     for t in (accent or "").split() if t.strip(string.punctuation)}
+
+    headline_text = headline.strip().upper()
+    font_h, size_h, track_h, lines_h = _fit_headline(
+        draw, headline_text, max_w,
+        start_size=int(w * 0.085), min_size=int(w * 0.042), max_lines=3)
+    hlh = int(size_h * 1.16)
+
+    sub_lines: list[str] = []
+    font_s = None
+    size_s = 0
+    track_s = 0.0
+    if subtext:
+        size_s = max(int(w * 0.030), 18)
+        font_s = _load_font(INTER_PATH, size_s, "Medium")
+        track_s = size_s * 0.01
+        sub_lines = _wrap(draw, subtext.strip(), font_s, max_w, track_s)
+    slh = int(size_s * 1.35)
+
+    accent_h = max(3, int(w * 0.012))
+    accent_w = int(w * 0.10)
+    accent_gap = int(size_h * 0.35)
+    sub_gap = int(size_h * 0.28) if sub_lines else 0
+
+    block_h = accent_h + accent_gap + len(lines_h) * hlh + sub_gap + len(sub_lines) * slh
+    bottom_margin = int(h * 0.09)
+    top = h - bottom_margin - block_h
+
+    def line_x(line, font, tracking):
+        if not centered:
+            return margin
+        return int((w - _line_width(draw, line, font, tracking)) / 2)
+
+    # Electric-blue accent rule.
+    bar_x = margin if not centered else int((w - accent_w) / 2)
+    draw.rectangle([bar_x, top, bar_x + accent_w, top + accent_h], fill=ELECTRIC_BLUE)
+
+    y = top + accent_h + accent_gap
+    for line in lines_h:
+        _draw_tracked_line(draw, line_x(line, font_h, track_h), y, line, font_h,
+                           track_h, SOFT_WHITE, accent_tokens, ELECTRIC_BLUE)
+        y += hlh
+
+    if sub_lines:
+        y += sub_gap - (hlh - size_h)  # tighten gap after headline
+        for line in sub_lines:
+            _draw_tracked_line(draw, line_x(line, font_s, track_s), y, line, font_s,
+                               track_s, SOFT_WHITE, set(), SOFT_WHITE)
+            y += slh
+
+    base.convert("RGB").save(image_path)
+    return True
+
+
 def _decode_b64_image(result) -> bytes:
     """Extract and decode the base64 PNG bytes from an OpenAI images response."""
     b64 = result.data[0].b64_json
@@ -173,6 +347,28 @@ def generate(client: OpenAI, post: dict, out_dir: pathlib.Path) -> str | None:
             image_bytes = _decode_b64_image(result)
 
         out_path.write_bytes(image_bytes)
+
+        # Composite branded headline typography (infographic / title-card style).
+        # The image models render garbled text, so they're prompted to leave clean
+        # negative space and we lay crisp brand type on top here.
+        headline = visual.get("headline")
+        if headline:
+            try:
+                applied = render_infographic(
+                    out_path,
+                    headline,
+                    visual.get("subtext"),
+                    visual.get("overlay_position", DEFAULT_OVERLAY_POSITION),
+                    visual.get("accent"),
+                )
+                if applied:
+                    print(f"  > {post['id']}: headline composited "
+                          f"({headline[:48]!r})")
+                else:
+                    print(f"  ! {post['id']}: fonts missing under assets/fonts, "
+                          f"headline overlay skipped")
+            except Exception as e:  # noqa: BLE001 - never lose a good image over text
+                print(f"  ! {post['id']}: headline overlay skipped ({e})")
 
         # Overlay the official wordmark (models are prompted not to render text).
         try:
