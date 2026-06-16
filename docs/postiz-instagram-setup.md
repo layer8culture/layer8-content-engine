@@ -133,6 +133,31 @@ In Postiz → **Settings → API**, copy each connected channel's **integration 
   (Settings → Secrets → Actions). No code edit needed — the engine reads it at
   publish time and falls back to a placeholder (skips the post) when unset.
 
+> **Use the Postiz integration ID, not a Meta ID.** The engine passes this value to
+> the Postiz API to identify the channel, so it must be Postiz's own integration ID —
+> a **cuid-style string** like the working main account's `cmqd9915w0001o5717h436ivp`.
+> A long **numeric** ID (e.g. `1086216911251971`) is the **Meta/Instagram account or
+> Page ID**, which Meta Business settings surfaces — that is *not* the Postiz channel
+> ID and won't publish. (The numeric Instagram Business account id is what the
+> separate analytics loop's `IG_USER_ID` secret uses, not publishing.) You only get
+> the Postiz integration ID *after* the channel is connected in Postiz, from
+> **Settings → API**.
+
+To set the secret from your machine (GitHub CLI):
+
+```bash
+gh secret set LOFI_IG_CHANNEL_ID --repo layer8culture/layer8-content-engine
+# paste the cuid-style Postiz integration ID when prompted
+```
+
+**Don't know the integration ID?** With `POSTIZ_URL` and `POSTIZ_API_KEY` set in your
+shell (same values as the GitHub secrets), run the helper to verify auth and print
+every connected channel's integration ID:
+
+```bash
+python scripts/list_postiz_channels.py
+```
+
 Merging an approval PR then schedules each post to the correct account.
 
 ## Alternative: Instagram Standalone

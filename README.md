@@ -114,7 +114,8 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
 - `assets/generated/` — OpenAI/ffmpeg outputs, named by post ID (images, carousel
   slides, reel mp4s + covers).
 - `scripts/` — the machinery (`openai_gen.py` images, `reel_gen.py` video,
-  `post_to_postiz.py` publishing, `fetch_insights.py` analytics) + generation prompts
-  (`generation-prompt.md` for layer8culture, `generation-prompt-lofi.md` for the lofi
-  brand). `.github/workflows/` — the schedule (generate, generate-lofi, publish,
-  analytics, daily-report).
+  `post_to_postiz.py` publishing, `list_postiz_channels.py` channel-ID lookup,
+  `fetch_insights.py` analytics) + generation prompts (`generation-prompt.md` for
+  layer8culture, `generation-prompt-lofi.md` for the lofi brand).
+  `.github/workflows/` — the schedule (generate, generate-lofi, publish, analytics,
+  daily-report).
