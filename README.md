@@ -74,6 +74,7 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
    account, connect it the same way and put its channel ID in the
    `LOFI_IG_CHANNEL_ID` secret (no code edit needed). The other entries stay
    `REPLACE_ME` while X / TikTok are paused — unmapped posts are skipped, not errored.
+   Full walkthrough: [`docs/postiz-instagram-setup.md`](docs/postiz-instagram-setup.md).
 5. **Customize the brand files** in `brand/` — this is what makes output sound like you.
 6. **Enable the workflows** in the Actions tab.
 
