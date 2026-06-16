@@ -62,7 +62,7 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
    | `OPENAI_API_KEY` | From platform.openai.com (image generation) |
    | `POSTIZ_URL` | e.g. `https://post.layer8culture.io` |
    | `POSTIZ_API_KEY` | From your Postiz instance |
-   | `LOFI_IG_CHANNEL_ID` | Postiz integration (channel) ID for the **Layer8Culture Radio** Instagram account. Optional until the lofi channel is connected — leave unset and lofi posts are skipped, not errored. |
+   | `LOFI_IG_CHANNEL_ID` | **Optional override.** The Layer8Culture Radio Instagram channel is already wired in `post_to_postiz.py`; set this only to point lofi posts at a different Postiz integration ID (e.g. after re-connecting the channel). |
    | `IG_USER_ID` | Instagram **Business** account user id (for the insights loop) |
    | `IG_GRAPH_TOKEN` | Long-lived Instagram Graph API token with `instagram_basic`, `instagram_manage_insights`, `pages_read_engagement` (reuses your Meta app) |
    | `REPORT_WEBHOOK` | Discord/Slack webhook for the daily report (optional) |
@@ -70,9 +70,10 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
    Instagram account (an IG **Business/Creator** account linked to a Facebook
    Page), then open **Settings → API** to copy that channel's **integration ID**.
    Paste it into `scripts/post_to_postiz.py` → `INTEGRATIONS[("layer8culture",
-   "instagram")]`, replacing `REPLACE_ME`. For the **Layer8Culture Radio (lofi)**
-   account, connect it the same way and put its channel ID in the
-   `LOFI_IG_CHANNEL_ID` secret (no code edit needed). The other entries stay
+   "instagram")]`, replacing `REPLACE_ME`. The **Layer8Culture Radio (lofi)**
+   account is already wired in `INTEGRATIONS[("lofi", "instagram")]`; set the
+   `LOFI_IG_CHANNEL_ID` secret only if you re-connect it and need to override the ID.
+   The other entries stay
    `REPLACE_ME` while X / TikTok are paused — unmapped posts are skipped, not errored.
    Full walkthrough: [`docs/postiz-instagram-setup.md`](docs/postiz-instagram-setup.md).
 5. **Customize the brand files** in `brand/` — this is what makes output sound like you.

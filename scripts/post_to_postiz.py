@@ -53,14 +53,14 @@ INTEGRATIONS = {
     ("layer8culture", "tiktok"): "REPLACE_ME",
     ("layer8culture", "instagram"): "cmqd9915w0001o5717h436ivp",
     ("layer8culture", "x"): "REPLACE_ME",
-    ("lofi", "instagram"): "REPLACE_ME",
+    ("lofi", "instagram"): "cmqgzb1xv000qo571zuz5lqfm",
     ("lofi", "x"): "REPLACE_ME",
     ("lofi", "tiktok"): "REPLACE_ME",
 }
 
-# The lofi (Layer8CultureRadio) Instagram channel is wired via the
-# LOFI_IG_CHANNEL_ID secret so it can be filled in after the Postiz channel is
-# connected, without a code change. Falls back to the REPLACE_ME placeholder.
+# The lofi (Layer8CultureRadio) Instagram channel is wired above with its Postiz
+# integration ID. The LOFI_IG_CHANNEL_ID secret, if set, overrides it without a code
+# change (e.g. if the channel is re-connected and gets a new ID).
 _lofi_ig = os.environ.get("LOFI_IG_CHANNEL_ID")
 if _lofi_ig:
     INTEGRATIONS[("lofi", "instagram")] = _lofi_ig

@@ -129,9 +129,11 @@ In Postiz → **Settings → API**, copy each connected channel's **integration 
 
 - **@layer8culture** → paste into `scripts/post_to_postiz.py` →
   `INTEGRATIONS[("layer8culture", "instagram")]`, replacing `REPLACE_ME`.
-- **@Layer8CultureRadio** → set it as the GitHub repo secret **`LOFI_IG_CHANNEL_ID`**
-  (Settings → Secrets → Actions). No code edit needed — the engine reads it at
-  publish time and falls back to a placeholder (skips the post) when unset.
+- **@Layer8CultureRadio** → wired in `scripts/post_to_postiz.py` →
+  `INTEGRATIONS[("lofi", "instagram")]` (currently `cmqgzb1xv000qo571zuz5lqfm`). To
+  point lofi posts at a different channel without a code edit, set the GitHub repo
+  secret **`LOFI_IG_CHANNEL_ID`** (Settings → Secrets → Actions); when set it
+  overrides the value in code.
 
 > **Use the Postiz integration ID, not a Meta ID.** The engine passes this value to
 > the Postiz API to identify the channel, so it must be Postiz's own integration ID —
