@@ -17,6 +17,41 @@ and **@Layer8CultureRadio** (lofi) — use the **same** Meta app; you just run t
 - For the Facebook Business method: the IG account is linked to a **Facebook Page**.
 - A [Meta for Developers](https://developers.facebook.com/apps/) account.
 
+## Meta Business foundation (do this first)
+
+"Facebook Business" is the account structure Instagram's publishing API requires.
+Set it up once on the Facebook side before touching the developer app.
+
+Mental model: a **Business Portfolio** (business.facebook.com) owns your **Page** +
+**Instagram account** + **developer App**. The App borrows the portfolio's Page/IG
+access via scopes; Postiz uses the App's ID/secret to run OAuth for that IG account.
+A single portfolio + app handles **both** brand accounts.
+
+1. **Create a Facebook Page** (if you don't have one):
+   https://www.facebook.com/pages/create. It can be minimal — it mainly anchors the
+   IG account to the API.
+2. **Create a Business Portfolio** (formerly "Business Manager"):
+   https://business.facebook.com → **Settings** → create the portfolio with your
+   business name + email.
+3. **Add the Page to the portfolio:** Business Settings → **Accounts → Pages → Add →
+   Add a Page**.
+4. **Convert Instagram to Business/Creator:** in the IG mobile app → **Settings →
+   Account type and tools → Switch to professional account** → **Business** (or
+   Creator). Do this for each account (`layer8culture`, `Layer8CultureRadio`).
+5. **Link the IG account to the Page** (either path):
+   - Business Suite: https://business.facebook.com → pick the Page → **Settings →
+     Linked accounts → Instagram → Connect account**.
+   - Or Business Settings → **Accounts → Instagram accounts → Add** → connect, then
+     assign it to the Page.
+6. **Confirm:** Business Settings → **Instagram accounts** shows the account with its
+   linked Page. That linkage is what `pages_show_list` + `instagram_basic` read during
+   the Postiz connect step. Repeat steps 4–5 for the second brand account.
+
+> Gotchas: the IG account must be Business/Creator **before** linking, or it won't
+> appear; if it doesn't show at the Postiz connect step it's almost always (a) IG not
+> linked to the Page, or (b) the handle not added as an Instagram Tester while the app
+> is in Dev mode (see step 6 below).
+
 ## 1. Create one Meta app
 
 1. Go to https://developers.facebook.com/apps/creation/ and pick a business portfolio.
@@ -67,6 +102,10 @@ Restart Postiz so it picks up the env:
 ```bash
 cd /opt/postiz && sudo docker compose up -d
 ```
+
+Also associate the app with your Business Portfolio: App Dashboard → **App settings →
+Basic → Business Account** → select the portfolio from the Meta Business foundation
+section. This is what lets the app see that portfolio's Pages / IG accounts.
 
 ## 6. (Dev mode only) add the IG account as a tester
 
