@@ -64,17 +64,34 @@ Keep the top-right corner clear for the wordmark."
 #   interactive sticker/question. Treat it as a quick daily touchpoint, not a hero.
 
 ## LOFI BASE PROMPT (prepend to every lofi generation — use INSTEAD of the main BASE PROMPT)
-# Per Section 20 of brand-guidelines-v2.md. Illustrated, not photorealistic.
-"Create a cinematic anime-inspired, illustrated Layer8Culture LoFi scene (not
-photorealistic) — a densely detailed, lived-in environment. A Black coder or
-creator at work, lit by a warm desk lamp against a deep blue night. A futuristic
-African city skyline glows through a large window. A blank neon sign panel on
-the wall (an unlit, lettering-free glowing panel — do NOT render any text or
-letters; the wordmark is composited in afterward), and the standalone 8 motif
-present somewhere in the scene (on a hoodie, a mug, or the wall). Bookshelves
-filled with coding books and West African-inspired objects, plants throughout,
-ambient blue and gold lighting, warm and immersive, with a loopable composition.
-The image should feel like a calm Afrofuturistic focus room for builders."
+# For the lofi account = Layer8Culture Radio (@Layer8CultureRadio). Per
+# brand/layer8culture_radio_brand_guidelines.md §7 + §15. Illustrated anime-inspired,
+# NOT photorealistic. Vary the time-of-day mood per post (night / sunrise / sunset /
+# rainy night) using the LOFI COLOR SYSTEM below so the feed doesn't repeat.
+"Create a cinematic lo-fi anime-inspired Afrofuturist coding studio scene for
+Layer8Culture Radio (not photorealistic). A Black creator is seated FROM BEHIND at
+a premium coding workstation, calm and focused, wearing a black hoodie with a large
+number 8 on the back (no face reveal). Multiple monitors show code and a subtle line
+graph; a laptop with code; a warm desk lamp; a coffee/tea mug with steam; plants and
+hanging vines; books on system design, clean code, and algorithms; West
+African-inspired pottery and design objects; a warm wood desk; and a blank blue neon
+sign panel on the wall (an unlit, lettering-free glowing panel — do NOT render any
+text or letters; branding is composited in afterward). Through a large window is a
+futuristic African city skyline with a few slow flying vehicles and [TIME-OF-DAY]
+lighting. The mood is calm, premium, focused, and loop-friendly, with a balanced
+electric-blue and warm lighting palette. High-quality anime illustration, cinematic
+lighting, clean composition, no extra people, no copyrighted characters."
+
+## LOFI COLOR SYSTEM (reference in lofi prompts; pick a theme per post for variety)
+# From brand/layer8culture_radio_brand_guidelines.md §5.
+# - Deep Black #030508, Midnight Navy #07111F (backgrounds)
+# - Electric Blue #0047FF, Neon Cyan #00BFFF (glow, waveforms, motion accents)
+# - Warm Gold #F5A524, Sunrise Amber #FFB347, Sunset Orange #FF6A1A (warm/cultural)
+# - Soft White #F8F9FA (primary text), Cool Gray #B7C0D1 (secondary text)
+# - Warm Brown #5A371C (wood, studio warmth)
+# Theme pairings (set the [TIME-OF-DAY] mood): Night / Deep Focus (black+navy+blue+cyan);
+# Sunrise / Morning Build (gold+amber+white+blue); Sunset / Evening Focus (orange+gold+
+# navy+cyan); Rainy Night (navy+steel blue+blue, neon reflections, warm lamp glow).
 
 ## NEGATIVE PROMPT (append to every generation)
 "Avoid generic startup office, bright corporate lighting, cheap gamer RGB,
@@ -91,9 +108,31 @@ rendered text, signage lettering, and garbled typography."
 professional broadcast setup, blue-black cinematic lighting, real build session"
 
 ## LOFI ADD-ON (optional scene flavor, layered onto the LOFI BASE PROMPT)
-"Afrofuturistic city view, Black coder or student, warm desk lamp, calm study
-atmosphere, loopable visual, gentle motion potential, culturally intentional
-objects, futuristic but grounded, ambient blue and gold lighting"
+"Afrofuturist city view, Black coder or student seated from behind, warm desk lamp,
+calm study atmosphere, loopable visual, gentle motion potential, culturally
+intentional objects, futuristic but grounded, balanced electric-blue and warm gold
+lighting"
+
+## LOFI POST-TYPE VISUAL NOTES (Layer8Culture Radio — §13 Instagram Design System)
+# The lofi account has NO composited wordmark for now (openai_gen ACCOUNT_WORDMARK
+# maps "lofi" -> None). Brand identity comes from the scene + the composited
+# headline typography, plus the in-scene "8" motif. Build the headline from the
+# post's visual.headline/subtext as usual; keep the lower third clean for it.
+# - brand intro: hero studio scene; headline "LAYER8CULTURE RADIO" + subtext
+#   ("Study • Build • Focus."). Strong, premium, scroll-stopping cover frame.
+# - video promo: thumbnail-like; bold session title headline + "NOW LIVE ON YOUTUBE"
+#   subtext; mood-specific colors matching the session's time-of-day/genre.
+# - quote: minimal dark background (Deep Black / Midnight Navy), the studio softened
+#   or abstracted, a HUGE short quote headline (e.g. "FOCUS IS A SKILL"), subtle
+#   waveform/circuit details. Keep it clean — let the words carry the frame.
+# - loop preview reel: 9:16 studio still composed for an 8–12s loop; minimal overlay
+#   beat(s) ("NIGHT CODING" / "SUNRISE BUILD" / "NOW LIVE"); keep lower + upper thirds
+#   calm for the animated text. audio "lofi".
+# - playlist: album/playlist-style framing; session name headline ("MORNING BUILD
+#   BEATS") + a tracklist-style or waveform motif; premium music-product feel.
+# - community: poll/card layout; a question headline ("WHAT SHOULD WE BUILD NEXT?")
+#   with option words (Jazz / Reggae / Latin / Sunset / Night) — answers go in the
+#   caption/first_comment.
 
 ## Typography note (for graphics with text)
 Space Grotesk for headlines (uppercase, wide tracking for labels), Inter for

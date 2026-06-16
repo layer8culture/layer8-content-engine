@@ -209,6 +209,10 @@ def date_label(queue_path: pathlib.Path, posts: list[dict]) -> str:
     stem = queue_path.stem
     if re.fullmatch(r"\d{4}-\d{2}-\d{2}", stem):
         return stem
+    # Queue files may carry a brand prefix (e.g. "lofi-2026-06-16"); pull the date.
+    m = re.search(r"\d{4}-\d{2}-\d{2}", stem)
+    if m:
+        return m.group(0)
     if posts:
         sched = posts[0].get("schedule_time", "")
         if len(sched) >= 10:
@@ -231,9 +235,11 @@ def build_body(
     assets_dir: pathlib.Path,
     date: str,
     summary: str | None = None,
+    brand: str | None = None,
 ) -> str:
+    title = f"# {brand} — Posts for {date}" if brand else f"# Posts for {date}"
     header = [
-        f"# Posts for {date} — {len(posts)} to review",
+        f"{title} — {len(posts)} to review",
         "",
         at_a_glance(posts),
     ]
@@ -264,6 +270,8 @@ def main() -> None:
     parser.add_argument("--out", required=True, help="Markdown file to write.")
     parser.add_argument("--assets-dir", default="assets/generated",
                         help="Directory holding rendered media (default: assets/generated).")
+    parser.add_argument("--brand", default=None,
+                        help="Optional brand label for the PR title (e.g. Layer8CultureRadio).")
     args = parser.parse_args()
 
     queue_path = pathlib.Path(args.queue_file)
@@ -279,6 +287,7 @@ def main() -> None:
         assets_dir=assets_dir,
         date=date_label(queue_path, posts),
         summary=find_summary(queue_path),
+        brand=args.brand,
     )
     pathlib.Path(args.out).write_text(body, encoding="utf-8")
     print(f"Wrote PR preview ({len(posts)} posts) -> {args.out}")

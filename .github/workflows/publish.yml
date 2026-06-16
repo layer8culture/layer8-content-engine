@@ -22,6 +22,7 @@ jobs:
         env:
           POSTIZ_URL: ${{ secrets.POSTIZ_URL }}
           POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
+          LOFI_IG_CHANNEL_ID: ${{ secrets.LOFI_IG_CHANNEL_ID }}
         run: |
           pip install requests
           shopt -s nullglob

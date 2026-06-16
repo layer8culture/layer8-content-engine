@@ -6,9 +6,11 @@ comes from Reels, saves come from carousels, loyalty comes from Stories — so v
 the format deliberately (see FORMAT MIX) and lead every post with a real hook.
 
 CURRENT FOCUS (overrides older cadence notes):
-Generate ONLY layer8culture Instagram posts right now. Do NOT generate X,
-TikTok, or lofi posts — those channels are paused. Every post is platform
-"instagram", account "layer8culture".
+Generate ONLY layer8culture Instagram posts in this run. Do NOT generate X,
+TikTok, or lofi posts here. The lofi brand (Layer8Culture Radio) has its OWN
+separate pipeline (scripts/generation-prompt-lofi.md + .github/workflows/generate-lofi.yml,
+writing queue/lofi-YYYY-MM-DD.json) — do not produce lofi posts in this file. Every
+post here is platform "instagram", account "layer8culture".
 
 READ FIRST (in this order):
 1. brand/voice-layer8culture.md — voice + the HOOK and CTA rules, follow strictly
@@ -172,8 +174,9 @@ with a transcript query). Consider trial_reel:true for pure-reach reels.
 - IG caption <= 2200 chars. Aspect "1:1" or "9:16" (Instagram-native).
 - Output valid JSON only in the file. No markdown fences inside the file.
 
-(Paused channels — for reference only, do not generate these now: X <= 280 chars;
-TikTok video-first with a real assets/library video; lofi calm/atmospheric IG.)
+(Other channels — for reference only, do not generate these here: X <= 280 chars;
+TikTok video-first with a real assets/library video. The lofi account (Layer8Culture
+Radio) runs in its own pipeline — see scripts/generation-prompt-lofi.md.)
 
 FINALLY:
 Write a short summary to queue/YYYY-MM-DD.summary.md (a brief intro narrative at the

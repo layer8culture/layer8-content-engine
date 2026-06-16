@@ -24,14 +24,20 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
   Daily report + Instagram Insights feedback loop steers the next day
 ```
 
-> **Current focus:** the engine generates **layer8culture Instagram** posts per day
-> (X, TikTok, and lofi are paused) across a deliberate format mix — **Reels** (reach),
-> **carousels** (saves), **Stories** (daily engagement), and the occasional single
-> static post. Each post gets fresh OpenAI visuals tied to that day's AI news, one
-> high-quality hero per day. A nightly **analytics** job pulls Instagram Insights into
-> `analytics/insights-digest.md`, which feeds back into generation to double down on
-> what's working and grow toward 4k+ followers. Flip channels/cadence in
-> `scripts/generation-prompt.md` and `calendar/topics.md`.
+> **Two channels.** The engine runs **two separate pipelines**:
+> - **layer8culture Instagram** (nightly) — news-driven posts across a deliberate
+>   format mix: **Reels** (reach), **carousels** (saves), **Stories** (daily
+>   engagement), and the occasional single static post. Each post gets fresh OpenAI
+>   visuals tied to that day's AI news, one high-quality hero per day. A nightly
+>   **analytics** job pulls Instagram Insights into `analytics/insights-digest.md`,
+>   which feeds back into generation to grow toward 4k+ followers. Steer it via
+>   `scripts/generation-prompt.md` and `calendar/topics.md`.
+> - **Layer8Culture Radio (lofi) Instagram** (Mon/Wed/Fri) — calm, evergreen
+>   focus-music brand content (quote cards, loop-preview Reels, playlist/community
+>   posts), plus a "Now Live on YouTube" promo when a video link is supplied. Its own
+>   prompt (`scripts/generation-prompt-lofi.md`), queue files (`queue/lofi-*.json`),
+>   workflow (`generate-lofi.yml`), and approval PR. Steer it via
+>   `calendar/topics-lofi.md`. (X and TikTok remain paused for both brands.)
 
 ## Setup (one-time)
 
@@ -56,6 +62,7 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
    | `OPENAI_API_KEY` | From platform.openai.com (image generation) |
    | `POSTIZ_URL` | e.g. `https://post.layer8culture.io` |
    | `POSTIZ_API_KEY` | From your Postiz instance |
+   | `LOFI_IG_CHANNEL_ID` | Postiz integration (channel) ID for the **Layer8Culture Radio** Instagram account. Optional until the lofi channel is connected — leave unset and lofi posts are skipped, not errored. |
    | `IG_USER_ID` | Instagram **Business** account user id (for the insights loop) |
    | `IG_GRAPH_TOKEN` | Long-lived Instagram Graph API token with `instagram_basic`, `instagram_manage_insights`, `pages_read_engagement` (reuses your Meta app) |
    | `REPORT_WEBHOOK` | Discord/Slack webhook for the daily report (optional) |
@@ -63,8 +70,10 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
    Instagram account (an IG **Business/Creator** account linked to a Facebook
    Page), then open **Settings → API** to copy that channel's **integration ID**.
    Paste it into `scripts/post_to_postiz.py` → `INTEGRATIONS[("layer8culture",
-   "instagram")]`, replacing `REPLACE_ME`. The other entries stay `REPLACE_ME`
-   while X / TikTok / lofi are paused — unmapped posts are skipped, not errored.
+   "instagram")]`, replacing `REPLACE_ME`. For the **Layer8Culture Radio (lofi)**
+   account, connect it the same way and put its channel ID in the
+   `LOFI_IG_CHANNEL_ID` secret (no code edit needed). The other entries stay
+   `REPLACE_ME` while X / TikTok are paused — unmapped posts are skipped, not errored.
 5. **Customize the brand files** in `brand/` — this is what makes output sound like you.
 6. **Enable the workflows** in the Actions tab.
 
@@ -73,8 +82,10 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
 | When | What you do | Time |
 |---|---|---|
 | After Tech Thursday | Drop transcript in `transcripts/`, update `calendar/topics.md` | 5 min |
-| Nightly (automatic) | Engine opens a PR with tomorrow's posts + visuals | 0 min |
-| Each morning | Review PR on GitHub mobile, edit, merge | 2-5 min |
+| When a lofi session goes live | Add the YouTube title + link to `calendar/topics-lofi.md` | 1 min |
+| Nightly (automatic) | Engine opens a PR with tomorrow's layer8culture posts + visuals | 0 min |
+| Mon/Wed/Fri (automatic) | Engine opens a separate PR with Layer8Culture Radio (lofi) posts | 0 min |
+| Each morning | Review PR(s) on GitHub mobile, edit, merge | 2-5 min |
 | Each morning | Read the daily report | 1 min |
 
 > **The approval PR shows a visual preview.** Instead of a plain text summary, the
@@ -86,10 +97,14 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
 
 ## Folder map
 
-- `brand/` — canonical guidelines (brand-guidelines-v2.md) + operational digests (voice, visual style, hashtags). Read by every generation run.
-- `calendar/topics.md` — your weekly steering input ("lean into X this week").
+- `brand/` — canonical guidelines (brand-guidelines-v2.md for layer8culture;
+  layer8culture_radio_brand_guidelines.md for the lofi brand) + operational digests
+  (voice-layer8culture.md, voice-lofi.md, visual style, hashtags). Read every run.
+- `calendar/topics.md` — weekly steering for layer8culture ("lean into X this week").
+- `calendar/topics-lofi.md` — steering + "Now Live" video links for the lofi brand.
 - `transcripts/` — Tech Thursday transcripts (pillar content).
-- `queue/` — generated posts awaiting approval (the PR contents).
+- `queue/` — generated posts awaiting approval (the PR contents). layer8culture uses
+  `queue/<date>.json`; the lofi brand uses `queue/lofi-<date>.json`.
 - `posted/` — archive of published posts (feeds the report + dedupe).
 - `analytics/` — Instagram Insights pulled back in (`insights.json`,
   `followers.json`, `insights-digest.md`); the digest steers next-day generation.
@@ -98,5 +113,7 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
 - `assets/generated/` — OpenAI/ffmpeg outputs, named by post ID (images, carousel
   slides, reel mp4s + covers).
 - `scripts/` — the machinery (`openai_gen.py` images, `reel_gen.py` video,
-  `post_to_postiz.py` publishing, `fetch_insights.py` analytics).
-  `.github/workflows/` — the schedule (generate, publish, analytics, daily-report).
+  `post_to_postiz.py` publishing, `fetch_insights.py` analytics) + generation prompts
+  (`generation-prompt.md` for layer8culture, `generation-prompt-lofi.md` for the lofi
+  brand). `.github/workflows/` — the schedule (generate, generate-lofi, publish,
+  analytics, daily-report).

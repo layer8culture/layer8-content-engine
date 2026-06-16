@@ -72,6 +72,14 @@ ACCOUNT_LOGO_POSITION = {
     "layer8culture": "top-right",
     "lofi": "top-right",
 }
+# Per-account wordmark asset. ``None`` means no wordmark is composited for that
+# account (e.g. the lofi brand, Layer8CultureRadio, uses its own "8 soundwave"
+# mark — drop its PNG here and point this at it when ready). Accounts not listed
+# fall back to the main Layer8Culture wordmark.
+ACCOUNT_WORDMARK = {
+    "layer8culture": WORDMARK_PATH,
+    "lofi": None,
+}
 # Wordmark opacity (0.0 transparent .. 1.0 opaque). Posts may override with
 # visual.logo_opacity, or set the boolean visual.logo_subtle flag to apply the
 # subtle preset for an understated, watermark-style mark.
@@ -84,19 +92,21 @@ def composite_wordmark(
     aspect: str,
     position: str,
     opacity: float = DEFAULT_LOGO_OPACITY,
+    wordmark_path: pathlib.Path | None = WORDMARK_PATH,
 ) -> bool:
-    """Overlay the Layer8Culture wordmark onto a generated image in place.
+    """Overlay a wordmark onto a generated image in place.
 
-    No-op (returns False) if the wordmark asset is missing. ``position`` is one
-    of top-left, top-right, bottom-left, bottom-right, center. ``opacity`` scales
-    the wordmark's alpha channel (1.0 = opaque, lower = subtle). Returns True
+    No-op (returns False) if ``wordmark_path`` is None (the account has no
+    wordmark) or the asset is missing. ``position`` is one of top-left,
+    top-right, bottom-left, bottom-right, center. ``opacity`` scales the
+    wordmark's alpha channel (1.0 = opaque, lower = subtle). Returns True
     when the wordmark was composited.
     """
-    if not WORDMARK_PATH.exists():
+    if wordmark_path is None or not wordmark_path.exists():
         return False
     opacity = max(0.0, min(1.0, opacity))
     base = Image.open(image_path).convert("RGBA")
-    logo = Image.open(WORDMARK_PATH).convert("RGBA")
+    logo = Image.open(wordmark_path).convert("RGBA")
     bw, bh = base.size
     target_w = max(1, int(bw * LOGO_WIDTH_FRAC.get(aspect, 0.26)))
     scale = target_w / logo.width
@@ -382,7 +392,9 @@ def _render_image(client: OpenAI, image_id: str, visual: dict,
                 print(f"  ! {image_id}: headline overlay skipped ({e})")
 
         # Overlay the official wordmark (models are prompted not to render text).
+        # Resolved per account: an account mapped to None (e.g. lofi) is skipped.
         try:
+            wordmark_path = ACCOUNT_WORDMARK.get(account, WORDMARK_PATH)
             position = visual.get(
                 "logo_position",
                 ACCOUNT_LOGO_POSITION.get(account, DEFAULT_LOGO_POSITION),
@@ -395,10 +407,15 @@ def _render_image(client: OpenAI, image_id: str, visual: dict,
                 opacity = SUBTLE_LOGO_OPACITY
             else:
                 opacity = DEFAULT_LOGO_OPACITY
-            applied = composite_wordmark(out_path, aspect, position, opacity)
+            applied = composite_wordmark(
+                out_path, aspect, position, opacity, wordmark_path
+            )
             if applied:
                 print(f"  > {image_id}: wordmark composited "
                       f"(position={position}, opacity={opacity:.2f})")
+            elif wordmark_path is None:
+                print(f"  > {image_id}: no wordmark for account "
+                      f"'{account}', skipped overlay")
             else:
                 print(f"  > {image_id}: wordmark asset missing, "
                       f"no overlay (would use position={position}, "

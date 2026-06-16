@@ -33,6 +33,27 @@ Irrelevant or spammy-broad tags (e.g. #lofi on main-account posts, #love, #viral
 #followforfollow) and banned/oversaturated tags. Don't exceed ~15. Keep every tag
 defensibly relevant to the specific post.
 
-## lofi (paused — for when the lofi account resumes)
-#Layer8Culture #Afrofuturism #LoFiCoding #lofi #studymusic #focusmusic
-#chillbeats #lofihiphop #codingmusic #ambient
+## lofi (Layer8Culture Radio — @Layer8CultureRadio)
+
+Calmer lane than the main account — keep sets SMALL and tasteful (≈6-12 tags,
+mixed + rotated, matched to the session's mood/genre). No hashtag walls. Prefer the
+first comment (`hashtags_in_first_comment: true`).
+
+### Branded (always include 1-2)
+#Layer8Culture #Layer8CultureRadio
+
+### Niche / community (2-3 — our people)
+#CodingMusic #StudyBeats #LofiCoding #FocusMusic #DeepWork #BuildInPublic
+
+### Medium reach (2-3 — broader but relevant)
+#lofi #lofihiphop #studymusic #chillbeats #ambientmusic #codingvibes
+
+### Topical (2-3 — swap to match the session)
+- Time-of-day: #MorningBeats #SunsetVibes #LateNightCoding #RainyNight
+- Culture/genre: #Afrofuturism #JazzHop #ReggaeVibes #Afrobeat
+- Use-case: #DeepFocus #ProductivityMusic #WorkMusic #FlowState
+
+### Avoid
+Hustle-culture tags, #viral / #followforfollow, oversaturated/banned tags, and
+main-account tech-news tags (#TechThursday, #ChatGPT, etc.). Keep every tag
+defensibly relevant to the session.

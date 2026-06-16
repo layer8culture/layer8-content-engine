@@ -19,6 +19,8 @@ the caption clean and drop the tags into that first comment instead.
 post["collaborators"] (list of IG handles) maps to IG collab tags.
 
 Env vars: POSTIZ_URL, POSTIZ_API_KEY
+Optional env: LOFI_IG_CHANNEL_ID — the Postiz channel ID for the lofi
+(Layer8CultureRadio) Instagram account; overrides its INTEGRATIONS placeholder.
 Note: integration IDs map your accounts/platforms to Postiz channels.
 Fill INTEGRATIONS after connecting your accounts in the Postiz UI
 (Settings -> API shows channel IDs).
@@ -55,6 +57,13 @@ INTEGRATIONS = {
     ("lofi", "x"): "REPLACE_ME",
     ("lofi", "tiktok"): "REPLACE_ME",
 }
+
+# The lofi (Layer8CultureRadio) Instagram channel is wired via the
+# LOFI_IG_CHANNEL_ID secret so it can be filled in after the Postiz channel is
+# connected, without a code change. Falls back to the REPLACE_ME placeholder.
+_lofi_ig = os.environ.get("LOFI_IG_CHANNEL_ID")
+if _lofi_ig:
+    INTEGRATIONS[("lofi", "instagram")] = _lofi_ig
 
 VIDEO_EXTS = (".mp4", ".mov")
 
