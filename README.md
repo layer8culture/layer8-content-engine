@@ -84,7 +84,7 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
 | When | What you do | Time |
 |---|---|---|
 | After Tech Thursday | Drop transcript in `transcripts/`, update `calendar/topics.md` | 5 min |
-| When a lofi session goes live | Add the YouTube title + link to `calendar/topics-lofi.md` | 1 min |
+| When a lofi session goes live | Nothing — the engine auto-pulls new YouTube uploads into "Now Live" promo posts. (Optional: hand-edit `calendar/topics-lofi.md` to steer.) | 0 min |
 | Nightly (automatic) | Engine opens a PR with tomorrow's layer8culture posts + visuals | 0 min |
 | Mon/Wed/Fri (automatic) | Engine opens a separate PR with Layer8Culture Radio (lofi) posts | 0 min |
 | Each morning | Review PR(s) on GitHub mobile, edit, merge | 2-5 min |
@@ -104,6 +104,9 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
   (voice-layer8culture.md, voice-lofi.md, visual style, hashtags). Read every run.
 - `calendar/topics.md` — weekly steering for layer8culture ("lean into X this week").
 - `calendar/topics-lofi.md` — steering + "Now Live" video links for the lofi brand.
+  The "Now Live" list is auto-refreshed from the Layer8CultureRadio YouTube channel
+  by `scripts/fetch_youtube.py` at the start of each lofi run (no API key — public
+  RSS feed; channel `UC0AQjSCaU9ByaU90XabBbHQ`).
 - `transcripts/` — Tech Thursday transcripts (pillar content).
 - `queue/` — generated posts awaiting approval (the PR contents). layer8culture uses
   `queue/<date>.json`; the lofi brand uses `queue/lofi-<date>.json`.
@@ -116,7 +119,8 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
   slides, reel mp4s + covers).
 - `scripts/` — the machinery (`openai_gen.py` images, `reel_gen.py` video,
   `post_to_postiz.py` publishing, `list_postiz_channels.py` channel-ID lookup,
-  `fetch_insights.py` analytics) + generation prompts (`generation-prompt.md` for
-  layer8culture, `generation-prompt-lofi.md` for the lofi brand).
+  `fetch_youtube.py` YouTube→"Now Live" refresh, `fetch_insights.py` analytics) +
+  generation prompts (`generation-prompt.md` for layer8culture,
+  `generation-prompt-lofi.md` for the lofi brand).
   `.github/workflows/` — the schedule (generate, generate-lofi, publish, analytics,
   daily-report).

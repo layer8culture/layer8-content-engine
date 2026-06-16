@@ -20,7 +20,9 @@ READ FIRST (in this order):
 3. brand/hashtags.md — the "lofi" tier (small, tasteful, rotated). Prefer the
    first comment.
 4. calendar/topics-lofi.md — this run's steering input AND the "Now Live" video
-   list. If a "Now Live" entry exists, make a Video Promo post for it.
+   list (auto-refreshed from the Layer8CultureRadio YouTube channel before each run
+   by scripts/fetch_youtube.py). If a "Now Live" entry exists, make a Video Promo
+   post for it.
 5. analytics/insights-digest.md IF it exists — lean into what's working for this
    account (best formats, moods, posting hours).
 6. posted/log.json if it exists — do NOT repeat angles, quotes, moods, or
