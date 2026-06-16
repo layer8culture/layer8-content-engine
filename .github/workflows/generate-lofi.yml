@@ -17,6 +17,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Refresh "Now Live" video promos from YouTube
+        # Pull the latest Layer8CultureRadio uploads via the public YouTube RSS feed
+        # (no API key) and rewrite the Now Live section of calendar/topics-lofi.md so
+        # the generator below turns new sessions into "Now Live on YouTube" promo
+        # posts. Non-fatal: if the feed is unreachable the run falls back to evergreen.
+        run: |
+          pip install requests
+          python scripts/fetch_youtube.py --max 1
+
       - name: Install Copilot CLI
         run: npm install -g @github/copilot
 
@@ -30,11 +44,6 @@ jobs:
             -s \
             --allow-tool='read,write(queue/*)' \
             --no-ask-user
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
 
       - name: Install ffmpeg (for Reels)
         run: sudo apt-get update && sudo apt-get install -y ffmpeg
@@ -69,6 +78,7 @@ jobs:
           # -f on assets/generated so the freshly rendered media are included in
           # the approval PR for review (the dir is .gitignored for local hygiene).
           git add queue/
+          git add calendar/topics-lofi.md
           git add -f assets/generated
           git commit -m "Lofi posts for $DATE — ready for review"
           git push origin "$BRANCH"
