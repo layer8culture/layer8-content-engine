@@ -25,6 +25,11 @@ Afrofuturistic LoFi stream.
   story), <id>-N.png (carousel slides), <id>.mp4 + <id>-cover.png (reels).
 - Reels are rendered by scripts/reel_gen.py with ffmpeg (a CI system tool, not a
   Python dep); it animates the still from openai_gen.py.
+- The approval PR body is an auto-built visual preview (image(s) + exact caption +
+  hashtags + schedule per post), produced by scripts/build_pr_preview.py and wired
+  into generate-content.yml (gh pr create --body-file). It is stdlib-only and embeds
+  images by the pushed commit SHA via raw.githubusercontent.com (needs a public repo).
+  queue/<date>.summary.md is the short intro narrative shown above the per-post preview.
 - Performance data lives in analytics/ (insights.json, followers.json,
   insights-digest.md), produced by scripts/fetch_insights.py from Instagram
   Insights. The digest steers generation — keep it in the prompt's READ FIRST list.

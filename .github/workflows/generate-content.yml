@@ -76,8 +76,17 @@ jobs:
           git add -f assets/generated
           git commit -m "Posts for $DATE — ready for review"
           git push origin "$BRANCH"
-          SUMMARY=$(cat queue/*.summary.md 2>/dev/null || echo "Generated posts for $DATE")
-          BODY=$(printf '%s\n\nReview, edit anything, then **merge to approve & schedule**.' "$SUMMARY")
+          # Build a visual PR body (image(s) + exact caption + hashtags) so the
+          # reviewer sees what will post, Postiz-style, right where they approve.
+          # Images embed by the just-pushed commit SHA via raw.githubusercontent.com
+          # (immutable, survives branch deletion on merge; relies on a public repo).
+          SHA=$(git rev-parse HEAD)
+          QUEUE_FILE="queue/$DATE.json"
+          [ -f "$QUEUE_FILE" ] || QUEUE_FILE=$(ls -t queue/*.json | head -n 1)
+          python scripts/build_pr_preview.py "$QUEUE_FILE" \
+                 --repo "${{ github.repository }}" \
+                 --sha "$SHA" \
+                 --out pr-body.md
           gh pr create --title "Posts for $DATE" \
-                       --body "$BODY" \
+                       --body-file pr-body.md \
                        --base main --head "$BRANCH"

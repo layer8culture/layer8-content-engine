@@ -15,7 +15,7 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
   ffmpeg renders Reels (video) from the stills
         │
         ▼
-  Pull Request opened  ──►  YOU review/edit/merge (GitHub mobile)
+  Pull Request opened (with a visual preview)  ──►  YOU review/edit/merge (GitHub mobile)
         │
         ▼  (merge to main)
   Posts + media pushed to Postiz → scheduled (feed / carousel / Reel / story)
@@ -76,6 +76,13 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
 | Nightly (automatic) | Engine opens a PR with tomorrow's posts + visuals | 0 min |
 | Each morning | Review PR on GitHub mobile, edit, merge | 2-5 min |
 | Each morning | Read the daily report | 1 min |
+
+> **The approval PR shows a visual preview.** Instead of a plain text summary, the
+> PR body renders each post Postiz-style — the image(s), the exact caption that will
+> post, hashtags, format and schedule time — built from the queue by
+> `scripts/build_pr_preview.py`. Images embed by the pushed commit SHA via
+> `raw.githubusercontent.com` (immutable; relies on this repo being **public**), so
+> you can approve confidently from GitHub mobile without opening "Files changed".
 
 ## Folder map
 

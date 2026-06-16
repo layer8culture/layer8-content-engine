@@ -176,6 +176,9 @@ with a transcript query). Consider trial_reel:true for pure-reach reels.
 TikTok video-first with a real assets/library video; lofi calm/atmospheric IG.)
 
 FINALLY:
-Write a short summary to queue/YYYY-MM-DD.summary.md (becomes the PR description):
-one line per post listing its format + category + hook, plus a one-line note on how
-the day's format mix advances the weekly reach/saves/loyalty balance.
+Write a short summary to queue/YYYY-MM-DD.summary.md (a brief intro narrative at the
+top of the approval PR): one line per post listing its format + category + hook, plus
+a one-line note on how the day's format mix advances the weekly reach/saves/loyalty
+balance. You do NOT need to describe each image or caption here — the approval PR
+auto-builds a per-post visual preview (image(s) + exact caption + hashtags) from the
+queue via scripts/build_pr_preview.py.

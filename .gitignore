@@ -9,6 +9,9 @@ assets/generated/*
 # Per-day generated PNGs in the queue (keep .json / .summary.md / .gitkeep)
 queue/*.png
 
+# Transient approval-PR body built by scripts/build_pr_preview.py (workflow only)
+pr-body.md
+
 # Never commit large binaries / installers (GitHub rejects >100MB)
 *.exe
 
