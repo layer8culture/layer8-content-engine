@@ -1,8 +1,10 @@
-name: Generate Content (nightly)
+name: Generate Lofi Content (Layer8CultureRadio)
 
 on:
   schedule:
-    - cron: "0 2 * * *"   # 2:00 UTC nightly — adjust to taste
+    # 02:00 UTC on Mon / Wed / Fri — targets a Mon/Wed/Fri queue file (today's UTC
+    # date), kept distinct from the layer8culture nightly run.
+    - cron: "0 2 * * 1,3,5"
   workflow_dispatch: {}     # manual trigger button
 
 permissions:
@@ -10,7 +12,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  generate:
+  generate-lofi:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,18 +20,15 @@ jobs:
       - name: Install Copilot CLI
         run: npm install -g @github/copilot
 
-      - name: Generate posts with Copilot CLI
+      - name: Generate lofi posts with Copilot CLI
         env:
           GH_TOKEN: ${{ secrets.COPILOT_CLI_TOKEN }}
-        # web-fetch + --allow-all-urls let the agent research the day's AI news.
-        # Writes stay scoped to queue/* (the agent only reads the web). For a
-        # stricter setup, replace --allow-all-urls with one or more
-        # --allow-url=<domain> flags for a curated source allow-list.
+        # Lofi is evergreen brand content; no web research needed. Writes stay
+        # scoped to queue/* (the agent only reads brand + steering files).
         run: |
-          copilot -p "$(cat scripts/generation-prompt.md)" \
+          copilot -p "$(cat scripts/generation-prompt-lofi.md)" \
             -s \
-            --allow-tool='read,write(queue/*),web-fetch' \
-            --allow-all-urls \
+            --allow-tool='read,write(queue/*)' \
             --no-ask-user
 
       - name: Set up Python
@@ -45,10 +44,10 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           pip install openai requests pillow
-          # Process tomorrow's queue (the file the Copilot step just generated).
-          # Fall back to the newest queue file if the dated one is missing.
-          QUEUE_FILE="queue/$(date -d tomorrow +%F).json"
-          [ -f "$QUEUE_FILE" ] || QUEUE_FILE=$(ls -t queue/*.json | head -n 1)
+          # Process this run's lofi queue (the file the Copilot step just generated).
+          # Fall back to the newest lofi queue file if the dated one is missing.
+          QUEUE_FILE="queue/lofi-$(date +%F).json"
+          [ -f "$QUEUE_FILE" ] || QUEUE_FILE=$(ls -t queue/lofi-*.json | head -n 1)
           echo "Generating images for $QUEUE_FILE"
           python scripts/openai_gen.py "$QUEUE_FILE"
           # Animate any format:"reel" posts into mp4s (uses the stills above).
@@ -56,37 +55,33 @@ jobs:
           python scripts/reel_gen.py "$QUEUE_FILE"
 
       - name: Open approval PR
-        # The org disables "Allow GitHub Actions to create pull requests", so the
-        # built-in GITHUB_TOKEN cannot open the approval PR. We create it with a
-        # user PAT (ENGINE_PR_TOKEN, repo scope) instead — a PR authored by a real
-        # user is not subject to that restriction. The branch push still uses the
+        # As with the main pipeline, the org disables Actions-created PRs, so we
+        # open it with a user PAT (ENGINE_PR_TOKEN). The branch push uses the
         # checkout-persisted GITHUB_TOKEN; only `gh pr create` reads GH_TOKEN.
         env:
           GH_TOKEN: ${{ secrets.ENGINE_PR_TOKEN }}
         run: |
-          DATE=$(date -d tomorrow +%F)
-          BRANCH="posts/$DATE"
+          DATE=$(date +%F)
+          BRANCH="lofi/posts-$DATE"
           git config user.name "layer8-engine"
           git config user.email "engine@layer8culture.io"
           git checkout -b "$BRANCH"
           # -f on assets/generated so the freshly rendered media are included in
           # the approval PR for review (the dir is .gitignored for local hygiene).
-          # Captures images, carousel slides, reel mp4s and their cover frames.
           git add queue/
           git add -f assets/generated
-          git commit -m "Posts for $DATE — ready for review"
+          git commit -m "Lofi posts for $DATE — ready for review"
           git push origin "$BRANCH"
           # Build a visual PR body (image(s) + exact caption + hashtags) so the
           # reviewer sees what will post, Postiz-style, right where they approve.
-          # Images embed by the just-pushed commit SHA via raw.githubusercontent.com
-          # (immutable, survives branch deletion on merge; relies on a public repo).
           SHA=$(git rev-parse HEAD)
-          QUEUE_FILE="queue/$DATE.json"
-          [ -f "$QUEUE_FILE" ] || QUEUE_FILE=$(ls -t queue/*.json | head -n 1)
+          QUEUE_FILE="queue/lofi-$DATE.json"
+          [ -f "$QUEUE_FILE" ] || QUEUE_FILE=$(ls -t queue/lofi-*.json | head -n 1)
           python scripts/build_pr_preview.py "$QUEUE_FILE" \
                  --repo "${{ github.repository }}" \
                  --sha "$SHA" \
+                 --brand "Layer8CultureRadio" \
                  --out pr-body.md
-          gh pr create --title "Posts for $DATE" \
+          gh pr create --title "Lofi posts for $DATE" \
                        --body-file pr-body.md \
                        --base main --head "$BRANCH"

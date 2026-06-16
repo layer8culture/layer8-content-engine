@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Layer8Culture · The Content Engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --black:#000000;
+    --navy:#050A1A;
+    --navy-2:#0a1230;
+    --blue:#0047FF;
+    --blue-soft:#3b6bff;
+    --white:#F5F5F5;
+    --gray:#8a93a6;
+    --red:#FF4B3E;
+    --walnut:#3B2416;
+    --line:rgba(245,245,245,0.08);
+    --card:rgba(245,245,245,0.035);
+    --glass:rgba(10,18,48,0.45);
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;overflow:hidden}
+  body{
+    background:var(--black);
+    color:var(--white);
+    font-family:'Inter',-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    position:relative;
+  }
+  /* atmospheric background */
+  .bg{position:fixed;inset:0;z-index:0;overflow:hidden}
+  .bg::before{
+    content:"";position:absolute;inset:-20%;
+    background:
+      radial-gradient(60% 50% at 78% 18%, rgba(0,71,255,0.22), transparent 60%),
+      radial-gradient(55% 55% at 12% 88%, rgba(0,71,255,0.12), transparent 60%),
+      radial-gradient(80% 80% at 50% 50%, rgba(5,10,26,0.9), #000 75%);
+    animation:drift 22s var(--ease) infinite alternate;
+  }
+  .bg .grid{
+    position:absolute;inset:0;
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(70% 70% at 50% 40%,#000 30%,transparent 80%);
+    opacity:.5;
+  }
+  @keyframes drift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-3%,2%,0) scale(1.08)}}
+
+  /* deck */
+  .deck{position:relative;z-index:2;height:100%;width:100%}
+  .slide{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:6vh 9vw;
+    opacity:0;visibility:hidden;
+    transform:translateY(28px) scale(.99);
+    transition:opacity .6s var(--ease),transform .6s var(--ease),visibility .6s;
+    pointer-events:none;
+  }
+  .slide.active{opacity:1;visibility:visible;transform:none;pointer-events:auto}
+  .slide.active .stagger>*{animation:rise .7s var(--ease) backwards}
+  .stagger>*:nth-child(1){animation-delay:.05s}
+  .stagger>*:nth-child(2){animation-delay:.14s}
+  .stagger>*:nth-child(3){animation-delay:.23s}
+  .stagger>*:nth-child(4){animation-delay:.32s}
+  .stagger>*:nth-child(5){animation-delay:.41s}
+  .stagger>*:nth-child(6){animation-delay:.50s}
+  @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+
+  /* typography */
+  h1,h2,h3,.kicker,.wm{font-family:'Space Grotesk',sans-serif}
+  .kicker{
+    font-size:.78rem;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--blue-soft);font-weight:600;margin-bottom:1.4rem;
+    display:flex;align-items:center;gap:.8rem;
+  }
+  .kicker::before{content:"";width:34px;height:1px;background:var(--blue);box-shadow:0 0 12px var(--blue)}
+  h1{font-size:clamp(2.6rem,7vw,6.2rem);font-weight:700;line-height:.98;letter-spacing:-.02em}
+  h2{font-size:clamp(2rem,4.6vw,3.7rem);font-weight:600;line-height:1.04;letter-spacing:-.015em}
+  h3{font-size:1.18rem;font-weight:600;letter-spacing:-.01em}
+  .lead{font-size:clamp(1.05rem,1.7vw,1.4rem);color:#c7cdda;font-weight:300;line-height:1.55;max-width:46ch;margin-top:1.4rem}
+  .accent{color:var(--blue-soft);text-shadow:0 0 26px rgba(0,71,255,.55)}
+  .mono{font-family:'JetBrains Mono',monospace}
+  .muted{color:var(--gray)}
+
+  /* cover */
+  .cover-wm{display:flex;align-items:center;gap:.9rem;margin-bottom:2.2rem}
+  .eight{
+    width:54px;height:54px;border-radius:14px;
+    border:1px solid rgba(0,71,255,.5);
+    display:grid;place-items:center;
+    font-family:'Space Grotesk';font-weight:700;font-size:1.7rem;
+    color:var(--white);
+    background:radial-gradient(circle at 30% 25%,rgba(0,71,255,.5),rgba(5,10,26,.6));
+    box-shadow:0 0 30px rgba(0,71,255,.35),inset 0 0 18px rgba(0,71,255,.25);
+  }
+  .cover-wm .name{font-family:'Space Grotesk';font-weight:600;letter-spacing:.12em;font-size:1rem;text-transform:uppercase}
+  .tag{margin-top:2.4rem;font-family:'Space Grotesk';font-size:clamp(1rem,1.5vw,1.25rem);color:#aeb6c6;font-weight:400}
+  .tag b{color:var(--white);font-weight:600}
+
+  /* generic grid of cards */
+  .grid-cards{display:grid;gap:1.1rem;margin-top:2.4rem}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g5{grid-template-columns:repeat(5,1fr)}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:1.5rem 1.4rem;backdrop-filter:blur(8px);
+    transition:transform .4s var(--ease),border-color .4s,background .4s;
+    position:relative;overflow:hidden;
+  }
+  .card::after{content:"";position:absolute;inset:0;border-radius:18px;padding:1px;
+    background:linear-gradient(140deg,rgba(0,71,255,.5),transparent 40%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .4s}
+  .card:hover{transform:translateY(-5px);background:rgba(0,71,255,.06)}
+  .card:hover::after{opacity:1}
+  .card .ico{font-size:1.5rem;margin-bottom:.9rem;display:block}
+  .card h3{margin-bottom:.45rem}
+  .card p{font-size:.92rem;color:var(--gray);line-height:1.5}
+  .card .num{font-family:'Space Grotesk';font-weight:700;color:var(--blue-soft);font-size:.85rem;letter-spacing:.1em}
+
+  /* pipeline flow */
+  .flow{display:flex;align-items:stretch;gap:0;margin-top:2.6rem;flex-wrap:wrap}
+  .step{flex:1;min-width:130px;position:relative;padding:1.3rem 1rem;text-align:center}
+  .step .dot{
+    width:46px;height:46px;border-radius:50%;margin:0 auto .85rem;
+    display:grid;place-items:center;font-family:'Space Grotesk';font-weight:700;
+    background:var(--navy-2);border:1px solid rgba(0,71,255,.4);color:var(--blue-soft);
+    box-shadow:0 0 18px rgba(0,71,255,.25);font-size:1.1rem;
+  }
+  .step h3{font-size:1rem;margin-bottom:.3rem}
+  .step p{font-size:.8rem;color:var(--gray);line-height:1.45}
+  .step:not(:last-child)::after{
+    content:"";position:absolute;top:2.55rem;right:-12px;width:24px;height:1px;
+    background:linear-gradient(90deg,var(--blue),transparent);
+  }
+
+  /* big step detail */
+  .detail{display:grid;grid-template-columns:auto 1fr;gap:2.6rem;align-items:center;margin-top:1rem}
+  .bignum{font-family:'Space Grotesk';font-weight:700;font-size:clamp(5rem,13vw,11rem);line-height:.8;
+    color:transparent;-webkit-text-stroke:1.4px rgba(0,71,255,.55);
+    text-shadow:0 0 60px rgba(0,71,255,.25)}
+  .detail .body .lead{max-width:54ch}
+  .chips{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.6rem}
+  .chip{font-family:'JetBrains Mono';font-size:.78rem;color:#bcd0ff;
+    border:1px solid rgba(0,71,255,.3);background:rgba(0,71,255,.07);
+    padding:.42rem .8rem;border-radius:999px}
+  .chip.red{color:#ffd2cd;border-color:rgba(255,75,62,.35);background:rgba(255,75,62,.08)}
+
+  /* format mix */
+  .fmt{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem;margin-top:2.4rem}
+  .fmt .card .big{font-family:'Space Grotesk';font-weight:700;font-size:1.05rem;color:var(--white);margin-bottom:.2rem}
+  .fmt .goal{font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--blue-soft);font-weight:600;margin-bottom:.9rem;display:block}
+
+  /* flywheel */
+  .wheel-wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:3rem;align-items:center;margin-top:1rem}
+  .wheel{position:relative;width:min(38vh,360px);aspect-ratio:1;margin:0 auto}
+  .wheel .ring{position:absolute;inset:0;border-radius:50%;border:1px dashed rgba(0,71,255,.3);animation:spin 30s linear infinite}
+  .wheel .ring.r2{inset:14%;border-color:rgba(0,71,255,.18);animation-duration:22s;animation-direction:reverse}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .wheel .core{position:absolute;inset:28%;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,rgba(0,71,255,.4),rgba(5,10,26,.85));
+    border:1px solid rgba(0,71,255,.4);display:grid;place-items:center;text-align:center;
+    box-shadow:0 0 50px rgba(0,71,255,.35)}
+  .wheel .core span{font-family:'Space Grotesk';font-weight:700;font-size:1.4rem;line-height:1}
+  .wheel .core small{display:block;color:var(--blue-soft);font-size:.7rem;letter-spacing:.2em;margin-top:.4rem;text-transform:uppercase}
+  .node{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--blue);box-shadow:0 0 16px var(--blue);transform:translate(-50%,-50%)}
+  .loop-list{list-style:none}
+  .loop-list li{display:flex;gap:1rem;align-items:flex-start;padding:.85rem 0;border-bottom:1px solid var(--line)}
+  .loop-list li:last-child{border:0}
+  .loop-list .n{font-family:'Space Grotesk';font-weight:700;color:var(--blue-soft);min-width:1.6rem}
+  .loop-list h3{font-size:1rem;margin-bottom:.15rem}
+  .loop-list p{font-size:.88rem;color:var(--gray);line-height:1.45}
+
+  /* rhythm table */
+  .rhythm{margin-top:2.2rem;width:100%;border-collapse:collapse;font-size:1rem}
+  .rhythm td,.rhythm th{padding:1.05rem 1.2rem;text-align:left;border-bottom:1px solid var(--line)}
+  .rhythm th{font-family:'Space Grotesk';font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);font-weight:600}
+  .rhythm td:first-child{font-family:'Space Grotesk';font-weight:600}
+  .rhythm .t{font-family:'JetBrains Mono';color:var(--blue-soft)}
+  .rhythm tr:hover td{background:rgba(0,71,255,.04)}
+  .callout{margin-top:2rem;display:inline-flex;align-items:center;gap:.8rem;
+    border:1px solid rgba(0,71,255,.3);background:rgba(0,71,255,.06);
+    padding:.9rem 1.4rem;border-radius:14px;font-size:1rem}
+  .callout b{font-family:'Space Grotesk'}
+
+  /* metrics */
+  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:2.6rem}
+  .metric{padding:1.8rem 1.5rem;border:1px solid var(--line);border-radius:18px;background:var(--card)}
+  .metric .v{font-family:'Space Grotesk';font-weight:700;font-size:clamp(2.4rem,4vw,3.4rem);line-height:1}
+  .metric .v .accent{display:inline}
+  .metric .l{color:var(--gray);font-size:.92rem;margin-top:.6rem;line-height:1.45}
+
+  /* closing */
+  .closing{align-items:center;text-align:center}
+  .closing h2{max-width:18ch}
+  .closing .tag{margin-top:1.8rem}
+
+  /* chrome: progress, nav, counter */
+  .progress{position:fixed;top:0;left:0;height:2px;background:var(--blue);box-shadow:0 0 12px var(--blue);z-index:20;transition:width .5s var(--ease);width:0}
+  .chrome{position:fixed;z-index:20;bottom:3.4vh;right:9vw;display:flex;align-items:center;gap:1.3rem}
+  .counter{font-family:'JetBrains Mono';font-size:.82rem;color:var(--gray);letter-spacing:.1em}
+  .counter b{color:var(--white)}
+  .arrows{display:flex;gap:.5rem}
+  .arrows button{
+    width:42px;height:42px;border-radius:50%;border:1px solid var(--line);
+    background:var(--glass);color:var(--white);cursor:pointer;font-size:1rem;
+    display:grid;place-items:center;transition:all .3s var(--ease);backdrop-filter:blur(8px)}
+  .arrows button:hover{border-color:var(--blue);background:rgba(0,71,255,.15);transform:translateY(-2px)}
+  .arrows button:disabled{opacity:.3;cursor:not-allowed;transform:none}
+  .dots{position:fixed;z-index:20;left:9vw;bottom:3.4vh;display:flex;gap:.55rem;align-items:center}
+  .dots button{width:8px;height:8px;border-radius:50%;border:0;background:rgba(245,245,245,.2);cursor:pointer;padding:0;transition:all .3s var(--ease)}
+  .dots button.on{background:var(--blue);box-shadow:0 0 10px var(--blue);width:22px;border-radius:6px}
+  .brandmark{position:fixed;z-index:20;top:3.4vh;left:9vw;display:flex;align-items:center;gap:.6rem;font-family:'Space Grotesk';font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gray)}
+  .brandmark .e8{width:24px;height:24px;border-radius:7px;border:1px solid rgba(0,71,255,.5);display:grid;place-items:center;font-weight:700;color:var(--white);font-size:.85rem;background:rgba(0,71,255,.12)}
+  .hint{position:fixed;z-index:20;top:3.4vh;right:9vw;font-family:'JetBrains Mono';font-size:.72rem;color:var(--gray);opacity:.7}
+  kbd{border:1px solid var(--line);border-radius:5px;padding:.05rem .4rem;font-family:'JetBrains Mono';font-size:.7rem;color:#cfd5e2}
+
+  @media (max-width:820px){
+    .slide{padding:8vh 7vw}
+    .g3,.g5,.fmt,.metrics{grid-template-columns:1fr 1fr}
+    .g2{grid-template-columns:1fr}
+    .detail{grid-template-columns:1fr;gap:1rem}
+    .bignum{font-size:5.5rem}
+    .wheel-wrap{grid-template-columns:1fr;gap:1.6rem}
+    .flow{gap:.6rem}.step{min-width:45%}.step::after{display:none}
+    .hint{display:none}.brandmark{font-size:.7rem}
+    .rhythm td,.rhythm th{padding:.7rem .6rem;font-size:.85rem}
+  }
+  @media (max-width:520px){
+    .g3,.g5,.fmt,.metrics{grid-template-columns:1fr}
+    .chrome{right:6vw}.dots{left:6vw}.brandmark{left:6vw}
+  }
+</style>
+</head>
+<body>
+<div class="bg"><div class="grid"></div></div>
+<div class="progress" id="progress"></div>
+
+<div class="brandmark"><span class="e8">8</span> Layer8Culture</div>
+<div class="hint">Use <kbd>←</kbd> <kbd>→</kbd> to navigate</div>
+
+<main class="deck" id="deck">
+
+  <!-- 1 · COVER -->
+  <section class="slide active">
+    <div class="stagger">
+      <div class="cover-wm">
+        <div class="eight">8</div>
+        <div class="name">Layer8Culture</div>
+      </div>
+      <h1>The Content<br><span class="accent">Engine</span>.</h1>
+      <p class="lead">A self-running system that researches, designs, writes, and schedules your Instagram content every night — so your brand grows while you sleep.</p>
+      <div class="tag">"Technology has seven layers. <b>We're the eighth.</b>"</div>
+    </div>
+  </section>
+
+  <!-- 2 · THE BIG IDEA -->
+  <section class="slide">
+    <div class="stagger">
+      <div class="kicker">In one sentence</div>
+      <h2>It's a tireless <span class="accent">teammate</span> that makes a day of content every night —<br>you just approve it from your phone.</h2>
+      <p class="lead">No design skills. No writing blocks. No "what do I post today?" Every morning a finished, on-brand post is waiting for your thumbs-up. Nothing ever goes live without you.</p>
+    </div>
+  </section>
+
+  <!-- 3 · THE CAST -->
+  <section class="slide">
+    <div class="kicker">Meet the team</div>
+    <h2>Five players. One smooth handoff.</h2>
+    <div class="grid-cards g5 stagger">
+      <div class="card"><span class="ico">🧠</span><h3>Copilot</h3><p>The brain. Researches the day's AI news and writes the posts.</p></div>
+      <div class="card"><span class="ico">🎨</span><h3>OpenAI</h3><p>The artist. Generates fresh, cinematic visuals for every post.</p></div>
+      <div class="card"><span class="ico">✅</span><h3>You</h3><p>The editor. Review &amp; approve from GitHub mobile in minutes.</p></div>
+      <div class="card"><span class="ico">📤</span><h3>Postiz</h3><p>The publisher. Schedules and posts to Instagram automatically.</p></div>
+      <div class="card"><span class="ico">📈</span><h3>Insights</h3><p>The coach. Reads results and tells the engine what's working.</p></div>
+    </div>
+  </section>
+
+  <!-- 4 · THE PIPELINE A-Z -->
+  <section class="slide">
+    <div class="kicker">The process, A → Z</div>
+    <h2>Six steps. Fully automatic <span class="muted">— except one.</span></h2>
+    <div class="flow stagger">
+      <div class="step"><div class="dot">A</div><h3>Research</h3><p>Finds today's AI news + your topics</p></div>
+      <div class="step"><div class="dot">B</div><h3>Create</h3><p>Writes posts &amp; designs visuals</p></div>
+      <div class="step"><div class="dot">C</div><h3>Approve</h3><p>You tap "merge" on your phone</p></div>
+      <div class="step"><div class="dot">D</div><h3>Publish</h3><p>Auto-posts to Instagram</p></div>
+      <div class="step"><div class="dot">E</div><h3>Measure</h3><p>Pulls Instagram Insights</p></div>
+      <div class="step"><div class="dot">F</div><h3>Improve</h3><p>Steers tomorrow's content</p></div>
+    </div>
+    <p class="lead">The whole loop runs on GitHub's servers and a small always-on machine. <span class="accent">Your computer can be off.</span> The only human step is the 2-minute approval.</p>
+  </section>
+
+  <!-- 5 · STEP A RESEARCH -->
+  <section class="slide">
+    <div class="kicker">Step A · Research</div>
+    <div class="detail">
+      <div class="bignum">A</div>
+      <div class="body stagger">
+        <h2>It reads the room — <span class="accent">every night.</span></h2>
+        <p class="lead">A scheduled job wakes up and gathers what to talk about: the day's real AI news, your Tech&nbsp;Thursday transcripts, and your weekly steering notes. Always fresh, always relevant, always in your voice.</p>
+        <div class="chips">
+          <span class="chip">live AI-news research</span>
+          <span class="chip">calendar/topics.md</span>
+          <span class="chip">brand voice files</span>
+          <span class="chip">show transcripts</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · STEP B CREATE -->
+  <section class="slide">
+    <div class="kicker">Step B · Create</div>
+    <div class="detail">
+      <div class="bignum">B</div>
+      <div class="body stagger">
+        <h2>It writes <em>and</em> designs.</h2>
+        <p class="lead">Copilot writes the caption — a scroll-stopping hook, real value, and a call-to-action. OpenAI paints a cinematic visual to match, and ffmpeg turns stills into video Reels. One high-quality hero per day, on-brand to the pixel.</p>
+        <div class="chips">
+          <span class="chip">hook + value + CTA</span>
+          <span class="chip">cinematic visuals</span>
+          <span class="chip">Reels · carousels · stories</span>
+          <span class="chip">tiered hashtags</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · STEP C APPROVE -->
+  <section class="slide">
+    <div class="kicker">Step C · Approve</div>
+    <div class="detail">
+      <div class="bignum">C</div>
+      <div class="body stagger">
+        <h2>You're the <span class="accent">final say.</span></h2>
+        <p class="lead">Each morning the engine opens a Pull Request — tomorrow's post, caption, and visuals in one tidy preview. Glance, tweak if you like, tap merge. That's it. <strong>Nothing publishes without your approval.</strong></p>
+        <div class="chips">
+          <span class="chip">review on GitHub mobile</span>
+          <span class="chip">edit anything</span>
+          <span class="chip red">human approval gate</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · STEP D PUBLISH -->
+  <section class="slide">
+    <div class="kicker">Step D · Publish</div>
+    <div class="detail">
+      <div class="bignum">D</div>
+      <div class="body stagger">
+        <h2>Approved → <span class="accent">posted.</span></h2>
+        <p class="lead">The moment you merge, the post and its media are handed to Postiz — an always-on publisher — which schedules and pushes it to Instagram at the right time. Feed post, carousel, Reel, or story: each goes out in its native format.</p>
+        <div class="chips">
+          <span class="chip">runs 24/7 in the cloud</span>
+          <span class="chip">native IG formats</span>
+          <span class="chip">smart scheduling</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 · STEP E MEASURE -->
+  <section class="slide">
+    <div class="kicker">Step E · Measure</div>
+    <div class="detail">
+      <div class="bignum">E</div>
+      <div class="body stagger">
+        <h2>It keeps score.</h2>
+        <p class="lead">Every morning a job pulls your Instagram Insights — reach, saves, follower growth — and matches them to each post. It distills everything into a simple digest: what's winning, what's not, and the best times to post.</p>
+        <div class="chips">
+          <span class="chip">reach &amp; saves per post</span>
+          <span class="chip">follower delta</span>
+          <span class="chip">best format &amp; hours</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 · STEP F IMPROVE -->
+  <section class="slide">
+    <div class="kicker">Step F · Improve</div>
+    <div class="detail">
+      <div class="bignum">F</div>
+      <div class="body stagger">
+        <h2>It gets <span class="accent">smarter</span> daily.</h2>
+        <p class="lead">That digest feeds straight back into tomorrow's research step. The engine doubles down on the formats, topics, and timing that grow you — and quietly drops what doesn't. The loop closes, and every day compounds.</p>
+        <div class="chips">
+          <span class="chip">closed feedback loop</span>
+          <span class="chip">data-driven topics</span>
+          <span class="chip">compounding growth</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 · FORMAT MIX -->
+  <section class="slide">
+    <div class="kicker">Why it grows you</div>
+    <h2>The right format for every job.</h2>
+    <p class="lead muted">Followers don't come from posting more — they come from posting the formats Instagram rewards. The engine runs a deliberate weekly mix.</p>
+    <div class="fmt stagger">
+      <div class="card"><span class="goal">Reach</span><div class="big">🎬 Reels</div><p>Short vertical video — how new people discover you. 3–4 per week.</p></div>
+      <div class="card"><span class="goal">Saves</span><div class="big">🖼 Carousels</div><p>Swipeable value decks people save &amp; share. 2–3 per week.</p></div>
+      <div class="card"><span class="goal">Engagement</span><div class="big">📲 Stories</div><p>Daily touchpoints with polls &amp; questions. Roughly one a day.</p></div>
+      <div class="card"><span class="goal">Authority</span><div class="big">🪧 Single posts</div><p>The occasional cinematic hero statement. Sparingly.</p></div>
+    </div>
+  </section>
+
+  <!-- 12 · GROWTH LEVERS -->
+  <section class="slide">
+    <div class="kicker">Built-in growth mechanics</div>
+    <h2>Every post is engineered to convert a scroll into a follow.</h2>
+    <div class="grid-cards g3 stagger">
+      <div class="card"><span class="num">01</span><h3>Scroll-stopping hooks</h3><p>The first line earns the second. No throat-clearing.</p></div>
+      <div class="card"><span class="num">02</span><h3>Clear CTAs</h3><p>Every post asks for the save, the share, or the follow.</p></div>
+      <div class="card"><span class="num">03</span><h3>Tiered hashtags</h3><p>Branded + niche + topical tags, rotated so reach stays fresh.</p></div>
+      <div class="card"><span class="num">04</span><h3>First-comment strategy</h3><p>Clean captions; tags drop in the first comment.</p></div>
+      <div class="card"><span class="num">05</span><h3>Best-time posting</h3><p>Scheduled when your audience is actually online.</p></div>
+      <div class="card"><span class="num">06</span><h3>One hero a day</h3><p>Quality over noise — a premium feed people want to follow.</p></div>
+    </div>
+  </section>
+
+  <!-- 13 · THE FLYWHEEL -->
+  <section class="slide">
+    <div class="kicker">The compounding loop</div>
+    <h2>A flywheel, not a treadmill.</h2>
+    <div class="wheel-wrap">
+      <div class="wheel" id="wheel">
+        <div class="ring"></div><div class="ring r2"></div>
+        <div class="core"><div><span>4K+</span><small>followers</small></div></div>
+      </div>
+      <div>
+        <ul class="loop-list stagger">
+          <li><span class="n">1</span><div><h3>Post smart content</h3><p>Reels, carousels &amp; stories engineered for reach.</p></div></li>
+          <li><span class="n">2</span><div><h3>Measure what lands</h3><p>Insights reveal the winners every morning.</p></div></li>
+          <li><span class="n">3</span><div><h3>Double down</h3><p>The engine makes more of what's working.</p></div></li>
+          <li><span class="n">4</span><div><h3>Reach more people</h3><p>Better content → more discovery → more follows.</p></div></li>
+          <li><span class="n">5</span><div><h3>More data → repeat</h3><p>Each turn of the wheel spins faster.</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 · YOUR WEEK -->
+  <section class="slide">
+    <div class="kicker">Your part is tiny</div>
+    <h2>The whole job: <span class="accent">a few minutes a day.</span></h2>
+    <table class="rhythm stagger">
+      <thead><tr><th>When</th><th>What you do</th><th>Time</th></tr></thead>
+      <tbody>
+        <tr><td>After Tech Thursday</td><td>Drop the transcript, jot this week's focus</td><td class="t">5 min</td></tr>
+        <tr><td>Nightly</td><td>Nothing — the engine drafts tomorrow's post</td><td class="t">0 min</td></tr>
+        <tr><td>Each morning</td><td>Review the PR on your phone, edit, merge</td><td class="t">2–5 min</td></tr>
+        <tr><td>Each morning</td><td>Skim the daily report</td><td class="t">1 min</td></tr>
+      </tbody>
+    </table>
+    <div class="callout">💡 <span><b>Your computer can be off.</b> Everything runs in the cloud, 24/7.</span></div>
+  </section>
+
+  <!-- 15 · THE GOAL -->
+  <section class="slide">
+    <div class="kicker">Where this is headed</div>
+    <h2>Engineered for one outcome: <span class="accent">growth.</span></h2>
+    <div class="metrics stagger">
+      <div class="metric"><div class="v"><span class="accent">4,000+</span></div><div class="l">The follower target every post is steering toward.</div></div>
+      <div class="metric"><div class="v">2–3<span class="muted" style="font-size:1.2rem">/day</span></div><div class="l">On-brand posts produced automatically, across formats.</div></div>
+      <div class="metric"><div class="v">100%</div><div class="l">Human-approved. Nothing ships without your merge.</div></div>
+    </div>
+    <p class="lead">Consistency is the hard part of growth — and that's exactly the part this removes. Show up premium, every single day, almost effortlessly.</p>
+  </section>
+
+  <!-- 16 · CLOSING -->
+  <section class="slide closing">
+    <div class="stagger">
+      <div class="eight" style="margin:0 auto 1.8rem">8</div>
+      <h2>Calm confidence,<br><span class="accent">on autopilot.</span></h2>
+      <div class="tag">"Technology has seven layers. <b>We're the eighth.</b>"</div>
+      <p class="lead" style="margin-left:auto;margin-right:auto">layer8culture.io · The Content Engine</p>
+    </div>
+  </section>
+
+</main>
+
+<div class="dots" id="dots"></div>
+<div class="chrome">
+  <div class="counter"><b id="cur">01</b> / <span id="total">16</span></div>
+  <div class="arrows">
+    <button id="prev" aria-label="Previous">←</button>
+    <button id="next" aria-label="Next">→</button>
+  </div>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let i = 0;
+  const progress = document.getElementById('progress');
+  const cur = document.getElementById('cur');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  const dotsWrap = document.getElementById('dots');
+  document.getElementById('total').textContent = String(total).padStart(2,'0');
+
+  // build dots
+  slides.forEach((_, idx) => {
+    const b = document.createElement('button');
+    b.setAttribute('aria-label', 'Go to slide ' + (idx+1));
+    b.addEventListener('click', () => go(idx));
+    dotsWrap.appendChild(b);
+  });
+  const dots = Array.from(dotsWrap.children);
+
+  // build flywheel nodes
+  const wheel = document.getElementById('wheel');
+  if (wheel){
+    const N = 5, R = 50; // percent radius onto the outer ring
+    for (let k=0;k<N;k++){
+      const ang = (k/N)*Math.PI*2 - Math.PI/2;
+      const node = document.createElement('div');
+      node.className='node';
+      node.style.left = (50 + Math.cos(ang)*R) + '%';
+      node.style.top  = (50 + Math.sin(ang)*R) + '%';
+      wheel.appendChild(node);
+    }
+  }
+
+  function go(n){
+    n = Math.max(0, Math.min(total-1, n));
+    slides[i].classList.remove('active');
+    i = n;
+    slides[i].classList.add('active');
+    // restart stagger
+    const s = slides[i].querySelector('.stagger');
+    if (s){ s.style.animation='none'; void s.offsetWidth; s.style.animation=''; }
+    progress.style.width = ((i+1)/total*100) + '%';
+    cur.textContent = String(i+1).padStart(2,'0');
+    prev.disabled = i===0;
+    next.disabled = i===total-1;
+    dots.forEach((d,idx)=>d.classList.toggle('on', idx===i));
+  }
+
+  prev.addEventListener('click', ()=>go(i-1));
+  next.addEventListener('click', ()=>go(i+1));
+  document.addEventListener('keydown', e=>{
+    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();go(i+1);}
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(i-1);}
+    if(e.key==='Home')go(0);
+    if(e.key==='End')go(total-1);
+  });
+  // touch swipe
+  let x0=null;
+  document.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});
+  document.addEventListener('touchend',e=>{
+    if(x0===null)return;
+    const dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>50) go(i + (dx<0?1:-1));
+    x0=null;
+  });
+  go(0);
+</script>
+</body>
+</html>

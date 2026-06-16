@@ -21,12 +21,15 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.COPILOT_CLI_TOKEN }}
         run: |
-          copilot -p "Read posted/log.json and any files in queue/. Write a short
-          daily report to report.md for Donville with: (1) what was scheduled or
-          published in the last 24h per account, (2) anything that failed or was
-          skipped (look for scheduled:false), (3) what's awaiting approval,
-          (4) one suggestion for this week's topics based on posted/log.json
-          patterns. Friendly, tight, under 200 words. Plain text, no headers." \
+          copilot -p "Read posted/log.json, any files in queue/, and
+          analytics/insights-digest.md if it exists. Write a short daily report to
+          report.md for Donville with: (1) follower progress toward the 4,000 goal
+          and the 7-day change (from the insights digest), (2) the top 2 and bottom 2
+          performing posts by reach/saves and one takeaway on which format is winning,
+          (3) what was scheduled or published in the last 24h per account, (4) anything
+          that failed or was skipped (look for scheduled:false), (5) what's awaiting
+          approval, (6) one concrete suggestion for tomorrow's format mix + topic based
+          on the data. Friendly, tight, under 220 words. Plain text, no headers." \
             -s \
             --allow-tool='read,write(report.md)' \
             --no-ask-user

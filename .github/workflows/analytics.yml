@@ -1,0 +1,37 @@
+name: Analytics (Instagram Insights)
+
+on:
+  schedule:
+    - cron: "0 13 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  analytics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch Instagram Insights
+        env:
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_GRAPH_TOKEN: ${{ secrets.IG_GRAPH_TOKEN }}
+          POSTIZ_URL: ${{ secrets.POSTIZ_URL }}
+          POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
+        run: |
+          pip install requests
+          python scripts/fetch_insights.py
+
+      - name: Commit analytics
+        run: |
+          git config user.name "layer8-engine"
+          git config user.email "engine@layer8culture.io"
+          git add analytics/
+          git diff --cached --quiet || git commit -m "Update Instagram insights"
+          git push
