@@ -76,6 +76,9 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
    The other entries stay
    `REPLACE_ME` while X / TikTok are paused — unmapped posts are skipped, not errored.
    Full walkthrough: [`docs/postiz-instagram-setup.md`](docs/postiz-instagram-setup.md).
+   To schedule **YouTube** uploads manually from Postiz, see
+   [`docs/postiz-youtube-setup.md`](docs/postiz-youtube-setup.md) (the engine doesn't
+   auto-post to YouTube — it promotes YouTube sessions on Instagram instead).
 5. **Customize the brand files** in `brand/` — this is what makes output sound like you.
 6. **Enable the workflows** in the Actions tab.
 
