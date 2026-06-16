@@ -203,6 +203,30 @@ So this error can almost always be ignored or worked around:
   (Business Settings → People → Add) and assign the Page/IG to you. You only need
   admin access to the Page and IG account — not ownership of billing.
 
+### "Insufficient Developer Role: Insufficient developer role"
+
+This appears during the OAuth popup when your Meta app is still in **Development
+mode** and the Facebook account you're logging in with isn't assigned a role on the
+app. In Dev mode only **Admins / Developers / Testers** (and their linked Instagram
+accounts) may complete the flow. Fix it by adding the account doing the connect:
+
+1. App dashboard (https://developers.facebook.com/apps/) → your app → **App Roles →
+   Roles**.
+2. **Add People** and add the Facebook account you're authenticating with as an
+   **Admin** or **Developer** (the account that owns/manages the Page + IG you're
+   connecting). For the Instagram handle specifically, also add it under **Add People
+   → Instagram Tester** (see step 6).
+3. **Accept the invite**: the invited person opens
+   https://developers.facebook.com/notifications/ (and, for an Instagram Tester, IG
+   app → Settings → **Apps and websites → Tester invites**) and accepts.
+4. Retry the Postiz **Add Channel → Instagram** connect with that same account.
+
+Alternatively, switching the app to **Live mode** removes the role requirement for
+real users — but Live mode needs the app reviewed/verified, so for a single
+self-owned account the role-assignment route above is faster. Double-check you're
+logging in with the account that actually holds the role (not a second personal
+profile).
+
 ### The Instagram account doesn't appear at the Postiz connect step
 
 Almost always one of: (a) the IG account isn't a Business/Creator account, (b) it
