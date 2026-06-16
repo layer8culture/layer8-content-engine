@@ -154,6 +154,37 @@ For long-term use beyond test accounts, submit the app for **Meta App Review** w
 the scopes above and complete **business verification**. Until then, the
 Instagram-Tester route (step 6) keeps things working.
 
+## Troubleshooting
+
+### "You're currently unable to make payments with your personal Facebook profile"
+
+**Posting via Postiz never requires a payment method or ad spend.** Creating a Page,
+a Business Portfolio, the developer app, and connecting Instagram through the Graph
+API are all free — only running **ads** needs billing, which this engine does not do.
+So this error can almost always be ignored or worked around:
+
+- It usually appears because you're in a "create business account / boost / run ads"
+  flow that nudges billing. Back out and create the Page from the plain creator at
+  https://www.facebook.com/pages/create (free, no payment prompt).
+- Create the Business Portfolio at https://business.facebook.com and **skip** any
+  "add a payment method" prompt — it's only needed for ads.
+- The message itself is a restriction on your personal profile's payments capability
+  (past failed/disputed payment, pending identity/business verification, or a new
+  account). Check **Settings & Privacy → Settings → Account Status / Account Quality**
+  (https://www.facebook.com/accountquality) and resolve anything flagged; remove
+  expired/declined cards under **Settings → Payments**.
+- If the restriction blocks Page/portfolio creation itself, have a **teammate** whose
+  profile is in good standing create the Page + portfolio, then add you as an admin
+  (Business Settings → People → Add) and assign the Page/IG to you. You only need
+  admin access to the Page and IG account — not ownership of billing.
+
+### The Instagram account doesn't appear at the Postiz connect step
+
+Almost always one of: (a) the IG account isn't a Business/Creator account, (b) it
+isn't linked to the Facebook Page, or (c) while the app is in Dev mode the handle
+wasn't added as an **Instagram Tester** (App Roles) and the invite accepted in IG
+settings.
+
 ## References
 
 - Postiz Instagram provider docs: https://docs.postiz.com/providers/instagram
