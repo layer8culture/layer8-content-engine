@@ -2,7 +2,7 @@ name: Generate Content (nightly)
 
 on:
   schedule:
-    - cron: "0 2 * * *"   # 2:00 UTC nightly — adjust to taste
+    - cron: "0 2 * * *"   # 02:00 UTC = 22:00 America/New_York the prior evening; the job resolves "tomorrow" in TZ (America/New_York) so it targets the approval-morning date
   workflow_dispatch: {}     # manual trigger button
 
 permissions:
@@ -12,6 +12,13 @@ permissions:
 jobs:
   generate:
     runs-on: ubuntu-latest
+    # Resolve all dates in the brand's local timezone so "tomorrow" (in the Copilot
+    # generation step and the `date -d tomorrow` shell steps below) matches the
+    # America/New_York day a human approves the batch. Without TZ the runner is UTC,
+    # where 02:00 UTC is already the next calendar day — so dates landed a day too
+    # far ahead and posts scheduled for tomorrow instead of today.
+    env:
+      TZ: America/New_York
     steps:
       - uses: actions/checkout@v4
 
