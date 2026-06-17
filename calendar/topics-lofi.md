@@ -7,17 +7,16 @@
 ## Lean into (themes for this week — optional)
 - (nothing yet)
 
-## Now Live — video promos (drives a "Now Live on YouTube" promo post)
-# Add an entry ONLY when a new YouTube session is published. Each entry below
-# becomes one Video Promo post (format: single or reel). Remove entries once posted.
+## Now Live — video promos
+# Auto-refreshed from YouTube by scripts/fetch_youtube.py before each lofi
+# run. Each entry below becomes one "Now Live on YouTube" Video Promo post
+# (the engine renders its own on-brand imagery; no YouTube footage is reposted).
+# Edit MOOD_RULES in the script or override entries by hand if needed.
 #
-# Format (one block per video):
-#   - title: <the session title, e.g. "Afrofuturist Sunrise Lo-Fi Coding Radio">
-#     url: <YouTube link>
-#     mood: <night | sunrise | sunset | rainy night | jazz | reggae | latin>
-#     note: <optional one-line steer>
-#
-# (no live videos queued)
+  - title: Afrofuturist Sunrise Lo-Fi Coding Radio | Morning Build Beats | Layer8Culture Radio
+    url: https://www.youtube.com/watch?v=j0VlqqJp5FE
+    mood: sunrise
+    note: drive viewers to the full session; link in bio.
 
 ## Session focus / pillars to feature (optional)
 # Steer which content pillar to lean on (Afrofuturist Coding Radio, Time-of-Day,
