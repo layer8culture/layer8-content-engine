@@ -59,7 +59,11 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
    |---|---|
    | `COPILOT_CLI_TOKEN` | A token the Copilot CLI accepts for authentication. A **fine-grained** PAT with the **Copilot Requests** permission works only if your account/enterprise policy allows PAT-based Copilot access. If that's blocked, use the OAuth token the CLI stores after you run `copilot` → `/login` with your Copilot-seat account (a `gho_` token; classic `ghp_` PATs are NOT supported). |
    | `ENGINE_PR_TOKEN` | A user PAT with `repo` scope, used **only** to open the nightly approval PR. Required because the org disables "Allow GitHub Actions to create pull requests", so the built-in `GITHUB_TOKEN` can't create it — a PR authored by a real user can. |
-   | `OPENAI_API_KEY` | From platform.openai.com (image generation) |
+   | `OPENAI_API_KEY` | From platform.openai.com (image generation). Used as the **fallback** image backend when the Azure secrets below are not set. |
+   | `AZURE_OPENAI_ENDPOINT` | **Optional (preferred image backend).** Your Azure OpenAI resource endpoint, e.g. `https://my-resource.openai.azure.com`. When this plus `AZURE_OPENAI_API_KEY` and `AZURE_OPENAI_IMAGE_DEPLOYMENT` are all set, `openai_gen.py` uses Azure OpenAI for images instead of `OPENAI_API_KEY`. |
+   | `AZURE_OPENAI_API_KEY` | **Optional.** Key for the Azure OpenAI resource above. |
+   | `AZURE_OPENAI_IMAGE_DEPLOYMENT` | **Optional.** The **deployment name** of your gpt-image model on Azure (this is passed as the model id — not `gpt-image-2`). |
+   | `AZURE_OPENAI_API_VERSION` | **Optional** repo **variable** (Settings → Variables → Actions), not a secret. The Azure API version that supports gpt-image generation/edits. Defaults to `2025-04-01-preview` when unset. |
    | `POSTIZ_URL` | e.g. `https://post.layer8culture.io` |
    | `POSTIZ_API_KEY` | From your Postiz instance |
    | `LOFI_IG_CHANNEL_ID` | **Optional override.** The Layer8Culture Radio Instagram channel is already wired in `post_to_postiz.py`; set this only to point lofi posts at a different Postiz integration ID (e.g. after re-connecting the channel). |

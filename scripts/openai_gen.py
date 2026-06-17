@@ -23,7 +23,12 @@ the Layer8Culture wordmark. The image models are prompted NOT to render text
 under assets/fonts/.
 
 Requires: pip install openai requests pillow
-Env vars: OPENAI_API_KEY
+Env vars:
+  * Direct OpenAI (default):  OPENAI_API_KEY
+  * Azure OpenAI (preferred when set): AZURE_OPENAI_ENDPOINT,
+    AZURE_OPENAI_API_KEY, AZURE_OPENAI_IMAGE_DEPLOYMENT, and optionally
+    AZURE_OPENAI_API_VERSION. When all three required Azure vars are present the
+    script uses Azure OpenAI; otherwise it falls back to direct OpenAI.
 """
 import base64
 import json
@@ -32,7 +37,7 @@ import string
 import sys
 import pathlib
 from PIL import Image, ImageDraw, ImageFont
-from openai import OpenAI, OpenAIError
+from openai import OpenAI, AzureOpenAI, OpenAIError
 
 # ---------------------------------------------------------------------------
 # OpenAI image model.
@@ -54,6 +59,47 @@ ASPECT_SIZE = {
     "16:9": "1536x1024",   # landscape
 }
 DEFAULT_SIZE = "1024x1024"
+
+# ---------------------------------------------------------------------------
+# Image backend selection: Azure OpenAI (preferred when configured) or direct
+# OpenAI (fallback). The openai SDK ships both clients, so this adds no new
+# dependency. On Azure the model passed to the Images API must be the
+# *deployment name*, not "gpt-image-2"; everything else (generate/edit, the
+# b64_json response, supported sizes, and quality tiers) is identical across the
+# two backends.
+# ---------------------------------------------------------------------------
+AZURE_OPENAI_ENDPOINT = os.environ.get("AZURE_OPENAI_ENDPOINT", "").strip()
+AZURE_OPENAI_API_KEY = os.environ.get("AZURE_OPENAI_API_KEY", "").strip()
+AZURE_OPENAI_IMAGE_DEPLOYMENT = os.environ.get(
+    "AZURE_OPENAI_IMAGE_DEPLOYMENT", "").strip()
+# api-version that supports gpt-image generation/edits; override per deployment.
+AZURE_OPENAI_API_VERSION = os.environ.get(
+    "AZURE_OPENAI_API_VERSION", "2025-04-01-preview").strip()
+
+
+def _make_image_client():
+    """Build the Images API client and resolve the model identifier to use.
+
+    Returns ``(client, model_name)``. When the Azure OpenAI env vars (endpoint +
+    key + deployment) are all set we use ``AzureOpenAI`` and the *deployment
+    name* as the model; otherwise we fall back to direct ``OpenAI()`` (reading
+    ``OPENAI_API_KEY``) with the configured ``IMAGE_MODEL``. Behaviour is
+    identical to before when Azure isn't configured.
+    """
+    if AZURE_OPENAI_ENDPOINT and AZURE_OPENAI_API_KEY and AZURE_OPENAI_IMAGE_DEPLOYMENT:
+        client = AzureOpenAI(
+            azure_endpoint=AZURE_OPENAI_ENDPOINT,
+            api_key=AZURE_OPENAI_API_KEY,
+            api_version=AZURE_OPENAI_API_VERSION,
+        )
+        print(f"Using Azure OpenAI image backend "
+              f"(deployment={AZURE_OPENAI_IMAGE_DEPLOYMENT}, "
+              f"api_version={AZURE_OPENAI_API_VERSION})")
+        return client, AZURE_OPENAI_IMAGE_DEPLOYMENT
+    client = OpenAI()
+    print(f"Using direct OpenAI image backend (model={IMAGE_MODEL})")
+    return client, IMAGE_MODEL
+
 
 # --- Branding composite -----------------------------------------------------
 # After each image is generated, overlay the official Layer8Culture wordmark so
@@ -301,7 +347,7 @@ def _decode_b64_image(result) -> bytes:
     return base64.b64decode(b64)
 
 
-def _render_image(client: OpenAI, image_id: str, visual: dict,
+def _render_image(client, model: str, image_id: str, visual: dict,
                   account: str | None, out_dir: pathlib.Path) -> str | None:
     """Render one OpenAI image for ``visual``, composite the branded headline
     typography + wordmark, and return the written path (or None on API failure).
@@ -338,7 +384,7 @@ def _render_image(client: OpenAI, image_id: str, visual: dict,
                 try:
                     with ref_path.open("rb") as ref_file:
                         result = client.images.edit(
-                            model=IMAGE_MODEL,
+                            model=model,
                             image=ref_file,
                             prompt=prompt,
                             size=size,
@@ -360,7 +406,7 @@ def _render_image(client: OpenAI, image_id: str, visual: dict,
 
         if image_bytes is None:
             result = client.images.generate(
-                model=IMAGE_MODEL,
+                model=model,
                 prompt=prompt,
                 size=size,
                 quality=quality,
@@ -431,7 +477,7 @@ def _render_image(client: OpenAI, image_id: str, visual: dict,
         return None
 
 
-def generate(client: OpenAI, post: dict, out_dir: pathlib.Path) -> str | None:
+def generate(client, model: str, post: dict, out_dir: pathlib.Path) -> str | None:
     """Render the single base still for a non-carousel post (single / story / reel).
 
     Stories and reels are vertical by nature, so default them to 9:16 when the
@@ -442,10 +488,10 @@ def generate(client: OpenAI, post: dict, out_dir: pathlib.Path) -> str | None:
     fmt = post.get("format", "single")
     if fmt in ("story", "reel") and "aspect" not in visual:
         visual = {**visual, "aspect": "9:16"}
-    return _render_image(client, post["id"], visual, post.get("account"), out_dir)
+    return _render_image(client, model, post["id"], visual, post.get("account"), out_dir)
 
 
-def render_carousel(client: OpenAI, post: dict, out_dir: pathlib.Path) -> list[str] | None:
+def render_carousel(client, model: str, post: dict, out_dir: pathlib.Path) -> list[str] | None:
     """Render each slide of a carousel post as its own branded image.
 
     Returns the ordered list of written paths (``<post_id>-1.png`` …) or None if
@@ -468,7 +514,7 @@ def render_carousel(client: OpenAI, post: dict, out_dir: pathlib.Path) -> list[s
     paths: list[str] = []
     for i, slide in enumerate(slides, 1):
         merged = {**base, **{k: v for k, v in slide.items() if v is not None}}
-        path = _render_image(client, f"{post['id']}-{i}", merged,
+        path = _render_image(client, model, f"{post['id']}-{i}", merged,
                              post.get("account"), out_dir)
         if path:
             paths.append(path)
@@ -483,19 +529,19 @@ def main(queue_file: str) -> None:
     out_dir = pathlib.Path("assets/generated")
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    client = OpenAI()
+    client, model = _make_image_client()
 
     for post in posts:
         if post.get("visual", {}).get("source") != "openai":
             continue
         if post.get("format") == "carousel":
-            paths = render_carousel(client, post, out_dir)
+            paths = render_carousel(client, model, post, out_dir)
             if paths:
                 post["visual"]["files"] = paths
                 post["visual"]["file"] = paths[0]  # primary/cover for the publisher
                 continue
         else:
-            path = generate(client, post, out_dir)
+            path = generate(client, model, post, out_dir)
             if path:
                 post["visual"]["file"] = path
                 continue

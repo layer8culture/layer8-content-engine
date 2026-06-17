@@ -39,3 +39,4 @@ Thumbs.db
 # --- Local ops helper (contains VM connection details; do not commit) ---
 set-instagram-creds.ps1
 set-postiz-apikey.ps1
+set-azure-openai.ps1
