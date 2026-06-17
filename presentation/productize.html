@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Content Engine · Productization &amp; Go-to-Market</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --black:#000000;
+    --navy:#050A1A;
+    --navy-2:#0a1230;
+    --blue:#0047FF;
+    --blue-soft:#3b6bff;
+    --white:#F5F5F5;
+    --gray:#8a93a6;
+    --red:#FF4B3E;
+    --green:#36d399;
+    --gold:#FFC857;
+    --line:rgba(245,245,245,0.08);
+    --card:rgba(245,245,245,0.035);
+    --glass:rgba(10,18,48,0.45);
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;overflow:hidden}
+  body{
+    background:var(--black);
+    color:var(--white);
+    font-family:'Inter',-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    position:relative;
+  }
+  /* atmospheric background */
+  .bg{position:fixed;inset:0;z-index:0;overflow:hidden}
+  .bg::before{
+    content:"";position:absolute;inset:-20%;
+    background:
+      radial-gradient(60% 50% at 78% 18%, rgba(0,71,255,0.22), transparent 60%),
+      radial-gradient(55% 55% at 12% 88%, rgba(0,71,255,0.12), transparent 60%),
+      radial-gradient(80% 80% at 50% 50%, rgba(5,10,26,0.9), #000 75%);
+    animation:drift 22s var(--ease) infinite alternate;
+  }
+  .bg .grid{
+    position:absolute;inset:0;
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(70% 70% at 50% 40%,#000 30%,transparent 80%);
+    opacity:.5;
+  }
+  @keyframes drift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-3%,2%,0) scale(1.08)}}
+
+  /* deck */
+  .deck{position:relative;z-index:2;height:100%;width:100%}
+  .slide{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:6vh 9vw;
+    opacity:0;visibility:hidden;
+    transform:translateY(28px) scale(.99);
+    transition:opacity .6s var(--ease),transform .6s var(--ease),visibility .6s;
+    pointer-events:none;
+    overflow-y:auto;
+  }
+  .slide.active{opacity:1;visibility:visible;transform:none;pointer-events:auto}
+  .slide.active .stagger>*{animation:rise .7s var(--ease) backwards}
+  .stagger>*:nth-child(1){animation-delay:.05s}
+  .stagger>*:nth-child(2){animation-delay:.14s}
+  .stagger>*:nth-child(3){animation-delay:.23s}
+  .stagger>*:nth-child(4){animation-delay:.32s}
+  .stagger>*:nth-child(5){animation-delay:.41s}
+  .stagger>*:nth-child(6){animation-delay:.50s}
+  @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+
+  /* typography */
+  h1,h2,h3,.kicker,.wm{font-family:'Space Grotesk',sans-serif}
+  .kicker{
+    font-size:.78rem;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--blue-soft);font-weight:600;margin-bottom:1.4rem;
+    display:flex;align-items:center;gap:.8rem;
+  }
+  .kicker::before{content:"";width:34px;height:1px;background:var(--blue);box-shadow:0 0 12px var(--blue)}
+  h1{font-size:clamp(2.6rem,7vw,6.2rem);font-weight:700;line-height:.98;letter-spacing:-.02em}
+  h2{font-size:clamp(2rem,4.6vw,3.7rem);font-weight:600;line-height:1.04;letter-spacing:-.015em}
+  h3{font-size:1.18rem;font-weight:600;letter-spacing:-.01em}
+  .lead{font-size:clamp(1.05rem,1.7vw,1.4rem);color:#c7cdda;font-weight:300;line-height:1.55;max-width:50ch;margin-top:1.4rem}
+  .accent{color:var(--blue-soft);text-shadow:0 0 26px rgba(0,71,255,.55)}
+  .mono{font-family:'JetBrains Mono',monospace}
+  .muted{color:var(--gray)}
+
+  /* cover */
+  .cover-wm{display:flex;align-items:center;gap:.9rem;margin-bottom:2.2rem}
+  .eight{
+    width:54px;height:54px;border-radius:14px;
+    border:1px solid rgba(0,71,255,.5);
+    display:grid;place-items:center;
+    font-family:'Space Grotesk';font-weight:700;font-size:1.7rem;
+    color:var(--white);
+    background:radial-gradient(circle at 30% 25%,rgba(0,71,255,.5),rgba(5,10,26,.6));
+    box-shadow:0 0 30px rgba(0,71,255,.35),inset 0 0 18px rgba(0,71,255,.25);
+  }
+  .cover-wm .name{font-family:'Space Grotesk';font-weight:600;letter-spacing:.12em;font-size:1rem;text-transform:uppercase}
+  .tag{margin-top:2.4rem;font-family:'Space Grotesk';font-size:clamp(1rem,1.5vw,1.25rem);color:#aeb6c6;font-weight:400}
+  .tag b{color:var(--white);font-weight:600}
+
+  /* generic grid of cards */
+  .grid-cards{display:grid;gap:1.1rem;margin-top:2.4rem}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .g5{grid-template-columns:repeat(5,1fr)}
+  .g6{grid-template-columns:repeat(3,1fr)}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:1.5rem 1.4rem;backdrop-filter:blur(8px);
+    transition:transform .4s var(--ease),border-color .4s,background .4s;
+    position:relative;overflow:hidden;
+  }
+  .card::after{content:"";position:absolute;inset:0;border-radius:18px;padding:1px;
+    background:linear-gradient(140deg,rgba(0,71,255,.5),transparent 40%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .4s}
+  .card:hover{transform:translateY(-5px);background:rgba(0,71,255,.06)}
+  .card:hover::after{opacity:1}
+  .card .ico{font-size:1.5rem;margin-bottom:.9rem;display:block}
+  .card h3{margin-bottom:.45rem}
+  .card p{font-size:.92rem;color:var(--gray);line-height:1.5}
+  .card .num{font-family:'Space Grotesk';font-weight:700;color:var(--blue-soft);font-size:.85rem;letter-spacing:.1em}
+
+  /* pipeline flow */
+  .flow{display:flex;align-items:stretch;gap:0;margin-top:2.6rem;flex-wrap:wrap}
+  .step{flex:1;min-width:130px;position:relative;padding:1.3rem 1rem;text-align:center}
+  .step .dot{
+    width:46px;height:46px;border-radius:50%;margin:0 auto .85rem;
+    display:grid;place-items:center;font-family:'Space Grotesk';font-weight:700;
+    background:var(--navy-2);border:1px solid rgba(0,71,255,.4);color:var(--blue-soft);
+    box-shadow:0 0 18px rgba(0,71,255,.25);font-size:1.1rem;
+  }
+  .step h3{font-size:1rem;margin-bottom:.3rem}
+  .step p{font-size:.8rem;color:var(--gray);line-height:1.45}
+  .step:not(:last-child)::after{
+    content:"";position:absolute;top:2.55rem;right:-12px;width:24px;height:1px;
+    background:linear-gradient(90deg,var(--blue),transparent);
+  }
+
+  /* big step detail */
+  .detail{display:grid;grid-template-columns:auto 1fr;gap:2.6rem;align-items:center;margin-top:1rem}
+  .bignum{font-family:'Space Grotesk';font-weight:700;font-size:clamp(5rem,13vw,11rem);line-height:.8;
+    color:transparent;-webkit-text-stroke:1.4px rgba(0,71,255,.55);
+    text-shadow:0 0 60px rgba(0,71,255,.25)}
+  .detail .body .lead{max-width:54ch}
+  .chips{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.6rem}
+  .chip{font-family:'JetBrains Mono';font-size:.78rem;color:#bcd0ff;
+    border:1px solid rgba(0,71,255,.3);background:rgba(0,71,255,.07);
+    padding:.42rem .8rem;border-radius:999px}
+  .chip.red{color:#ffd2cd;border-color:rgba(255,75,62,.35);background:rgba(255,75,62,.08)}
+  .chip.green{color:#c6f7e2;border-color:rgba(54,211,153,.35);background:rgba(54,211,153,.08)}
+
+  /* roadmap phases */
+  .phases{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:2.2rem}
+  .phase{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:1.5rem 1.4rem;position:relative}
+  .phase .ph{font-family:'JetBrains Mono';font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue-soft);font-weight:600}
+  .phase h3{margin:.5rem 0 .3rem;font-size:1.15rem}
+  .phase .when{font-size:.78rem;color:var(--gray);margin-bottom:1rem}
+  .phase ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+  .phase li{font-size:.86rem;color:#c7cdda;line-height:1.4;padding-left:1.1rem;position:relative}
+  .phase li::before{content:"›";position:absolute;left:0;color:var(--blue-soft);font-weight:700}
+  .phase.p1{border-color:rgba(0,71,255,.35)}
+  .phase.p2{border-color:rgba(54,211,153,.22)}
+  .phase.p3{border-color:rgba(255,200,87,.22)}
+
+  /* gap (current vs needed) list */
+  .gap{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-top:2rem}
+  .gap .col{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:1.5rem 1.5rem}
+  .gap .col h3{font-size:1rem;margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
+  .gap ul{list-style:none;display:flex;flex-direction:column;gap:.7rem}
+  .gap li{font-size:.9rem;color:#c7cdda;line-height:1.45;padding-left:1.4rem;position:relative}
+  .gap .now li::before{content:"●";position:absolute;left:0;color:var(--gray);font-size:.7rem;top:.15rem}
+  .gap .need li::before{content:"+";position:absolute;left:0;color:var(--blue-soft);font-weight:700}
+
+  /* pricing tiers */
+  .tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2.2rem}
+  .tier{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:1.6rem 1.4rem;display:flex;flex-direction:column}
+  .tier.feature{border-color:rgba(0,71,255,.5);background:rgba(0,71,255,.06);box-shadow:0 0 40px rgba(0,71,255,.12)}
+  .tier .tn{font-family:'Space Grotesk';font-weight:600;font-size:1.1rem}
+  .tier .tp{font-family:'Space Grotesk';font-weight:700;font-size:2rem;margin:.6rem 0 .1rem;line-height:1}
+  .tier .tp small{font-size:.8rem;color:var(--gray);font-weight:400}
+  .tier .for{font-size:.78rem;color:var(--blue-soft);margin-bottom:1rem;letter-spacing:.04em}
+  .tier ul{list-style:none;display:flex;flex-direction:column;gap:.5rem;margin-top:.3rem}
+  .tier li{font-size:.83rem;color:#c7cdda;line-height:1.4;padding-left:1.2rem;position:relative}
+  .tier li::before{content:"✓";position:absolute;left:0;color:var(--blue-soft);font-size:.78rem}
+  .tier .badge{position:absolute;top:-10px;right:14px;font-family:'JetBrains Mono';font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--blue);padding:.25rem .6rem;border-radius:999px;box-shadow:0 0 18px rgba(0,71,255,.5)}
+
+  /* pricing models cards */
+  .models{display:grid;grid-template-columns:repeat(2,1fr);gap:1.1rem;margin-top:2.2rem}
+  .model{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.4rem 1.4rem}
+  .model h3{font-size:1.02rem;margin-bottom:.4rem}
+  .model p{font-size:.88rem;color:var(--gray);line-height:1.5}
+  .model .how{font-family:'JetBrains Mono';font-size:.74rem;color:var(--blue-soft);margin-top:.7rem;display:block}
+
+  /* metrics */
+  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:2.6rem}
+  .metric{padding:1.8rem 1.5rem;border:1px solid var(--line);border-radius:18px;background:var(--card)}
+  .metric .v{font-family:'Space Grotesk';font-weight:700;font-size:clamp(2.2rem,4vw,3.2rem);line-height:1}
+  .metric .v .accent{display:inline}
+  .metric .l{color:var(--gray);font-size:.92rem;margin-top:.6rem;line-height:1.45}
+
+  .callout{margin-top:2rem;display:inline-flex;align-items:center;gap:.8rem;
+    border:1px solid rgba(0,71,255,.3);background:rgba(0,71,255,.06);
+    padding:.9rem 1.4rem;border-radius:14px;font-size:.98rem}
+  .callout b{font-family:'Space Grotesk'}
+  .note{margin-top:1.4rem;font-family:'JetBrains Mono';font-size:.74rem;color:var(--gray);letter-spacing:.02em}
+
+  /* closing */
+  .closing{align-items:center;text-align:center}
+  .closing h2{max-width:20ch}
+  .closing .tag{margin-top:1.8rem}
+
+  /* chrome: progress, nav, counter */
+  .progress{position:fixed;top:0;left:0;height:2px;background:var(--blue);box-shadow:0 0 12px var(--blue);z-index:20;transition:width .5s var(--ease);width:0}
+  .chrome{position:fixed;z-index:20;bottom:3.4vh;right:9vw;display:flex;align-items:center;gap:1.3rem}
+  .counter{font-family:'JetBrains Mono';font-size:.82rem;color:var(--gray);letter-spacing:.1em}
+  .counter b{color:var(--white)}
+  .arrows{display:flex;gap:.5rem}
+  .arrows button{
+    width:42px;height:42px;border-radius:50%;border:1px solid var(--line);
+    background:var(--glass);color:var(--white);cursor:pointer;font-size:1rem;
+    display:grid;place-items:center;transition:all .3s var(--ease);backdrop-filter:blur(8px)}
+  .arrows button:hover{border-color:var(--blue);background:rgba(0,71,255,.15);transform:translateY(-2px)}
+  .arrows button:disabled{opacity:.3;cursor:not-allowed;transform:none}
+  .dots{position:fixed;z-index:20;left:9vw;bottom:3.4vh;display:flex;gap:.55rem;align-items:center;max-width:60vw;flex-wrap:wrap}
+  .dots button{width:8px;height:8px;border-radius:50%;border:0;background:rgba(245,245,245,.2);cursor:pointer;padding:0;transition:all .3s var(--ease)}
+  .dots button.on{background:var(--blue);box-shadow:0 0 10px var(--blue);width:22px;border-radius:6px}
+  .brandmark{position:fixed;z-index:20;top:3.4vh;left:9vw;display:flex;align-items:center;gap:.6rem;font-family:'Space Grotesk';font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gray)}
+  .brandmark .e8{width:24px;height:24px;border-radius:7px;border:1px solid rgba(0,71,255,.5);display:grid;place-items:center;font-weight:700;color:var(--white);font-size:.85rem;background:rgba(0,71,255,.12)}
+  .hint{position:fixed;z-index:20;top:3.4vh;right:9vw;font-family:'JetBrains Mono';font-size:.72rem;color:var(--gray);opacity:.7}
+  kbd{border:1px solid var(--line);border-radius:5px;padding:.05rem .4rem;font-family:'JetBrains Mono';font-size:.7rem;color:#cfd5e2}
+
+  @media (max-width:820px){
+    .slide{padding:8vh 7vw}
+    .g3,.g4,.g5,.g6,.metrics,.phases,.tiers,.models{grid-template-columns:1fr 1fr}
+    .g2,.gap{grid-template-columns:1fr}
+    .detail{grid-template-columns:1fr;gap:1rem}
+    .bignum{font-size:5.5rem}
+    .flow{gap:.6rem}.step{min-width:45%}.step::after{display:none}
+    .hint{display:none}.brandmark{font-size:.7rem}
+  }
+  @media (max-width:520px){
+    .g3,.g4,.g5,.g6,.metrics,.phases,.tiers,.models{grid-template-columns:1fr}
+    .chrome{right:6vw}.dots{left:6vw}.brandmark{left:6vw}
+  }
+</style>
+</head>
+<body>
+<div class="bg"><div class="grid"></div></div>
+<div class="progress" id="progress"></div>
+
+<div class="brandmark"><span class="e8">8</span> Layer8Culture</div>
+<div class="hint">Use <kbd>←</kbd> <kbd>→</kbd> to navigate</div>
+
+<main class="deck" id="deck">
+
+  <!-- 1 · COVER -->
+  <section class="slide active">
+    <div class="stagger">
+      <div class="cover-wm">
+        <div class="eight">8</div>
+        <div class="name">Layer8Culture</div>
+      </div>
+      <h1>The Content Engine,<br><span class="accent">productized</span>.</h1>
+      <p class="lead">An all-in-one social media manager that researches, designs, writes, approves, publishes, and measures premium content — for any brand. The system that runs Layer8Culture, packaged to sell.</p>
+      <div class="tag">"Technology has seven layers. <b>We're the eighth.</b>"</div>
+    </div>
+  </section>
+
+  <!-- 2 · THE OPPORTUNITY -->
+  <section class="slide">
+    <div class="stagger">
+      <div class="kicker">The opportunity</div>
+      <h2>Every business needs to post.<br>Almost none can keep it up.</h2>
+      <p class="lead">Consistent, on-brand social is the hardest part of growth. The options today all break down:</p>
+      <div class="grid-cards g3 stagger">
+        <div class="card"><span class="ico">💸</span><h3>Agencies</h3><p>$2k–$10k/mo, slow, and your brand voice lives in someone else's head.</p></div>
+        <div class="card"><span class="ico">🤖</span><h3>Generic AI tools</h3><p>Fast but spammy — off-brand captions and stock-feeling images that audiences scroll past.</p></div>
+        <div class="card"><span class="ico">⏳</span><h3>DIY</h3><p>Founders and creators run out of time, ideas, and momentum within weeks.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · THE BIG IDEA -->
+  <section class="slide">
+    <div class="stagger">
+      <div class="kicker">The big idea</div>
+      <h2>We already run a self-driving content engine.<br><span class="accent">Let's sell it.</span></h2>
+      <p class="lead">Layer8Culture's own Instagram is produced end-to-end by an automated pipeline with one human approval step. The same system — brand-trained, premium, hands-off — can run for any business. Productize it as a subscription.</p>
+      <div class="callout">🎯 <b>Sell the outcome:</b> a finished, on-brand post every day — approved in two minutes from a phone.</div>
+    </div>
+  </section>
+
+  <!-- 4 · WHAT IT IS -->
+  <section class="slide">
+    <div class="stagger">
+      <div class="kicker">What it is</div>
+      <h2>One loop. Every channel. <span class="accent">On autopilot.</span></h2>
+      <p class="lead">An all-in-one manager that owns the full content lifecycle, across brands and channels — so clients get agency-grade output at software prices.</p>
+      <div class="flow stagger">
+        <div class="step"><div class="dot">1</div><h3>Research</h3><p>Trends, news &amp; brand topics</p></div>
+        <div class="step"><div class="dot">2</div><h3>Create</h3><p>Writes copy + cinematic visuals</p></div>
+        <div class="step"><div class="dot">3</div><h3>Approve</h3><p>One-tap client sign-off</p></div>
+        <div class="step"><div class="dot">4</div><h3>Publish</h3><p>Auto-posts to every channel</p></div>
+        <div class="step"><div class="dot">5</div><h3>Measure</h3><p>Pulls performance data</p></div>
+        <div class="step"><div class="dot">6</div><h3>Improve</h3><p>Steers tomorrow's content</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · PLATFORM AT A GLANCE -->
+  <section class="slide">
+    <div class="kicker">The platform at a glance</div>
+    <h2>Five engines. One product.</h2>
+    <div class="grid-cards g5 stagger">
+      <div class="card"><span class="ico">🧠</span><h3>AI Brain</h3><p>Researches and writes on-brand posts in the client's voice.</p></div>
+      <div class="card"><span class="ico">🎨</span><h3>Visual Studio</h3><p>Generates cinematic images and video from a brand visual system.</p></div>
+      <div class="card"><span class="ico">✅</span><h3>Approval</h3><p>The human gate — clients approve before anything goes live.</p></div>
+      <div class="card"><span class="ico">📤</span><h3>Publisher</h3><p>Schedules and posts across connected social channels.</p></div>
+      <div class="card"><span class="ico">📈</span><h3>Insights Coach</h3><p>Reads results and feeds them back into the engine.</p></div>
+    </div>
+  </section>
+
+  <!-- 6 · HOW IT WORKS -->
+  <section class="slide">
+    <div class="stagger">
+      <div class="kicker">How it works</div>
+      <h2>Six steps. Fully automatic <span class="muted">— except one.</span></h2>
+      <div class="flow stagger">
+        <div class="step"><div class="dot">A</div><h3>Research</h3><p>Finds trends + brand topics</p></div>
+        <div class="step"><div class="dot">B</div><h3>Create</h3><p>Writes posts &amp; designs visuals</p></div>
+        <div class="step"><div class="dot">C</div><h3>Approve</h3><p>Client taps approve</p></div>
+        <div class="step"><div class="dot">D</div><h3>Publish</h3><p>Auto-posts on schedule</p></div>
+        <div class="step"><div class="dot">E</div><h3>Measure</h3><p>Pulls insights</p></div>
+        <div class="step"><div class="dot">F</div><h3>Improve</h3><p>Steers next content</p></div>
+      </div>
+      <p class="lead">The loop runs on always-on infrastructure. <span class="accent">The client's computer can be off.</span> The only human step is the approval — the trust that separates this from generic AI spam.</p>
+    </div>
+  </section>
+
+  <!-- 7 · BUILT TO SCALE TO MANY CLIENTS -->
+  <section class="slide">
+    <div class="stagger">
+      <div class="kicker">Why it scales</div>
+      <h2>Already multi-brand. Already <span class="accent">multi-channel.</span></h2>
+      <p class="lead">Each client is just a set of brand files plus connected channels — the same engine serves them all. We've already proven a second brand and multiple channels in production.</p>
+      <div class="grid-cards g3 stagger">
+        <div class="card"><span class="num">PROVEN</span><h3>Two brands live</h3><p>The flagship Layer8Culture brand and a separate 24/7 LoFi radio brand run on the same engine.</p></div>
+        <div class="card"><span class="num">MULTI-CHANNEL</span><h3>More than Instagram</h3><p>Instagram today; YouTube promos wired in; X &amp; TikTok ready to add per client.</p></div>
+        <div class="card"><span class="num">CONFIG-DRIVEN</span><h3>New client = new config</h3><p>Brand voice + visual files + channel keys. No new code to onboard a brand.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · WHY IT'S DIFFERENT -->
+  <section class="slide">
+    <div class="kicker">Why it's different</div>
+    <h2>Premium by design. <span class="accent">Not AI slop.</span></h2>
+    <div class="grid-cards g4 stagger">
+      <div class="card"><span class="ico">🔒</span><h3>Human approval gate</h3><p>Nothing publishes without a person's sign-off. Brand-safe by default.</p></div>
+      <div class="card"><span class="ico">🎙️</span><h3>Brand-trained voice</h3><p>Trained on the client's actual voice &amp; visual system — not a generic template.</p></div>
+      <div class="card"><span class="ico">🎬</span><h3>Cinematic visuals</h3><p>A composed visual style, not random stock-feeling AI images.</p></div>
+      <div class="card"><span class="ico">🗄️</span><h3>Owns-your-data</h3><p>Content and history live with the client — portable, auditable, theirs.</p></div>
+    </div>
+  </section>
+
+  <!-- 9 · POTENTIAL CLIENTS -->
+  <section class="slide">
+    <div class="stagger">
+      <div class="kicker">Potential clients</div>
+      <h2>Who buys this.</h2>
+      <p class="lead">Anyone who must stay visible but can't afford an agency or the time. Six high-fit segments:</p>
+      <div class="grid-cards g6 stagger">
+        <div class="card"><span class="ico">🎥</span><h3>Creators &amp; personal brands</h3><p>Coaches, founders-as-influencers, thought leaders who live on consistency.</p></div>
+        <div class="card"><span class="ico">🏪</span><h3>Local service businesses</h3><p>Gyms, salons, restaurants, real estate, clinics — premium look, no marketing team.</p></div>
+        <div class="card"><span class="ico">🛍️</span><h3>DTC &amp; e-commerce</h3><p>Product brands that need a steady, on-brand feed and launch content.</p></div>
+        <div class="card"><span class="ico">💼</span><h3>B2B founders &amp; SaaS</h3><p>Technical founders who want presence without becoming content marketers.</p></div>
+        <div class="card"><span class="ico">🎧</span><h3>Musicians &amp; labels</h3><p>Artists and lo-fi/ambient channels — a natural tie-in to our own LoFi brand.</p></div>
+        <div class="card"><span class="ico">🏢</span><h3>Agencies (white-label)</h3><p>Resell the engine under their own brand and scale client output without headcount.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 · WHERE IT IS TODAY (HONEST CURRENT STATE) -->
+  <section class="slide">
+    <div class="stagger">
+      <div class="kicker">Where it is today</div>
+      <h2>A working engine — <span class="accent">not yet a product.</span></h2>
+      <p class="lead">Being honest about the starting line is what makes the roadmap credible. Today the engine is single-tenant and builder-operated:</p>
+      <div class="chips stagger">
+        <span class="chip">single tenant (one brand owner)</span>
+        <span class="chip">runs on GitHub Actions cron</span>
+        <span class="chip">approval = merge a Pull Request</span>
+        <span class="chip">one self-hosted Postiz publisher</span>
+        <span class="chip">config &amp; secrets per repo</span>
+        <span class="chip red">no client dashboard yet</span>
+        <span class="chip red">no billing yet</span>
+      </div>
+      <p class="note">It's the proof and the prototype. The next slides show exactly what turns it into a sellable SaaS.</p>
+    </div>
+  </section>
+
+  <!-- 11 · THE GAP -->
+  <section class="slide">
+    <div class="stagger">
+      <div class="kicker">Production-readiness · the gap</div>
+      <h2>From one builder → <span class="accent">to many clients.</span></h2>
+      <div class="gap stagger">
+        <div class="col now">
+          <h3>🔧 Today (single-tenant)</h3>
+          <ul>
+            <li>One brand owner, technical, comfortable with GitHub.</li>
+            <li>Approval by merging a PR on the phone.</li>
+            <li>Per-repo brand files &amp; GitHub secrets.</li>
+            <li>One Postiz instance, one set of channel keys.</li>
+            <li>Scheduling via repo cron workflows.</li>
+          </ul>
+        </div>
+        <div class="col need">
+          <h3>🚀 To sell it (multi-tenant SaaS)</h3>
+          <ul>
+            <li>Accounts, orgs &amp; data isolation per client.</li>
+            <li>A friendly web/mobile approval dashboard.</li>
+            <li>Guided onboarding &amp; brand-intake wizard.</li>
+            <li>Per-client channel OAuth + scaled publishing.</li>
+            <li>Billing, metering, scheduling &amp; observability.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 · PRODUCTION-READINESS ROADMAP (PHASED) -->
+  <section class="slide">
+    <div class="stagger">
+      <div class="kicker">Production-readiness roadmap</div>
+      <h2>Three phases to <span class="accent">production-ready.</span></h2>
+      <div class="phases stagger">
+        <div class="phase p1">
+          <div class="ph">Phase 1</div>
+          <h3>MVP SaaS</h3>
+          <div class="when">Make it sellable</div>
+          <ul>
+            <li>Multi-tenancy + auth &amp; orgs</li>
+            <li>Web/mobile approval dashboard (replaces PR-merge)</li>
+            <li>Onboarding / brand-intake wizard</li>
+            <li>Per-client channel OAuth</li>
+            <li>Stripe billing + basic usage metering</li>
+          </ul>
+        </div>
+        <div class="phase p2">
+          <div class="ph">Phase 2</div>
+          <h3>Scale</h3>
+          <div class="when">Make it reliable</div>
+          <ul>
+            <li>Managed scheduler/queue (off per-repo cron)</li>
+            <li>Observability, retries &amp; SLAs</li>
+            <li>Analytics dashboard for clients</li>
+            <li>White-label + custom domains</li>
+            <li>More channels (X, TikTok, LinkedIn)</li>
+          </ul>
+        </div>
+        <div class="phase p3">
+          <div class="ph">Phase 3</div>
+          <h3>Enterprise</h3>
+          <div class="when">Make it trusted</div>
+          <ul>
+            <li>SSO + RBAC</li>
+            <li>SOC 2 / GDPR + audit trail</li>
+            <li>Content moderation &amp; brand-safety</li>
+            <li>Cost-control budgets per client</li>
+            <li>Public API + brand-template marketplace</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 · HOW IT'S PACKAGED -->
+  <section class="slide">
+    <div class="stagger">
+      <div class="kicker">Productization</div>
+      <h2>One engine, <span class="accent">three ways to sell it.</span></h2>
+      <div class="grid-cards g3 stagger">
+        <div class="card"><span class="num">SELF-SERVE</span><h3>SaaS subscription</h3><p>Clients sign up, complete a brand intake, connect channels, and approve posts from a dashboard. Tiered by brands, channels &amp; volume.</p></div>
+        <div class="card"><span class="num">WHITE-LABEL</span><h3>Agency / reseller</h3><p>Agencies run the engine under their own brand for many clients. Wholesale pricing, per-seat or per-client.</p></div>
+        <div class="card"><span class="num">DONE-FOR-YOU</span><h3>Managed service</h3><p>A premium retainer where we run the engine + strategy for the client. Highest touch, highest price.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 · PRICING MODELS -->
+  <section class="slide">
+    <div class="stagger">
+      <div class="kicker">Pricing models</div>
+      <h2>Built to monetize <span class="accent">four ways.</span></h2>
+      <div class="models stagger">
+        <div class="model"><h3>Per-brand subscription</h3><p>Flat monthly fee per brand, tiered by features and output. The core recurring revenue.</p><span class="how">$ / brand / month</span></div>
+        <div class="model"><h3>Usage-based add-ons</h3><p>Extra brands, extra channels, or higher AI-image volume billed on top of the base tier.</p><span class="how">$ / extra channel · $ / image pack</span></div>
+        <div class="model"><h3>Agency / white-label</h3><p>Wholesale per-seat or per-client pricing for resellers running many brands.</p><span class="how">$ / seat or wholesale / client</span></div>
+        <div class="model"><h3>Done-for-you retainer</h3><p>Managed service on top of the platform for hands-off premium clients.</p><span class="how">$ / month retainer</span></div>
+      </div>
+      <p class="note">⚠ Illustrative model structure — main cost driver (COGS) is OpenAI image generation + infra. All numbers editable.</p>
+    </div>
+  </section>
+
+  <!-- 15 · EXAMPLE TIER TABLE -->
+  <section class="slide">
+    <div class="stagger">
+      <div class="kicker">Example pricing · illustrative</div>
+      <h2>Simple tiers. <span class="accent">Clear value.</span></h2>
+      <div class="tiers stagger">
+        <div class="tier">
+          <div class="tn">Starter</div>
+          <div class="tp">$49<small>/mo</small></div>
+          <div class="for">Creators &amp; solo founders</div>
+          <ul><li>1 brand</li><li>1 channel</li><li>~15 posts / mo</li><li>Mobile approvals</li><li>Email support</li></ul>
+        </div>
+        <div class="tier feature">
+          <div class="badge">Popular</div>
+          <div class="tn">Growth</div>
+          <div class="tp">$149<small>/mo</small></div>
+          <div class="for">Small businesses</div>
+          <ul><li>1 brand</li><li>3 channels</li><li>Daily posting</li><li>Reels + carousels</li><li>Analytics digest</li></ul>
+        </div>
+        <div class="tier">
+          <div class="tn">Studio</div>
+          <div class="tp">$399<small>/mo</small></div>
+          <div class="for">Multi-brand / DTC</div>
+          <ul><li>3 brands</li><li>All channels</li><li>Priority generation</li><li>Custom visual style</li><li>Priority support</li></ul>
+        </div>
+        <div class="tier">
+          <div class="tn">Agency</div>
+          <div class="tp">Custom<small></small></div>
+          <div class="for">White-label resellers</div>
+          <ul><li>Unlimited brands</li><li>White-label + domain</li><li>Wholesale rate</li><li>Seat management</li><li>Dedicated support</li></ul>
+        </div>
+      </div>
+      <p class="note">⚠ Illustrative USD placeholders — swap in real price points after cost &amp; willingness-to-pay testing.</p>
+    </div>
+  </section>
+
+  <!-- 16 · ONBOARDING -->
+  <section class="slide">
+    <div class="stagger">
+      <div class="kicker">Onboarding</div>
+      <h2>A new client live <span class="accent">in a day.</span></h2>
+      <div class="flow stagger">
+        <div class="step"><div class="dot">1</div><h3>Brand intake</h3><p>Short guided questionnaire</p></div>
+        <div class="step"><div class="dot">2</div><h3>Voice files</h3><p>Generate voice &amp; visual system</p></div>
+        <div class="step"><div class="dot">3</div><h3>Connect channels</h3><p>OAuth to their socials</p></div>
+        <div class="step"><div class="dot">4</div><h3>First approval</h3><p>Approve post #1 from the dashboard</p></div>
+      </div>
+      <p class="lead">Low-touch onboarding is what makes the unit economics work — every client self-serves into a running engine.</p>
+    </div>
+  </section>
+
+  <!-- 17 · MOAT / WHY NOW -->
+  <section class="slide">
+    <div class="stagger">
+      <div class="kicker">The moat · why now</div>
+      <h2>Consistency is the moat.<br><span class="accent">We automate it.</span></h2>
+      <p class="lead">The hard part of growth isn't one good post — it's a great post every day, on-brand, forever. We pair that consistency with a premium brand system and AI, at a fraction of agency cost. The timing — capable AI + a proven pipeline — is now.</p>
+      <div class="chips stagger">
+        <span class="chip green">consistency at scale</span>
+        <span class="chip">premium brand system</span>
+        <span class="chip">a fraction of agency cost</span>
+        <span class="chip">proven in production</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 18 · BUSINESS MODEL -->
+  <section class="slide">
+    <div class="kicker">Business model · illustrative</div>
+    <h2>Recurring revenue, <span class="accent">low marginal cost.</span></h2>
+    <div class="metrics stagger">
+      <div class="metric"><div class="v"><span class="accent">Low</span></div><div class="l">Marginal cost per client — own infra + metered AI image generation.</div></div>
+      <div class="metric"><div class="v">Expansion</div><div class="l">Revenue grows as clients add brands, channels &amp; volume — net-revenue retention &gt; 100%.</div></div>
+      <div class="metric"><div class="v"><span class="accent">SaaS</span></div><div class="l">Predictable MRR with white-label &amp; done-for-you as higher-margin upsells.</div></div>
+    </div>
+    <p class="note">⚠ Directional / illustrative — validate COGS (OpenAI usage) and margins with real volume.</p>
+  </section>
+
+  <!-- 19 · GO-TO-MARKET -->
+  <section class="slide">
+    <div class="stagger">
+      <div class="kicker">Go-to-market</div>
+      <h2>Niche down. <span class="accent">Then expand.</span></h2>
+      <div class="grid-cards g4 stagger">
+        <div class="card"><span class="ico">🎯</span><h3>Wedge</h3><p>Win one niche first — creators or agencies — where the pain &amp; ROI are sharpest.</p></div>
+        <div class="card"><span class="ico">🟦</span><h3>Live case study</h3><p>Layer8Culture itself is the running demo — the brand the engine builds.</p></div>
+        <div class="card"><span class="ico">📣</span><h3>Content-led growth</h3><p>Use the product to market the product — founder- and content-led acquisition.</p></div>
+        <div class="card"><span class="ico">🤝</span><h3>Partnerships</h3><p>Agencies &amp; communities resell white-label and bring books of clients.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 20 · PROOF -->
+  <section class="slide">
+    <div class="kicker">Proof</div>
+    <h2>The demo is <span class="accent">already running.</span></h2>
+    <div class="metrics stagger">
+      <div class="metric"><div class="v"><span class="accent">2</span></div><div class="l">Brands in production on one engine — flagship + LoFi radio.</div></div>
+      <div class="metric"><div class="v">1 tap</div><div class="l">Human approval to publish — the brand-safety gate clients trust.</div></div>
+      <div class="metric"><div class="v"><span class="accent">24/7</span></div><div class="l">Hands-off operation — research, create &amp; schedule while you sleep.</div></div>
+    </div>
+    <p class="lead">Layer8Culture isn't a pitch deck mockup — it's the live proof that the engine works. The product is the brand, and the brand is the product.</p>
+  </section>
+
+  <!-- 21 · CLOSING -->
+  <section class="slide closing">
+    <div class="stagger">
+      <div class="kicker" style="justify-content:center">The pitch</div>
+      <h2>Sell <span class="accent">calm confidence</span> as a service.</h2>
+      <p class="lead" style="margin-left:auto;margin-right:auto">Premium, automated, on-brand social for any business — built on the engine that already runs ours.</p>
+      <div class="tag">Next: pick the wedge, build the MVP dashboard, onboard the first ten clients.</div>
+    </div>
+  </section>
+
+</main>
+
+<div class="dots" id="dots"></div>
+<div class="chrome">
+  <div class="counter"><b id="cur">01</b> / <span id="total">21</span></div>
+  <div class="arrows">
+    <button id="prev" aria-label="Previous">←</button>
+    <button id="next" aria-label="Next">→</button>
+  </div>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let i = 0;
+  const progress = document.getElementById('progress');
+  const cur = document.getElementById('cur');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  const dotsWrap = document.getElementById('dots');
+  document.getElementById('total').textContent = String(total).padStart(2,'0');
+
+  // build dots
+  slides.forEach((_, idx) => {
+    const b = document.createElement('button');
+    b.setAttribute('aria-label', 'Go to slide ' + (idx+1));
+    b.addEventListener('click', () => go(idx));
+    dotsWrap.appendChild(b);
+  });
+  const dots = Array.from(dotsWrap.children);
+
+  function go(n){
+    n = Math.max(0, Math.min(total-1, n));
+    slides[i].classList.remove('active');
+    i = n;
+    slides[i].classList.add('active');
+    // restart stagger
+    const s = slides[i].querySelector('.stagger');
+    if (s){ s.style.animation='none'; void s.offsetWidth; s.style.animation=''; }
+    progress.style.width = ((i+1)/total*100) + '%';
+    cur.textContent = String(i+1).padStart(2,'0');
+    prev.disabled = i===0;
+    next.disabled = i===total-1;
+    dots.forEach((d,idx)=>d.classList.toggle('on', idx===i));
+    slides[i].scrollTop = 0;
+  }
+
+  prev.addEventListener('click', ()=>go(i-1));
+  next.addEventListener('click', ()=>go(i+1));
+  document.addEventListener('keydown', e=>{
+    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();go(i+1);}
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(i-1);}
+    if(e.key==='Home')go(0);
+    if(e.key==='End')go(total-1);
+  });
+  // touch swipe
+  let x0=null;
+  document.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});
+  document.addEventListener('touchend',e=>{
+    if(x0===null)return;
+    const dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>50) go(i + (dx<0?1:-1));
+    x0=null;
+  });
+  go(0);
+</script>
+</body>
+</html>
