@@ -131,10 +131,15 @@ headline; vary the scene per slide so the set doesn't look repetitive.
   "subtext": "OPTIONAL.",
   "accent": "OPTIONAL.",
   "reel": {
-    "mode": "motion",            // "motion" = animate the still (default, always works)
-    "duration_sec": 8,            // 5-15
-    "beats": ["HOOK LINE", "PAYOFF LINE"],   // 1-3 short on-screen text beats, upper third
-    "audio": "lofi",             // "lofi" bed if available, else "none"
+    "mode": "sora",              // "sora" = animate the still with Azure Sora-2 (DEFAULT)
+    "sora_prompt": "A cinematic motion description per visual-style.md: what moves and
+         how (slow push-in, drifting light, particles), the mood, and a clear first
+         beat. Sora animates the branded still as the first frame and adds its OWN
+         synced audio — the output is CLEAN (no on-screen text), so don't ask for any.",
+    "seconds": 8,                 // Sora clip length — one of 4 / 8 / 12
+    "duration_sec": 8,            // used only by the "motion" fallback (5-15)
+    "beats": ["HOOK LINE", "PAYOFF LINE"],   // fallback-only on-screen beats (motion mode)
+    "audio": "lofi",             // fallback-only: "lofi" bed for motion, else "none"
     "clip": {                     // ONLY when a Tech Thursday recording exists in assets/library/
        "source_file": "assets/library/<show>.mp4",
        "query": "a quotable line to locate in the transcript",
@@ -143,8 +148,11 @@ headline; vary the scene per slide so the set doesn't look repetitive.
   }
 }
 Reel craft: the first ~1 second must hook (a claim, a question, a number). Default to
-"motion" mode unless a real show video is present in assets/library/ (then use "clip"
-with a transcript query). Consider trial_reel:true for pure-reach reels.
+"sora" mode — write a strong "sora_prompt" so the branded still comes alive with its
+own cinematic audio (no text overlays in Sora output; the "headline"/"beats" are only
+used by the "motion" fallback and the cover frame). Use "clip" only when a real show
+recording exists in assets/library/ (then add a transcript query). "motion" is the
+automatic fallback if Sora is unavailable. Consider trial_reel:true for pure-reach reels.
 
 ## VOICE RULES (non-negotiable)
 - Lead with belief. Short cinematic lines. Don't overexplain. Make tech human. Show the work.

@@ -6,17 +6,25 @@ assets/generated/<post_id>.mp4 plus a cover frame, then writes the paths back to
 the post's visual dict. Designed to run after openai_gen.py has already rendered
 assets/generated/<post_id>.png for motion reels.
 
-Requires: ffmpeg available on PATH. Uses only Python stdlib + Pillow.
+Requires: ffmpeg available on PATH. Uses Python stdlib + Pillow, and (for the
+Sora-2 reel backend) requests. Reels render via Azure Sora-2 when the
+AZURE_OPENAI_* env is configured, falling back to the ffmpeg "motion" renderer.
 """
+import io
 import json
 import math
+import os
 import pathlib
 import re
 import shutil
 import subprocess
 import sys
+import time
 from dataclasses import dataclass
 from typing import Iterable
+
+import requests
+from PIL import Image
 
 
 WIDTH = 1080
@@ -35,6 +43,32 @@ LOFI_BEDS = [
 ]
 
 SOFT_WHITE = "0xF5F5F5"
+
+# --- Azure Sora-2 video backend --------------------------------------------
+# Reels render via Azure OpenAI Sora-2 when configured. It reuses the same
+# resource (endpoint + key) as the gpt-image backend; only the deployment name
+# differs. The REST surface is the OpenAI-style async "videos" API:
+#   POST {endpoint}/openai/v1/videos?api-version=preview   (create job)
+#   GET  {endpoint}/openai/v1/videos/{id}?api-version=preview        (poll)
+#   GET  {endpoint}/openai/v1/videos/{id}/content?api-version=preview (download)
+# The endpoint must be the *.openai.azure.com host. Sora keeps its own audio and
+# the output is left clean (no composited branding). When Sora isn't configured
+# or a job fails/times out, reel_gen falls back to the ffmpeg "motion" renderer.
+AZURE_OPENAI_ENDPOINT = os.environ.get("AZURE_OPENAI_ENDPOINT", "").strip().rstrip("/")
+AZURE_OPENAI_API_KEY = os.environ.get("AZURE_OPENAI_API_KEY", "").strip()
+SORA_DEPLOYMENT = os.environ.get("AZURE_OPENAI_VIDEO_DEPLOYMENT", "sora-2").strip()
+SORA_API_VERSION = os.environ.get("AZURE_OPENAI_VIDEO_API_VERSION", "preview").strip()
+# Brand aspect -> a Sora-supported canvas size (square is coerced to vertical).
+SORA_SIZE = {"9:16": "720x1280", "16:9": "1280x720", "1:1": "720x1280"}
+SORA_DEFAULT_SIZE = "720x1280"
+SORA_ALLOWED_SECONDS = (4, 8, 12)
+SORA_DEFAULT_SECONDS = 8
+SORA_POLL_INTERVAL = 10.0
+SORA_TIMEOUT_SEC = 600.0
+
+
+def sora_configured() -> bool:
+    return bool(AZURE_OPENAI_ENDPOINT and AZURE_OPENAI_API_KEY)
 
 
 @dataclass
@@ -535,6 +569,150 @@ def generate_clip(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None:
     return str(out_path), str(cover_path)
 
 
+def _sora_seconds(reel: dict) -> int:
+    """Resolve and snap the requested clip length to a Sora-supported value."""
+    raw = reel.get("seconds", reel.get("duration_sec"))
+    try:
+        val = int(round(float(raw)))
+    except (TypeError, ValueError):
+        return SORA_DEFAULT_SECONDS
+    return min(SORA_ALLOWED_SECONDS, key=lambda s: abs(s - val))
+
+
+def _sora_size(visual: dict, reel: dict) -> str:
+    aspect = reel.get("aspect") or visual.get("aspect") or "9:16"
+    return SORA_SIZE.get(aspect, SORA_DEFAULT_SIZE)
+
+
+def _sora_headers(json_body: bool = False) -> dict:
+    headers = {"api-key": AZURE_OPENAI_API_KEY}
+    if json_body:
+        headers["Content-Type"] = "application/json"
+    return headers
+
+
+def _sora_create_job(prompt: str, size: str, seconds: int,
+                     still_path: pathlib.Path | None) -> requests.Response:
+    """Create a Sora-2 video job. With ``still_path`` set, animate that still as the
+    first frame via image+text (``input_reference``); otherwise text-to-video.
+    """
+    url = f"{AZURE_OPENAI_ENDPOINT}/openai/v1/videos?api-version={SORA_API_VERSION}"
+    data = {
+        "model": SORA_DEPLOYMENT,
+        "prompt": prompt,
+        "size": size,
+        "seconds": str(seconds),
+    }
+    if still_path is not None:
+        width, height = (int(part) for part in size.split("x"))
+        with Image.open(still_path) as im:
+            # input_reference must match the requested size exactly.
+            resized = im.convert("RGB").resize((width, height))
+            buf = io.BytesIO()
+            resized.save(buf, format="PNG")
+        buf.seek(0)
+        files = {"input_reference": ("still.png", buf, "image/png")}
+        return requests.post(url, headers=_sora_headers(), data=data,
+                             files=files, timeout=60)
+    return requests.post(url, headers=_sora_headers(json_body=True), json=data,
+                         timeout=60)
+
+
+def _sora_poll(job_id: str) -> dict | None:
+    """Poll a Sora job until it reaches a terminal state or the timeout elapses."""
+    url = f"{AZURE_OPENAI_ENDPOINT}/openai/v1/videos/{job_id}?api-version={SORA_API_VERSION}"
+    deadline = time.time() + SORA_TIMEOUT_SEC
+    while time.time() < deadline:
+        time.sleep(SORA_POLL_INTERVAL)
+        try:
+            status = requests.get(url, headers=_sora_headers(), timeout=60).json()
+        except (requests.RequestException, ValueError):
+            continue
+        if status.get("status") in ("completed", "succeeded", "failed", "cancelled"):
+            return status
+    return None
+
+
+def _sora_download(job_id: str, out_path: pathlib.Path) -> bool:
+    url = (f"{AZURE_OPENAI_ENDPOINT}/openai/v1/videos/{job_id}/content"
+           f"?api-version={SORA_API_VERSION}")
+    try:
+        resp = requests.get(url, headers=_sora_headers(), timeout=120)
+    except requests.RequestException:
+        return False
+    if not resp.ok or not resp.content:
+        return False
+    out_path.write_bytes(resp.content)
+    return True
+
+
+def generate_sora(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None:
+    """Render a reel via Azure Sora-2 (image+text when a still exists, else text).
+
+    Returns ``(video_path, cover_path)`` on success, or ``None`` so the caller can
+    fall back to the ffmpeg motion renderer (Sora unset, job failed/blocked/timed
+    out, or download error). The output keeps Sora's native audio and is left clean
+    (no composited branding).
+    """
+    if not sora_configured():
+        return None
+    post_id = str(post.get("id", "")).strip()
+    visual = post.setdefault("visual", {})
+    reel = visual.get("reel") or {}
+    prompt = reel.get("sora_prompt") or visual.get("openai_prompt")
+    if not prompt:
+        print(f"  ! {post_id}: no reel.sora_prompt/visual.openai_prompt; Sora skipped")
+        return None
+
+    size = _sora_size(visual, reel)
+    seconds = _sora_seconds(reel)
+    still_path = out_dir / f"{post_id}.png"
+    out_path = out_dir / f"{post_id}.mp4"
+    cover_path = out_dir / f"{post_id}-cover.png"
+
+    # Prefer image+text (anchors brand visuals); on a moderation block, retry as
+    # plain text-to-video so the reel still renders.
+    attempts: list[pathlib.Path | None] = []
+    if still_path.exists():
+        attempts.append(still_path)
+    attempts.append(None)
+
+    for ref in attempts:
+        label = "image+text" if ref is not None else "text"
+        try:
+            resp = _sora_create_job(prompt, size, seconds, ref)
+        except requests.RequestException as e:
+            print(f"  x {post_id}: Sora create failed ({e})")
+            return None
+        if not resp.ok:
+            print(f"  x {post_id}: Sora create HTTP {resp.status_code} "
+                  f"({resp.text[:160]})")
+            continue
+        job_id = resp.json().get("id")
+        print(f"  > {post_id}: Sora job {job_id} ({label}, {size}, {seconds}s) — polling")
+        final = _sora_poll(job_id)
+        if final is None:
+            print(f"  x {post_id}: Sora job {job_id} timed out")
+            return None
+        status = final.get("status")
+        if status in ("completed", "succeeded"):
+            if not _sora_download(job_id, out_path):
+                print(f"  x {post_id}: Sora download failed")
+                return None
+            if not export_cover(out_path, cover_path, post_id,
+                                timestamp=min(1.0, seconds / 2)):
+                return None
+            print(f"  + {post_id} -> {out_path} (Sora {label})")
+            return str(out_path), str(cover_path)
+        err = (final.get("error") or {}).get("code")
+        print(f"  ! {post_id}: Sora job {status} ({err})")
+        if err == "moderation_blocked" and ref is not None:
+            print(f"  > {post_id}: retrying Sora as text-only after moderation block")
+            continue
+        return None
+    return None
+
+
 def generate(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None:
     post_id = str(post.get("id", "")).strip()
     if not post_id:
@@ -542,12 +720,19 @@ def generate(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None:
         return None
     visual = post.setdefault("visual", {})
     reel = visual.get("reel") or {}
-    mode = str(reel.get("mode", "motion")).lower()
+    mode = str(reel.get("mode", "sora")).lower()
     try:
         if mode == "clip":
             return generate_clip(post, out_dir)
-        if mode != "motion":
-            print(f"  ! {post_id}: unknown reel mode {mode!r}; using motion")
+        if mode == "motion":
+            return generate_motion(post, out_dir)
+        if mode != "sora":
+            print(f"  ! {post_id}: unknown reel mode {mode!r}; using sora")
+        result = generate_sora(post, out_dir)
+        if result:
+            return result
+        if sora_configured():
+            print(f"  > {post_id}: Sora unavailable/failed; falling back to motion")
         return generate_motion(post, out_dir)
     except Exception as e:  # noqa: BLE001 - one bad reel must not abort the queue
         print(f"  x {post_id}: reel generation failed ({e})")

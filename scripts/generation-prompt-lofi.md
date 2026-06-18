@@ -107,10 +107,15 @@ NOT set logo_position/logo_opacity.
   "headline": "REQUIRED short title-card line (e.g. NIGHT CODING / SUNRISE BUILD).",
   "subtext": "OPTIONAL (e.g. STUDY • BUILD • FOCUS).",
   "reel": {
-    "mode": "motion",
-    "duration_sec": 10,             // 8-12 for a clean loop
-    "beats": ["NIGHT CODING", "STUDY. BUILD. FOCUS."],  // 1-2 minimal beats, upper third
-    "audio": "lofi"
+    "mode": "sora",                 // "sora" = Azure Sora-2 animates the still (DEFAULT)
+    "sora_prompt": "A calm cinematic loop description per the lofi visual style: gentle
+         drifting motion (slow push, soft light, rain on glass, steam), the studio mood,
+         and an unhurried first beat. Sora animates the branded still and adds its OWN
+         ambient audio — output is CLEAN (no on-screen text).",
+    "seconds": 8,                   // Sora clip length — one of 4 / 8 / 12
+    "duration_sec": 10,             // used only by the "motion" fallback (8-12 for a clean loop)
+    "beats": ["NIGHT CODING", "STUDY. BUILD. FOCUS."],  // fallback-only minimal beats (motion mode)
+    "audio": "lofi"                  // fallback-only: lofi bed for the motion loop
   }
 }
 
