@@ -11,7 +11,7 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
   Copilot CLI researches the day's AI news + generates posts + visual prompts
         │
         ▼
-  OpenAI generates fresh visuals per post (image / carousel slides),
+  OpenAI generates fresh visuals per post (image / carousel slides) at 2K,
   Sora-2 (Azure) renders Reels from the stills — ffmpeg is the fallback
         │
         ▼
@@ -66,6 +66,10 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
    | `AZURE_OPENAI_API_VERSION` | **Optional** repo **variable** (Settings → Variables → Actions), not a secret. The Azure API version that supports gpt-image generation/edits. Defaults to `2025-04-01-preview` when unset. |
    | `AZURE_OPENAI_VIDEO_DEPLOYMENT` | **Optional** repo **variable** (not a secret). The **deployment name** of your Sora-2 video model on Azure (e.g. `sora-2`). When set (with the `AZURE_OPENAI_ENDPOINT`/`AZURE_OPENAI_API_KEY` above), `reel_gen.py` renders Reels with Sora-2; otherwise it falls back to ffmpeg "motion". |
    | `AZURE_OPENAI_VIDEO_API_VERSION` | **Optional** repo **variable** (not a secret). The Azure API version for Sora video. Defaults to `preview` when unset. |
+   | `AZURE_OPENAI_VIDEO_SIZE` | **Optional** repo **variable** (not a secret). Explicit Sora canvas size, e.g. `1024x1792`. The base `sora-2` model supports only `720x1280` / `1280x720` (the default); the 2K tier (`1024x1792` / `1792x1024`) needs a **`sora-2-pro`** deployment — point `AZURE_OPENAI_VIDEO_DEPLOYMENT` at it and set this to `1024x1792`. |
+   | `OPENAI_IMAGE_QUALITY` | **Optional** repo **variable** (not a secret). Image quality tier — `low` / `medium` / `high`. Defaults to **`high`** when empty/unset. A post can still override per item via `visual.quality`. |
+   | `OPENAI_IMAGE_2K` | **Optional** repo **variable** (not a secret). Whether to upscale each still to a **2K master** (long edge `OPENAI_IMAGE_LONG_EDGE`) before compositing brand type. **On** by default; set `0` to disable. |
+   | `OPENAI_IMAGE_LONG_EDGE` | **Optional** repo **variable** (not a secret). Target long-edge in px for the 2K master. Defaults to `2048` when empty/unset. |
    | `POSTIZ_URL` | e.g. `https://post.layer8culture.io` |
    | `POSTIZ_API_KEY` | From your Postiz instance |
    | `LOFI_IG_CHANNEL_ID` | **Optional override.** The Layer8Culture Radio Instagram channel is already wired in `post_to_postiz.py`; set this only to point lofi posts at a different Postiz integration ID (e.g. after re-connecting the channel). |
