@@ -89,7 +89,7 @@ Common fields on EVERY post:
   "subtext": "OPTIONAL one short supporting line (e.g. STUDY • BUILD • FOCUS or NOW
        LIVE ON YOUTUBE).",
   "accent": "OPTIONAL single word taken verbatim from the headline (rendered accent).",
-  "quality": "low | medium | high",  // exactly ONE post per run = 'high' (hero); rest 'medium'
+  "quality": "low | medium | high",  // OPTIONAL; defaults to 'high' (2K master). Use 'low'/'medium' only for quick drafts
   "aspect": "1:1 | 9:16"             // stories should be '9:16'
 }
 NOTE: the lofi account has NO composited wordmark (skipped automatically) — brand
@@ -100,7 +100,7 @@ NOT set logo_position/logo_opacity.
 {
   "source": "openai",
   "aspect": "9:16",
-  "quality": "medium",
+  "quality": "high",
   "openai_prompt": "LOFI BASE PROMPT (9:16) — the cinematic studio still that gets
        animated into a calm loop. Keep the lower third and upper third calm/simple
        for the minimal overlay beats.",
@@ -123,7 +123,7 @@ NOT set logo_position/logo_opacity.
 {
   "source": "openai",
   "aspect": "1:1",
-  "quality": "medium",
+  "quality": "high",
   "slides": [
     { "openai_prompt": "...LOFI BASE PROMPT...", "headline": "COVER", "role": "cover" },
     { "openai_prompt": "...", "headline": "POINT", "role": "value" },

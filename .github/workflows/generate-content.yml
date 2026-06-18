@@ -56,10 +56,15 @@ jobs:
           AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
           AZURE_OPENAI_IMAGE_DEPLOYMENT: ${{ secrets.AZURE_OPENAI_IMAGE_DEPLOYMENT }}
           AZURE_OPENAI_API_VERSION: ${{ vars.AZURE_OPENAI_API_VERSION }}
+          # Premium image defaults: quality "high" + 2K master (empty/unset = high/on).
+          OPENAI_IMAGE_QUALITY: ${{ vars.OPENAI_IMAGE_QUALITY }}
+          OPENAI_IMAGE_2K: ${{ vars.OPENAI_IMAGE_2K }}
+          OPENAI_IMAGE_LONG_EDGE: ${{ vars.OPENAI_IMAGE_LONG_EDGE }}
           # Reel backend: Sora-2 (Azure) renders format:"reel" posts; it reuses the
           # AZURE_OPENAI_ENDPOINT/KEY above and falls back to ffmpeg motion if unset.
           AZURE_OPENAI_VIDEO_DEPLOYMENT: ${{ vars.AZURE_OPENAI_VIDEO_DEPLOYMENT }}
           AZURE_OPENAI_VIDEO_API_VERSION: ${{ vars.AZURE_OPENAI_VIDEO_API_VERSION }}
+          AZURE_OPENAI_VIDEO_SIZE: ${{ vars.AZURE_OPENAI_VIDEO_SIZE }}
         run: |
           pip install openai requests pillow
           # Process tomorrow's queue (the file the Copilot step just generated).

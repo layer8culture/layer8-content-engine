@@ -36,7 +36,7 @@ import os
 import string
 import sys
 import pathlib
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageOps
 from openai import OpenAI, AzureOpenAI, OpenAIError
 
 # ---------------------------------------------------------------------------
@@ -48,10 +48,13 @@ from openai import OpenAI, AzureOpenAI, OpenAIError
 # ---------------------------------------------------------------------------
 IMAGE_MODEL = os.environ.get("OPENAI_IMAGE_MODEL", "gpt-image-2")
 # Quality tier: "low" (drafts), "medium", "high" (hero assets). The module
-# default is "medium" (cost-safe); a post sets visual.quality per item, and the
-# generator marks exactly one daily hero as "high".
-IMAGE_QUALITY = os.environ.get("OPENAI_IMAGE_QUALITY", "medium")
+# default is "high" (the Azure benefit is uncharged, so favour quality); a post
+# can still set visual.quality per item to "low"/"medium" for drafts. An empty
+# OPENAI_IMAGE_QUALITY (e.g. an unset Actions variable) falls back to "high".
+IMAGE_QUALITY = (os.environ.get("OPENAI_IMAGE_QUALITY") or "high").strip().lower()
 VALID_QUALITIES = {"low", "medium", "high"}
+if IMAGE_QUALITY not in VALID_QUALITIES:
+    IMAGE_QUALITY = "high"
 # Brand aspect ratio -> gpt-image-2 supported canvas size.
 ASPECT_SIZE = {
     "1:1": "1024x1024",
@@ -59,6 +62,17 @@ ASPECT_SIZE = {
     "16:9": "1536x1024",   # landscape
 }
 DEFAULT_SIZE = "1024x1024"
+
+# 2K master: gpt-image-2 caps natively at a 1536px long edge, so we LANCZOS-
+# upscale each rendered still to IMAGE_LONG_EDGE (default 2048) *before*
+# compositing brand type/wordmark, keeping typography crisp at full resolution.
+# Aspect ratio is preserved. Disable with OPENAI_IMAGE_2K=0 (empty/unset = on).
+IMAGE_2K = os.environ.get("OPENAI_IMAGE_2K", "1").strip().lower() not in (
+    "0", "false", "no", "off")
+try:
+    IMAGE_LONG_EDGE = int(os.environ.get("OPENAI_IMAGE_LONG_EDGE") or "2048")
+except ValueError:
+    IMAGE_LONG_EDGE = 2048
 
 # ---------------------------------------------------------------------------
 # Image backend selection: Azure OpenAI (preferred when configured) or direct
@@ -347,6 +361,23 @@ def _decode_b64_image(result) -> bytes:
     return base64.b64decode(b64)
 
 
+def _upscale_to_2k(path: pathlib.Path) -> None:
+    """Upscale a rendered still so its long edge is ``IMAGE_LONG_EDGE`` px, keeping
+    the native aspect ratio (LANCZOS). No-op when disabled or already at/above the
+    target — gpt-image-2 maxes at a 1536px long edge, so this lifts stills to a 2K
+    master before brand type is composited on top."""
+    if not IMAGE_2K:
+        return
+    with Image.open(path) as im:
+        im = im.convert("RGB")
+        w, h = im.size
+        long_edge = max(w, h)
+        if long_edge >= IMAGE_LONG_EDGE:
+            return
+        scale = IMAGE_LONG_EDGE / long_edge
+        im.resize((round(w * scale), round(h * scale)), Image.LANCZOS).save(path)
+
+
 def _render_image(client, model: str, image_id: str, visual: dict,
                   account: str | None, out_dir: pathlib.Path) -> str | None:
     """Render one OpenAI image for ``visual``, composite the branded headline
@@ -414,6 +445,13 @@ def _render_image(client, model: str, image_id: str, visual: dict,
             image_bytes = _decode_b64_image(result)
 
         out_path.write_bytes(image_bytes)
+
+        # Upscale to a 2K master before laying brand type so typography + wordmark
+        # are composited at full resolution (gpt-image-2 caps at 1536px natively).
+        try:
+            _upscale_to_2k(out_path)
+        except Exception as e:  # noqa: BLE001 - never lose a good image over upscale
+            print(f"  ! {image_id}: 2K upscale skipped ({e})")
 
         # Composite branded headline typography (infographic / title-card style).
         # The image models render garbled text, so they're prompted to leave clean

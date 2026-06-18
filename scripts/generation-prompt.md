@@ -90,7 +90,7 @@ Common fields on EVERY post:
   "accent": "OPTIONAL single word taken verbatim from the headline, rendered Electric
        Blue. Must appear in the headline.",
   "overlay_position": "OPTIONAL 'lower-left' (default) or 'lower-center'.",
-  "quality": "low | medium | high",  // exactly ONE post per day = 'high' (the hero); rest 'medium'
+  "quality": "low | medium | high",  // OPTIONAL; defaults to 'high' (2K master). Use 'low'/'medium' only for quick drafts
   "aspect": "1:1 | 9:16",            // stories should be '9:16'
   "logo_position": "OPTIONAL top-left|top-right|bottom-left|bottom-right|center (default top-right)",
   "logo_subtle": false,
@@ -104,7 +104,7 @@ their reach through replies and taps.
 {
   "source": "openai",
   "aspect": "1:1",                 // or "9:16" for a taller carousel; applies to all slides
-  "quality": "medium",            // applies to all slides
+  "quality": "high",            // applies to all slides
   "slides": [
     { "openai_prompt": "...per visual-style.md...", "headline": "HOOK COVER",
       "subtext": "what they'll learn", "accent": "ONE", "role": "cover" },
@@ -124,7 +124,7 @@ headline; vary the scene per slide so the set doesn't look repetitive.
 {
   "source": "openai",
   "aspect": "9:16",
-  "quality": "medium",
+  "quality": "high",
   "openai_prompt": "...per visual-style.md... — the cinematic BASE STILL that gets
        animated. Keep the lower third clear; the upper third hosts on-screen beats.",
   "headline": "REQUIRED title-card headline composited on the still.",

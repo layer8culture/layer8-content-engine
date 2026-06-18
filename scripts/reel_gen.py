@@ -24,7 +24,7 @@ from dataclasses import dataclass
 from typing import Iterable
 
 import requests
-from PIL import Image
+from PIL import Image, ImageOps
 
 
 WIDTH = 1080
@@ -59,8 +59,14 @@ AZURE_OPENAI_API_KEY = os.environ.get("AZURE_OPENAI_API_KEY", "").strip()
 SORA_DEPLOYMENT = os.environ.get("AZURE_OPENAI_VIDEO_DEPLOYMENT", "sora-2").strip()
 SORA_API_VERSION = os.environ.get("AZURE_OPENAI_VIDEO_API_VERSION", "preview").strip()
 # Brand aspect -> a Sora-supported canvas size (square is coerced to vertical).
+# The base "sora-2" model supports 720x1280 and 1280x720. The higher-resolution
+# 2K tier (1024x1792 / 1792x1024) requires a "sora-2-pro" deployment — point
+# AZURE_OPENAI_VIDEO_DEPLOYMENT at it and set AZURE_OPENAI_VIDEO_SIZE=1024x1792.
 SORA_SIZE = {"9:16": "720x1280", "16:9": "1280x720", "1:1": "720x1280"}
 SORA_DEFAULT_SIZE = "720x1280"
+# Optional explicit size override (e.g. "1024x1792" with a sora-2-pro deployment
+# for premium 2K reels). When set it applies regardless of aspect.
+SORA_SIZE_OVERRIDE = os.environ.get("AZURE_OPENAI_VIDEO_SIZE", "").strip()
 SORA_ALLOWED_SECONDS = (4, 8, 12)
 SORA_DEFAULT_SECONDS = 8
 SORA_POLL_INTERVAL = 10.0
@@ -580,6 +586,8 @@ def _sora_seconds(reel: dict) -> int:
 
 
 def _sora_size(visual: dict, reel: dict) -> str:
+    if SORA_SIZE_OVERRIDE:
+        return SORA_SIZE_OVERRIDE
     aspect = reel.get("aspect") or visual.get("aspect") or "9:16"
     return SORA_SIZE.get(aspect, SORA_DEFAULT_SIZE)
 
@@ -606,8 +614,10 @@ def _sora_create_job(prompt: str, size: str, seconds: int,
     if still_path is not None:
         width, height = (int(part) for part in size.split("x"))
         with Image.open(still_path) as im:
-            # input_reference must match the requested size exactly.
-            resized = im.convert("RGB").resize((width, height))
+            # input_reference must match the requested size exactly; cover-crop
+            # (ImageOps.fit) to fill the canvas without stretching the still.
+            resized = ImageOps.fit(im.convert("RGB"), (width, height),
+                                   Image.LANCZOS)
             buf = io.BytesIO()
             resized.save(buf, format="PNG")
         buf.seek(0)
