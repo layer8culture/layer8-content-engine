@@ -12,7 +12,7 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
         │
         ▼
   OpenAI generates fresh visuals per post (image / carousel slides),
-  ffmpeg renders Reels (video) from the stills
+  Sora-2 (Azure) renders Reels from the stills — ffmpeg is the fallback
         │
         ▼
   Pull Request opened (with a visual preview)  ──►  YOU review/edit/merge (GitHub mobile)
@@ -64,6 +64,8 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
    | `AZURE_OPENAI_API_KEY` | **Optional.** Key for the Azure OpenAI resource above. |
    | `AZURE_OPENAI_IMAGE_DEPLOYMENT` | **Optional.** The **deployment name** of your gpt-image model on Azure (this is passed as the model id — not `gpt-image-2`). |
    | `AZURE_OPENAI_API_VERSION` | **Optional** repo **variable** (Settings → Variables → Actions), not a secret. The Azure API version that supports gpt-image generation/edits. Defaults to `2025-04-01-preview` when unset. |
+   | `AZURE_OPENAI_VIDEO_DEPLOYMENT` | **Optional** repo **variable** (not a secret). The **deployment name** of your Sora-2 video model on Azure (e.g. `sora-2`). When set (with the `AZURE_OPENAI_ENDPOINT`/`AZURE_OPENAI_API_KEY` above), `reel_gen.py` renders Reels with Sora-2; otherwise it falls back to ffmpeg "motion". |
+   | `AZURE_OPENAI_VIDEO_API_VERSION` | **Optional** repo **variable** (not a secret). The Azure API version for Sora video. Defaults to `preview` when unset. |
    | `POSTIZ_URL` | e.g. `https://post.layer8culture.io` |
    | `POSTIZ_API_KEY` | From your Postiz instance |
    | `LOFI_IG_CHANNEL_ID` | **Optional override.** The Layer8Culture Radio Instagram channel is already wired in `post_to_postiz.py`; set this only to point lofi posts at a different Postiz integration ID (e.g. after re-connecting the channel). |
@@ -122,7 +124,7 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
   `followers.json`, `insights-digest.md`); the digest steers next-day generation.
 - `assets/library/` — your existing branded graphics + optional lofi audio bed
   (`lofi-bed.mp3`) and Tech Thursday recordings (for clip Reels).
-- `assets/generated/` — OpenAI/ffmpeg outputs, named by post ID (images, carousel
+- `assets/generated/` — OpenAI/Sora/ffmpeg outputs, named by post ID (images, carousel
   slides, reel mp4s + covers).
 - `scripts/` — the machinery (`openai_gen.py` images, `reel_gen.py` video,
   `post_to_postiz.py` publishing, `list_postiz_channels.py` channel-ID lookup,
