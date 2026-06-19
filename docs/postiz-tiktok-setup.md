@@ -129,6 +129,61 @@ to **≤5 Direct Posts / 24h** on a **private** account. So:
 See TikTok's
 [Direct Post developer guidelines](https://developers.tiktok.com/doc/content-sharing-guidelines#direct_post_api_-_developer_guidelines).
 
+## App review — product & scope justifications
+
+When you submit the TikTok app for review, the form asks: *"Explain how each product
+and scope works within your app or website."* Paste-ready, accurate answers (this is a
+self-hosted scheduling tool that posts the owner's own videos to the owner's own
+account — keep every claim truthful and scoped to that):
+
+**App overview (lead with this):**
+
+> This app is a self-hosted social media scheduling tool that lets the account owner
+> connect their own TikTok account and publish their own pre-produced short videos to
+> it on a schedule. It does not offer public sign-in, social discovery, or access to
+> any other users' content — only the authenticated owner's own account.
+
+**Login Kit:**
+
+> Login Kit is used solely for OAuth authorization so the account owner can connect
+> their own TikTok account. The user clicks "Add TikTok channel," is redirected to
+> TikTok to log in and approve scopes, and the app stores the returned access/refresh
+> tokens to publish on their behalf. There is no third-party "Sign in with TikTok"
+> feature — only the owner authorizing access to their own account.
+
+**Content Posting API:**
+
+> The Content Posting API publishes the owner's own brand videos to their own TikTok
+> account via Direct Post. The user produces a 9:16 MP4 + caption, schedules it, and at
+> the scheduled time the app sends the video with the user-selected privacy level,
+> interaction settings (duet/stitch/comments), and the AI-generated-content disclosure
+> where applicable. All content is the user's own; it never posts to other accounts.
+
+**Scope `user.info.basic`:**
+
+> Retrieves the authenticated user's basic profile (open ID, display name, avatar)
+> after authorization, to confirm and display which TikTok account is connected and let
+> the owner select the correct account to schedule posts to.
+
+**Scope `video.upload`:**
+
+> Transfers the owner's own video file to TikTok as part of publishing a scheduled post
+> to their account — the core action of the tool.
+
+**If the form also lists these (Postiz default scopes), justify them too:**
+
+> - `video.publish` — finalizes and publishes the uploaded video to the owner's account.
+> - `video.create` — creates the post container (caption + privacy/interaction settings)
+>   for the upload.
+> - `user.info.profile` — shows the connected account's profile in the dashboard so the
+>   owner can confirm the right account. Only list scopes your app actually requests.
+
+**Tips to pass review:** TikTok usually requires a **demo video** of the real flow
+(connect account → pick video → set privacy/disclosure → publish → show it live). Note
+that the engine's videos are AI-generated (Sora-2) and it sets the **AI-generated
+content** flag (`video_made_with_ai`) — reviewers treat that disclosure as a compliance
+plus. Don't overclaim multi-user/social features.
+
 ## 10. Settings the engine sends (reference)
 
 Every TikTok video is AI-generated (Sora-2), so `video_made_with_ai` is disclosed.
