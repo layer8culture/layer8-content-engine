@@ -25,16 +25,16 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
 ```
 
 > **Two channels.** The engine runs **two separate pipelines**:
-> - **layer8culture Instagram + TikTok + YouTube** (nightly) — news-driven posts across a deliberate
->   Instagram format mix: **Reels** (reach), **carousels** (saves), **Stories** (daily
->   engagement), and the occasional single static post. Each post gets fresh OpenAI
->   visuals tied to that day's AI news, one high-quality hero per day. The same run also
->   ships **4-6 reach-first TikTok videos/day** — cross-posting each day's Reel for free
->   (reuse the rendered mp4) and filling the rest with dedicated Sora-2 videos — plus
->   **1-2 YouTube Shorts/day** that reuse the day's strongest reel. A nightly
+> - **layer8culture — viral video + Instagram** (nightly) — the core output is **4-6
+>   viral short-form videos/day**: 8-12s Sora cinematics with **huge burned-in overlay text**
+>   on a 3-beat arc (pattern interrupt → transformation → punchline/CTA), across 5 viral
+>   pillars, with hooks scored by the **STEPPS** framework (see `brand/viral-formats.md`).
+>   Each master posts to **TikTok**; the top 1-2 also cross-post to **Instagram Reels** and
+>   **YouTube Shorts** (one render, reused). Instagram additionally gets **carousels** (saves)
+>   and a **story** (engagement). A nightly
 >   **analytics** job pulls Instagram Insights into `analytics/insights-digest.md`,
 >   which feeds back into generation to grow toward 4k+ followers. Steer it via
->   `scripts/generation-prompt.md` and `calendar/topics.md`.
+>   `scripts/generation-prompt.md`, `brand/viral-formats.md`, and `calendar/topics.md`.
 > - **Layer8Culture Radio (lofi) Instagram + YouTube** (Mon/Wed/Fri) — calm, evergreen
 >   focus-music brand content (quote cards, loop-preview Reels, playlist/community
 >   posts), plus a "Now Live on YouTube" promo when a video link is supplied. It also
@@ -128,7 +128,8 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
 
 - `brand/` — canonical guidelines (brand-guidelines-v2.md for layer8culture;
   layer8culture_radio_brand_guidelines.md for the lofi brand) + operational digests
-  (voice-layer8culture.md, voice-lofi.md, visual style, hashtags). Read every run.
+  (voice-layer8culture.md, voice-lofi.md, visual style, hashtags, **viral-formats.md** —
+  the viral short-form video spec + STEPPS hook scoring). Read every run.
 - `calendar/topics.md` — weekly steering for layer8culture ("lean into X this week").
 - `calendar/topics-lofi.md` — steering + "Now Live" video links for the lofi brand.
   The "Now Live" list is auto-refreshed from the Layer8CultureRadio YouTube channel

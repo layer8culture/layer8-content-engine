@@ -17,12 +17,14 @@
 - (nothing yet)
 
 ## Posting cadence targets
-- CURRENT FOCUS: layer8culture Instagram + TikTok + YouTube Shorts.
-  - Instagram: 2-3 posts/day, every post a fresh topical OpenAI image (1
-    high-quality hero/day, the rest medium).
-  - TikTok: 4-6 reach-first videos/day. Cross-post each day's Instagram reel for
-    free (reuse the rendered mp4), then fill to 4-6 with dedicated Sora-2 videos —
-    a distinct hook/angle each, schedule spread across high-traffic windows.
-  - YouTube Shorts: 1-2/day, reusing the day's strongest reel (IG reel or a top
-    TikTok video). Upload PRIVATE until the Google app is verified (flip in Studio).
+- CURRENT FOCUS: layer8culture VIRAL short-form video (brand/viral-formats.md) +
+  Instagram carousels/stories.
+  - Viral videos: 4-6/day — 8-12s Sora cinematics with HUGE burned-in overlay text on
+    the 0-2 / 2-7 / 7-10 arc, STEPPS-scored hooks, across the 5 viral pillars. Masters
+    post to TikTok; the top 1-2 (by hook score) also cross-post to Instagram Reels +
+    YouTube Shorts (one render, reused).
+  - Instagram: 1-2 carousels + ~1 story/day (saves + engagement); the IG Reel slot is
+    the viral cross-post (no separate cinematic reel).
+  - YouTube Shorts: 1-2/day (the cross-posted viral masters). Upload PRIVATE until the
+    Google app is verified (flip in Studio).
 - Paused for now: layer8culture X, and the lofi account.
