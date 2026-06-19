@@ -1184,5 +1184,158 @@
       "file": "assets/generated/20260620-layer8culture-instagram-3.png"
     },
     "scheduled": true
+  },
+  {
+    "id": "20260620-layer8culture-tiktok-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-06-19T15:30:00-04:00",
+    "text": "ai agents are handing off tasks to each other now.\n\ngoogle's a2a protocol \u2014 one AI passes work to another across platforms, models, companies.\n\nwe went from single prompts to multi-agent pipelines in under two years.\n\nfollow @layer8culture for the build.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIagents",
+      "#AI",
+      "#TechTok",
+      "#BuildInPublic"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "reuse",
+      "of": "20260620-layer8culture-instagram-2",
+      "aspect": "9:16",
+      "file": "assets/generated/20260620-layer8culture-tiktok-1.mp4",
+      "cover": "assets/generated/20260620-layer8culture-tiktok-1-cover.png"
+    },
+    "scheduled": true
+  },
+  {
+    "id": "20260620-layer8culture-tiktok-2",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-06-19T17:00:00-04:00",
+    "text": "we automated our entire content pipeline.\n\ncopilot cli writes the post. github actions renders the image. a pull request opens. a human approves. publish.\n\nbuilt in public. every piece is on github.\n\nwatch the full build on tech thursday. follow @layer8culture.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#BuildInPublic",
+      "#AI",
+      "#TechTok",
+      "#CodingLife"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Scene: a confident Black creator viewed over-the-shoulder at a premium dark walnut desk, dual monitors glowing with abstracted blue code panels, a terminal window open, stream deck to the side, warm desk lamp glow. Active, precise, in-progress \u2014 the build session from the inside. Compose 9:16 vertical. Lower third clean. Upper third minimal, no fine detail. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "headline": "THE PIPELINE IS LIVE",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Opening with a slow cinematic push-in toward a glowing monitor in a dark studio \u2014 electric-blue code streams across the display, the creator's silhouette lit from the screen. The camera pauses, holds the tight frame, then slowly eases back to reveal the full desk setup: dual screens, keyboard, dark walnut surface, warm desk lamp glow in the background. Motion is deliberate and documentary \u2014 like an opening sequence for a build journal. Deep-black atmosphere. No text overlays.",
+        "seconds": 8
+      },
+      "file": "assets/generated/20260620-layer8culture-tiktok-2.mp4",
+      "cover": "assets/generated/20260620-layer8culture-tiktok-2-cover.png"
+    },
+    "scheduled": true
+  },
+  {
+    "id": "20260620-layer8culture-tiktok-3",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-06-19T18:30:00-04:00",
+    "text": "nvidia just dropped the first open omnimodel for physical AI.\n\ncosmos 3 merges vision reasoning, world simulation, and action generation in one architecture.\n\nrobots that understand the physical world \u2014 not from rules, from seeing.\n\nthis is the era. follow @layer8culture.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AI",
+      "#TechTok",
+      "#AInews",
+      "#FutureBuilders"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Scene: abstract Afrofuturistic physical-AI visualization \u2014 a sleek minimal geometric figure (not a humanoid robot \u2014 more like an architectural skeleton or data form) dissolving upward into a constellation of electric-blue data nodes and geometry, set against deep black and navy gradients. Suggests intelligence meeting physicality \u2014 architectural and thoughtful, not sci-fi armor. Compose 9:16 vertical. Lower third clean. Upper third minimal. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "headline": "PHYSICAL AI IS HERE",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "A cinematic opening \u2014 a single electric-blue data point appears in pure black darkness, pulses, then slowly multiplies outward into a geometric constellation that gradually takes on the suggestion of a form inhabiting space. The camera holds still as the structure assembles itself slowly, each new node connecting with a soft pulse of light. The composition is meditative and architectural \u2014 intelligence becoming physical. Faint navy atmosphere. No text, no labels.",
+        "seconds": 8
+      },
+      "file": "assets/generated/20260620-layer8culture-tiktok-3.mp4",
+      "cover": "assets/generated/20260620-layer8culture-tiktok-3-cover.png"
+    },
+    "scheduled": true
+  },
+  {
+    "id": "20260620-layer8culture-tiktok-4",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-06-19T20:00:00-04:00",
+    "text": "someone trained a 100 billion parameter model for $1.25 an hour.\n\na year ago that cost millions.\n\nthe cost barrier to building with AI just collapsed.\n\nthe only question left: what are you building?\n\nfollow @layer8culture.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AI",
+      "#BuildInPublic",
+      "#TechTok",
+      "#AItools"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Scene: abstract cost-collapse visualization \u2014 a single glowing electric-blue descending curve rendered as a clean graphic line against deep black, data points distributed along it that grow sparser as the curve drops. The composition is minimal and graphic \u2014 a trend rendered as art, not a chart. Compose 9:16 vertical. Lower third clean. Upper third minimal. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "headline": "$1.25 / HOUR",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "A cinematic opening \u2014 a glowing electric-blue line begins high and left in the frame, slowly descending across the screen in a smooth, gravity-driven arc as the camera gently pushes in. Data points drift away from the curve as it falls, like barriers dissolving. The motion is smooth and architectural \u2014 a sense of something releasing, opening. Ambient atmospheric glow drifts through the deep-black scene. No text, no labels. The mood is quiet triumph.",
+        "seconds": 8
+      },
+      "file": "assets/generated/20260620-layer8culture-tiktok-4.mp4",
+      "cover": "assets/generated/20260620-layer8culture-tiktok-4-cover.png"
+    },
+    "scheduled": true
+  },
+  {
+    "id": "20260620-layer8culture-tiktok-5",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-06-19T21:30:00-04:00",
+    "text": "even microsoft is building its own AI model stack now.\n\nmai-thinking-1 \u2014 so they're not fully dependent on openai.\n\nwhen the biggest companies in tech start building their own models instead of renting them, the message is clear:\n\nowning your stack matters.\n\nfollow @layer8culture.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AI",
+      "#BuildInPublic",
+      "#TechTok",
+      "#AInews"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Scene: abstract stack-ownership visualization \u2014 a single central electric-blue node with four or five orbiting satellite nodes connected by clean lines, all contained within the center's gravitational field, deep black background with faint navy gradient. The composition suggests self-reliance and architectural control \u2014 not dependence. Compose 9:16 vertical. Lower third clean. Upper third minimal. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "headline": "OWN YOUR STACK",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "A cinematic opening with a single bright electric-blue node appearing in deep black space, pulsing steadily. One by one, smaller satellite nodes appear and begin a slow orbit around the central node, connected by thin threads of light. The camera holds steady as the system self-assembles \u2014 a contained, self-reliant constellation. The motion is calm and purposeful. Soft navy atmosphere drifts in the background. No text, no labels. The mood is architectural confidence.",
+        "seconds": 8
+      },
+      "file": "assets/generated/20260620-layer8culture-tiktok-5.mp4",
+      "cover": "assets/generated/20260620-layer8culture-tiktok-5-cover.png"
+    },
+    "scheduled": true
   }
 ]
