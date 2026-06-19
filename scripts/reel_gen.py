@@ -234,10 +234,16 @@ def escape_filter_path(path: pathlib.Path) -> str:
 
 def escape_drawtext(text: str) -> str:
     text = text.replace("\\", r"\\")
-    text = text.replace("'", r"\'")
+    # A literal apostrophe inside an ffmpeg single-quoted text='...' value must be
+    # written as the close-reopen sequence '\'' (NOT \'). Using \' leaks the value's
+    # quoting and lets later commas (in the alpha/enable exprs) break the filtergraph
+    # ("No such filter: '7.000)'"). Viral hooks are full of apostrophes, so this matters.
+    text = text.replace("'", r"'\''")
     text = text.replace(":", r"\:")
     text = text.replace("%", r"\%")
-    text = text.replace("\n", r"\n")
+    # Keep real newline characters: ffmpeg drawtext renders a literal newline as a
+    # line break, but a backslash-n ("\\n") renders as a literal "n". wrap_text joins
+    # lines with real newlines, so do NOT escape them.
     return text
 
 
@@ -368,12 +374,27 @@ def find_lofi_bed() -> pathlib.Path | None:
 
 # --- Viral overlay (huge burned-in text beats on a Sora clip) ----------------
 # layer8culture's short-form videos use the viral format (brand/viral-formats.md):
-# Sora renders the cinematic 9:16 clip, then we burn HUGE Space Grotesk text beats
+# Sora renders the cinematic 9:16 clip, then we burn big Space Grotesk text beats
 # onto it on a 3-beat arc (hook / transformation cue / punchline-CTA). Text sits in
-# the upper-center band, clear of the bottom caption/UI zone.
-VIRAL_OVERLAY_FONTSIZE = 88
-VIRAL_OVERLAY_Y = "h*0.20"
+# the upper band, clear of the bottom caption/UI zone. Font auto-fits so the longest
+# line always stays inside the frame (no horizontal overflow).
+VIRAL_OVERLAY_FONTSIZE_MAX = 76
+VIRAL_OVERLAY_FONTSIZE_MIN = 44
+VIRAL_OVERLAY_WRAP = 15           # max chars per line before wrapping
+VIRAL_OVERLAY_Y = "h*0.16"
 VIRAL_DEFAULT_SPAN = 10.0  # fallback total seconds when beats omit timings
+
+
+def _fit_fontsize(wrapped: str) -> int:
+    """Largest font (within bounds) whose widest line fits ~84% of the frame width.
+
+    Space Grotesk uppercase glyphs average ~0.56*fontsize wide, so the widest line
+    is ~0.56*fontsize*len; solve for fontsize and clamp. Prevents the overflow seen
+    when a long hook was rendered at a fixed big size.
+    """
+    longest = max((len(line) for line in wrapped.split("\n")), default=1)
+    fit = int((0.84 * WIDTH) / (0.56 * max(1, longest)))
+    return max(VIRAL_OVERLAY_FONTSIZE_MIN, min(VIRAL_OVERLAY_FONTSIZE_MAX, fit))
 
 
 def _coerce_beats(raw) -> list[dict]:
@@ -420,16 +441,18 @@ def overlay_beats_on_video(video_path: pathlib.Path, raw_beats,
     beats = _coerce_beats(raw_beats)
     if not beats:
         return False
-    filters = [
-        drawtext_filter(
-            wrap_text(b["text"], max_chars=16, max_lines=4),
-            VIRAL_OVERLAY_Y,
-            VIRAL_OVERLAY_FONTSIZE,
-            start=b["start"],
-            end=b["end"],
+    filters = []
+    for b in beats:
+        wrapped = wrap_text(b["text"], max_chars=VIRAL_OVERLAY_WRAP, max_lines=3)
+        filters.append(
+            drawtext_filter(
+                wrapped,
+                VIRAL_OVERLAY_Y,
+                _fit_fontsize(wrapped),
+                start=b["start"],
+                end=b["end"],
+            )
         )
-        for b in beats
-    ]
     args = [
         "ffmpeg", "-y", "-i", str(video_path),
         "-vf", ",".join(filters),
