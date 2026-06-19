@@ -21,6 +21,8 @@ post["collaborators"] (list of IG handles) maps to IG collab tags.
 Env vars: POSTIZ_URL, POSTIZ_API_KEY
 Optional env: LOFI_IG_CHANNEL_ID — the Postiz channel ID for the lofi
 (Layer8CultureRadio) Instagram account; overrides its INTEGRATIONS placeholder.
+Optional env: TIKTOK_CHANNEL_ID — the Postiz channel ID for the layer8culture
+TikTok account; fills its INTEGRATIONS placeholder (unset -> TikTok posts skipped).
 Note: integration IDs map your accounts/platforms to Postiz channels.
 Fill INTEGRATIONS after connecting your accounts in the Postiz UI
 (Settings -> API shows channel IDs).
@@ -46,9 +48,11 @@ POSTIZ_URL = _require_env("POSTIZ_URL").rstrip("/")
 HEADERS = {"Authorization": _require_env("POSTIZ_API_KEY")}
 
 # account+platform -> Postiz integration (channel) ID. FILL THESE IN.
-# Note: ("lofi", "tiktok") is provisioning-only — the lofi cadence currently
-# targets Instagram and X (see calendar/topics.md); nothing generates for lofi
-# TikTok unless topics.md explicitly asks for it.
+# Note: ("layer8culture", "tiktok") is active — the layer8culture pipeline now
+# generates TikTok videos (see calendar/topics.md + scripts/generation-prompt.md).
+# Its channel ID is supplied via the TIKTOK_CHANNEL_ID secret below (kept out of
+# code). ("lofi", "tiktok") stays provisioning-only — nothing generates for lofi
+# TikTok unless topics-lofi.md explicitly asks for it.
 INTEGRATIONS = {
     ("layer8culture", "tiktok"): "REPLACE_ME",
     ("layer8culture", "instagram"): "cmqd9915w0001o5717h436ivp",
@@ -65,13 +69,39 @@ _lofi_ig = os.environ.get("LOFI_IG_CHANNEL_ID")
 if _lofi_ig:
     INTEGRATIONS[("lofi", "instagram")] = _lofi_ig
 
+# The layer8culture TikTok channel ID is supplied via the TIKTOK_CHANNEL_ID secret
+# (kept out of code). When unset the mapping stays REPLACE_ME and TikTok posts are
+# skipped — not errored — so the engine ships TikTok posts only once the channel is
+# connected in Postiz and the secret is set.
+_tiktok_channel = os.environ.get("TIKTOK_CHANNEL_ID")
+if _tiktok_channel:
+    INTEGRATIONS[("layer8culture", "tiktok")] = _tiktok_channel
+
 VIDEO_EXTS = (".mp4", ".mov")
 
 # Per-platform base post settings required by the Postiz API. For Instagram the
 # api requires settings.post_type ("post" or "story"); we add it per-format in
 # platform_settings(). The others are placeholders for when those channels wire up.
+#
+# TikTok mirrors Postiz's TikTokDto. Every TikTok video this engine ships is
+# AI-generated (Sora-2), so video_made_with_ai is disclosed (TikTok policy +
+# honesty). Defaults favor reach: public, duet/stitch/comments enabled, organic
+# (no branded-content flags), published directly. NOTE: if the connected TikTok
+# app hasn't passed TikTok's audit, PUBLIC_TO_EVERYONE + DIRECT_POST can be
+# rejected — fall back to SELF_ONLY / UPLOAD via a post's "tiktok_settings".
 PLATFORM_SETTINGS = {
     "instagram": {"post_type": "post"},  # base; story/reel adjust this below
+    "tiktok": {
+        "privacy_level": "PUBLIC_TO_EVERYONE",
+        "duet": True,
+        "stitch": True,
+        "comment": True,
+        "autoAddMusic": "no",
+        "brand_content_toggle": False,
+        "brand_organic_toggle": False,
+        "video_made_with_ai": True,
+        "content_posting_method": "DIRECT_POST",
+    },
 }
 
 
@@ -82,8 +112,18 @@ def platform_settings(post: dict, fmt: str) -> dict:
     is published as a Reel automatically. Optional growth flags pass through:
     trial_reel -> is_trial_reel (Reel shown to non-followers first), and
     collaborators -> IG collab tags.
+
+    TikTok returns the reach-favoring TikTokDto defaults, with any per-post
+    "tiktok_settings" dict merged on top (e.g. to set privacy_level/SELF_ONLY for
+    an unaudited app).
     """
     platform = post["platform"]
+    if platform == "tiktok":
+        settings = dict(PLATFORM_SETTINGS.get("tiktok", {}))
+        overrides = post.get("tiktok_settings")
+        if isinstance(overrides, dict):
+            settings.update(overrides)
+        return settings
     if platform != "instagram":
         return dict(PLATFORM_SETTINGS.get(platform, {}))
     settings = {"post_type": "story" if fmt == "story" else "post"}

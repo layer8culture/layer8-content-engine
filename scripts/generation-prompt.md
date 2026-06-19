@@ -9,11 +9,13 @@ comes from Reels, saves come from carousels, loyalty comes from Stories — so v
 the format deliberately (see FORMAT MIX) and lead every post with a real hook.
 
 CURRENT FOCUS (overrides older cadence notes):
-Generate ONLY layer8culture Instagram posts in this run. Do NOT generate X,
-TikTok, or lofi posts here. The lofi brand (Layer8Culture Radio) has its OWN
-separate pipeline (scripts/generation-prompt-lofi.md + .github/workflows/generate-lofi.yml,
-writing queue/lofi-YYYY-MM-DD.json) — do not produce lofi posts in this file. Every
-post here is platform "instagram", account "layer8culture".
+Generate layer8culture posts for TWO platforms in this run: Instagram (the core
+feed) AND TikTok (a high-volume, reach-first video lane — see the TIKTOK section
+below). Do NOT generate X or lofi posts here. The lofi brand (Layer8Culture Radio)
+has its OWN separate pipeline (scripts/generation-prompt-lofi.md +
+.github/workflows/generate-lofi.yml, writing queue/lofi-YYYY-MM-DD.json) — do not
+produce lofi posts in this file. Every post here is account "layer8culture", with
+platform either "instagram" or "tiktok".
 
 READ FIRST (in this order):
 1. brand/voice-layer8culture.md — voice + the HOOK and CTA rules, follow strictly
@@ -41,8 +43,10 @@ calendar/topics.md plus the latest transcript — never block on the web.
 
 THEN GENERATE:
 Create queue/YYYY-MM-DD.json (tomorrow's date in America/New_York) containing an array of post
-objects. Target: 2-3 layer8culture Instagram posts for the day, chosen to advance
-the weekly FORMAT MIX below (quality + format variety beat raw volume).
+objects:
+- 2-3 layer8culture INSTAGRAM posts, chosen to advance the weekly FORMAT MIX below
+  (quality + format variety beat raw volume), PLUS
+- 4-6 layer8culture TIKTOK videos, reach-first, per the TIKTOK section below.
 
 ## FORMAT MIX (the core growth lever)
 Each post has a top-level "format": one of "single", "carousel", "reel", "story".
@@ -54,7 +58,11 @@ Across a 7-day window aim for roughly:
 Per day: vary formats from the day before; never produce an all-static day; include
 at least one reel OR carousel every day, plus one story. Use posted/log.json to see
 recent formats and rotate. When analytics/insights-digest.md shows a format winning,
-weight toward it.
+weight toward it. When a day includes an Instagram reel, also add its TikTok cross-post
+(see TIKTOK below) so that reel does double duty for free.
+
+The FORMAT MIX above governs the Instagram feed. TikTok is a separate, higher-volume
+lane (4-6 videos/day) — see the TIKTOK section.
 
 ## POST SCHEMA
 Common fields on EVERY post:
@@ -62,7 +70,7 @@ Common fields on EVERY post:
   "id": "YYYYMMDD-layer8culture-instagram-n",
   "account": "layer8culture",
   "category": "one of the 10 content categories in voice-layer8culture.md",
-  "platform": "instagram",
+  "platform": "instagram",                     // or "tiktok" — see the TIKTOK section
   "format": "single | carousel | reel | story",
   "schedule_time": "YYYY-MM-DDTHH:MM:00-04:00",  // tomorrow's date in America/New_York; offset -04:00 (EDT, ~Mar-Nov) or -05:00 (EST, ~Nov-Mar)
   "text": "full caption — HOOK first line, then value, then a CTA (see voice doc)",
@@ -154,6 +162,80 @@ used by the "motion" fallback and the cover frame). Use "clip" only when a real 
 recording exists in assets/library/ (then add a transcript query). "motion" is the
 automatic fallback if Sora is unavailable. Consider trial_reel:true for pure-reach reels.
 
+## TIKTOK (4-6 reach-first videos/day — the second platform this run)
+TikTok is a separate, higher-volume lane from the Instagram feed. Produce 4-6 TikTok
+videos for the day — every one account "layer8culture", platform "tiktok", format
+"reel" (TikTok is video-only here). They come in two kinds:
+
+1) CROSS-POST (free — use whenever the day has an Instagram reel): reuse that reel's
+   already-rendered video instead of making a new one. One TikTok cross-post per IG reel.
+   {
+     "id": "YYYYMMDD-layer8culture-tiktok-n",
+     "account": "layer8culture",
+     "category": "one of the 10 content categories",
+     "platform": "tiktok",
+     "format": "reel",
+     "schedule_time": "YYYY-MM-DDTHH:MM:00-04:00",
+     "text": "TikTok-native caption — see TIKTOK CAPTIONS. Do NOT copy the IG caption.",
+     "hashtags": ["..."],                       // 3-5, TikTok-tuned (see below)
+     "hashtags_in_first_comment": true,         // OPTIONAL
+     "visual": { "source": "reuse", "of": "<the IG reel's post id>", "aspect": "9:16" }
+   }
+   The engine copies that IG reel's mp4 to this post automatically — add NO openai_prompt
+   and NO reel block for a cross-post.
+
+2) DEDICATED (the bulk — fill up to 4-6/day): a brand-new TikTok video rendered with
+   Sora-2. Same visual shape as an Instagram reel (source "openai" + a "reel" block), but
+   platform "tiktok":
+   {
+     "id": "YYYYMMDD-layer8culture-tiktok-n",
+     "account": "layer8culture",
+     "category": "one of the 10 content categories",
+     "platform": "tiktok",
+     "format": "reel",
+     "schedule_time": "YYYY-MM-DDTHH:MM:00-04:00",
+     "text": "TikTok-native caption (see TIKTOK CAPTIONS).",
+     "hashtags": ["..."],                       // 3-5, TikTok-tuned
+     "hashtags_in_first_comment": true,         // OPTIONAL
+     "visual": {
+       "source": "openai",
+       "aspect": "9:16",
+       "quality": "medium",
+       "openai_prompt": "...per visual-style.md — the cinematic 9:16 base still Sora animates.",
+       "headline": "REQUIRED title-card line (used only for the cover frame).",
+       "reel": {
+         "mode": "sora",                        // ALWAYS sora for TikTok
+         "sora_prompt": "A cinematic motion description per visual-style.md with a strong
+              FIRST BEAT so the hook lands in the first ~1s: what moves and how (push-in,
+              drifting light, particles), the mood. Sora adds its own audio; output is
+              CLEAN (no on-screen text).",
+         "seconds": 8                           // 4 / 8 / 12; 8 is the default
+       }
+     }
+   }
+
+REACH RULES (TikTok lives or dies on these):
+- HOOK in the first ~1 second of the sora_prompt's first beat — a claim, a question, a
+  number, motion that demands attention. No slow intros.
+- Every one of the 4-6 must be a DISTINCT angle/hook and a DISTINCT scene. Near-duplicate
+  videos get throttled — vary the topic, category, and visual each time.
+- Pull dedicated topics from the AI news you researched + transcript moments +
+  calendar/topics.md (the same sources as the feed) — but render each as its own punchy
+  standalone video.
+- Spread schedule_time across the day's high-traffic windows (roughly: late morning,
+  midday, late afternoon, evening, night) so the 4-6 don't post in a clump. Keep every
+  time on tomorrow's date with the correct -04:00 (EDT) / -05:00 (EST) offset.
+- trial_reel and collaborators are Instagram-only — never set them on TikTok posts.
+
+TIKTOK CAPTIONS:
+- Short and native: one strong hook line, then at most a line or two, then ONE CTA (watch
+  the full Tech Thursday / follow @layer8culture / a genuine question). Calm, premium,
+  builder-first — never hype. Lowercase is fine. Keep it tight.
+- A cross-post's caption MUST be freshly written for TikTok — never the IG caption.
+- Hashtags: a small TUNED set of 3-5 — one branded (#Layer8Culture) plus broad, on-topic,
+  high-reach tags (e.g. #AI #BuildInPublic #TechTok). Rotate per post; set
+  hashtags_in_first_comment:true when a clean caption reads better.
+
 ## VOICE RULES (non-negotiable)
 - Lead with belief. Short cinematic lines. Don't overexplain. Make tech human. Show the work.
 - Every post maps to exactly one of the 10 content categories.
@@ -187,9 +269,9 @@ automatic fallback if Sora is unavailable. Consider trial_reel:true for pure-rea
   days out. Use the correct seasonal offset: -04:00 (EDT) or -05:00 (EST).
 - Output valid JSON only in the file. No markdown fences inside the file.
 
-(Other channels — for reference only, do not generate these here: X <= 280 chars;
-TikTok video-first with a real assets/library video. The lofi account (Layer8Culture
-Radio) runs in its own pipeline — see scripts/generation-prompt-lofi.md.)
+(Other channels — for reference only, do not generate these here: X <= 280 chars.
+TikTok IS generated here now — see the TIKTOK section above. The lofi account
+(Layer8Culture Radio) runs in its own pipeline — see scripts/generation-prompt-lofi.md.)
 
 FINALLY:
 Write a short summary to queue/YYYY-MM-DD.summary.md (a brief intro narrative at the

@@ -6,6 +6,10 @@ assets/generated/<post_id>.mp4 plus a cover frame, then writes the paths back to
 the post's visual dict. Designed to run after openai_gen.py has already rendered
 assets/generated/<post_id>.png for motion reels.
 
+Cross-posts (e.g. TikTok reusing the day's Instagram reel) set visual.source ==
+"reuse" and visual.of == "<source-post-id>"; instead of rendering, a second pass
+copies that source reel's mp4 + cover to this post's id (zero extra render cost).
+
 Requires: ffmpeg available on PATH. Uses Python stdlib + Pillow, and (for the
 Sora-2 reel backend) requests. Reels render via Azure Sora-2 when the
 AZURE_OPENAI_* env is configured, falling back to the ffmpeg "motion" renderer.
@@ -749,6 +753,41 @@ def generate(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None:
         return None
 
 
+def resolve_crosspost(post: dict, out_dir: pathlib.Path) -> bool:
+    """Reuse another post's rendered reel for a cross-post (e.g. TikTok).
+
+    A cross-post sets ``visual.source == "reuse"`` and ``visual.of ==
+    "<source-post-id>"`` (typically the same day's Instagram reel). We copy that
+    post's rendered mp4 + cover frame to THIS post's id, so every downstream tool
+    (the PR preview keyed by id, the publisher via ``visual.file``) works with no
+    special-casing. No new render — zero extra video-gen cost.
+    """
+    post_id = str(post.get("id", "")).strip()
+    if not post_id:
+        print("  ! cross-post missing id; skipped")
+        return False
+    visual = post.setdefault("visual", {})
+    source_id = str(visual.get("of", "")).strip()
+    if not source_id:
+        print(f"  ! {post_id}: cross-post has no visual.of source id; skipped")
+        return False
+    src_mp4 = out_dir / f"{source_id}.mp4"
+    if not src_mp4.exists():
+        print(f"  ! {post_id}: source reel {src_mp4} not found "
+              f"(of={source_id!r}); cross-post skipped")
+        return False
+    dst_mp4 = out_dir / f"{post_id}.mp4"
+    shutil.copyfile(src_mp4, dst_mp4)
+    visual["file"] = str(dst_mp4)
+    src_cover = out_dir / f"{source_id}-cover.png"
+    if src_cover.exists():
+        dst_cover = out_dir / f"{post_id}-cover.png"
+        shutil.copyfile(src_cover, dst_cover)
+        visual["cover"] = str(dst_cover)
+    print(f"  = {post_id} <- {source_id} (cross-post reuse)")
+    return True
+
+
 def main(queue_file: str) -> None:
     if not ffmpeg_available():
         print("  x ffmpeg not found on PATH; reel generation skipped.")
@@ -758,14 +797,24 @@ def main(queue_file: str) -> None:
     posts = json.loads(qpath.read_text(encoding="utf-8"))
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
+    def is_reuse(post: dict) -> bool:
+        return str((post.get("visual") or {}).get("source", "")).lower() == "reuse"
+
+    # Pass 1: render every reel that owns its media (source != "reuse").
     for post in posts:
-        if post.get("format") == "reel":
+        if post.get("format") == "reel" and not is_reuse(post):
             result = generate(post, OUT_DIR)
             if result:
                 file_path, cover_path = result
                 visual = post.setdefault("visual", {})
                 visual["file"] = file_path
                 visual["cover"] = cover_path
+
+    # Pass 2: resolve cross-posts (e.g. TikTok) that reuse a pass-1 reel's mp4.
+    # Run second so it's independent of post order in the queue.
+    for post in posts:
+        if post.get("format") == "reel" and is_reuse(post):
+            resolve_crosspost(post, OUT_DIR)
 
     qpath.write_text(json.dumps(posts, indent=2), encoding="utf-8")
     print("Queue updated with generated reel paths.")
