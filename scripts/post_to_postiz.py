@@ -23,6 +23,9 @@ Optional env: LOFI_IG_CHANNEL_ID — the Postiz channel ID for the lofi
 (Layer8CultureRadio) Instagram account; overrides its INTEGRATIONS placeholder.
 Optional env: TIKTOK_CHANNEL_ID — the Postiz channel ID for the layer8culture
 TikTok account; fills its INTEGRATIONS placeholder (unset -> TikTok posts skipped).
+Optional env: YOUTUBE_LAYER8_CHANNEL_ID / YOUTUBE_LOFI_CHANNEL_ID — the Postiz
+channel IDs for each brand's YouTube channel; fill their INTEGRATIONS placeholders
+(unset -> that brand's YouTube Shorts are skipped, not errored).
 Note: integration IDs map your accounts/platforms to Postiz channels.
 Fill INTEGRATIONS after connecting your accounts in the Postiz UI
 (Settings -> API shows channel IDs).
@@ -51,15 +54,19 @@ HEADERS = {"Authorization": _require_env("POSTIZ_API_KEY")}
 # Note: ("layer8culture", "tiktok") is active — the layer8culture pipeline now
 # generates TikTok videos (see calendar/topics.md + scripts/generation-prompt.md).
 # Its channel ID is supplied via the TIKTOK_CHANNEL_ID secret below (kept out of
-# code). ("lofi", "tiktok") stays provisioning-only — nothing generates for lofi
-# TikTok unless topics-lofi.md explicitly asks for it.
+# code). YouTube is active for BOTH brands — the pipelines cross-post reels as
+# YouTube Shorts; channel IDs come from the YOUTUBE_*_CHANNEL_ID secrets below.
+# ("lofi", "tiktok") stays provisioning-only — nothing generates for lofi TikTok
+# unless topics-lofi.md explicitly asks for it.
 INTEGRATIONS = {
     ("layer8culture", "tiktok"): "REPLACE_ME",
     ("layer8culture", "instagram"): "cmqd9915w0001o5717h436ivp",
     ("layer8culture", "x"): "REPLACE_ME",
+    ("layer8culture", "youtube"): "REPLACE_ME",
     ("lofi", "instagram"): "cmqgzb1xv000qo571zuz5lqfm",
     ("lofi", "x"): "REPLACE_ME",
     ("lofi", "tiktok"): "REPLACE_ME",
+    ("lofi", "youtube"): "REPLACE_ME",
 }
 
 # The lofi (Layer8CultureRadio) Instagram channel is wired above with its Postiz
@@ -76,6 +83,17 @@ if _lofi_ig:
 _tiktok_channel = os.environ.get("TIKTOK_CHANNEL_ID")
 if _tiktok_channel:
     INTEGRATIONS[("layer8culture", "tiktok")] = _tiktok_channel
+
+# YouTube channel IDs (one per brand) come from secrets, kept out of code. Unset ->
+# REPLACE_ME -> those Shorts are skipped (not errored), so YouTube ships only once
+# each channel is connected in Postiz and its secret is set. (Note: distinct from
+# fetch_youtube.py's YT_CHANNEL_ID, which is the RSS channel id for "Now Live" promos.)
+_yt_layer8 = os.environ.get("YOUTUBE_LAYER8_CHANNEL_ID")
+if _yt_layer8:
+    INTEGRATIONS[("layer8culture", "youtube")] = _yt_layer8
+_yt_lofi = os.environ.get("YOUTUBE_LOFI_CHANNEL_ID")
+if _yt_lofi:
+    INTEGRATIONS[("lofi", "youtube")] = _yt_lofi
 
 VIDEO_EXTS = (".mp4", ".mov")
 
@@ -104,6 +122,62 @@ PLATFORM_SETTINGS = {
     },
 }
 
+# YouTube uploads must carry a non-empty title (2-100 chars). We request type
+# "public"; an unverified Google app forces every upload to PRIVATE regardless, so
+# in practice Shorts land private until the user flips them in Studio (or the app is
+# verified). YouTube caps the combined length of all tags at 500 chars.
+YOUTUBE_TITLE_MAX = 100
+YOUTUBE_TAGS_MAX = 500
+
+
+def _youtube_title(post: dict) -> str:
+    """A valid YouTube title (2-100 chars): youtube_title -> headline -> 1st line."""
+    visual = post.get("visual") or {}
+    candidates = [
+        post.get("youtube_title"),
+        visual.get("headline"),
+        (post.get("text") or "").strip().split("\n", 1)[0],
+    ]
+    for c in candidates:
+        title = (c or "").strip()
+        if len(title) >= 2:
+            return title[:YOUTUBE_TITLE_MAX]
+    return "Layer8Culture"
+
+
+def _youtube_tags(post: dict) -> list[dict]:
+    """hashtags -> Postiz YoutubeTagsSettings, kept under the 500-char total."""
+    tags, total = [], 0
+    for t in (post.get("hashtags") or []):
+        label = str(t).lstrip("#").strip()
+        if not label:
+            continue
+        cost = len(label) + (2 if any(ch.isspace() for ch in label) else 0)
+        if total + cost > YOUTUBE_TAGS_MAX:
+            break
+        tags.append({"value": label, "label": label})
+        total += cost
+    return tags
+
+
+def youtube_settings(post: dict) -> dict:
+    """Build Postiz's YoutubeSettingsDto for a YouTube (Shorts) upload.
+
+    A per-post "youtube_settings" dict (e.g. type "unlisted") merges on top.
+    """
+    settings = {
+        "title": _youtube_title(post),
+        "type": "public",            # forced private until the Google app is verified
+        "selfDeclaredMadeForKids": "no",
+    }
+    tags = _youtube_tags(post)
+    if tags:
+        settings["tags"] = tags
+    overrides = post.get("youtube_settings")
+    if isinstance(overrides, dict):
+        settings.update(overrides)
+    return settings
+
 
 def platform_settings(post: dict, fmt: str) -> dict:
     """Build the Postiz per-platform settings for this post + resolved format.
@@ -115,7 +189,7 @@ def platform_settings(post: dict, fmt: str) -> dict:
 
     TikTok returns the reach-favoring TikTokDto defaults, with any per-post
     "tiktok_settings" dict merged on top (e.g. to set privacy_level/SELF_ONLY for
-    an unaudited app).
+    an unaudited app). YouTube returns the YoutubeSettingsDto (title + type + tags).
     """
     platform = post["platform"]
     if platform == "tiktok":
@@ -124,6 +198,8 @@ def platform_settings(post: dict, fmt: str) -> dict:
         if isinstance(overrides, dict):
             settings.update(overrides)
         return settings
+    if platform == "youtube":
+        return youtube_settings(post)
     if platform != "instagram":
         return dict(PLATFORM_SETTINGS.get(platform, {}))
     settings = {"post_type": "story" if fmt == "story" else "post"}
@@ -203,12 +279,13 @@ def schedule(post: dict) -> bool:
     paths = resolve_local_paths(post)
     is_video = bool(paths) and paths[0].lower().endswith(VIDEO_EXTS)
 
-    if post["platform"] == "tiktok":
+    if post["platform"] in ("tiktok", "youtube"):
+        label = post["platform"]
         if not paths:
-            print(f"  ! tiktok post {post['id']} has no resolved media, skipping")
+            print(f"  ! {label} post {post['id']} has no resolved media, skipping")
             return False
         if not is_video:
-            print(f"  ! tiktok post {post['id']} media is not a video "
+            print(f"  ! {label} post {post['id']} media is not a video "
                   f"({', '.join(VIDEO_EXTS)}), skipping")
             return False
 

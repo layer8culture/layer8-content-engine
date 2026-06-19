@@ -7,9 +7,10 @@ sends viewers to the YouTube sessions. This is a DIFFERENT brand and lane from t
 main layer8culture account — calm and atmospheric, never news/tips/strategy.
 
 CURRENT FOCUS:
-Generate ONLY lofi (Layer8Culture Radio) Instagram posts. Every post is platform
-"instagram", account "lofi". Do NOT generate layer8culture, X, or TikTok posts —
-those run in a separate pipeline.
+Generate lofi (Layer8Culture Radio) posts. Every post is account "lofi". Most are
+platform "instagram"; ADDITIONALLY, when this run includes a Loop Preview Reel, also
+emit ONE platform "youtube" Short that reuses that reel (see the YOUTUBE SHORT section).
+Do NOT generate layer8culture, X, or TikTok posts — those run in a separate pipeline.
 
 READ FIRST (in this order):
 1. brand/voice-lofi.md — the voice, taglines, post types, and caption patterns.
@@ -61,7 +62,7 @@ Common fields on EVERY post:
   "account": "lofi",
   "category": "one of the lofi post types: brand-intro | video-promo | quote |
        loop-reel | behind-the-scenes | playlist | community",
-  "platform": "instagram",
+  "platform": "instagram",                      // or "youtube" for a Short — see YOUTUBE SHORT
   "format": "single | carousel | reel | story",
   "schedule_time": "YYYY-MM-DDTHH:MM:00-05:00",
   "text": "full caption in the lofi voice — follow the caption pattern for this
@@ -131,9 +132,29 @@ NOT set logo_position/logo_opacity.
   ]
 }
 
+## YOUTUBE SHORT (cross-post the Loop Preview Reel)
+When this run includes a Loop Preview Reel, ALSO emit ONE YouTube Short that reuses it
+(no new render) so the lofi YouTube channel gets the loop too. Skip it if the run has no
+reel. It is account "lofi", platform "youtube", format "reel":
+
+{
+  "id": "YYYYMMDD-lofi-youtube-n",
+  "account": "lofi",
+  "category": "loop-reel",
+  "platform": "youtube",
+  "format": "reel",
+  "schedule_time": "YYYY-MM-DDTHH:MM:00-05:00",
+  "youtube_title": "REQUIRED — calm, search-friendly, <=100 chars, ending with #Shorts
+       (e.g. 'Afrofuturist Night Coding Radio | Lo-Fi Focus Beats #Shorts').",
+  "text": "the YouTube description — one or two calm lines + 'tune in 24/7 on YouTube'.",
+  "hashtags": ["#Shorts", "#lofi", "#studymusic", "#Layer8Culture"],
+  "visual": { "source": "reuse", "of": "<the Loop Preview Reel's post id>", "aspect": "9:16" }
+}
+The reel it reuses (visual.of) must be the run's rendered loop-reel (source "openai").
+Add no openai_prompt and no reel block. These upload PRIVATE until the channel's Google
+app is verified — expected; a human flips them to public.
+
 ## VOICE RULES (non-negotiable)
-- Calm, premium, confident; short cinematic lines; lowercase acceptable. NEVER
-  hype, urgency, hustle-culture, sales language, or news/tips/strategy.
 - Every post maps to exactly one lofi post type (category above).
 - Use a secondary tagline from voice-lofi.md but ROTATE it (don't reuse one from the
   last several posts). Use "Technology has seven layers. We're the eighth." sparingly.

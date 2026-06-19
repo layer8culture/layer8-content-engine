@@ -9,13 +9,14 @@ comes from Reels, saves come from carousels, loyalty comes from Stories — so v
 the format deliberately (see FORMAT MIX) and lead every post with a real hook.
 
 CURRENT FOCUS (overrides older cadence notes):
-Generate layer8culture posts for TWO platforms in this run: Instagram (the core
-feed) AND TikTok (a high-volume, reach-first video lane — see the TIKTOK section
-below). Do NOT generate X or lofi posts here. The lofi brand (Layer8Culture Radio)
+Generate layer8culture posts for THREE platforms in this run: Instagram (the core
+feed), TikTok (a high-volume, reach-first video lane — see the TIKTOK section), and
+YouTube (1-2 Shorts/day that reuse the day's best reel — see the YOUTUBE SHORTS
+section). Do NOT generate X or lofi posts here. The lofi brand (Layer8Culture Radio)
 has its OWN separate pipeline (scripts/generation-prompt-lofi.md +
 .github/workflows/generate-lofi.yml, writing queue/lofi-YYYY-MM-DD.json) — do not
 produce lofi posts in this file. Every post here is account "layer8culture", with
-platform either "instagram" or "tiktok".
+platform "instagram", "tiktok", or "youtube".
 
 READ FIRST (in this order):
 1. brand/voice-layer8culture.md — voice + the HOOK and CTA rules, follow strictly
@@ -46,7 +47,9 @@ Create queue/YYYY-MM-DD.json (tomorrow's date in America/New_York) containing an
 objects:
 - 2-3 layer8culture INSTAGRAM posts, chosen to advance the weekly FORMAT MIX below
   (quality + format variety beat raw volume), PLUS
-- 4-6 layer8culture TIKTOK videos, reach-first, per the TIKTOK section below.
+- 4-6 layer8culture TIKTOK videos, reach-first, per the TIKTOK section below, PLUS
+- 1-2 layer8culture YOUTUBE SHORTS that reuse the day's best reel, per the YOUTUBE
+  SHORTS section below (only when the day has a rendered reel).
 
 ## FORMAT MIX (the core growth lever)
 Each post has a top-level "format": one of "single", "carousel", "reel", "story".
@@ -236,6 +239,36 @@ TIKTOK CAPTIONS:
   high-reach tags (e.g. #AI #BuildInPublic #TechTok). Rotate per post; set
   hashtags_in_first_comment:true when a clean caption reads better.
 
+## YOUTUBE SHORTS (1-2/day — cross-post the day's best reel)
+YouTube is a low-volume, high-quality Shorts lane. Emit **1-2** YouTube Shorts for the
+day, every one account "layer8culture", platform "youtube", format "reel". A Short is a
+CROSS-POST that reuses an already-rendered reel's video (no new render):
+
+{
+  "id": "YYYYMMDD-layer8culture-youtube-n",
+  "account": "layer8culture",
+  "category": "one of the 10 content categories",
+  "platform": "youtube",
+  "format": "reel",
+  "schedule_time": "YYYY-MM-DDTHH:MM:00-04:00",
+  "youtube_title": "REQUIRED — a punchy, keyword-rich title, <=100 chars (becomes the
+       YouTube title). End it with #Shorts.",
+  "text": "the YouTube DESCRIPTION — 1-3 lines, keyword-rich first line, then a CTA.",
+  "hashtags": ["#Shorts", "#Layer8Culture", "..."],   // include #Shorts + a few broad tags
+  "visual": { "source": "reuse", "of": "<a RENDERED reel's post id>", "aspect": "9:16" }
+}
+
+RULES:
+- Pick the day's STRONGEST reel(s) to reuse: prefer an Instagram reel, else a top TikTok
+  video. visual.of MUST point at a RENDERED reel in this same queue (source "openai" — an
+  IG reel or a dedicated TikTok video), NEVER another "reuse" cross-post. Add no
+  openai_prompt and no reel block for a Short.
+- A Short requires a same-day rendered reel; if the day has none, emit no YouTube Short.
+- youtube_title is REQUIRED (YouTube needs a 2-100 char title) — make it search-friendly
+  and end with #Shorts. The "text" is the video description (keep it tight).
+- Keep it to 1-2/day (YouTube's upload quota is limited). These upload PRIVATE until the
+  channel's Google app is verified — that's expected; a human flips them to public.
+
 ## VOICE RULES (non-negotiable)
 - Lead with belief. Short cinematic lines. Don't overexplain. Make tech human. Show the work.
 - Every post maps to exactly one of the 10 content categories.
@@ -270,8 +303,9 @@ TIKTOK CAPTIONS:
 - Output valid JSON only in the file. No markdown fences inside the file.
 
 (Other channels — for reference only, do not generate these here: X <= 280 chars.
-TikTok IS generated here now — see the TIKTOK section above. The lofi account
-(Layer8Culture Radio) runs in its own pipeline — see scripts/generation-prompt-lofi.md.)
+TikTok and YouTube ARE generated here now — see the TIKTOK and YOUTUBE SHORTS sections
+above. The lofi account (Layer8Culture Radio) runs in its own pipeline — see
+scripts/generation-prompt-lofi.md.)
 
 FINALLY:
 Write a short summary to queue/YYYY-MM-DD.summary.md (a brief intro narrative at the
