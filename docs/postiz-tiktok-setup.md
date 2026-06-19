@@ -60,18 +60,27 @@ Request these scopes (they match what the engine needs to create + publish video
 
 ## 6. Put the client credentials in Postiz
 
-Copy the app's **Client key** (16 chars) and **Client secret** (32 chars) into
-`/opt/postiz/social.env` on the `postiz-vm`:
+SSH into the `postiz-vm` (connection details live in the private
+`files/postiz-deployment.md`, kept out of git). First check whether the env file
+already has commented TikTok placeholders, so you fill them instead of duplicating:
+
+```bash
+sudo grep -ni tiktok /opt/postiz/social.env
+```
+
+Then add (or uncomment + fill) the app's **Client key** (16 chars) and **Client
+secret** (32 chars) in `/opt/postiz/social.env` (e.g. `sudo nano /opt/postiz/social.env`):
 
 ```env
 TIKTOK_CLIENT_ID="your 16-char client key"
 TIKTOK_CLIENT_SECRET="your 32-char client secret"
 ```
 
-Restart Postiz so it picks up the env:
+Recreate the container so it loads the new env, then verify both vars are present:
 
 ```bash
 cd /opt/postiz && sudo docker compose up -d
+sudo docker exec postiz printenv | grep TIKTOK
 ```
 
 ## 7. Connect the account in the Postiz UI
