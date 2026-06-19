@@ -32,7 +32,9 @@ A 3-beat arc; keep the whole thing **8-12 seconds** (Sora clip = 8 or 12s):
 The big on-screen text is **burned in by ffmpeg** (Sora output is clean) — see
 `scripts/reel_gen.py` `overlay_beats_on_video`. It is supplied as
 `visual.reel.overlay_beats` (below). Rules:
-- **Huge and simple.** Space Grotesk, UPPERCASE, high contrast. **<= 6-8 words per beat.**
+- **Huge and simple.** Space Grotesk, UPPERCASE, high contrast. **<= 4 words and <= 15
+  characters per beat** so it renders BIG and never overflows (the renderer auto-shrinks,
+  but short beats read best). Break a long idea across the 3 beats, not one long line.
 - **Controversial enough to stop the scroll** — but on-brand (calm confidence, never
   hype, hustle, or fake-motivational). Tension, not clickbait lies.
 - **Safe margins:** text renders in the **upper-center** band — keep the top ~12% and
@@ -53,13 +55,36 @@ Plus viral-hook heuristics: **pattern interrupt, curiosity gap, controversy, spe
 (numbers/names), transformation (before→after).** In the queue summary, note the chosen
 hook and its score so reviewers see the pick.
 
-## 5. Sora prompt style (the cinematic clip)
-Cinematic, vertical 9:16, documentary realism, shallow depth of field. Layer8Culture
-look: a Black technology creator/builder, dark modern studio, **electric blue + deep
-navy** palette, premium and minimal, late-night focus. Describe a clear **first beat**
-and a **transformation/metaphor**. Add subtle ambient audio (keyboard, deep cinematic
-bass) — Sora keeps its own audio. **No logos, no copyrighted music, no brand text.**
-(On-screen words are burned in later via `overlay_beats`, so don't rely on Sora text.)
+## 5. Sora prompt style — VARIETY is the anti-generic rule
+Cinematic, vertical 9:16, documentary realism, shallow depth of field, **electric blue +
+deep navy** palette (warm gold accents allowed for the culture pillar). Add subtle ambient
+audio. **No logos, no copyrighted music, no brand text** (on-screen words are burned in
+later via `overlay_beats` — don't rely on Sora text).
+
+**CRITICAL — no two videos in a batch may share the same scene.** The default "a person
+sitting at a desk staring at a glowing monitor" is BANNED as a repeated template — it reads
+as generic stock-AI b-roll. Each video gets a DISTINCT visual world. Vary the **subject**
+(not always a human; use cityscapes, hands, screens, objects, abstract forms, motion), the
+**composition** (close macro / wide environment / overhead / profile / moving POV), and the
+**camera move**. Pull the world from the pillar:
+
+- **AI fluency** — abstraction of intelligence/orchestration: glowing agent-graphs forming
+  in mid-air, a split world of "scrolling vs building", data becoming structure. Often NO
+  person, or a person as a small silhouette against a vast system.
+- **Black tech culture** — Afrofuturist grandeur: a luminous African-futurist cityscape at
+  golden hour, bold architecture, the standalone "8" motif as a monument or skyline element,
+  warm gold + electric blue. Cultural, cinematic, aspirational.
+- **Build-in-public** — the real work: macro of a terminal/cursor/PR merging, hands on a
+  keyboard, a pipeline animating, a screen recording feel — raw and specific, not posed.
+- **Cinematic coding** — code as art: light trails, particles, glass, reflections, extreme
+  macro of type and cursors, neon-in-the-dark texture — abstract and premium, often faceless.
+- **Transformations** — a clear before→after arc: a figure walking from a dim/passive space
+  into a lit/active one, a state change, a path/threshold, dawn breaking. Emotion via light.
+
+Always describe a strong **first beat** (0-2s, instant) and a clear **transformation/metaphor**
+(2-7s). Bold, specific, cinematic — never a safe centered talking-head. Avoid: generic
+startup office, stock "person at desk with floating UI", cheap RGB, cluttered sci-fi,
+garbled screen text.
 
 ## 6. Caption + CTA
 Short, native, hook-style. End with the CTA, lightly rotated around:
@@ -91,9 +116,9 @@ For YouTube, also set a `youtube_title` ending with `#Shorts`.
       "sora_prompt": "...per section 5 — a strong first beat + transformation...",
       "seconds": 8,                // 8 or 12
       "overlay_beats": [
-        { "text": "YOU'RE NOT BEHIND. YOU'RE EARLY.", "start": 0, "end": 2 },
-        { "text": "CONSUMER. OPERATOR. BUILDER.",     "start": 2, "end": 7 },
-        { "text": "START BUILDING.",                  "start": 7, "end": 10 }
+        { "text": "NOT BEHIND.", "start": 0, "end": 2 },
+        { "text": "JUST EARLY.", "start": 2, "end": 7 },
+        { "text": "START BUILDING", "start": 7, "end": 10 }
       ]
     }
   }
@@ -104,9 +129,12 @@ mp4 via `visual.source: "reuse"`, `visual.of: "<this id>"` — see the TIKTOK/YO
 sections of `scripts/generation-prompt.md`.
 
 ## 8. Template library (repeatable; rotate, never reuse verbatim within ~14 days)
+These are *starting points* — when you use one, **re-cut the beats to <= 4 words / <= 15
+chars each** and **give it a fresh, pillar-appropriate visual world** (never re-run the
+same "creator in a studio" scene twice in a batch; see §5). Re-score the hook with STEPPS.
 
 **T1 — "You're Not Behind. You're Early." (pillar: AI fluency / transformation)**
-- Overlay beats: `YOU ARE NOT BEHIND ON AI` (0-2) / `YOU'RE EARLY ENOUGH TO STILL WIN` (2-7) / `START BUILDING` (7-10)
+- Overlay beats: `NOT BEHIND` (0-2) / `JUST EARLY` (2-7) / `START BUILDING` (7-10)
 - Sora: Vertical 9:16 cinematic. A Black creator alone in a dark modern studio at night,
   laptop open, blue ambient light on his face; quiet, focused, premium, minimal. As he
   types, floating holographic words appear — "consumer," "operator," "creator," "builder,"

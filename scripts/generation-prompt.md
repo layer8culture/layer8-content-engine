@@ -139,8 +139,9 @@ headline; vary the scene per slide so the set doesn't look repetitive.
   "source": "openai",
   "aspect": "9:16",
   "quality": "high",
-  "openai_prompt": "...the cinematic 9:16 BASE STILL Sora animates (no text). Per
-       brand/viral-formats.md §5: Black tech creator, dark studio, electric blue + navy.",
+  "openai_prompt": "...the cinematic 9:16 BASE STILL Sora animates (no text). Build the
+       scene from THIS video's pillar visual world (brand/viral-formats.md §5) — vary it
+       per video, NOT the default studio; keep the electric blue + deep navy palette.",
   "headline": "REQUIRED — the hook line (used for the cover frame).",
   "viral_pillar": "ai-fluency | black-tech-culture | build-in-public | cinematic-coding | transformation",
   "hook_score": 0,               // STEPPS score (0-100) of the chosen hook — see §4
@@ -151,10 +152,10 @@ headline; vary the scene per slide so the set doesn't look repetitive.
          audio; output is CLEAN (no on-screen text) — the big text is burned in via
          overlay_beats below.",
     "seconds": 8,                 // Sora clip length — 8 or 12 (8-12s target)
-    "overlay_beats": [            // VIRAL FORMAT: HUGE text burned onto the Sora clip (<= 6-8 words/beat)
-       { "text": "HOOK — PATTERN INTERRUPT", "start": 0, "end": 2 },
-       { "text": "TRANSFORMATION CUE", "start": 2, "end": 7 },
-       { "text": "PUNCHLINE / CTA", "start": 7, "end": 10 }
+    "overlay_beats": [            // VIRAL FORMAT: HUGE text burned in (<= 4 words / <= 15 chars/beat)
+       { "text": "HOOK (<=4 WORDS)", "start": 0, "end": 2 },
+       { "text": "TURN", "start": 2, "end": 7 },
+       { "text": "PAYOFF / CTA", "start": 7, "end": 10 }
     ],
     "duration_sec": 8,            // used only by the "motion" fallback (5-15)
     "beats": ["HOOK LINE", "PAYOFF LINE"],   // fallback-only on-screen beats (motion mode)
@@ -169,7 +170,9 @@ headline; vary the scene per slide so the set doesn't look repetitive.
 Reel craft: this IS the viral format (brand/viral-formats.md). Pick a pillar, draft >=3
 hooks, STEPPS-score them, ship the best (record it in hook_score). The clean Sora clip
 does the cinematic transformation; the HUGE on-screen text is burned in from overlay_beats
-on the 0-2 / 2-7 / 7-10 arc (do NOT ask Sora to render text). Keep each beat <= 6-8 words.
+on the 0-2 / 2-7 / 7-10 arc (do NOT ask Sora to render text). Keep each beat <= 4 words /
+<= 15 chars so it renders BIG. Give each video a DISTINCT visual world per its pillar
+(brand/viral-formats.md §5) — never repeat the "person at a desk" scene.
 Use "clip" only when a real show recording exists in assets/library/. "motion" is the
 automatic fallback if Sora is unavailable.
 
@@ -197,10 +200,10 @@ brand/viral-formats.md §7):
          "mode": "sora",
          "sora_prompt": "...per brand/viral-formats.md §5 — strong first beat + transformation...",
          "seconds": 8,                                           // 8 or 12 (8-12s)
-         "overlay_beats": [
-            { "text": "HOOK — PATTERN INTERRUPT", "start": 0, "end": 2 },
-            { "text": "TRANSFORMATION CUE", "start": 2, "end": 7 },
-            { "text": "PUNCHLINE / CTA", "start": 7, "end": 10 }
+         "overlay_beats": [        // <= 4 words / <= 15 chars per beat
+            { "text": "HOOK (<=4 WORDS)", "start": 0, "end": 2 },
+            { "text": "TURN", "start": 2, "end": 7 },
+            { "text": "PAYOFF / CTA", "start": 7, "end": 10 }
          ]
        }
      }
@@ -215,7 +218,10 @@ rendered, text-baked master — add NO openai_prompt / reel block on a reuse pos
    - YouTube Short: see the YOUTUBE SHORTS section (also source "reuse", of the master id).
 
 REACH RULES:
-- Every one of the 4-6 is a DISTINCT pillar / hook / scene — never near-duplicates.
+- Every one of the 4-6 is a DISTINCT VISUAL WORLD per its pillar (brand/viral-formats.md §5)
+  — NEVER two "person at a desk in a dark studio" scenes in a batch; vary the subject (often
+  no person — cityscapes, hands, screens, abstract forms), composition, and camera move.
+  Bold, cinematic, specific — not safe stock-AI b-roll. Keep overlay beats <= 4 words.
 - Draft >=3 hooks per video and STEPPS-score them (brand/viral-formats.md §4); ship the
   best and record hook_score.
 - Pull angles from the AI news you researched + transcript moments + calendar/topics.md.
