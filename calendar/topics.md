@@ -17,6 +17,10 @@
 - (nothing yet)
 
 ## Posting cadence targets
-- CURRENT FOCUS: layer8culture Instagram only — 3-4 posts/day, every post a
-  fresh topical OpenAI image (1 high-quality hero/day, the rest medium).
-- Paused for now: layer8culture X & TikTok, and the lofi account.
+- CURRENT FOCUS: layer8culture Instagram + TikTok.
+  - Instagram: 2-3 posts/day, every post a fresh topical OpenAI image (1
+    high-quality hero/day, the rest medium).
+  - TikTok: 4-6 reach-first videos/day. Cross-post each day's Instagram reel for
+    free (reuse the rendered mp4), then fill to 4-6 with dedicated Sora-2 videos —
+    a distinct hook/angle each, schedule spread across high-traffic windows.
+- Paused for now: layer8culture X, and the lofi account.

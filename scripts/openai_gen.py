@@ -533,6 +533,9 @@ def main(queue_file: str) -> None:
 
     for post in posts:
         if post.get("visual", {}).get("source") != "openai":
+            # Non-"openai" sources are intentionally skipped here: "library" posts
+            # bring their own asset, and "reuse" cross-posts (e.g. TikTok reusing
+            # the day's Instagram reel) get their media in reel_gen.py's pass 2.
             continue
         if post.get("format") == "carousel":
             paths = render_carousel(client, model, post, out_dir)

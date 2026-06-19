@@ -23,12 +23,19 @@ Afrofuturistic LoFi stream.
   LOFI COLOR SYSTEM, and LOFI POST-TYPE notes — never the main BASE PROMPT.
 
 ## Two pipelines (keep them separate)
-- **layer8culture** (nightly, generate-content.yml): news-driven IG posts; prompt
-  scripts/generation-prompt.md; queue/<date>.json; steered by calendar/topics.md.
+- **layer8culture** (nightly, generate-content.yml): news-driven posts on TWO platforms
+  in one run — Instagram (the core feed) AND TikTok (4-6 reach-first videos/day); prompt
+  scripts/generation-prompt.md; queue/<date>.json; steered by calendar/topics.md. TikTok
+  posts are platform "tiktok", format "reel", video-only: a CROSS-POST reuses the day's IG
+  reel (visual.source "reuse", visual.of "<ig-reel-id>" — reel_gen.py pass 2 copies that
+  reel's mp4/cover to the TikTok post id, zero extra render), and DEDICATED videos render
+  with Sora-2 like an IG reel. The TikTok Postiz channel resolves from the
+  TIKTOK_CHANNEL_ID secret (unset -> TikTok posts skipped, not errored).
 - **lofi / Layer8Culture Radio** (Mon/Wed/Fri, generate-lofi.yml): evergreen
   focus-music content + conditional "Now Live" video promos; prompt
   scripts/generation-prompt-lofi.md; queue/lofi-<date>.json; steered by
-  calendar/topics-lofi.md. account is "lofi", platform "instagram". The lofi account
+  calendar/topics-lofi.md. account is "lofi", platform "instagram" (lofi TikTok stays
+  paused/provisioning-only). The lofi account
   has NO composited wordmark for now (openai_gen.py ACCOUNT_WORDMARK maps lofi->None);
   its Postiz channel resolves from the LOFI_IG_CHANNEL_ID secret.
 
