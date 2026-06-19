@@ -24,6 +24,8 @@ jobs:
           POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
           LOFI_IG_CHANNEL_ID: ${{ secrets.LOFI_IG_CHANNEL_ID }}
           TIKTOK_CHANNEL_ID: ${{ secrets.TIKTOK_CHANNEL_ID }}
+          YOUTUBE_LAYER8_CHANNEL_ID: ${{ secrets.YOUTUBE_LAYER8_CHANNEL_ID }}
+          YOUTUBE_LOFI_CHANNEL_ID: ${{ secrets.YOUTUBE_LOFI_CHANNEL_ID }}
         run: |
           pip install requests
           shopt -s nullglob

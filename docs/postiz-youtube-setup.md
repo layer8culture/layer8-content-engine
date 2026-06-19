@@ -1,14 +1,15 @@
 # Connecting Postiz to YouTube
 
-How to connect the **@Layer8CultureRadio** YouTube channel to the self-hosted Postiz
-instance so you can **schedule video uploads** (long-form sessions or Shorts) from
-Postiz.
+How to connect **both** brand YouTube channels — **@layer8culture** and
+**@Layer8CultureRadio** — to the self-hosted Postiz instance so the content engine can
+**auto-publish Shorts** to them (and so you can also schedule uploads by hand).
 
-> **Scope.** This enables **manual scheduling** of uploads to YouTube from the Postiz
-> UI. The content engine does **not** auto-generate or auto-post YouTube content — it
-> drives traffic *to* YouTube via the Instagram "Now Live on YouTube" promo posts (see
-> `scripts/fetch_youtube.py`). Auto-posting was deferred on purpose; see
-> [The forced-private limitation](#the-forced-private-limitation-read-this-first).
+> **Scope.** The engine now **cross-posts its 9:16 reels as YouTube Shorts** to both
+> channels — layer8culture 1-2/day, lofi the loop-reel each run (see
+> `scripts/generation-prompt.md` / `generation-prompt-lofi.md` and
+> `scripts/post_to_postiz.py`). It still **also** drives traffic *to* YouTube via the
+> Instagram "Now Live on YouTube" promo posts (`scripts/fetch_youtube.py`). Before
+> relying on auto-publishing, read [The forced-private limitation](#the-forced-private-limitation-read-this-first).
 
 ## The forced-private limitation (read this first)
 
@@ -19,19 +20,23 @@ regardless of the visibility you request — until that project passes Google's 
 
 What this means in practice:
 
-- You **can** connect YouTube to Postiz and schedule uploads today.
-- Each uploaded video lands **private**. To publish it you either:
-  1. **Manually flip it to Public/Unlisted** in YouTube Studio after Postiz uploads
-     it (simplest), or
-  2. Complete Google's **OAuth app verification + security assessment** so uploads
-     post at the requested visibility (only worth it at scale).
+- You **can** connect YouTube to Postiz and the engine will auto-upload Shorts today.
+- Each uploaded Short lands **private**. To make it visible you either:
+  1. **Manually flip it to Public/Unlisted** in YouTube Studio after Postiz uploads it
+     (the current workflow — the engine requests `public`, so once verified no change is
+     needed), or
+  2. Complete Google's **OAuth app verification + security assessment** so uploads post
+     at the requested visibility (only worth it at scale).
 
-This is the main reason the engine does not auto-post to YouTube.
+This forced-private behavior is expected; plan to flip the Shorts in YouTube Studio until
+the Google app is verified.
 
 ## 0. Prerequisites
 
-- A Google account that **manages** the @Layer8CultureRadio YouTube channel
-  (channel id `UC0AQjSCaU9ByaU90XabBbHQ`).
+- A Google account that **manages** both YouTube channels: **@layer8culture** and
+  **@Layer8CultureRadio** (lofi channel id `UC0AQjSCaU9ByaU90XabBbHQ`). One Google Cloud
+  OAuth app (one `YOUTUBE_CLIENT_ID/SECRET`) serves both — you just run the "Add Channel"
+  + integration-ID steps once per channel.
 - Access to the [Google Cloud Console](https://console.cloud.google.com/).
 - Admin access to the Postiz VM (`/opt/postiz` on `postiz-vm`).
 
@@ -104,16 +109,37 @@ organization, you must also trust the app at the org level:
 
 (If your channel is a plain personal YouTube account, you can skip this section.)
 
-## 7. Connect the channel in the Postiz UI
+## 7. Connect BOTH channels in the Postiz UI
 
 1. Open Postiz (`POSTIZ_URL`) and log in with the admin account.
-2. **Add Channel → YouTube** → authorize via the Google login popup with the account
-   that manages the channel → approve the requested scopes.
-3. The @Layer8CultureRadio channel now appears as a Postiz channel; you can schedule
-   uploads to it from the calendar.
+2. **Add Channel → YouTube** → authorize via the Google login popup with the account that
+   manages the channel → approve the requested scopes. Pick **@layer8culture**.
+3. **Add Channel → YouTube** again and connect **@Layer8CultureRadio**. (Same OAuth app;
+   both managing Google accounts must be **test users** on the consent screen — section 2.)
+4. Both channels now appear as Postiz channels.
 
-> Remember: scheduled uploads arrive **private** (see the limitation above) until you
-> publish them in YouTube Studio or complete Google verification.
+> Remember: uploads arrive **private** (see the limitation above) until you flip them in
+> YouTube Studio or complete Google verification.
+
+## 8. Put each channel's integration ID into the engine
+
+In Postiz → **Settings → API**, copy each connected YouTube channel's **integration ID**
+(a cuid-style string, not a numeric YouTube id), then set them as GitHub repo secrets so
+the engine publishes Shorts to each:
+
+```bash
+gh secret set YOUTUBE_LAYER8_CHANNEL_ID --repo layer8culture/layer8-content-engine
+gh secret set YOUTUBE_LOFI_CHANNEL_ID  --repo layer8culture/layer8-content-engine
+# paste the matching cuid when prompted
+```
+
+`post_to_postiz.py` reads these and fills `INTEGRATIONS[("layer8culture","youtube")]` /
+`[("lofi","youtube")]` at publish time. **Until a secret is set, that brand's YouTube
+Shorts are skipped — not errored** — so the rest of the engine keeps running. (These are
+distinct from `YT_CHANNEL_ID`, the RSS channel id `fetch_youtube.py` uses for promos.)
+
+**Don't know the integration ID?** With `POSTIZ_URL` + `POSTIZ_API_KEY` set in your shell,
+run `python scripts/list_postiz_channels.py` to print every connected channel's id.
 
 ## Troubleshooting
 

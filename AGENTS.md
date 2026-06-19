@@ -23,21 +23,26 @@ Afrofuturistic LoFi stream.
   LOFI COLOR SYSTEM, and LOFI POST-TYPE notes — never the main BASE PROMPT.
 
 ## Two pipelines (keep them separate)
-- **layer8culture** (nightly, generate-content.yml): news-driven posts on TWO platforms
-  in one run — Instagram (the core feed) AND TikTok (4-6 reach-first videos/day); prompt
-  scripts/generation-prompt.md; queue/<date>.json; steered by calendar/topics.md. TikTok
-  posts are platform "tiktok", format "reel", video-only: a CROSS-POST reuses the day's IG
-  reel (visual.source "reuse", visual.of "<ig-reel-id>" — reel_gen.py pass 2 copies that
-  reel's mp4/cover to the TikTok post id, zero extra render), and DEDICATED videos render
-  with Sora-2 like an IG reel. The TikTok Postiz channel resolves from the
-  TIKTOK_CHANNEL_ID secret (unset -> TikTok posts skipped, not errored).
+- **layer8culture** (nightly, generate-content.yml): news-driven posts on THREE platforms
+  in one run — Instagram (the core feed), TikTok (4-6 reach-first videos/day), and YouTube
+  (1-2 Shorts/day); prompt scripts/generation-prompt.md; queue/<date>.json; steered by
+  calendar/topics.md. TikTok posts are platform "tiktok", format "reel", video-only: a
+  CROSS-POST reuses the day's IG reel (visual.source "reuse", visual.of "<ig-reel-id>" —
+  reel_gen.py pass 2 copies that reel's mp4/cover to the post id, zero extra render), and
+  DEDICATED videos render with Sora-2 like an IG reel. YouTube Shorts are platform
+  "youtube", format "reel", always a CROSS-POST (visual.source "reuse") of the day's best
+  rendered reel, with a required youtube_title. The TikTok / YouTube Postiz channels
+  resolve from the TIKTOK_CHANNEL_ID / YOUTUBE_LAYER8_CHANNEL_ID secrets (unset -> those
+  posts skipped, not errored). YouTube uploads land PRIVATE until the Google app is
+  verified (flip in Studio).
 - **lofi / Layer8Culture Radio** (Mon/Wed/Fri, generate-lofi.yml): evergreen
   focus-music content + conditional "Now Live" video promos; prompt
   scripts/generation-prompt-lofi.md; queue/lofi-<date>.json; steered by
-  calendar/topics-lofi.md. account is "lofi", platform "instagram" (lofi TikTok stays
-  paused/provisioning-only). The lofi account
+  calendar/topics-lofi.md. account is "lofi"; posts are platform "instagram" plus, when a
+  run has a loop-reel, ONE platform "youtube" Short cross-posting it (resolves from
+  YOUTUBE_LOFI_CHANNEL_ID; lofi TikTok stays paused/provisioning-only). The lofi account
   has NO composited wordmark for now (openai_gen.py ACCOUNT_WORDMARK maps lofi->None);
-  its Postiz channel resolves from the LOFI_IG_CHANNEL_ID secret.
+  its Postiz IG channel resolves from the LOFI_IG_CHANNEL_ID secret.
 
 ## Repo conventions
 - Generated posts go in queue/ — layer8culture as YYYY-MM-DD.json, lofi as

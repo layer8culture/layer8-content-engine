@@ -25,18 +25,20 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
 ```
 
 > **Two channels.** The engine runs **two separate pipelines**:
-> - **layer8culture Instagram + TikTok** (nightly) — news-driven posts across a deliberate
+> - **layer8culture Instagram + TikTok + YouTube** (nightly) — news-driven posts across a deliberate
 >   Instagram format mix: **Reels** (reach), **carousels** (saves), **Stories** (daily
 >   engagement), and the occasional single static post. Each post gets fresh OpenAI
 >   visuals tied to that day's AI news, one high-quality hero per day. The same run also
 >   ships **4-6 reach-first TikTok videos/day** — cross-posting each day's Reel for free
->   (reuse the rendered mp4) and filling the rest with dedicated Sora-2 videos. A nightly
+>   (reuse the rendered mp4) and filling the rest with dedicated Sora-2 videos — plus
+>   **1-2 YouTube Shorts/day** that reuse the day's strongest reel. A nightly
 >   **analytics** job pulls Instagram Insights into `analytics/insights-digest.md`,
 >   which feeds back into generation to grow toward 4k+ followers. Steer it via
 >   `scripts/generation-prompt.md` and `calendar/topics.md`.
-> - **Layer8Culture Radio (lofi) Instagram** (Mon/Wed/Fri) — calm, evergreen
+> - **Layer8Culture Radio (lofi) Instagram + YouTube** (Mon/Wed/Fri) — calm, evergreen
 >   focus-music brand content (quote cards, loop-preview Reels, playlist/community
->   posts), plus a "Now Live on YouTube" promo when a video link is supplied. Its own
+>   posts), plus a "Now Live on YouTube" promo when a video link is supplied. It also
+>   cross-posts its loop-reel to the lofi YouTube channel as a Short. Its own
 >   prompt (`scripts/generation-prompt-lofi.md`), queue files (`queue/lofi-*.json`),
 >   workflow (`generate-lofi.yml`), and approval PR. Steer it via
 >   `calendar/topics-lofi.md`. (X remains paused for both brands; lofi TikTok is paused.)
@@ -76,6 +78,8 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
    | `POSTIZ_API_KEY` | From your Postiz instance |
    | `LOFI_IG_CHANNEL_ID` | **Optional override.** The Layer8Culture Radio Instagram channel is already wired in `post_to_postiz.py`; set this only to point lofi posts at a different Postiz integration ID (e.g. after re-connecting the channel). |
    | `TIKTOK_CHANNEL_ID` | **Required to publish TikTok.** The Postiz integration ID for the layer8culture TikTok channel. Until it's set, `INTEGRATIONS[("layer8culture","tiktok")]` stays `REPLACE_ME` and TikTok posts are **skipped, not errored** — so the engine can ship TikTok content the moment you connect TikTok in Postiz and add this secret. |
+   | `YOUTUBE_LAYER8_CHANNEL_ID` | **Required to publish layer8culture YouTube Shorts.** The Postiz integration ID for the layer8culture YouTube channel. Unset -> those Shorts are **skipped, not errored**. (Distinct from `YT_CHANNEL_ID`, the RSS channel id used by `fetch_youtube.py`.) |
+   | `YOUTUBE_LOFI_CHANNEL_ID` | **Required to publish lofi YouTube Shorts.** The Postiz integration ID for the Layer8Culture Radio YouTube channel. Unset -> those Shorts are skipped, not errored. |
    | `IG_USER_ID` | Instagram **Business** account user id (for the insights loop) |
    | `IG_GRAPH_TOKEN` | Long-lived Instagram Graph API token with `instagram_basic`, `instagram_manage_insights`, `pages_read_engagement` (reuses your Meta app) |
    | `REPORT_WEBHOOK` | Discord/Slack webhook for the daily report (optional) |
@@ -93,9 +97,12 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
    `REPLACE_ME` entries (X for both brands, lofi TikTok) stay paused — unmapped posts
    are skipped, not errored.
    Full walkthrough: [`docs/postiz-instagram-setup.md`](docs/postiz-instagram-setup.md).
-   To schedule **YouTube** uploads manually from Postiz, see
-   [`docs/postiz-youtube-setup.md`](docs/postiz-youtube-setup.md) (the engine doesn't
-   auto-post to YouTube — it promotes YouTube sessions on Instagram instead).
+   To publish **YouTube Shorts**, connect each brand's YouTube channel in Postiz and set
+   `YOUTUBE_LAYER8_CHANNEL_ID` / `YOUTUBE_LOFI_CHANNEL_ID` — the engine cross-posts reels
+   as Shorts to both (uploads land **private** until the Google app is verified; flip them
+   in YouTube Studio). Full walkthrough:
+   [`docs/postiz-youtube-setup.md`](docs/postiz-youtube-setup.md). The engine still also
+   promotes lofi YouTube *sessions* on Instagram via the "Now Live" posts.
 5. **Customize the brand files** in `brand/` — this is what makes output sound like you.
 6. **Enable the workflows** in the Actions tab.
 

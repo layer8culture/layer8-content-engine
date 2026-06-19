@@ -28,6 +28,8 @@
 
 ## Cadence
 - 3x/week — Monday / Wednesday / Friday, 1-2 posts per run.
+- When a run includes a Loop Preview Reel, also cross-post it as ONE YouTube Short
+  (reuse the rendered mp4). Uploads land PRIVATE until the Google app is verified.
 - Favor Loop Preview Reels + Quote singles; rotate in playlist / community /
   behind-the-scenes. Add a Video Promo whenever a "Now Live" entry exists above.
 - Exactly one "high" quality hero per run; the rest "medium".
