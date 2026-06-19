@@ -366,6 +366,80 @@ def find_lofi_bed() -> pathlib.Path | None:
     return None
 
 
+# --- Viral overlay (huge burned-in text beats on a Sora clip) ----------------
+# layer8culture's short-form videos use the viral format (brand/viral-formats.md):
+# Sora renders the cinematic 9:16 clip, then we burn HUGE Space Grotesk text beats
+# onto it on a 3-beat arc (hook / transformation cue / punchline-CTA). Text sits in
+# the upper-center band, clear of the bottom caption/UI zone.
+VIRAL_OVERLAY_FONTSIZE = 88
+VIRAL_OVERLAY_Y = "h*0.20"
+VIRAL_DEFAULT_SPAN = 10.0  # fallback total seconds when beats omit timings
+
+
+def _coerce_beats(raw) -> list[dict]:
+    """Normalize visual.reel.overlay_beats into [{text,start,end}] with sane timings.
+
+    Accepts either plain strings (timings auto-split evenly) or dicts with
+    text/start/end. Beats missing timings are spread across VIRAL_DEFAULT_SPAN.
+    """
+    beats: list[dict] = []
+    for b in (raw or []):
+        if isinstance(b, str):
+            text, start, end = b, None, None
+        elif isinstance(b, dict):
+            text = b.get("text", "")
+            start, end = b.get("start"), b.get("end")
+        else:
+            continue
+        text = str(text).strip()
+        if not text:
+            continue
+        beats.append({
+            "text": text,
+            "start": None if start is None else float(start),
+            "end": None if end is None else float(end),
+        })
+    if beats and any(b["start"] is None or b["end"] is None for b in beats):
+        slot = VIRAL_DEFAULT_SPAN / len(beats)
+        for i, b in enumerate(beats):
+            if b["start"] is None:
+                b["start"] = round(i * slot, 2)
+            if b["end"] is None:
+                b["end"] = round((i + 1) * slot, 2)
+    return beats
+
+
+def overlay_beats_on_video(video_path: pathlib.Path, raw_beats,
+                           out_path: pathlib.Path, post_id: str) -> bool:
+    """Burn the viral big-text beats onto an existing (Sora) mp4 via ffmpeg.
+
+    Each beat shows between its start/end as a large centered Space Grotesk overlay
+    (with the shared box + shadow style); Sora's audio is preserved. Returns True on
+    success, False if there are no usable beats or ffmpeg fails.
+    """
+    beats = _coerce_beats(raw_beats)
+    if not beats:
+        return False
+    filters = [
+        drawtext_filter(
+            wrap_text(b["text"], max_chars=16, max_lines=4),
+            VIRAL_OVERLAY_Y,
+            VIRAL_OVERLAY_FONTSIZE,
+            start=b["start"],
+            end=b["end"],
+        )
+        for b in beats
+    ]
+    args = [
+        "ffmpeg", "-y", "-i", str(video_path),
+        "-vf", ",".join(filters),
+        "-c:v", "libx264", "-preset", "medium", "-crf", "18",
+        "-pix_fmt", "yuv420p", "-c:a", "copy", "-movflags", "+faststart",
+        str(out_path),
+    ]
+    return run_ffmpeg(args, post_id, "viral overlay")
+
+
 def generate_motion(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None:
     post_id = str(post.get("id", "")).strip()
     visual = post.setdefault("visual", {})
@@ -713,8 +787,21 @@ def generate_sora(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None:
             if not _sora_download(job_id, out_path):
                 print(f"  x {post_id}: Sora download failed")
                 return None
-            if not export_cover(out_path, cover_path, post_id,
-                                timestamp=min(1.0, seconds / 2)):
+            # Viral format: burn the big-text beats onto the clean Sora clip, and
+            # take the cover at the hook beat so the thumbnail leads with the text.
+            cover_ts = min(1.0, seconds / 2)
+            beats = reel.get("overlay_beats")
+            if beats:
+                tmp = out_dir / f"{post_id}-textovl.mp4"
+                if overlay_beats_on_video(out_path, beats, tmp, post_id):
+                    tmp.replace(out_path)
+                    coerced = _coerce_beats(beats)
+                    if coerced:
+                        cover_ts = max(0.1, (coerced[0]["start"] + coerced[0]["end"]) / 2)
+                    print(f"  + {post_id}: burned {len(coerced)} viral text beat(s)")
+                else:
+                    print(f"  ! {post_id}: viral overlay failed; using clean Sora clip")
+            if not export_cover(out_path, cover_path, post_id, timestamp=cover_ts):
                 return None
             print(f"  + {post_id} -> {out_path} (Sora {label})")
             return str(out_path), str(cover_path)

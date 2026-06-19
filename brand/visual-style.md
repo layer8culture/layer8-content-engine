@@ -2,6 +2,15 @@
 # Encodes Sections 13 (color), 14 (type), 16 (imagery), 26 (AI prompting) of brand-guidelines-v2.md
 # The engine MUST build every image prompt from these blocks.
 
+## VIRAL FORMAT (layer8culture short-form video) — see brand/viral-formats.md
+All layer8culture videos (TikTok / YouTube Shorts / IG Reels) use the viral format:
+an 8-12s Sora cinematic + HUGE on-screen text burned in by ffmpeg on the 0-2 / 2-7 / 7-10
+arc (Sora output is clean — never ask it to render text). Overlay text styling: Space
+Grotesk UPPERCASE, high-contrast Soft White with a dark box + soft shadow, centered in the
+**upper-center** band; keep the top ~12% and bottom ~20% clear of essential words (platform
+UI). <= 6-8 words per beat. Hooks are STEPPS-scored. Full spec + template library:
+brand/viral-formats.md. (The lofi account does NOT use this — see its LOFI blocks below.)
+
 ## Color system (reference in prompts)
 - Deep Black #000000 (backgrounds, negative space)
 - Electric Blue #0047FF (accents, glow — intentional, never overused)

@@ -21,17 +21,20 @@ Afrofuturistic LoFi stream.
 - Image prompts are ALWAYS composed per brand/visual-style.md
   (base prompt + add-on + scene + negative prompt). Lofi uses the LOFI BASE PROMPT,
   LOFI COLOR SYSTEM, and LOFI POST-TYPE notes — never the main BASE PROMPT.
+- layer8culture short-form VIDEO (TikTok/YouTube/IG Reels) uses the VIRAL FORMAT
+  (brand/viral-formats.md): 8-12s Sora cinematic + HUGE overlay text burned in by
+  reel_gen.py (visual.reel.overlay_beats, timed 0-2 / 2-7 / 7-10), hooks STEPPS-scored.
+  Sora output stays clean (no Sora-rendered text). lofi video does NOT use the viral format.
 
 ## Two pipelines (keep them separate)
-- **layer8culture** (nightly, generate-content.yml): news-driven posts on THREE platforms
-  in one run — Instagram (the core feed), TikTok (4-6 reach-first videos/day), and YouTube
-  (1-2 Shorts/day); prompt scripts/generation-prompt.md; queue/<date>.json; steered by
-  calendar/topics.md. TikTok posts are platform "tiktok", format "reel", video-only: a
-  CROSS-POST reuses the day's IG reel (visual.source "reuse", visual.of "<ig-reel-id>" —
-  reel_gen.py pass 2 copies that reel's mp4/cover to the post id, zero extra render), and
-  DEDICATED videos render with Sora-2 like an IG reel. YouTube Shorts are platform
-  "youtube", format "reel", always a CROSS-POST (visual.source "reuse") of the day's best
-  rendered reel, with a required youtube_title. The TikTok / YouTube Postiz channels
+- **layer8culture** (nightly, generate-content.yml): 4-6 VIRAL short-form videos/day
+  (brand/viral-formats.md) + Instagram carousels/stories; prompt scripts/generation-prompt.md;
+  queue/<date>.json; steered by calendar/topics.md. Each viral video MASTER is platform
+  "tiktok", format "reel", source "openai" + a reel block with sora_prompt + overlay_beats.
+  The TOP 1-2 (by hook_score) are ALSO cross-posted as an Instagram Reel + a YouTube Short
+  (visual.source "reuse", visual.of "<tiktok master id>" — reel_gen.py pass 2 copies the
+  text-baked mp4/cover to the post id, zero extra render). YouTube Shorts also need a
+  youtube_title. The TikTok / YouTube Postiz channels
   resolve from the TIKTOK_CHANNEL_ID / YOUTUBE_LAYER8_CHANNEL_ID secrets (unset -> those
   posts skipped, not errored). YouTube uploads land PRIVATE until the Google app is
   verified (flip in Studio).

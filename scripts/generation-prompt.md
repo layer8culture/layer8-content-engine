@@ -9,26 +9,29 @@ comes from Reels, saves come from carousels, loyalty comes from Stories — so v
 the format deliberately (see FORMAT MIX) and lead every post with a real hook.
 
 CURRENT FOCUS (overrides older cadence notes):
-Generate layer8culture posts for THREE platforms in this run: Instagram (the core
-feed), TikTok (a high-volume, reach-first video lane — see the TIKTOK section), and
-YouTube (1-2 Shorts/day that reuse the day's best reel — see the YOUTUBE SHORTS
-section). Do NOT generate X or lofi posts here. The lofi brand (Layer8Culture Radio)
-has its OWN separate pipeline (scripts/generation-prompt-lofi.md +
-.github/workflows/generate-lofi.yml, writing queue/lofi-YYYY-MM-DD.json) — do not
-produce lofi posts in this file. Every post here is account "layer8culture", with
-platform "instagram", "tiktok", or "youtube".
+The core content is now 4-6 **VIRAL short-form videos/day** (brand/viral-formats.md):
+8-12s Sora cinematics with HUGE burned-in overlay text, STEPPS-scored hooks, built on the
+5 viral pillars. Each master is a TikTok post; the TOP 1-2 are also cross-posted as an
+Instagram Reel + a YouTube Short. Instagram additionally gets carousels + a story. Do NOT
+generate X or lofi posts here. The lofi brand (Layer8Culture Radio) has its OWN separate
+pipeline (scripts/generation-prompt-lofi.md + .github/workflows/generate-lofi.yml, writing
+queue/lofi-YYYY-MM-DD.json) — do not produce lofi posts in this file. Every post here is
+account "layer8culture", with platform "instagram", "tiktok", or "youtube".
 
 READ FIRST (in this order):
 1. brand/voice-layer8culture.md — voice + the HOOK and CTA rules, follow strictly
 2. brand/visual-style.md — REQUIRED formula for every image prompt + per-format notes
-3. brand/hashtags.md — the tiered, rotating hashtag strategy
-4. analytics/insights-digest.md IF it exists — this is real performance data. Lean
+3. brand/viral-formats.md — REQUIRED for every video (TikTok/YouTube/Reel): the 5 viral
+   pillars, the 8-12s 3-beat structure, the overlay-text rules, the STEPPS hook scoring,
+   and the template library. All short-form video follows this.
+4. brand/hashtags.md — the tiered, rotating hashtag strategy
+5. analytics/insights-digest.md IF it exists — this is real performance data. Lean
    HARD into what's working: repeat the best-performing formats, categories, hooks,
    and posting hours; avoid the lowest-reach patterns. This is the steering signal.
-5. calendar/topics.md — this week's steering input
-6. The most recent file in transcripts/ — pillar content; mine it for quotable
+6. calendar/topics.md — this week's steering input
+7. The most recent file in transcripts/ — pillar content; mine it for quotable
    moments, tips, hooks, and Reel clip ideas
-7. posted/log.json if it exists — do NOT repeat recent angles, quotes, hooks, or
+8. posted/log.json if it exists — do NOT repeat recent angles, quotes, hooks, or
    secondary taglines used in the last 7 days
 8. For anything ambiguous, brand/brand-guidelines-v2.md is the canonical source
 
@@ -45,27 +48,27 @@ calendar/topics.md plus the latest transcript — never block on the web.
 THEN GENERATE:
 Create queue/YYYY-MM-DD.json (tomorrow's date in America/New_York) containing an array of post
 objects:
-- 2-3 layer8culture INSTAGRAM posts, chosen to advance the weekly FORMAT MIX below
-  (quality + format variety beat raw volume), PLUS
-- 4-6 layer8culture TIKTOK videos, reach-first, per the TIKTOK section below, PLUS
-- 1-2 layer8culture YOUTUBE SHORTS that reuse the day's best reel, per the YOUTUBE
-  SHORTS section below (only when the day has a rendered reel).
+- 4-6 layer8culture VIRAL VIDEOS (platform "tiktok" masters) per the VIRAL VIDEOS section
+  below — the core scroll-stopping content (brand/viral-formats.md), PLUS
+- the TOP 1-2 of those videos ALSO cross-posted as an Instagram Reel + a YouTube Short
+  (source "reuse"), PLUS
+- 1-2 layer8culture INSTAGRAM carousels and ~1 Instagram story (saves + daily engagement)
+  per the FORMAT MIX below. (The IG REEL slot is filled by the viral cross-post above —
+  do NOT also generate a separate cinematic IG reel.)
 
-## FORMAT MIX (the core growth lever)
-Each post has a top-level "format": one of "single", "carousel", "reel", "story".
-Across a 7-day window aim for roughly:
-- 3-4 reels    — the #1 driver of reach to non-followers. Prioritize these.
-- 2-3 carousels— the #1 driver of saves. Educational, value-dense.
+## FORMAT MIX (Instagram feed)
+Each post has a top-level "format": one of "single", "carousel", "reel", "story". The IG
+**reel** is now a viral cross-post (the top viral master, reused). For the rest of the IG
+feed, across a 7-day window aim for roughly:
+- 2-3 carousels — the #1 driver of saves. Educational, value-dense.
 - ~1 story/day — lightweight daily engagement (poll/question/tap-to-watch).
-- the rest single static posts — use sparingly, for a strong single statement.
-Per day: vary formats from the day before; never produce an all-static day; include
-at least one reel OR carousel every day, plus one story. Use posted/log.json to see
-recent formats and rotate. When analytics/insights-digest.md shows a format winning,
-weight toward it. When a day includes an Instagram reel, also add its TikTok cross-post
-(see TIKTOK below) so that reel does double duty for free.
+- the occasional single static post — sparingly, for a strong single statement.
+Per day: include 1-2 carousels and a story alongside the viral reel cross-post; vary from
+the day before; never produce an all-static day. Use posted/log.json to rotate. When
+analytics/insights-digest.md shows a format winning, weight toward it.
 
-The FORMAT MIX above governs the Instagram feed. TikTok is a separate, higher-volume
-lane (4-6 videos/day) — see the TIKTOK section.
+The short-form VIDEO (the growth engine) is the VIRAL VIDEOS section — 4-6 masters/day on
+TikTok, the best cross-posted to IG Reels + YouTube Shorts.
 
 ## POST SCHEMA
 Common fields on EVERY post:
@@ -73,7 +76,7 @@ Common fields on EVERY post:
   "id": "YYYYMMDD-layer8culture-instagram-n",
   "account": "layer8culture",
   "category": "one of the 10 content categories in voice-layer8culture.md",
-  "platform": "instagram",                     // or "tiktok" — see the TIKTOK section
+  "platform": "instagram",                     // or "tiktok"/"youtube" — see the VIRAL VIDEOS section
   "format": "single | carousel | reel | story",
   "schedule_time": "YYYY-MM-DDTHH:MM:00-04:00",  // tomorrow's date in America/New_York; offset -04:00 (EDT, ~Mar-Nov) or -05:00 (EST, ~Nov-Mar)
   "text": "full caption — HOOK first line, then value, then a CTA (see voice doc)",
@@ -131,23 +134,28 @@ Final slide = an explicit CTA (Save this, Follow for more, Share to a builder). 
 the whole set teach something concrete and re-openable. Each slide still needs a
 headline; vary the scene per slide so the set doesn't look repetitive.
 
-### visual for "reel" (vertical video; drives REACH)
+### visual for "reel" (vertical video — uses the VIRAL FORMAT, brand/viral-formats.md)
 {
   "source": "openai",
   "aspect": "9:16",
   "quality": "high",
-  "openai_prompt": "...per visual-style.md... — the cinematic BASE STILL that gets
-       animated. Keep the lower third clear; the upper third hosts on-screen beats.",
-  "headline": "REQUIRED title-card headline composited on the still.",
-  "subtext": "OPTIONAL.",
-  "accent": "OPTIONAL.",
+  "openai_prompt": "...the cinematic 9:16 BASE STILL Sora animates (no text). Per
+       brand/viral-formats.md §5: Black tech creator, dark studio, electric blue + navy.",
+  "headline": "REQUIRED — the hook line (used for the cover frame).",
+  "viral_pillar": "ai-fluency | black-tech-culture | build-in-public | cinematic-coding | transformation",
+  "hook_score": 0,               // STEPPS score (0-100) of the chosen hook — see §4
   "reel": {
     "mode": "sora",              // "sora" = animate the still with Azure Sora-2 (DEFAULT)
-    "sora_prompt": "A cinematic motion description per visual-style.md: what moves and
-         how (slow push-in, drifting light, particles), the mood, and a clear first
-         beat. Sora animates the branded still as the first frame and adds its OWN
-         synced audio — the output is CLEAN (no on-screen text), so don't ask for any.",
-    "seconds": 8,                 // Sora clip length — one of 4 / 8 / 12
+    "sora_prompt": "A cinematic motion description per brand/viral-formats.md §5: a strong
+         FIRST BEAT (0-2s) + a transformation/visual metaphor (2-7s). Sora adds its OWN
+         audio; output is CLEAN (no on-screen text) — the big text is burned in via
+         overlay_beats below.",
+    "seconds": 8,                 // Sora clip length — 8 or 12 (8-12s target)
+    "overlay_beats": [            // VIRAL FORMAT: HUGE text burned onto the Sora clip (<= 6-8 words/beat)
+       { "text": "HOOK — PATTERN INTERRUPT", "start": 0, "end": 2 },
+       { "text": "TRANSFORMATION CUE", "start": 2, "end": 7 },
+       { "text": "PUNCHLINE / CTA", "start": 7, "end": 10 }
+    ],
     "duration_sec": 8,            // used only by the "motion" fallback (5-15)
     "beats": ["HOOK LINE", "PAYOFF LINE"],   // fallback-only on-screen beats (motion mode)
     "audio": "lofi",             // fallback-only: "lofi" bed for motion, else "none"
@@ -158,91 +166,73 @@ headline; vary the scene per slide so the set doesn't look repetitive.
     }
   }
 }
-Reel craft: the first ~1 second must hook (a claim, a question, a number). Default to
-"sora" mode — write a strong "sora_prompt" so the branded still comes alive with its
-own cinematic audio (no text overlays in Sora output; the "headline"/"beats" are only
-used by the "motion" fallback and the cover frame). Use "clip" only when a real show
-recording exists in assets/library/ (then add a transcript query). "motion" is the
-automatic fallback if Sora is unavailable. Consider trial_reel:true for pure-reach reels.
+Reel craft: this IS the viral format (brand/viral-formats.md). Pick a pillar, draft >=3
+hooks, STEPPS-score them, ship the best (record it in hook_score). The clean Sora clip
+does the cinematic transformation; the HUGE on-screen text is burned in from overlay_beats
+on the 0-2 / 2-7 / 7-10 arc (do NOT ask Sora to render text). Keep each beat <= 6-8 words.
+Use "clip" only when a real show recording exists in assets/library/. "motion" is the
+automatic fallback if Sora is unavailable.
 
-## TIKTOK (4-6 reach-first videos/day — the second platform this run)
-TikTok is a separate, higher-volume lane from the Instagram feed. Produce 4-6 TikTok
-videos for the day — every one account "layer8culture", platform "tiktok", format
-"reel" (TikTok is video-only here). They come in two kinds:
-
-1) CROSS-POST (free — use whenever the day has an Instagram reel): reuse that reel's
-   already-rendered video instead of making a new one. One TikTok cross-post per IG reel.
+## VIRAL VIDEOS — the master short-form content (4-6/day → TikTok, best cross-posted)
+Per brand/viral-formats.md, produce 4-6 VIRAL videos for the day. Each is account
+"layer8culture", format "reel", and uses the viral format (clean Sora cinematic + HUGE
+burned-in overlay_beats on the 0-2 / 2-7 / 7-10 arc, hook chosen by STEPPS). The MASTER
+copy is platform "tiktok" (the high-volume lane). Shape (see the reel visual spec above +
+brand/viral-formats.md §7):
    {
      "id": "YYYYMMDD-layer8culture-tiktok-n",
-     "account": "layer8culture",
-     "category": "one of the 10 content categories",
-     "platform": "tiktok",
-     "format": "reel",
+     "account": "layer8culture", "category": "<one of the 10 categories>",
+     "platform": "tiktok", "format": "reel",
      "schedule_time": "YYYY-MM-DDTHH:MM:00-04:00",
-     "text": "TikTok-native caption — see TIKTOK CAPTIONS. Do NOT copy the IG caption.",
-     "hashtags": ["..."],                       // 3-5, TikTok-tuned (see below)
-     "hashtags_in_first_comment": true,         // OPTIONAL
-     "visual": { "source": "reuse", "of": "<the IG reel's post id>", "aspect": "9:16" }
-   }
-   The engine copies that IG reel's mp4 to this post automatically — add NO openai_prompt
-   and NO reel block for a cross-post.
-
-2) DEDICATED (the bulk — fill up to 4-6/day): a brand-new TikTok video rendered with
-   Sora-2. Same visual shape as an Instagram reel (source "openai" + a "reel" block), but
-   platform "tiktok":
-   {
-     "id": "YYYYMMDD-layer8culture-tiktok-n",
-     "account": "layer8culture",
-     "category": "one of the 10 content categories",
-     "platform": "tiktok",
-     "format": "reel",
-     "schedule_time": "YYYY-MM-DDTHH:MM:00-04:00",
-     "text": "TikTok-native caption (see TIKTOK CAPTIONS).",
-     "hashtags": ["..."],                       // 3-5, TikTok-tuned
-     "hashtags_in_first_comment": true,         // OPTIONAL
+     "text": "TikTok-native caption ending with the Follow CTA (see CAPTIONS).",
+     "hashtags": ["#Layer8Culture", "#AI", "#TechTok", "..."],   // 3-5, tuned
+     "hashtags_in_first_comment": true,                          // OPTIONAL
+     "viral_pillar": "ai-fluency | black-tech-culture | build-in-public | cinematic-coding | transformation",
+     "hook_score": 0,                                            // STEPPS 0-100 of the chosen hook
      "visual": {
-       "source": "openai",
-       "aspect": "9:16",
-       "quality": "medium",
-       "openai_prompt": "...per visual-style.md — the cinematic 9:16 base still Sora animates.",
-       "headline": "REQUIRED title-card line (used only for the cover frame).",
+       "source": "openai", "aspect": "9:16", "quality": "medium",
+       "openai_prompt": "...the cinematic 9:16 base still Sora animates (no text)...",
+       "headline": "the hook line (used for the cover frame)",
        "reel": {
-         "mode": "sora",                        // ALWAYS sora for TikTok
-         "sora_prompt": "A cinematic motion description per visual-style.md with a strong
-              FIRST BEAT so the hook lands in the first ~1s: what moves and how (push-in,
-              drifting light, particles), the mood. Sora adds its own audio; output is
-              CLEAN (no on-screen text).",
-         "seconds": 8                           // 4 / 8 / 12; 8 is the default
+         "mode": "sora",
+         "sora_prompt": "...per brand/viral-formats.md §5 — strong first beat + transformation...",
+         "seconds": 8,                                           // 8 or 12 (8-12s)
+         "overlay_beats": [
+            { "text": "HOOK — PATTERN INTERRUPT", "start": 0, "end": 2 },
+            { "text": "TRANSFORMATION CUE", "start": 2, "end": 7 },
+            { "text": "PUNCHLINE / CTA", "start": 7, "end": 10 }
+         ]
        }
      }
    }
 
-REACH RULES (TikTok lives or dies on these):
-- HOOK in the first ~1 second of the sora_prompt's first beat — a claim, a question, a
-  number, motion that demands attention. No slow intros.
-- Every one of the 4-6 must be a DISTINCT angle/hook and a DISTINCT scene. Near-duplicate
-  videos get throttled — vary the topic, category, and visual each time.
-- Pull dedicated topics from the AI news you researched + transcript moments +
-  calendar/topics.md (the same sources as the feed) — but render each as its own punchy
-  standalone video.
-- Spread schedule_time across the day's high-traffic windows (roughly: late morning,
-  midday, late afternoon, evening, night) so the 4-6 don't post in a clump. Keep every
-  time on tomorrow's date with the correct -04:00 (EDT) / -05:00 (EST) offset.
-- trial_reel and collaborators are Instagram-only — never set them on TikTok posts.
+CROSS-POST THE BEST (fan-out to IG Reels + YouTube): take the TOP 1-2 viral videos by
+hook_score and ALSO emit them as an Instagram Reel AND a YouTube Short that REUSE the
+rendered, text-baked master — add NO openai_prompt / reel block on a reuse post:
+   - Instagram Reel: { "id": "...-instagram-n", "account": "layer8culture",
+       "platform": "instagram", "format": "reel", "text": "IG caption", "hashtags": [...],
+       "visual": { "source": "reuse", "of": "<the tiktok master id>", "aspect": "9:16" } }
+   - YouTube Short: see the YOUTUBE SHORTS section (also source "reuse", of the master id).
 
-TIKTOK CAPTIONS:
-- Short and native: one strong hook line, then at most a line or two, then ONE CTA (watch
-  the full Tech Thursday / follow @layer8culture / a genuine question). Calm, premium,
-  builder-first — never hype. Lowercase is fine. Keep it tight.
-- A cross-post's caption MUST be freshly written for TikTok — never the IG caption.
-- Hashtags: a small TUNED set of 3-5 — one branded (#Layer8Culture) plus broad, on-topic,
-  high-reach tags (e.g. #AI #BuildInPublic #TechTok). Rotate per post; set
-  hashtags_in_first_comment:true when a clean caption reads better.
+REACH RULES:
+- Every one of the 4-6 is a DISTINCT pillar / hook / scene — never near-duplicates.
+- Draft >=3 hooks per video and STEPPS-score them (brand/viral-formats.md §4); ship the
+  best and record hook_score.
+- Pull angles from the AI news you researched + transcript moments + calendar/topics.md.
+- Spread schedule_time across high-traffic windows; correct -04:00 (EDT) / -05:00 (EST) offset.
+- trial_reel / collaborators are Instagram-only — never on TikTok/YouTube.
 
-## YOUTUBE SHORTS (1-2/day — cross-post the day's best reel)
+CAPTIONS:
+- Short, native, hook-style; END with the Follow CTA ("Follow Layer8Culture if you're
+  building with AI." — rotate variants per brand/viral-formats.md §6). Calm-confident,
+  never hype. Each platform gets its OWN caption (don't copy across).
+- Hashtags: a small tuned set of 3-5 — branded (#Layer8Culture) + broad reach tags
+  (#AI #BuildInPublic #TechTok). Set hashtags_in_first_comment:true to keep captions clean.
+
+## YOUTUBE SHORTS (1-2/day — cross-post the top viral videos)
 YouTube is a low-volume, high-quality Shorts lane. Emit **1-2** YouTube Shorts for the
 day, every one account "layer8culture", platform "youtube", format "reel". A Short is a
-CROSS-POST that reuses an already-rendered reel's video (no new render):
+CROSS-POST that reuses one of the day's TOP viral master videos (no new render):
 
 {
   "id": "YYYYMMDD-layer8culture-youtube-n",
@@ -253,19 +243,17 @@ CROSS-POST that reuses an already-rendered reel's video (no new render):
   "schedule_time": "YYYY-MM-DDTHH:MM:00-04:00",
   "youtube_title": "REQUIRED — a punchy, keyword-rich title, <=100 chars (becomes the
        YouTube title). End it with #Shorts.",
-  "text": "the YouTube DESCRIPTION — 1-3 lines, keyword-rich first line, then a CTA.",
+  "text": "the YouTube DESCRIPTION — 1-3 lines, keyword-rich first line, then the Follow CTA.",
   "hashtags": ["#Shorts", "#Layer8Culture", "..."],   // include #Shorts + a few broad tags
-  "visual": { "source": "reuse", "of": "<a RENDERED reel's post id>", "aspect": "9:16" }
+  "visual": { "source": "reuse", "of": "<a top viral master's tiktok id>", "aspect": "9:16" }
 }
 
 RULES:
-- Pick the day's STRONGEST reel(s) to reuse: prefer an Instagram reel, else a top TikTok
-  video. visual.of MUST point at a RENDERED reel in this same queue (source "openai" — an
-  IG reel or a dedicated TikTok video), NEVER another "reuse" cross-post. Add no
-  openai_prompt and no reel block for a Short.
-- A Short requires a same-day rendered reel; if the day has none, emit no YouTube Short.
-- youtube_title is REQUIRED (YouTube needs a 2-100 char title) — make it search-friendly
-  and end with #Shorts. The "text" is the video description (keep it tight).
+- Reuse the day's TOP 1-2 viral videos by hook_score (the same masters cross-posted to IG).
+  visual.of MUST point at a RENDERED viral master in this queue (a platform "tiktok" post
+  with source "openai"), NEVER another "reuse" cross-post. Add no openai_prompt / reel block.
+- youtube_title is REQUIRED (YouTube needs a 2-100 char title) — search-friendly, ending
+  with #Shorts. The "text" is the description (keep it tight, end with the Follow CTA).
 - Keep it to 1-2/day (YouTube's upload quota is limited). These upload PRIVATE until the
   channel's Google app is verified — that's expected; a human flips them to public.
 
@@ -289,10 +277,11 @@ RULES:
 - Anchor at least 1 post in the AI news you researched, and pull at least 1 post
   from a transcript moment — specifics beat generalities. Quote sparingly, paraphrase
   in brand voice.
-- Every visual uses "source": "openai" with fresh, topic-specific imagery. Exactly one
-  "high" hero/day; the rest "medium". NEVER reuse library assets and NEVER set
-  "style_reference" — brand look comes from the BASE PROMPT; variety comes from each
-  post's distinct scene. No two posts (or carousel slides) should look or read alike.
+- Every IG image/carousel visual uses "source": "openai" with fresh, topic-specific
+  imagery (the viral videos use Sora; the IG-Reel/YouTube cross-posts use "reuse" and add
+  no visual). Exactly one "high" hero/day; the rest "medium". NEVER reuse library assets
+  and NEVER set "style_reference" — brand look comes from the BASE PROMPT; variety comes
+  from each post's distinct scene. No two posts (or carousel slides) should look or read alike.
 - Every image/slide MUST include a "headline" (composited like an infographic title).
 - Hashtags: pull from brand/hashtags.md as a tiered set (branded + niche + medium +
   topical), 8-15 tags, rotated and matched to THIS post's topic — not a fixed block.
@@ -303,8 +292,8 @@ RULES:
 - Output valid JSON only in the file. No markdown fences inside the file.
 
 (Other channels — for reference only, do not generate these here: X <= 280 chars.
-TikTok and YouTube ARE generated here now — see the TIKTOK and YOUTUBE SHORTS sections
-above. The lofi account (Layer8Culture Radio) runs in its own pipeline — see
+TikTok and YouTube ARE generated here now — see the VIRAL VIDEOS and YOUTUBE SHORTS
+sections above. The lofi account (Layer8Culture Radio) runs in its own pipeline — see
 scripts/generation-prompt-lofi.md.)
 
 FINALLY:
