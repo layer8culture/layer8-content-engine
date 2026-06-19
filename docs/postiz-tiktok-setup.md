@@ -123,17 +123,20 @@ python scripts/list_postiz_channels.py
 
 ## 9. Audit / visibility caveat (important)
 
-Until your **TikTok app passes TikTok's audit**, Direct Post is **forced to
-`SELF_ONLY` (private)** regardless of the privacy level Postiz sends, and you're limited
-to **≤5 Direct Posts / 24h** on a **private** account. So:
+Until your **TikTok app passes TikTok's audit**, Direct Post can only publish
+`SELF_ONLY` (private), and you're limited to **≤5 Direct Posts / 24h** on a **private**
+account (an unaudited client posting `PUBLIC_TO_EVERYONE` is rejected with
+`unaudited_client_can_only_post_to_private_accounts`). So:
 
-- Early TikTok posts publish **privately**, and the 4-6/day target is effectively capped
-  until the app is audited.
-- The engine already defaults to `PUBLIC_TO_EVERYONE` + `DIRECT_POST`
-  (`PLATFORM_SETTINGS["tiktok"]` in `post_to_postiz.py`); once your app is audited, that
-  public visibility takes effect automatically — **no code change**.
-- To make the private-only phase explicit, you can add a per-post override in the queue:
-  `"tiktok_settings": { "privacy_level": "SELF_ONLY" }` (merged over the defaults).
+- The engine therefore **defaults to `privacy_level: SELF_ONLY`** (`PLATFORM_SETTINGS["tiktok"]`
+  in `post_to_postiz.py`) so posts actually publish (as private drafts) on an unaudited app.
+- Once your app is **audited**, flip it to `PUBLIC_TO_EVERYONE` in `PLATFORM_SETTINGS["tiktok"]`
+  (or per post via `"tiktok_settings"`) to publish publicly.
+- **URL ownership (separate requirement):** TikTok pulls the video via `PULL_FROM_URL`, so
+  the Postiz media domain must be **verified as a URL property** in the TikTok dev portal,
+  or posts fail with `url_ownership_unverified` ("You have to upload the picture/video to
+  Postiz when sending a URL"). Verify the prefix `https://<your-POSTIZ_URL>/uploads/` via the
+  signature-file method (host the file under that public `/uploads/` path).
 
 See TikTok's
 [Direct Post developer guidelines](https://developers.tiktok.com/doc/content-sharing-guidelines#direct_post_api_-_developer_guidelines).
@@ -200,7 +203,7 @@ Defaults (`PLATFORM_SETTINGS["tiktok"]`, mirrors Postiz's `TikTokDto`):
 
 | field | default | note |
 |---|---|---|
-| `privacy_level` | `PUBLIC_TO_EVERYONE` | forced to `SELF_ONLY` until app is audited |
+| `privacy_level` | `SELF_ONLY` | unaudited app posts private only; flip to `PUBLIC_TO_EVERYONE` after audit |
 | `content_posting_method` | `DIRECT_POST` | publish directly |
 | `duet` / `stitch` / `comment` | `true` | engagement → reach |
 | `autoAddMusic` | `no` | Sora clips carry their own audio |

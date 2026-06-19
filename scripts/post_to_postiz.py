@@ -103,14 +103,17 @@ VIDEO_EXTS = (".mp4", ".mov")
 #
 # TikTok mirrors Postiz's TikTokDto. Every TikTok video this engine ships is
 # AI-generated (Sora-2), so video_made_with_ai is disclosed (TikTok policy +
-# honesty). Defaults favor reach: public, duet/stitch/comments enabled, organic
-# (no branded-content flags), published directly. NOTE: if the connected TikTok
-# app hasn't passed TikTok's audit, PUBLIC_TO_EVERYONE + DIRECT_POST can be
-# rejected — fall back to SELF_ONLY / UPLOAD via a post's "tiktok_settings".
+# honesty). privacy_level is SELF_ONLY (private) because the TikTok app is NOT yet
+# audited — an unaudited Direct Post client can only post privately (TikTok rejects
+# PUBLIC_TO_EVERYONE with unaudited_client_can_only_post_to_private_accounts). Once
+# the app passes TikTok's audit, flip privacy_level to "PUBLIC_TO_EVERYONE" here (or
+# per post via "tiktok_settings") to publish publicly. NOTE: TikTok pulls the video
+# via PULL_FROM_URL, so the Postiz media domain must be verified as a URL property in
+# the TikTok dev portal or posts fail with url_ownership_unverified.
 PLATFORM_SETTINGS = {
     "instagram": {"post_type": "post"},  # base; story/reel adjust this below
     "tiktok": {
-        "privacy_level": "PUBLIC_TO_EVERYONE",
+        "privacy_level": "SELF_ONLY",  # unaudited app -> private only; flip after audit
         "duet": True,
         "stitch": True,
         "comment": True,
