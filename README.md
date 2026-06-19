@@ -84,8 +84,10 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
    `LOFI_IG_CHANNEL_ID` secret only if you re-connect it and need to override the ID.
    To publish **TikTok**, connect the layer8culture TikTok account in Postiz, copy its
    integration ID, and add it as the `TIKTOK_CHANNEL_ID` secret — TikTok posts are
-   skipped (not errored) until it's set. The remaining `REPLACE_ME` entries (X for both
-   brands, lofi TikTok) stay paused — unmapped posts are skipped, not errored.
+   skipped (not errored) until it's set. Full walkthrough:
+   [`docs/postiz-tiktok-setup.md`](docs/postiz-tiktok-setup.md). The remaining
+   `REPLACE_ME` entries (X for both brands, lofi TikTok) stay paused — unmapped posts
+   are skipped, not errored.
    Full walkthrough: [`docs/postiz-instagram-setup.md`](docs/postiz-instagram-setup.md).
    To schedule **YouTube** uploads manually from Postiz, see
    [`docs/postiz-youtube-setup.md`](docs/postiz-youtube-setup.md) (the engine doesn't
