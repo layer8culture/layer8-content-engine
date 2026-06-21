@@ -32,6 +32,11 @@ READ FIRST (in this order):
    canonical source.
 
 THEN GENERATE:
+WRITE the files to disk with the write tool — do NOT print the JSON to the chat or paste
+file contents in your reply. You DO have write access to queue/* (the workflow passes
+--allow-tool='write(queue/*)'), so never conclude that writes are blocked: if a write seems
+to fail, retry the write tool. The run only succeeds if queue/lofi-YYYY-MM-DD.json physically
+exists on disk — dumping the JSON to stdout instead will fail the pipeline.
 Create queue/lofi-YYYY-MM-DD.json (today's UTC date) containing a JSON array of
 post objects. Target 1-2 lofi Instagram posts for the run, chosen to advance the
 POST-TYPE MIX below (quality and variety beat volume).

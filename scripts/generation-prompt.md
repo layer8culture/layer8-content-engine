@@ -46,6 +46,11 @@ If web access is unavailable or returns nothing useful, fall back to
 calendar/topics.md plus the latest transcript — never block on the web.
 
 THEN GENERATE:
+WRITE the files to disk with the write tool — do NOT print the JSON to the chat or paste
+file contents in your reply. You DO have write access to queue/* (the workflow passes
+--allow-tool='write(queue/*)'), so never conclude that writes are blocked: if a write seems
+to fail, retry the write tool. The run only succeeds if queue/YYYY-MM-DD.json physically
+exists on disk — dumping the JSON to stdout instead will fail the pipeline.
 Create queue/YYYY-MM-DD.json (tomorrow's date in America/New_York) containing an array of post
 objects:
 - 4-6 layer8culture VIRAL VIDEOS (platform "tiktok" masters) per the VIRAL VIDEOS section

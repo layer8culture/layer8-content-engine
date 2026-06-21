@@ -39,6 +39,22 @@ jobs:
             --allow-all-urls \
             --no-ask-user
 
+      - name: Verify the queue file was written
+        # The Copilot step above MUST write queue/<tomorrow>.json. If the agent
+        # instead prints the JSON to the log (a known intermittent miss where it
+        # wrongly believes writes are blocked), nothing lands on disk. Fail loudly
+        # here with an actionable message instead of letting the downstream visuals
+        # step crash cryptically (python openai_gen.py "" -> IsADirectoryError: '.').
+        run: |
+          QUEUE_FILE="queue/$(date -d tomorrow +%F).json"
+          if [ ! -f "$QUEUE_FILE" ]; then
+            echo "::error::Copilot CLI did not write $QUEUE_FILE. The generation step produced no queue file (it likely printed the JSON to the run log instead of writing it). Re-run the workflow to regenerate."
+            echo "queue/ currently contains:"
+            ls -la queue/ || true
+            exit 1
+          fi
+          echo "Confirmed $QUEUE_FILE was written ($(wc -c < "$QUEUE_FILE") bytes)."
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
