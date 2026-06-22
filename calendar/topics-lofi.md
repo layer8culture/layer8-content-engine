@@ -13,9 +13,9 @@
 # (the engine renders its own on-brand imagery; no YouTube footage is reposted).
 # Edit MOOD_RULES in the script or override entries by hand if needed.
 #
-  - title: Afrofuturist Sunrise Lo-Fi Coding Radio | Morning Build Beats | Layer8Culture Radio
-    url: https://www.youtube.com/watch?v=j0VlqqJp5FE
-    mood: sunrise
+  - title: Afrofuturist Deep Sleep Radio | Deep Sleep Lofi for Sleep, Rest & Unwind 🌙🎧 #sleepmusic #lofi #relax
+    url: https://www.youtube.com/watch?v=MMWLJcJGO1Y
+    mood: night
     note: drive viewers to the full session; link in bio.
 
 ## Session focus / pillars to feature (optional)
