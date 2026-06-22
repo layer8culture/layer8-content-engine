@@ -25,7 +25,7 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
 ```
 
 > **Two channels.** The engine runs **two separate pipelines**:
-> - **layer8culture — viral video + Instagram** (nightly) — the core output is **4-6
+> - **layer8culture — viral video + Instagram** (nightly) — the core output is **4-5
 >   viral short-form videos/day**: 8-12s Sora cinematics with **huge burned-in overlay text**
 >   on a 3-beat arc (pattern interrupt → transformation → punchline/CTA), across 5 viral
 >   pillars, with hooks scored by the **STEPPS** framework (see `brand/viral-formats.md`).
