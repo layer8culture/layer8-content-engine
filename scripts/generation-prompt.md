@@ -9,7 +9,7 @@ comes from Reels, saves come from carousels, loyalty comes from Stories — so v
 the format deliberately (see FORMAT MIX) and lead every post with a real hook.
 
 CURRENT FOCUS (overrides older cadence notes):
-The core content is now 4-6 **VIRAL short-form videos/day** (brand/viral-formats.md):
+The core content is now 4-5 **VIRAL short-form videos/day** (brand/viral-formats.md):
 8-12s Sora cinematics with HUGE burned-in overlay text, STEPPS-scored hooks, built on the
 5 viral pillars. Each master is a TikTok post; the TOP 1-2 are also cross-posted as an
 Instagram Reel + a YouTube Short. Instagram additionally gets carousels + a story. Do NOT
@@ -53,7 +53,7 @@ to fail, retry the write tool. The run only succeeds if queue/YYYY-MM-DD.json ph
 exists on disk — dumping the JSON to stdout instead will fail the pipeline.
 Create queue/YYYY-MM-DD.json (tomorrow's date in America/New_York) containing an array of post
 objects:
-- 4-6 layer8culture VIRAL VIDEOS (platform "tiktok" masters) per the VIRAL VIDEOS section
+- 4-5 layer8culture VIRAL VIDEOS (platform "tiktok" masters) per the VIRAL VIDEOS section
   below — the core scroll-stopping content (brand/viral-formats.md), PLUS
 - the TOP 1-2 of those videos ALSO cross-posted as an Instagram Reel + a YouTube Short
   (source "reuse"), PLUS
@@ -72,7 +72,7 @@ Per day: include 1-2 carousels and a story alongside the viral reel cross-post; 
 the day before; never produce an all-static day. Use posted/log.json to rotate. When
 analytics/insights-digest.md shows a format winning, weight toward it.
 
-The short-form VIDEO (the growth engine) is the VIRAL VIDEOS section — 4-6 masters/day on
+The short-form VIDEO (the growth engine) is the VIRAL VIDEOS section — 4-5 masters/day on
 TikTok, the best cross-posted to IG Reels + YouTube Shorts.
 
 ## POST SCHEMA
@@ -181,8 +181,10 @@ on the 0-2 / 2-7 / 7-10 arc (do NOT ask Sora to render text). Keep each beat <= 
 Use "clip" only when a real show recording exists in assets/library/. "motion" is the
 automatic fallback if Sora is unavailable.
 
-## VIRAL VIDEOS — the master short-form content (4-6/day → TikTok, best cross-posted)
-Per brand/viral-formats.md, produce 4-6 VIRAL videos for the day. Each is account
+## VIRAL VIDEOS — the master short-form content (4-5/day → TikTok, best cross-posted)
+Per brand/viral-formats.md, produce 4-5 VIRAL videos for the day. (Cap is 5, not more:
+TikTok delivers these to the app's Drafts inbox, which allows at most 5 pending uploads
+per 24h.) Each is account
 "layer8culture", format "reel", and uses the viral format (clean Sora cinematic + HUGE
 burned-in overlay_beats on the 0-2 / 2-7 / 7-10 arc, hook chosen by STEPPS). The MASTER
 copy is platform "tiktok" (the high-volume lane). Shape (see the reel visual spec above +
@@ -223,7 +225,7 @@ rendered, text-baked master — add NO openai_prompt / reel block on a reuse pos
    - YouTube Short: see the YOUTUBE SHORTS section (also source "reuse", of the master id).
 
 REACH RULES:
-- Every one of the 4-6 is a DISTINCT VISUAL WORLD per its pillar (brand/viral-formats.md §5)
+- Every one of the 4-5 is a DISTINCT VISUAL WORLD per its pillar (brand/viral-formats.md §5)
   — NEVER two "person at a desk in a dark studio" scenes in a batch; vary the subject (often
   no person — cityscapes, hands, screens, abstract forms), composition, and camera move.
   Bold, cinematic, specific — not safe stock-AI b-roll. Keep overlay beats <= 4 words.

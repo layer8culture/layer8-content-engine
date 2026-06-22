@@ -27,7 +27,7 @@ Afrofuturistic LoFi stream.
   Sora output stays clean (no Sora-rendered text). lofi video does NOT use the viral format.
 
 ## Two pipelines (keep them separate)
-- **layer8culture** (nightly, generate-content.yml): 4-6 VIRAL short-form videos/day
+- **layer8culture** (nightly, generate-content.yml): 4-5 VIRAL short-form videos/day
   (brand/viral-formats.md) + Instagram carousels/stories; prompt scripts/generation-prompt.md;
   queue/<date>.json; steered by calendar/topics.md. Each viral video MASTER is platform
   "tiktok", format "reel", source "openai" + a reel block with sora_prompt + overlay_beats.

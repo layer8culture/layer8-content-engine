@@ -19,7 +19,7 @@
 ## Posting cadence targets
 - CURRENT FOCUS: layer8culture VIRAL short-form video (brand/viral-formats.md) +
   Instagram carousels/stories.
-  - Viral videos: 4-6/day — 8-12s Sora cinematics with HUGE burned-in overlay text on
+  - Viral videos: 4-5/day — 8-12s Sora cinematics with HUGE burned-in overlay text on
     the 0-2 / 2-7 / 7-10 arc, STEPPS-scored hooks, across the 5 viral pillars. Masters
     post to TikTok; the top 1-2 (by hook score) also cross-post to Instagram Reels +
     YouTube Shorts (one render, reused).

@@ -103,17 +103,23 @@ VIDEO_EXTS = (".mp4", ".mov")
 #
 # TikTok mirrors Postiz's TikTokDto. Every TikTok video this engine ships is
 # AI-generated (Sora-2), so video_made_with_ai is disclosed (TikTok policy +
-# honesty). privacy_level is SELF_ONLY (private) because the TikTok app is NOT yet
-# audited — an unaudited Direct Post client can only post privately (TikTok rejects
-# PUBLIC_TO_EVERYONE with unaudited_client_can_only_post_to_private_accounts). Once
-# the app passes TikTok's audit, flip privacy_level to "PUBLIC_TO_EVERYONE" here (or
-# per post via "tiktok_settings") to publish publicly. NOTE: TikTok pulls the video
-# via PULL_FROM_URL, so the Postiz media domain must be verified as a URL property in
-# the TikTok dev portal or posts fail with url_ownership_unverified.
+# honesty). content_posting_method is "UPLOAD": Postiz sends the video to the
+# creator's TikTok inbox as a DRAFT (endpoint /post/publish/inbox/video/init/), so it
+# appears under Drafts in the TikTok mobile app for you to review and publish by hand.
+# This is the working flow for an UNAUDITED app — finishing the post manually lets you
+# publish PUBLICLY, whereas an unaudited DIRECT_POST can only post SELF_ONLY (private)
+# and never lands in Drafts. privacy_level is IGNORED in UPLOAD mode but is still
+# required by Postiz's TikTokDto validation, so we keep a valid value. Once the app
+# passes TikTok's audit, you can auto-post directly instead: set content_posting_method
+# back to "DIRECT_POST" and privacy_level to "PUBLIC_TO_EVERYONE" (here or per post via
+# "tiktok_settings"). NOTE 1: TikTok pulls the video via PULL_FROM_URL, so the Postiz
+# media domain must be verified as a URL property in the TikTok dev portal or posts fail
+# with url_ownership_unverified. NOTE 2: TikTok caps inbox uploads at 5 PENDING drafts
+# per 24h, so the generator keeps TikTok masters at <=5/day (scripts/generation-prompt.md).
 PLATFORM_SETTINGS = {
     "instagram": {"post_type": "post"},  # base; story/reel adjust this below
     "tiktok": {
-        "privacy_level": "SELF_ONLY",  # unaudited app -> private only; flip after audit
+        "privacy_level": "SELF_ONLY",  # ignored in UPLOAD mode; kept for DTO validation
         "duet": True,
         "stitch": True,
         "comment": True,
@@ -121,7 +127,7 @@ PLATFORM_SETTINGS = {
         "brand_content_toggle": False,
         "brand_organic_toggle": False,
         "video_made_with_ai": True,
-        "content_posting_method": "DIRECT_POST",
+        "content_posting_method": "UPLOAD",  # -> TikTok inbox as a DRAFT (publish by hand)
     },
 }
 
@@ -190,9 +196,10 @@ def platform_settings(post: dict, fmt: str) -> dict:
     trial_reel -> is_trial_reel (Reel shown to non-followers first), and
     collaborators -> IG collab tags.
 
-    TikTok returns the reach-favoring TikTokDto defaults, with any per-post
-    "tiktok_settings" dict merged on top (e.g. to set privacy_level/SELF_ONLY for
-    an unaudited app). YouTube returns the YoutubeSettingsDto (title + type + tags).
+    TikTok returns the TikTokDto defaults (content_posting_method "UPLOAD" -> the
+    video is sent to the TikTok app inbox as a draft to publish by hand), with any
+    per-post "tiktok_settings" dict merged on top. YouTube returns the
+    YoutubeSettingsDto (title + type + tags).
     """
     platform = post["platform"]
     if platform == "tiktok":

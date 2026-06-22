@@ -5,8 +5,9 @@ instance so the content engine can publish its nightly TikTok videos. TikTok is 
 **own** Postiz provider with a **separate developer app** from the Meta/Instagram one
 — none of the Facebook/Instagram setup is reused here.
 
-> The engine ships 4-6 reach-first TikTok videos/day (cross-posts of the day's
-> Instagram Reel + dedicated Sora-2 videos). Each is a 9:16 mp4. See
+> The engine ships 4-5 reach-first TikTok videos/day (cross-posts of the day's
+> Instagram Reel + dedicated Sora-2 videos), delivered to your TikTok Drafts inbox to
+> publish by hand. Each is a 9:16 mp4. See
 > `scripts/generation-prompt.md` (TIKTOK section) and `scripts/post_to_postiz.py`.
 
 ## 0. Prerequisites
@@ -28,8 +29,10 @@ instance so the content engine can publish its nightly TikTok videos. TikTok is 
 Add both to the app:
 
 - **Login Kit** — set its redirect URI to the Postiz TikTok callback (step 3).
-- **Content Posting API** — enable **Direct Post** (the engine publishes directly,
-  not upload-to-drafts).
+- **Content Posting API** — the engine **uploads videos to your TikTok Drafts inbox**
+  (the `video.upload` flow), which works on an **unaudited** app. Enabling **Direct Post**
+  (`video.publish`) too is optional — only needed if you later switch to auto-publishing
+  directly (after audit). See the visibility caveat in step 9.
 
 ## 3. Add the OAuth redirect URI
 
@@ -123,15 +126,22 @@ python scripts/list_postiz_channels.py
 
 ## 9. Audit / visibility caveat (important)
 
-Until your **TikTok app passes TikTok's audit**, Direct Post can only publish
-`SELF_ONLY` (private), and you're limited to **≤5 Direct Posts / 24h** on a **private**
-account (an unaudited client posting `PUBLIC_TO_EVERYONE` is rejected with
-`unaudited_client_can_only_post_to_private_accounts`). So:
+Until your **TikTok app passes TikTok's audit**, you **cannot auto-publish publicly**:
+an unaudited client posting `PUBLIC_TO_EVERYONE` via Direct Post is rejected with
+`unaudited_client_can_only_post_to_private_accounts`, and a direct `SELF_ONLY` post is
+private (visible only to you, never in Drafts). So instead:
 
-- The engine therefore **defaults to `privacy_level: SELF_ONLY`** (`PLATFORM_SETTINGS["tiktok"]`
-  in `post_to_postiz.py`) so posts actually publish (as private drafts) on an unaudited app.
-- Once your app is **audited**, flip it to `PUBLIC_TO_EVERYONE` in `PLATFORM_SETTINGS["tiktok"]`
-  (or per post via `"tiktok_settings"`) to publish publicly.
+- The engine **defaults to `content_posting_method: UPLOAD`** (`PLATFORM_SETTINGS["tiktok"]`
+  in `post_to_postiz.py`). Postiz sends each video to your **TikTok app's Drafts inbox**
+  (endpoint `/post/publish/inbox/video/init/`); you open the TikTok app, review the draft,
+  and **publish it publicly by hand**. This is the working flow for an unaudited app.
+- **TikTok caps the inbox at ≤5 pending drafts / 24h.** The generator therefore keeps TikTok
+  masters at **≤5/day** (`scripts/generation-prompt.md`); a 6th upload would be rejected.
+- `privacy_level` is **ignored in UPLOAD mode** (you choose visibility when you publish in the
+  app), but Postiz's `TikTokDto` still requires the field, so the engine keeps a valid value.
+- Once your app is **audited**, you can fully automate: set `content_posting_method` back to
+  `DIRECT_POST` and `privacy_level` to `PUBLIC_TO_EVERYONE` in `PLATFORM_SETTINGS["tiktok"]`
+  (or per post via `"tiktok_settings"`) to publish publicly without the manual draft step.
 - **URL ownership (separate requirement):** TikTok pulls the video via `PULL_FROM_URL`, so
   the Postiz media domain must be **verified as a URL property** in the TikTok dev portal,
   or posts fail with `url_ownership_unverified` ("You have to upload the picture/video to
@@ -166,8 +176,9 @@ account — keep every claim truthful and scoped to that):
 **Content Posting API:**
 
 > The Content Posting API publishes the owner's own brand videos to their own TikTok
-> account via Direct Post. The user produces a 9:16 MP4 + caption, schedules it, and at
-> the scheduled time the app sends the video with the user-selected privacy level,
+> account. The user produces a 9:16 MP4 + caption and schedules it; the app uploads the
+> video to the owner's TikTok **Drafts inbox** for them to review and publish, and — once
+> approved for **Direct Post** — can publish directly with the user-selected privacy level,
 > interaction settings (duet/stitch/comments), and the AI-generated-content disclosure
 > where applicable. All content is the user's own; it never posts to other accounts.
 
@@ -203,8 +214,8 @@ Defaults (`PLATFORM_SETTINGS["tiktok"]`, mirrors Postiz's `TikTokDto`):
 
 | field | default | note |
 |---|---|---|
-| `privacy_level` | `SELF_ONLY` | unaudited app posts private only; flip to `PUBLIC_TO_EVERYONE` after audit |
-| `content_posting_method` | `DIRECT_POST` | publish directly |
+| `privacy_level` | `SELF_ONLY` | ignored in UPLOAD mode (you pick visibility when publishing the draft); kept only for `TikTokDto` validation |
+| `content_posting_method` | `UPLOAD` | send to the TikTok app **Drafts inbox**; publish by hand (works unaudited). Switch to `DIRECT_POST` after audit to auto-publish |
 | `duet` / `stitch` / `comment` | `true` | engagement → reach |
 | `autoAddMusic` | `no` | Sora clips carry their own audio |
 | `brand_content_toggle` / `brand_organic_toggle` | `false` | organic, not branded-content |
@@ -218,8 +229,12 @@ Override any of these per post via `"tiktok_settings": { ... }` in the queue JSO
   and the domain must be in the app's verified sites (step 5). Private `/uploads` or
   http will fail.
 - **Insufficient scopes:** re-check step 4; re-connect the channel after fixing scopes.
-- **Posts are private even though you set public:** that's the pre-audit restriction in
-  step 9 — expected until the app is audited.
+- **TikTok videos aren't showing up / aren't public:** in the default `UPLOAD` mode they
+  land in your **TikTok app Drafts inbox** — open the TikTok app, finish the draft, and
+  publish (publicly) by hand. Nothing auto-publishes to TikTok pre-audit. (If you switched
+  to `DIRECT_POST`, an unaudited app can only post `SELF_ONLY`/private — see step 9.)
+- **Only 5 TikTok drafts arrive / the 6th fails:** TikTok caps the inbox at 5 pending
+  uploads per 24h — keep TikTok masters at ≤5/day (the generator already does).
 
 ## References
 
