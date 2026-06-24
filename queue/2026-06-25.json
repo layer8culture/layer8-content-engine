@@ -1,0 +1,535 @@
+[
+  {
+    "id": "20260625-layer8culture-instagram-1",
+    "account": "layer8culture",
+    "category": "Community Questions",
+    "platform": "instagram",
+    "format": "story",
+    "schedule_time": "2026-06-25T08:00:00-04:00",
+    "text": "What's your biggest AI build challenge right now?\n\nStarting from scratch. Staying consistent. Or figuring out which tools are worth it.\n\nDrop your answer below",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AICommunity",
+      "#BuildWithAI",
+      "#FutureBuilders",
+      "#BuildInPublic",
+      "#AIBuilders",
+      "#TechCreators",
+      "#AItools"
+    ],
+    "hashtags_in_first_comment": true,
+    "first_comment": "Starting | Staying consistent | Choosing tools -- reply and tell us where you're stuck.",
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. COMPOSITION FOR TYPOGRAPHY: leave the LOWER-LEFT lower third of the frame as clean uncluttered negative space; keep the top-right corner clear for the wordmark. SCENE: A close-up of a confident Black creator's hand holding a glowing smartphone in a very dark room. The phone screen emits a soft electric blue glow illuminating the wrist and fingers. The hand is centered in frame; background is deeply atmospheric dark navy. Warm practical lamp light catches the side of the wrist. Intimate and human. No text on screen, no logos. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, rendered text, signage lettering, garbled screen text.",
+      "headline": "WHERE'S YOUR BLOCK?",
+      "subtext": "reply below",
+      "overlay_position": "lower-center",
+      "file": "assets/generated/20260625-layer8culture-instagram-1.png"
+    }
+  },
+  {
+    "id": "20260625-layer8culture-tiktok-1",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-06-25T09:00:00-04:00",
+    "text": "Most people watch 20 clips on AI and think they get it.\n\nThat's not fluency. That's exposure.\n\nReal skill gets installed at depth -- focused hours, not minutes.\n\nFollow @layer8culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#BuildInPublic",
+      "#TechTok",
+      "#AI"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "ai-fluency",
+    "hook_score": 82,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Cinematic Layer8Culture 9:16 vertical base still for animation. SCENE: A smartphone lies face-up on a dark walnut surface, its screen casting cold white-blue glow upward -- a blurred social feed scrolling, passive and bright. Beside it slightly out of focus, a laptop screen with a lone terminal cursor blinking in focused electric blue. Two worlds, one frame. Upper third: deep dark navy, calm. Lower third: dark walnut surface, clean for text overlay. No person visible. No text on any screen, no logos. Shallow DoF. Documentary realism. Avoid bright corporate lighting, cluttered composition, rendered text.",
+      "headline": "20 CLIPS IS NOT MASTERY",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16. A smartphone lies face-up on a dark walnut desk, its screen filled with a rapid-scrolling social feed -- electric blue and white light flickering in darkness. Camera holds close on the phone. Then the scrolling slows, stops. The phone dims. Beside it, a laptop screen wakes -- a terminal cursor blinks alive in electric blue. Camera slowly pushes in toward the terminal. No person visible. Deep navy atmosphere, warm practical lamp light. Story: from passive consumption to active building. Documentary realism, shallow DoF, no text, no logos.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "20 CLIPS",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "ISN'T MASTERY",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "GO 20 HOURS",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "file": "assets/generated/20260625-layer8culture-tiktok-1.mp4",
+      "cover": "assets/generated/20260625-layer8culture-tiktok-1-cover.png"
+    }
+  },
+  {
+    "id": "20260625-layer8culture-instagram-2",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-06-25T10:00:00-04:00",
+    "text": "Gemini 3.5 Flash. Claude Opus 4.8. GPT-5.5.\n\nThree major models dropped this month. Each one built for a different job.\n\nThis is the decision map for builders who don't want to guess.\n\nSave this for your next build.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AItools",
+      "#Claude",
+      "#ChatGPT",
+      "#Gemini",
+      "#BuildWithAI",
+      "#AIFluency",
+      "#AICommunity",
+      "#GenerativeAI",
+      "#LLM",
+      "#FutureBuilders"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "openai",
+      "aspect": "1:1",
+      "quality": "high",
+      "slides": [
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, Black tech futurism, minimal composition, strong negative space, high contrast. COMPOSITION FOR TYPOGRAPHY: lower-left lower third clear for headline; top-right clear for wordmark. SCENE: Three luminous orbs float at different depths in a deep black void -- leftmost glows brightest electric blue, center deep teal, rightmost soft navy. Each distinct, separated, a different intensity of intelligence. Abstract premium model-selection visualization. No text, no logos. Avoid bright corporate lighting, cheap RGB, cluttered composition, rendered text.",
+          "headline": "PICK THE RIGHT MODEL",
+          "subtext": "Claude 4.8 / GPT-5.5 / Gemini 3.5",
+          "accent": "RIGHT",
+          "role": "cover"
+        },
+        {
+          "openai_prompt": "Cinematic Layer8Culture visual, deep black, electric blue accent. COMPOSITION: lower-left clear for headline; top-right clear for wordmark. SCENE: A single intensely luminous neural-network web in electric blue on deep black -- intricate, precise, every node perfectly connected. Camera close on the brightest center node. Shallow DoF. Abstract intelligence: depth and precision. No text, no logos.",
+          "headline": "BUILT FOR DEPTH",
+          "subtext": "Claude Opus 4.8 -- complex reasoning, agentic coding, effort control.",
+          "accent": "DEPTH",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Cinematic Layer8Culture visual, deep black, electric blue accent. COMPOSITION: lower-left clear for headline; top-right clear for wordmark. SCENE: An overhead aerial view of a city at night -- deep black ground plane, electric blue light tracing vast streets and connecting nodes like a living network across the whole frame. Wide, expansive, interconnected. No text, no logos.",
+          "headline": "BUILT FOR REACH",
+          "subtext": "GPT-5.5 -- broad ecosystem, flexible integration, fast multimodal.",
+          "accent": "REACH",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Cinematic Layer8Culture visual, deep black, electric blue accent. COMPOSITION: lower-left clear for headline; top-right clear for wordmark. SCENE: Abstract motion-blur of electric blue particles accelerating through a dark corridor -- streaks of light, speed as pure directional energy. Particles travel upward, kinetic and precise. Minimal, bold. No text, no logos.",
+          "headline": "BUILT FOR SPEED",
+          "subtext": "Gemini 3.5 Flash -- low cost, fast responses, high-volume tasks.",
+          "accent": "SPEED",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Cinematic Layer8Culture visual, deep black, electric blue accent. COMPOSITION: lower-left clear for headline; top-right clear for wordmark. SCENE: A single electric blue angular geometric form -- rendered in soft glowing particle light -- centered in a vast deep black space. Extremely minimal. Communicates keeping something valuable. One precise electric blue element against deep black. No text, no logos.",
+          "headline": "SAVE THIS",
+          "subtext": "Follow @layer8culture for the build.",
+          "accent": "SAVE",
+          "role": "cta"
+        }
+      ],
+      "files": [
+        "assets/generated/20260625-layer8culture-instagram-2-1.png",
+        "assets/generated/20260625-layer8culture-instagram-2-2.png",
+        "assets/generated/20260625-layer8culture-instagram-2-3.png",
+        "assets/generated/20260625-layer8culture-instagram-2-4.png",
+        "assets/generated/20260625-layer8culture-instagram-2-5.png"
+      ],
+      "file": "assets/generated/20260625-layer8culture-instagram-2-1.png"
+    }
+  },
+  {
+    "id": "20260625-layer8culture-tiktok-2",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-06-25T12:00:00-04:00",
+    "text": "AI isn't answering questions anymore. It's taking actions.\n\nThe shift from chat to agents is here -- and most people haven't caught up yet.\n\nFollow @layer8culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIAgents",
+      "#AgenticAI",
+      "#TechTok",
+      "#AI"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "transformation",
+    "hook_score": 90,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Cinematic Layer8Culture 9:16 vertical base still for animation. SCENE: A single glowing chat bubble floats centered in a deep black void, soft and solitary -- a familiar small light in a vast space. Around it in the dark periphery, dozens of tiny luminous agent nodes pulse faintly in electric blue, a silent awakening network. Chat bubble in sharp focus; peripheral nodes soft. Upper third of frame: deep dark void, calm. Lower third: fading darkness, clean for text overlay. Premium abstract visualization. No text on any element, no logos. Shallow DoF. Avoid robots, fake hologram overload, garbled text, cheap RGB.",
+      "headline": "AI STOPPED ANSWERING",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16. Abstract: a single soft glowing chat bubble sits alone center-frame in deep black space, pulsing gently. Then it fractures -- a slow cinematic crack. From the fragments, dozens of electric blue agent nodes bloom outward in cascading streams, connecting across the void. The network expands, pulses, becomes vast and intelligent, filling the frame. Camera slowly zooms out. Deep navy to electric black. Premium, awe-inspiring. No person, no text, no logos.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "CHAT IS DONE",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "NOW IT ACTS",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "BE THE DIRECTOR",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "file": "assets/generated/20260625-layer8culture-tiktok-2.mp4",
+      "cover": "assets/generated/20260625-layer8culture-tiktok-2-cover.png"
+    }
+  },
+  {
+    "id": "20260625-layer8culture-tiktok-3",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-06-25T13:00:00-04:00",
+    "text": "They weren't in the room when the technology was made.\n\nNow we build the room.\n\nCulture is the eighth layer. The frontier is ours.\n\nFollow @layer8culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#Afrofuturism",
+      "#TechCulture",
+      "#BuildInPublic",
+      "#AI"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "black-tech-culture",
+    "hook_score": 93,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Cinematic Layer8Culture 9:16 vertical base still for animation. SCENE: A luminous Afrofuturist cityscape at golden twilight -- soaring glass and warm gold architecture, electric blue light rising from the towers. Framed from street level looking upward at a monumental building facade where a singular standalone 8 is carved and softly lit in warm amber. The skyline fills the upper frame. Upper third: deep twilight sky, gold-tinged, calm. Lower third: dark street-level pavement, clean for text overlay. Warm gold and electric blue palette. Wide-angle, cinematic, premium documentary realism. No people in foreground. No text, no logos. Avoid cluttered composition, garbled lettering.",
+      "headline": "NOT IN THE ROOM",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16. Street-level view of a luminous Afrofuturist city at golden twilight. Camera starts low, looking up at soaring gold and glass towers. A monumental standalone 8 is carved into a building facade, softly glowing warm amber. The camera begins a slow cinematic tilt upward from street to skyline, revealing the full scope of the city as electric blue tower lights activate one by one. A few sleek vehicles arc silently between spires. No people in foreground. Warm gold meets electric blue. Premium, aspirational, awe-inspiring. No text, no logos.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "NOT IN THE ROOM",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "NOW WE BUILD IT",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "THAT'S LAYER 8",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "file": "assets/generated/20260625-layer8culture-tiktok-3.mp4",
+      "cover": "assets/generated/20260625-layer8culture-tiktok-3-cover.png"
+    }
+  },
+  {
+    "id": "20260625-layer8culture-instagram-3",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-06-25T13:00:00-04:00",
+    "text": "They weren't in the room when the technology was made.\n\nNow we build the room.\n\nThat's the eighth layer -- culture as the frontier of AI.\n\nShare this with a builder.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#Afrofuturism",
+      "#BlackTech",
+      "#TechCulture",
+      "#BuildInPublic",
+      "#AICommunity",
+      "#FutureBuilders",
+      "#TechCreators",
+      "#DigitalCulture"
+    ],
+    "hashtags_in_first_comment": true,
+    "trial_reel": true,
+    "visual": {
+      "source": "reuse",
+      "of": "20260625-layer8culture-tiktok-3",
+      "aspect": "9:16",
+      "file": "assets/generated/20260625-layer8culture-instagram-3.mp4",
+      "cover": "assets/generated/20260625-layer8culture-instagram-3-cover.png"
+    }
+  },
+  {
+    "id": "20260625-layer8culture-youtube-1",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "youtube",
+    "format": "reel",
+    "schedule_time": "2026-06-25T13:30:00-04:00",
+    "youtube_title": "They Weren't in the Room. Now We Build It. | Black Tech + AI #Shorts",
+    "text": "They weren't in the room when the technology was made. Now we build the room.\n\nCulture is the eighth layer. The frontier is ours.\n\nFollow @layer8culture for the build.",
+    "hashtags": [
+      "#Shorts",
+      "#Layer8Culture",
+      "#Afrofuturism",
+      "#AI",
+      "#TechCulture"
+    ],
+    "visual": {
+      "source": "reuse",
+      "of": "20260625-layer8culture-tiktok-3",
+      "aspect": "9:16",
+      "file": "assets/generated/20260625-layer8culture-youtube-1.mp4",
+      "cover": "assets/generated/20260625-layer8culture-youtube-1-cover.png"
+    }
+  },
+  {
+    "id": "20260625-layer8culture-instagram-4",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-06-25T15:00:00-04:00",
+    "text": "You watched 20 AI clips this week.\n\nYou still don't know how to build with it.\n\nFlipping through content creates exposure. Fluency is installed at depth.\n\nSave this. Return when you're ready to go deep.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#BuildInPublic",
+      "#LearnInPublic",
+      "#FutureBuilders",
+      "#CreatorTech",
+      "#AIBuilders",
+      "#TechCreators",
+      "#AICommunity",
+      "#BuildWithAI"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "openai",
+      "aspect": "1:1",
+      "quality": "medium",
+      "slides": [
+        {
+          "openai_prompt": "Cinematic Layer8Culture visual, deep black environment, electric blue accent lighting, premium creator-tech atmosphere, documentary realism, Black tech futurism, minimal composition, strong negative space. COMPOSITION: lower-left clear for headline; top-right clear for wordmark. SCENE: A split-frame -- left half: a smartphone face-up casting cold bright white-blue glow, a blurred social feed scrolling, passive; right half: a dark walnut desk with a terminal cursor blinking in focused electric blue, deliberate and alive. A thin electric blue edge divides them. Intentional contrast: consumption vs creation. Premium, cinematic. No text on any screen, no logos. Avoid cluttered composition, rendered text.",
+          "headline": "20 CLIPS VS 20 HOURS",
+          "subtext": "The depth trap most builders fall into.",
+          "accent": "20",
+          "role": "cover"
+        },
+        {
+          "openai_prompt": "Cinematic Layer8Culture visual, deep black, electric blue. COMPOSITION: lower-left clear for headline; top-right for wordmark. SCENE: Overhead close-up of a smartphone face-up on a dark surface, its screen glowing with a blurred social feed -- cold, passive light isolated in deep black. Nothing else in frame. The phone is the only light source. Melancholic, minimal, solitary. No person visible. No text on screen, no logos.",
+          "headline": "THE SCROLL TRAP",
+          "subtext": "20 clips. 20 minutes. Zero skill installed.",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Cinematic Layer8Culture visual, deep black, electric blue accent, premium atmosphere. COMPOSITION: lower-left clear for headline; top-right for wordmark. SCENE: A pair of hands resting on a dark walnut keyboard, fingers on the keys. Electric blue terminal glow from above casts precise light on the hands. Intimate -- just hands and keyboard in darkness, focused and deliberate. No face visible. Warm practical light from the side. Premium documentary realism, shallow DoF. No text on any screen, no logos.",
+          "headline": "INSTALL THE SKILL",
+          "subtext": "Real fluency needs 20 hours of doing, not watching.",
+          "accent": "INSTALL",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Cinematic Layer8Culture visual, deep black, electric blue. COMPOSITION: lower-left clear for headline; top-right for wordmark. SCENE: An abstract electric blue circuit-flow diagram rendered as glowing light traces on deep black -- a clean loop pattern cycling: one luminous point connecting to the next and back again, forming a closed loop. Graphic, premium, precise. No text, no logos, no rendered lettering. Minimal and bold.",
+          "headline": "THE BUILDER S LOOP",
+          "subtext": "Build -> Break -> Fix -> Ship. Repeat.",
+          "accent": "LOOP",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Cinematic Layer8Culture visual, deep black, electric blue accent, premium. COMPOSITION: lower-left clear for headline; top-right for wordmark. SCENE: A minimalist dark frame with a single electric blue angular geometric form -- rendered in soft glowing particle light, centered in a vast deep black space. Extremely minimal. Communicates keeping something valuable. One precise electric blue element against deep black. No text, no logos.",
+          "headline": "SAVE THIS",
+          "subtext": "Return when you are ready to build.",
+          "accent": "SAVE",
+          "role": "cta"
+        }
+      ],
+      "files": [
+        "assets/generated/20260625-layer8culture-instagram-4-1.png",
+        "assets/generated/20260625-layer8culture-instagram-4-2.png",
+        "assets/generated/20260625-layer8culture-instagram-4-3.png",
+        "assets/generated/20260625-layer8culture-instagram-4-4.png",
+        "assets/generated/20260625-layer8culture-instagram-4-5.png"
+      ],
+      "file": "assets/generated/20260625-layer8culture-instagram-4-1.png"
+    }
+  },
+  {
+    "id": "20260625-layer8culture-tiktok-4",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-06-25T17:30:00-04:00",
+    "text": "The biggest thing stopping builders from starting?\n\nDoing it alone.\n\nWhen you build in isolation, you freeze. When you build with others, you ship.\n\nFollow @layer8culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#BuildInPublic",
+      "#TechTok",
+      "#AI",
+      "#FutureBuilders"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "build-in-public",
+    "hook_score": 85,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Cinematic Layer8Culture 9:16 vertical base still for animation. SCENE: Extreme close-up macro of a single pair of hands resting still on a dark walnut keyboard. Mid-pause, fingers lightly resting. A single laptop screen above casts electric blue light on the hands from off the top of frame. Surrounding room deeply dark -- no other screens, no other presence. Upper third: dark and calm. Lower third: dark walnut desk surface, clean for text overlay. Premium documentary realism, shallow DoF focused on knuckles and keys. Warm practical lamp light from the side. No face, no text on any screen, no logos. Avoid generic startup office, bright corporate lighting, rendered text.",
+      "headline": "STUCK IN A SILO",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16. Extreme close-up macro of a pair of hands on a dark walnut keyboard in a dark isolated room. The hands type steadily, alone. Only one screen. The typing slows. The cursor stops. A long held beat of stillness -- just hands and silence. Then: a second screen activates beside the first, its electric blue glow warm and alive -- a PR merge notification pulses. The hands begin moving again, faster and energized. Camera holds steady on the hands throughout. Macro, shallow DoF, warm practical lamp light, deep navy behind. Documentary realism. No text, no logos.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "STUCK IN A SILO",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "IT FREEZES YOU",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "BUILD TOGETHER",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "file": "assets/generated/20260625-layer8culture-tiktok-4.mp4",
+      "cover": "assets/generated/20260625-layer8culture-tiktok-4-cover.png"
+    }
+  },
+  {
+    "id": "20260625-layer8culture-tiktok-5",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-06-25T19:00:00-04:00",
+    "text": "You can tell Claude Opus 4.8 how hard to think.\n\nLow effort for quick tasks. High for complex reasoning. The model adjusts.\n\nThis is what precision looks like in an AI-native workflow.\n\nFollow @layer8culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#Claude",
+      "#PromptEngineering",
+      "#TechTok",
+      "#AI"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "cinematic-coding",
+    "hook_score": 92,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Cinematic Layer8Culture 9:16 vertical base still for animation. SCENE: Abstract visualization -- a vast vertical dial or slider composed entirely of flowing electric blue particles, centered in a deep black space. Set at mid-high position. At the high end, particles dense, bright, interconnected like a luminous neural web; lower they become sparse and languid, gently drifting. Purely abstract -- no mechanical parts, just flowing particle intelligence shaped into a vertical form. Upper third: deep dark void, uncluttered. Lower third: fading particle wisps against black, clean for text overlay. Electric blue on deep navy. Awe-inspiring, minimal abstraction. No text, no logos. Avoid cluttered composition, garbled text, rendered lettering.",
+      "headline": "TUNE THE AI",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16. Abstract: an enormous vertical dial rendered in flowing electric blue particles hangs centered in deep black space. Begins at the lowest setting -- particles drift languidly, dim and sparse. The dial slowly sweeps upward. As it rises, particles accelerate and densify: streams interconnecting, forming cascading luminous neural webs, electric blue intelligence filling the upper frame. The dial reaches the top -- the particle system blazes, vast and precise and alive. Camera stays static; the particles do all the work. Deep navy backdrop. Premium abstract tech. No text, no logos.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "TUNE THE AI",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "HIGH MED OR LOW",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "THAT'S MASTERY",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "file": "assets/generated/20260625-layer8culture-tiktok-5.mp4",
+      "cover": "assets/generated/20260625-layer8culture-tiktok-5-cover.png"
+    }
+  },
+  {
+    "id": "20260625-layer8culture-instagram-5",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-06-25T19:00:00-04:00",
+    "text": "Claude Opus 4.8 has effort control. You choose how hard it thinks.\n\nLow, medium, high -- the intelligence scales to your task.\n\nThis is what building with AI precision looks like.\n\nSave this if you're building your AI workflow.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#Claude",
+      "#AI",
+      "#PromptEngineering",
+      "#AItools",
+      "#BuildWithAI",
+      "#AICommunity",
+      "#CodingLife",
+      "#DevCommunity",
+      "#GenerativeAI",
+      "#AIFluency"
+    ],
+    "hashtags_in_first_comment": true,
+    "trial_reel": true,
+    "visual": {
+      "source": "reuse",
+      "of": "20260625-layer8culture-tiktok-5",
+      "aspect": "9:16",
+      "file": "assets/generated/20260625-layer8culture-instagram-5.mp4",
+      "cover": "assets/generated/20260625-layer8culture-instagram-5-cover.png"
+    }
+  },
+  {
+    "id": "20260625-layer8culture-youtube-2",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "youtube",
+    "format": "reel",
+    "schedule_time": "2026-06-25T19:30:00-04:00",
+    "youtube_title": "You Can Tell Claude Opus 4.8 How Hard to Think | AI Precision #Shorts",
+    "text": "Claude Opus 4.8 lets you set effort level -- low, medium, or high. The model adjusts.\n\nThis is precision AI building.\n\nFollow @layer8culture if you're building with AI.",
+    "hashtags": [
+      "#Shorts",
+      "#Layer8Culture",
+      "#Claude",
+      "#AI",
+      "#PromptEngineering"
+    ],
+    "visual": {
+      "source": "reuse",
+      "of": "20260625-layer8culture-tiktok-5",
+      "aspect": "9:16",
+      "file": "assets/generated/20260625-layer8culture-youtube-2.mp4",
+      "cover": "assets/generated/20260625-layer8culture-youtube-2-cover.png"
+    }
+  }
+]
