@@ -3701,5 +3701,73 @@
       "cover": "assets/generated/20260624-layer8culture-youtube-2-cover.png"
     },
     "scheduled": true
+  },
+  {
+    "id": "20260624-lofi-instagram-1",
+    "account": "lofi",
+    "category": "video-promo",
+    "platform": "instagram",
+    "format": "single",
+    "schedule_time": "2026-06-24T09:00:00-05:00",
+    "text": "the session is still running.\n\nafter the late-night commit. after the final push.\nwhen the city goes quiet and the monitors dim \u2014\nafrofuturist deep rest beats for the hours between builds.\n\nwarm lo-fi soundscapes to help the mind fully power down.\ncalm. unhurried. culturally grounded.\n\nsoundtracks for focused builders.\n\npress play. unwind. reset.\n\nnow live on YouTube. link in bio.",
+    "hashtags": [
+      "#Layer8CultureRadio",
+      "#Layer8Culture",
+      "#CodingMusic",
+      "#StudyBeats",
+      "#lofihiphop",
+      "#chillbeats",
+      "#RainyNight",
+      "#DeepFocus",
+      "#Afrofuturism",
+      "#WorkMusic"
+    ],
+    "hashtags_in_first_comment": true,
+    "collaborators": [],
+    "visual": {
+      "source": "openai",
+      "openai_prompt": "Create a cinematic lo-fi anime-inspired Afrofuturist coding studio scene for Layer8Culture Radio (not photorealistic). A Black creator is seated FROM BEHIND at a premium coding workstation, calm and focused, wearing a black hoodie with a large number 8 on the back (no face reveal). Multiple monitors show code and a subtle line graph; a laptop with code; a warm desk lamp casting a soft amber circle on the wood; a coffee/tea mug with slow-rising steam; plants and hanging vines; books on system design, clean code, and algorithms; West African-inspired pottery and design objects; a warm wood desk; and a blank blue neon sign panel on the wall (an unlit, lettering-free glowing panel \u2014 do NOT render any text or letters; branding is composited in afterward). Through a large window is a futuristic African city skyline with a few slow flying vehicles at deep rainy night \u2014 heavy rain streaking down the glass in long luminous trails, the city glowing with diffused midnight navy and steel-blue reflections below, puddles on the streets catching neon cyan glimmers, the skyline softened and dream-like through the wet glass. The atmosphere feels like the hour after the last commit \u2014 the city hushed, the studio warm and intimate against the cold dark night outside. Color palette: Deep Black and Midnight Navy backgrounds, Electric Blue and Neon Cyan reflections on rain-wet surfaces, warm amber desk lamp as the sole warm counterpoint. The mood is profoundly calm, intimate, and restorative. Afrofuturist city view, Black coder or student seated from behind, warm desk lamp, calm study atmosphere, loopable visual, gentle motion potential, culturally intentional objects, futuristic but grounded, balanced electric-blue and warm gold lighting. Leave the lower third as clean, uncluttered negative space for composited headline typography. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography. avoid photorealism, empty minimal rooms, sparse composition",
+      "headline": "UNWIND & RESET",
+      "subtext": "NOW LIVE ON YOUTUBE",
+      "accent": "UNWIND",
+      "quality": "high",
+      "aspect": "1:1",
+      "file": "assets/generated/20260624-lofi-instagram-1.png"
+    },
+    "scheduled": true
+  },
+  {
+    "id": "20260624-lofi-instagram-2",
+    "account": "lofi",
+    "category": "community",
+    "platform": "instagram",
+    "format": "single",
+    "schedule_time": "2026-06-24T20:00:00-05:00",
+    "text": "help shape the next layer8culture radio session.\n\nwhat should we build next?\n\nevery session is crafted for deep work \u2014\nafrofuturist lo-fi, culturally intentional,\nbuilt for the ones building.\n\ndrop your vote in the comments.\n\nafrofuturist beats for deep work.\n\nstudy. build. focus.",
+    "hashtags": [
+      "#Layer8CultureRadio",
+      "#Layer8Culture",
+      "#LofiCoding",
+      "#BuildInPublic",
+      "#lofi",
+      "#studymusic",
+      "#FlowState",
+      "#Afrofuturism",
+      "#FocusMusic",
+      "#DeepWork"
+    ],
+    "hashtags_in_first_comment": true,
+    "first_comment": "\ud83c\udfb7 Jazz Coding Lounge\n\ud83c\udf34 Reggae Focus Session\n\ud83c\udfb5 Latin Lo-Fi Study\n\ud83c\udf05 Sunset Flow Session\n\ud83c\udf27 Rainy Night Deep Focus\n\nDrop your pick \ud83d\udc47",
+    "collaborators": [],
+    "visual": {
+      "source": "openai",
+      "openai_prompt": "Create a cinematic lo-fi anime-inspired Afrofuturist coding studio scene for Layer8Culture Radio (not photorealistic). A Black creator is seated FROM BEHIND at a premium coding workstation, calm and focused, wearing a black hoodie with a large number 8 on the back (no face reveal). Multiple monitors show code and a subtle line graph; a laptop with code; a warm desk lamp; a coffee/tea mug with steam; plants and hanging vines; books on system design, clean code, and algorithms; West African-inspired pottery and design objects; a warm wood desk; and a blank blue neon sign panel on the wall (an unlit, lettering-free glowing panel \u2014 do NOT render any text or letters; branding is composited in afterward). Through a large window is a futuristic African city skyline with a few slow flying vehicles and a rich evening sunset \u2014 deep Sunset Orange and Warm Gold flooding the horizon, the African city towers catching the last of the evening light in amber and copper tones, the sky layering from electric-blue overhead to molten warm orange at the horizon line, the studio bathed in the golden-hour glow. Color palette: Sunset Orange #FF6A1A, Warm Gold #F5A524, Sunrise Amber #FFB347 blended with Deep Navy #07111F and Electric Blue #0047FF. The mood is inviting, creative, and community-oriented \u2014 the hour when builders look up from the screen and connect. Afrofuturist city view, Black coder or student seated from behind, warm desk lamp, calm study atmosphere, loopable visual, gentle motion potential, culturally intentional objects, futuristic but grounded, balanced electric-blue and warm gold lighting. Leave the lower third as clean, uncluttered negative space for composited headline typography. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography. avoid photorealism, empty minimal rooms, sparse composition",
+      "headline": "WHAT SHOULD WE BUILD NEXT?",
+      "subtext": "VOTE IN THE COMMENTS",
+      "quality": "medium",
+      "aspect": "1:1",
+      "file": "assets/generated/20260624-lofi-instagram-2.png"
+    },
+    "scheduled": true
   }
 ]
