@@ -102,7 +102,7 @@ jobs:
           GH_TOKEN: ${{ secrets.ENGINE_PR_TOKEN }}
         run: |
           DATE=$(date +%F)
-          BRANCH="lofi/posts-$DATE"
+          BRANCH="lofi/posts-$DATE-${GITHUB_RUN_ID}"
           git config user.name "layer8-engine"
           git config user.email "engine@layer8culture.io"
           git checkout -b "$BRANCH"
