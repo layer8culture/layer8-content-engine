@@ -2,9 +2,9 @@ name: Generate Lofi Content (Layer8CultureRadio)
 
 on:
   schedule:
-    # 02:00 UTC on Mon / Wed / Fri — targets a Mon/Wed/Fri queue file (today's UTC
-    # date), kept distinct from the layer8culture nightly run.
-    - cron: "0 2 * * 1,3,5"
+    # Daily 02:00 UTC. Layer8Culture Radio now has a 24/7 livestream, so the lofi
+    # pipeline runs every day with a more aggressive Instagram + YouTube Shorts funnel.
+    - cron: "0 2 * * *"
   workflow_dispatch: {}     # manual trigger button
 
 permissions:
