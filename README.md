@@ -35,10 +35,10 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
 >   **analytics** job pulls Instagram Insights into `analytics/insights-digest.md`,
 >   which feeds back into generation to grow toward 4k+ followers. Steer it via
 >   `scripts/generation-prompt.md`, `brand/viral-formats.md`, and `calendar/topics.md`.
-> - **Layer8Culture Radio (lofi) Instagram + YouTube** (Mon/Wed/Fri) — calm, evergreen
->   focus-music brand content (quote cards, loop-preview Reels, playlist/community
->   posts), plus a "Now Live on YouTube" promo when a video link is supplied. It also
->   cross-posts its loop-reel to the lofi YouTube channel as a Short. Its own
+> - **Layer8Culture Radio (lofi) Instagram + YouTube** (daily) — calm, premium
+>   focus-music content for the 24/7 livestream funnel: live-stream promos,
+>   quote cards, loop-preview Reels, playlist/community posts, and behind-the-scenes
+>   posts. It also cross-posts its loop-reel to the lofi YouTube channel as a Short. Its own
 >   prompt (`scripts/generation-prompt-lofi.md`), queue files (`queue/lofi-*.json`),
 >   workflow (`generate-lofi.yml`), and approval PR. Steer it via
 >   `calendar/topics-lofi.md`. (X remains paused for both brands; lofi TikTok is paused.)
@@ -112,8 +112,9 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
 |---|---|---|
 | After Tech Thursday | Drop transcript in `transcripts/`, update `calendar/topics.md` | 5 min |
 | When a lofi session goes live | Nothing — the engine auto-pulls new YouTube uploads into "Now Live" promo posts. (Optional: hand-edit `calendar/topics-lofi.md` to steer.) | 0 min |
+| Friday morning (automatic) | Weekly steering refresh scans the newest transcript, AI news, analytics coverage and virality notes, then updates `calendar/topics.md` + `analytics/weekly-steering.md` | 0 min |
 | Nightly (automatic) | Engine opens a PR with tomorrow's layer8culture posts + visuals | 0 min |
-| Mon/Wed/Fri (automatic) | Engine opens a separate PR with Layer8Culture Radio (lofi) posts | 0 min |
+| Daily (automatic) | Engine opens a separate PR with Layer8Culture Radio (lofi) posts | 0 min |
 | Each morning | Review PR(s) on GitHub mobile, edit, merge | 2-5 min |
 | Each morning | Read the daily report | 1 min |
 
@@ -131,6 +132,8 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
   (voice-layer8culture.md, voice-lofi.md, visual style, hashtags, **viral-formats.md** —
   the viral short-form video spec + STEPPS hook scoring). Read every run.
 - `calendar/topics.md` — weekly steering for layer8culture ("lean into X this week").
+  A Friday workflow refreshes this from the newest transcript, current AI news,
+  and virality steering.
 - `calendar/topics-lofi.md` — steering + "Now Live" video links for the lofi brand.
   The "Now Live" list is auto-refreshed from the Layer8CultureRadio YouTube channel
   by `scripts/fetch_youtube.py` at the start of each lofi run (no API key — public
@@ -139,8 +142,10 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
 - `queue/` — generated posts awaiting approval (the PR contents). layer8culture uses
   `queue/<date>.json`; the lofi brand uses `queue/lofi-<date>.json`.
 - `posted/` — archive of published posts (feeds the report + dedupe).
-- `analytics/` — Instagram Insights pulled back in (`insights.json`,
-  `followers.json`, `insights-digest.md`); the digest steers next-day generation.
+- `analytics/` — Instagram Insights and coverage pulled back in (`insights.json`,
+  `followers.json`, `coverage.json`, `insights-digest.md`,
+  `social-assessment.md`, `weekly-steering.md`); the digest steers next-day
+  generation and the assessment tracks cross-platform coverage gaps.
 - `assets/library/` — your existing branded graphics + optional lofi audio bed
   (`lofi-bed.mp3`) and Tech Thursday recordings (for clip Reels).
 - `assets/generated/` — OpenAI/Sora/ffmpeg outputs, named by post ID (images, carousel

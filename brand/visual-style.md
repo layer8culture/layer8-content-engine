@@ -36,18 +36,16 @@ standalone 8 motif on a hoodie or mug); an over-the-shoulder build session; an
 abstract Afrofuturistic tech or data-visualization environment with glowing
 electric-blue nodes and grids; or an atmospheric branded studio space. Recurring
 brand cues when a scene fits: a blank neon sign panel on the wall (an unlit,
-lettering-free glowing panel — do NOT render any text or letters; the wordmark is
-composited in afterward), the standalone 8 motif, a bookshelf washed in blue
-accent lighting. When a person appears they are a confident Black creator,
+lettering-free glowing panel - do NOT render any text or letters), the standalone
+8 motif, a bookshelf washed in blue accent lighting. When a person appears they are a confident Black creator,
 engaged and intentional, never anonymous side profiles. The image should feel
 like a premium technology documentary and creative studio brand.
 
 COMPOSITION FOR TYPOGRAPHY: leave the LOWER-LEFT / lower third of the frame as
 clean, uncluttered negative space (a dark, simple area with no faces, fine
-detail, or busy elements there) so a branded headline can be composited over it.
-Keep the top-right corner clear for the wordmark."
+detail, or busy elements there) so a branded headline can be composited over it."
 
-## TYPOGRAPHY OVERLAY (composited after generation — do NOT ask the model to render it)
+## TYPOGRAPHY OVERLAY (composited after generation - do NOT ask the model to render it)
 # The image models render garbled text, so openai_gen.py composites clean brand
 # type onto each image, infographic / title-card style. The generation step
 # supplies the words via the post's visual.headline / visual.subtext fields.
@@ -55,14 +53,13 @@ Keep the top-right corner clear for the wordmark."
 #   Soft White #F5F5F5, with an optional single Electric Blue #0047FF accent word
 #   (visual.accent). Keep it SHORT — ideally 2–5 words, max ~7.
 # - Subtext: Inter, one short supporting line (optional), Soft White.
-# - A deep-black bottom scrim is added automatically for legibility; the wordmark
-#   is overlaid top-right. Because the message lives in the typography, the
-#   generated background should be atmospheric and varied, not literal.
+# - A deep-black bottom scrim is added automatically for legibility. No wordmark is
+#   composited on posts. Because the message lives in the typography, the generated
+#   background should be atmospheric and varied, not literal.
 
 ## PER-FORMAT VISUAL NOTES (single / carousel / reel / story)
 # Same color system, BASE PROMPT, and NEGATIVE PROMPT apply to every format.
-# - single: one image. Reserve lower-left negative space for the headline,
-#   top-right for the wordmark (as above).
+# - single: one image. Reserve lower-left negative space for the headline.
 # - carousel: every slide is its own generation with its own headline. Keep the
 #   look cohesive (same palette/energy) but give each slide a DISTINCT scene so the
 #   set doesn't look like one image repeated. Slide 1 (cover) = the boldest, most
@@ -124,11 +121,48 @@ calm study atmosphere, loopable visual, gentle motion potential, culturally
 intentional objects, futuristic but grounded, balanced electric-blue and warm gold
 lighting"
 
-## LOFI POST-TYPE VISUAL NOTES (Layer8Culture Radio — §13 Instagram Design System)
-# The lofi account has NO composited wordmark for now (openai_gen ACCOUNT_WORDMARK
-# maps "lofi" -> None). Brand identity comes from the scene + the composited
-# headline typography, plus the in-scene "8" motif. Build the headline from the
-# post's visual.headline/subtext as usual; keep the lower third clean for it.
+## LOFI VIRAL ART-STYLE MATRIX (rotate for reach while preserving the brand)
+# Every lofi visual keeps the Layer8Culture Radio anchor:
+# Black creator from behind, black hoodie with a large 8, deep focus at a premium
+# workstation, warm desk lamp, culturally intentional objects, and an Afrofuturist
+# city view through the window. Vary the style around that anchor.
+#
+# 1. Cozy Afrofuturist Focus Room
+#    Warm lamp, books, plants, mug steam, wood desk, soft blankets/textures,
+#    calm study room energy. Avoid making it generic or overly cute.
+#
+# 2. Rainy Night Coding
+#    Rain on glass, midnight navy, electric-blue reflections, blurred city lights,
+#    warm gold lamp inside. Strong for late-night loops and shareable reels.
+#
+# 3. Anime-Inspired Study Room
+#    High-quality illustrated look, soft linework, expressive atmosphere, subtle
+#    environmental detail. Do not reference or imitate copyrighted anime characters.
+#
+# 4. Cyberpunk Afrofuturist Skyline
+#    Futuristic African city, neon cyan/electric-blue glow, window reflections,
+#    grounded cultural objects inside. Premium and calm, not dystopian chaos.
+#
+# 5. Deep Sleep / Midnight Focus
+#    Darker palette, lower contrast, idle monitors or closed laptop, soft city lights,
+#    peaceful overnight energy. Designed for low-stimulation long-watch-time visuals.
+#
+# 6. Cosmic Focus
+#    Moonlight, stars, orbit-like UI shapes, deep-space navy, Afrofuturist skyline.
+#    Use cosmic atmosphere without fantasy clutter.
+#
+# 7. Jazz Coding Lounge
+#    Warm brown wood, vinyl/Rhodes/jazz cues, coffee, African pottery, amber lamp,
+#    premium late-night lounge feel.
+#
+# 8. Sunrise Build Beats
+#    Clean desk, golden sunrise, warm amber skyline, fresh morning focus, soft mist,
+#    optimistic but calm.
+
+## LOFI POST-TYPE VISUAL NOTES (Layer8Culture Radio - §13 Instagram Design System)
+# Posts have no composited wordmark. Brand identity comes from the scene + the
+# composited headline typography, plus the in-scene "8" motif. Build the headline
+# from the post's visual.headline/subtext as usual; keep the lower third clean for it.
 # - brand intro: hero studio scene; headline "LAYER8CULTURE RADIO" + subtext
 #   ("Study • Build • Focus."). Strong, premium, scroll-stopping cover frame.
 # - video promo: thumbnail-like; bold session title headline + "NOW LIVE ON YOUTUBE"
