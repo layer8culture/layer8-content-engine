@@ -76,6 +76,18 @@
     mood: sunrise
     note: drive viewers to the full session; link in bio.
 
+## Now Live — video promos
+# Auto-refreshed from YouTube by scripts/fetch_youtube.py before each lofi
+# run. Each entry below becomes one "Now Live on YouTube" Video Promo post
+# (the engine renders its own on-brand imagery; no YouTube footage is reposted).
+# Edit MOOD_RULES in the script or override entries by hand if needed.
+#
+  - title: Afrofuturist Night Coding Radio: Cosmic Lofi to Code, Study & Focus 🌃🎧 Vol. 1 #lofi 2026
+    url: https://www.youtube.com/watch?v=l3vBs5hXiHc
+    mood: night
+    note: drive viewers to the full session; link in bio.
+
+
 ## Session focus / pillars to feature
 - Afrofuturist Coding Radio
 - Time-of-Day Sessions
