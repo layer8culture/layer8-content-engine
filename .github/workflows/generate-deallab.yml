@@ -1,10 +1,6 @@
-name: Generate Deal Lab Content
+name: Render Deal Lab Sample Images
 
 on:
-  schedule:
-    # Daily morning run for America/New_York. Generates same-day Instagram content
-    # for The Real Estate Deal Lab only.
-    - cron: "30 11 * * *"
   workflow_dispatch: {}
 
 permissions:
@@ -12,42 +8,22 @@ permissions:
   pull-requests: write
 
 jobs:
-  generate-deallab:
+  render-samples:
     runs-on: ubuntu-latest
-    env:
-      TZ: America/New_York
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Copilot CLI
-        run: npm install -g @github/copilot
-
-      - name: Generate Deal Lab posts with Copilot CLI
-        env:
-          GH_TOKEN: ${{ secrets.COPILOT_CLI_TOKEN }}
-        run: |
-          copilot -p "$(cat clients/therealestatedeallab/generation-prompt.md)" \
-            -s \
-            --allow-tool='read,write(queue/*)' \
-            --no-ask-user
-
-      - name: Verify queue file was written
-        run: |
-          QUEUE_FILE="queue/deallab-$(date +%F).json"
-          if [ ! -f "$QUEUE_FILE" ]; then
-            echo "::error::Copilot CLI did not write $QUEUE_FILE."
-            echo "queue/ currently contains:"
-            ls -la queue/ || true
-            exit 1
-          fi
-          echo "Confirmed $QUEUE_FILE was written ($(wc -c < "$QUEUE_FILE") bytes)."
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Generate visuals via OpenAI
+      - name: Prepare sample JSON
+        run: |
+          mkdir -p clients/therealestatedeallab/samples
+          cp posted/deallab-2026-06-27.json clients/therealestatedeallab/samples/deallab-2026-06-27.json
+          cp posted/deallab-2026-06-28.json clients/therealestatedeallab/samples/deallab-2026-06-28.json
+
+      - name: Render sample images
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
@@ -59,30 +35,25 @@ jobs:
           OPENAI_IMAGE_LONG_EDGE: ${{ vars.OPENAI_IMAGE_LONG_EDGE }}
         run: |
           pip install openai requests pillow
-          QUEUE_FILE="queue/deallab-$(date +%F).json"
-          echo "Generating images for $QUEUE_FILE"
-          python scripts/openai_gen.py "$QUEUE_FILE"
+          python scripts/openai_gen.py clients/therealestatedeallab/samples/deallab-2026-06-27.json
+          python scripts/openai_gen.py clients/therealestatedeallab/samples/deallab-2026-06-28.json
 
-      - name: Open approval PR
+      - name: Open sample image PR
         env:
           GH_TOKEN: ${{ secrets.ENGINE_PR_TOKEN }}
         run: |
-          DATE=$(date +%F)
-          BRANCH="deallab/posts-$DATE-${GITHUB_RUN_ID}"
+          BRANCH="deallab/sample-images-${GITHUB_RUN_ID}"
           git config user.name "layer8-engine"
           git config user.email "engine@layer8culture.io"
           git checkout -b "$BRANCH"
-          git add queue/
-          git add -f assets/generated
-          git commit -m "Deal Lab posts for $DATE - ready for review"
+          git add clients/therealestatedeallab/samples
+          git add -f assets/generated/20260627-deallab-* assets/generated/20260628-deallab-*
+          git commit -m "Render Deal Lab sample images"
           git push origin "$BRANCH"
           SHA=$(git rev-parse HEAD)
-          QUEUE_FILE="queue/deallab-$DATE.json"
-          python scripts/build_pr_preview.py "$QUEUE_FILE" \
-                 --repo "${{ github.repository }}" \
-                 --sha "$SHA" \
-                 --brand "TheRealEstateDealLab" \
-                 --out pr-body.md
-          gh pr create --title "Deal Lab posts for $DATE" \
-                       --body-file pr-body.md \
-                       --base main --head "$BRANCH"
+          python scripts/build_pr_preview.py clients/therealestatedeallab/samples/deallab-2026-06-27.json --repo "${{ github.repository }}" --sha "$SHA" --brand "TheRealEstateDealLab Samples Day 1" --out pr-day1.md
+          python scripts/build_pr_preview.py clients/therealestatedeallab/samples/deallab-2026-06-28.json --repo "${{ github.repository }}" --sha "$SHA" --brand "TheRealEstateDealLab Samples Day 2" --out pr-day2.md
+          cat pr-day1.md > pr-body.md
+          printf '\n\n---\n\n' >> pr-body.md
+          cat pr-day2.md >> pr-body.md
+          gh pr create --title "Render Deal Lab sample images" --body-file pr-body.md --base main --head "$BRANCH"
