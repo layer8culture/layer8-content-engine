@@ -100,8 +100,7 @@ Common fields on EVERY post:
        composed exactly per brand/visual-style.md. The scene MUST visually reflect
        THIS post's concrete topic and differ noticeably from the other posts. The
        background is atmospheric, NOT literal text. Leave the lower-left / lower
-       third as clean dark negative space for the composited headline, and keep the
-       top-right clear for the wordmark.",
+       third as clean dark negative space for the composited headline.",
   "headline": "REQUIRED. Short punchy headline composited in brand type (Space
        Grotesk, UPPERCASE). 2-5 words ideal, max ~7. The visual hook — make it land
        on its own; do NOT restate the caption.",
@@ -110,10 +109,7 @@ Common fields on EVERY post:
        Blue. Must appear in the headline.",
   "overlay_position": "OPTIONAL 'lower-left' (default) or 'lower-center'.",
   "quality": "low | medium | high",  // OPTIONAL; defaults to 'high' (2K master). Use 'low'/'medium' only for quick drafts
-  "aspect": "1:1 | 9:16",            // stories should be '9:16'
-  "logo_position": "OPTIONAL top-left|top-right|bottom-left|bottom-right|center (default top-right)",
-  "logo_subtle": false,
-  "logo_opacity": 1.0
+  "aspect": "1:1 | 9:16"             // stories should be '9:16'
 }
 For "story": prefer aspect "9:16", and put an interactive prompt in the caption or
 first_comment (a poll-style question, "tap to watch", a this-or-that) — Stories earn
