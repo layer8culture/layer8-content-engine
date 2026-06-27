@@ -42,6 +42,11 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
 >   prompt (`scripts/generation-prompt-lofi.md`), queue files (`queue/lofi-*.json`),
 >   workflow (`generate-lofi.yml`), and approval PR. Steer it via
 >   `calendar/topics-lofi.md`. (X remains paused for both brands; lofi TikTok is paused.)
+> - **The Real Estate Deal Lab (client brand) Instagram** (daily) — fully isolated
+>   client lane for premium real estate deal education. It uses client files under
+>   `clients/therealestatedeallab/`, writes `queue/deallab-*.json`, and opens a
+>   separate approval PR from `generate-deallab.yml`. It does not read Layer8Culture
+>   or Layer8Culture Radio brand docs.
 
 ## Setup (one-time)
 
@@ -80,6 +85,7 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
    | `TIKTOK_CHANNEL_ID` | **Required to publish TikTok.** The Postiz integration ID for the layer8culture TikTok channel. Until it's set, `INTEGRATIONS[("layer8culture","tiktok")]` stays `REPLACE_ME` and TikTok posts are **skipped, not errored** — so the engine can ship TikTok content the moment you connect TikTok in Postiz and add this secret. |
    | `YOUTUBE_LAYER8_CHANNEL_ID` | **Required to publish layer8culture YouTube Shorts.** The Postiz integration ID for the layer8culture YouTube channel. Unset -> those Shorts are **skipped, not errored**. (Distinct from `YT_CHANNEL_ID`, the RSS channel id used by `fetch_youtube.py`.) |
    | `YOUTUBE_LOFI_CHANNEL_ID` | **Required to publish lofi YouTube Shorts.** The Postiz integration ID for the Layer8Culture Radio YouTube channel. Unset -> those Shorts are skipped, not errored. |
+   | `DEALLAB_IG_CHANNEL_ID` | **Required to publish The Real Estate Deal Lab Instagram posts.** Unset -> client posts are skipped, not errored. |
    | `IG_USER_ID` | Instagram **Business** account user id (for the insights loop) |
    | `IG_GRAPH_TOKEN` | Long-lived Instagram Graph API token with `instagram_basic`, `instagram_manage_insights`, `pages_read_engagement` (reuses your Meta app) |
    | `REPORT_WEBHOOK` | Discord/Slack webhook for the daily report (optional) |
@@ -115,6 +121,7 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
 | Friday morning (automatic) | Weekly steering refresh scans the newest transcript, AI news, analytics coverage and virality notes, then updates `calendar/topics.md` + `analytics/weekly-steering.md` | 0 min |
 | Nightly (automatic) | Engine opens a PR with tomorrow's layer8culture posts + visuals | 0 min |
 | Daily (automatic) | Engine opens a separate PR with Layer8Culture Radio (lofi) posts | 0 min |
+| Daily (automatic) | Engine opens a separate PR with The Real Estate Deal Lab client posts | 0 min |
 | Each morning | Review PR(s) on GitHub mobile, edit, merge | 2-5 min |
 | Each morning | Read the daily report | 1 min |
 
@@ -138,9 +145,12 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
   The "Now Live" list is auto-refreshed from the Layer8CultureRadio YouTube channel
   by `scripts/fetch_youtube.py` at the start of each lofi run (no API key — public
   RSS feed; channel `UC0AQjSCaU9ByaU90XabBbHQ`).
+- `clients/therealestatedeallab/` — isolated client brand lane for The Real Estate
+  Deal Lab: brand, voice, visual style, hashtags, topics, and generation prompt.
 - `transcripts/` — Tech Thursday transcripts (pillar content).
 - `queue/` — generated posts awaiting approval (the PR contents). layer8culture uses
-  `queue/<date>.json`; the lofi brand uses `queue/lofi-<date>.json`.
+  `queue/<date>.json`; the lofi brand uses `queue/lofi-<date>.json`; Deal Lab
+  uses `queue/deallab-<date>.json`.
 - `posted/` — archive of published posts (feeds the report + dedupe).
 - `analytics/` — Instagram Insights and coverage pulled back in (`insights.json`,
   `followers.json`, `coverage.json`, `insights-digest.md`,
@@ -154,6 +164,7 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
   `post_to_postiz.py` publishing, `list_postiz_channels.py` channel-ID lookup,
   `fetch_youtube.py` YouTube→"Now Live" refresh, `fetch_insights.py` analytics) +
   generation prompts (`generation-prompt.md` for layer8culture,
-  `generation-prompt-lofi.md` for the lofi brand).
+  `generation-prompt-lofi.md` for the lofi brand, and
+  `clients/therealestatedeallab/generation-prompt.md` for the client lane).
   `.github/workflows/` — the schedule (generate, generate-lofi, publish, analytics,
   daily-report).

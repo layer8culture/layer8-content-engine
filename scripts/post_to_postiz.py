@@ -26,6 +26,8 @@ TikTok account; fills its INTEGRATIONS placeholder (unset -> TikTok posts skippe
 Optional env: YOUTUBE_LAYER8_CHANNEL_ID / YOUTUBE_LOFI_CHANNEL_ID — the Postiz
 channel IDs for each brand's YouTube channel; fill their INTEGRATIONS placeholders
 (unset -> that brand's YouTube Shorts are skipped, not errored).
+Optional env: DEALLAB_IG_CHANNEL_ID — the Postiz channel ID for The Real Estate
+Deal Lab Instagram account. Unset -> Deal Lab posts are skipped, not errored.
 Note: integration IDs map your accounts/platforms to Postiz channels.
 Fill INTEGRATIONS after connecting your accounts in the Postiz UI
 (Settings -> API shows channel IDs).
@@ -34,6 +36,7 @@ import json
 import os
 import sys
 import pathlib
+import time
 import requests
 
 
@@ -67,6 +70,7 @@ INTEGRATIONS = {
     ("lofi", "x"): "REPLACE_ME",
     ("lofi", "tiktok"): "REPLACE_ME",
     ("lofi", "youtube"): "REPLACE_ME",
+    ("deallab", "instagram"): "REPLACE_ME",
 }
 
 # The lofi (Layer8CultureRadio) Instagram channel is wired above with its Postiz
@@ -95,6 +99,12 @@ _yt_lofi = os.environ.get("YOUTUBE_LOFI_CHANNEL_ID")
 if _yt_lofi:
     INTEGRATIONS[("lofi", "youtube")] = _yt_lofi
 
+# The Real Estate Deal Lab is a client brand and must stay isolated from the
+# Layer8Culture accounts. Its Postiz channel ID is supplied only via secret.
+_deallab_ig = os.environ.get("DEALLAB_IG_CHANNEL_ID")
+if _deallab_ig:
+    INTEGRATIONS[("deallab", "instagram")] = _deallab_ig
+
 VIDEO_EXTS = (".mp4", ".mov")
 
 # Per-platform base post settings required by the Postiz API. For Instagram the
@@ -115,7 +125,8 @@ VIDEO_EXTS = (".mp4", ".mov")
 # "tiktok_settings"). NOTE 1: TikTok pulls the video via PULL_FROM_URL, so the Postiz
 # media domain must be verified as a URL property in the TikTok dev portal or posts fail
 # with url_ownership_unverified. NOTE 2: TikTok caps inbox uploads at 5 PENDING drafts
-# per 24h, so the generator keeps TikTok masters at <=5/day (scripts/generation-prompt.md).
+# per 24h, so the generator keeps TikTok masters at <=5/day (scripts/generation-prompt.md)
+# and main() enforces the same cap as a safety net (see TIKTOK_INBOX_CAP below).
 PLATFORM_SETTINGS = {
     "instagram": {"post_type": "post"},  # base; story/reel adjust this below
     "tiktok": {
@@ -130,6 +141,14 @@ PLATFORM_SETTINGS = {
         "content_posting_method": "UPLOAD",  # -> TikTok inbox as a DRAFT (publish by hand)
     },
 }
+
+# TikTok caps its Drafts inbox at 5 PENDING uploads per 24h; a 6th UPLOAD is rejected
+# (spam_risk_too_many_pending_share) and silently never reaches Drafts. The generator is
+# meant to keep TikTok masters at <=5/day, but as a safety net we also enforce the cap
+# here: only the first 5 inbox-bound TikTok posts in a run are scheduled, the rest are
+# skipped (not errored). DIRECT_POST TikTok posts (post-audit) publish directly and do
+# NOT accumulate as pending drafts, so they are exempt.
+TIKTOK_INBOX_CAP = 5
 
 # YouTube uploads must carry a non-empty title (2-100 chars). We request type
 # "public"; an unverified Google app forces every upload to PRIVATE regardless, so
@@ -221,6 +240,18 @@ def platform_settings(post: dict, fmt: str) -> dict:
     return settings
 
 
+def is_tiktok_inbox_post(post: dict) -> bool:
+    """True if the post is a TikTok upload that lands in the Drafts inbox.
+
+    Only these count toward TikTok's 5-pending-drafts/24h cap. DIRECT_POST TikTok
+    posts (used once the app is audited) publish directly and are exempt.
+    """
+    if post.get("platform") != "tiktok":
+        return False
+    settings = platform_settings(post, post.get("format", "single"))
+    return settings.get("content_posting_method", "UPLOAD") == "UPLOAD"
+
+
 def upload_media(filepath: str) -> dict:
     with open(filepath, "rb") as f:
         r = requests.post(
@@ -276,6 +307,51 @@ def build_caption(post: dict) -> tuple[str, str | None]:
     elif hashtags:
         caption += "\n\n" + tag_line
     return caption, (first_comment or None)
+
+
+def load_log(log_path: pathlib.Path) -> list[dict]:
+    if not log_path.exists():
+        return []
+    payload = json.loads(log_path.read_text())
+    return payload if isinstance(payload, list) else []
+
+
+def scheduled_post_ids(log: list[dict]) -> set[str]:
+    return {
+        str(record.get("id"))
+        for record in log
+        if isinstance(record, dict) and record.get("id") and record.get("scheduled") is True
+    }
+
+
+def append_new_log_records(log: list[dict], results: list[dict]) -> list[dict]:
+    """Append results without duplicating post IDs already present in the log."""
+    seen = {str(record.get("id")) for record in log if isinstance(record, dict) and record.get("id")}
+    for result in results:
+        post_id = str(result.get("id") or "")
+        if not post_id:
+            log.append(result)
+            continue
+        if post_id in seen:
+            print(f"  ! {post_id}: already present in posted/log.json, not appending duplicate")
+            continue
+        log.append(result)
+        seen.add(post_id)
+    return log
+
+
+def archive_queue_file(qpath: pathlib.Path, posted_dir: pathlib.Path) -> pathlib.Path:
+    """Move queue file to posted/, avoiding same-name archive collisions."""
+    target = posted_dir / qpath.name
+    if not target.exists():
+        qpath.rename(target)
+        return target
+
+    run_id = os.environ.get("GITHUB_RUN_ID") or str(int(time.time()))
+    target = posted_dir / f"{qpath.stem}-run-{run_id}{qpath.suffix}"
+    qpath.rename(target)
+    print(f"  ! archive {posted_dir / qpath.name} already exists; moved queue to {target}")
+    return target
 
 
 def schedule(post: dict) -> bool:
@@ -340,15 +416,40 @@ def schedule(post: dict) -> bool:
 def main(queue_file: str) -> None:
     qpath = pathlib.Path(queue_file)
     posts = json.loads(qpath.read_text())
-    results = [{**p, "scheduled": schedule(p)} for p in posts]
-
     posted_dir = pathlib.Path("posted")
     posted_dir.mkdir(exist_ok=True)
     log_path = posted_dir / "log.json"
-    log = json.loads(log_path.read_text()) if log_path.exists() else []
-    log.extend(results)
+    log = load_log(log_path)
+    already_scheduled = scheduled_post_ids(log)
+
+    # Enforce TikTok's 5-pending-drafts/24h inbox cap: schedule only the first
+    # TIKTOK_INBOX_CAP inbox-bound TikTok posts; skip the rest so they aren't
+    # rejected by TikTok as spam. Order follows the queue file (time-spread by the
+    # generator). Non-TikTok and DIRECT_POST posts are unaffected.
+    results = []
+    tiktok_inbox_seen = 0
+    seen_post_ids = set(already_scheduled)
+    for p in posts:
+        post_id = str(p.get("id") or "")
+        if post_id and post_id in seen_post_ids:
+            print(f"  ! {post_id}: already seen as scheduled, skipping Postiz")
+            results.append({**p, "scheduled": False, "skip_reason": "duplicate_post_id"})
+            continue
+        if post_id:
+            seen_post_ids.add(post_id)
+        if is_tiktok_inbox_post(p):
+            tiktok_inbox_seen += 1
+            if tiktok_inbox_seen > TIKTOK_INBOX_CAP:
+                print(f"  ! TikTok inbox cap ({TIKTOK_INBOX_CAP} pending/24h) reached, "
+                      f"skipping {p['id']} (a 6th+ upload is rejected as "
+                      f"spam_risk_too_many_pending_share)")
+                results.append({**p, "scheduled": False, "skip_reason": "tiktok_inbox_cap"})
+                continue
+        results.append({**p, "scheduled": schedule(p)})
+
+    log = append_new_log_records(log, results)
     log_path.write_text(json.dumps(log, indent=2))
-    qpath.rename(posted_dir / qpath.name)
+    archive_queue_file(qpath, posted_dir)
     print(f"Done: {sum(p['scheduled'] for p in results)}/{len(results)} scheduled.")
 
 if __name__ == "__main__":
