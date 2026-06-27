@@ -26,7 +26,7 @@ Afrofuturistic LoFi stream.
   reel_gen.py (visual.reel.overlay_beats, timed 0-2 / 2-7 / 7-10), hooks STEPPS-scored.
   Sora output stays clean (no Sora-rendered text). lofi video does NOT use the viral format.
 
-## Two pipelines (keep them separate)
+## Three pipelines (keep them separate)
 - **layer8culture** (nightly, generate-content.yml): 4-5 VIRAL short-form videos/day
   (brand/viral-formats.md) + Instagram carousels/stories; prompt scripts/generation-prompt.md;
   queue/<date>.json; steered by calendar/topics.md. Each viral video MASTER is platform
@@ -38,18 +38,26 @@ Afrofuturistic LoFi stream.
   resolve from the TIKTOK_CHANNEL_ID / YOUTUBE_LAYER8_CHANNEL_ID secrets (unset -> those
   posts skipped, not errored). YouTube uploads land PRIVATE until the Google app is
   verified (flip in Studio).
-- **lofi / Layer8Culture Radio** (Mon/Wed/Fri, generate-lofi.yml): evergreen
-  focus-music content + conditional "Now Live" video promos; prompt
+- **lofi / Layer8Culture Radio** (daily, generate-lofi.yml): evergreen
+  focus-music content + 24/7 livestream promos; prompt
   scripts/generation-prompt-lofi.md; queue/lofi-<date>.json; steered by
   calendar/topics-lofi.md. account is "lofi"; posts are platform "instagram" plus, when a
   run has a loop-reel, ONE platform "youtube" Short cross-posting it (resolves from
   YOUTUBE_LOFI_CHANNEL_ID; lofi TikTok stays paused/provisioning-only). Posts have
   no composited wordmark; brand identity comes from scene design and headline type.
   Its Postiz IG channel resolves from the LOFI_IG_CHANNEL_ID secret.
+- **therealestatedeallab / The Real Estate Deal Lab** (daily, generate-deallab.yml):
+  isolated client brand lane for premium real estate deal education. Prompt and brand
+  files live under clients/therealestatedeallab/. Queue files are
+  queue/deallab-<date>.json. account is "deallab"; initial platform is Instagram only.
+  Its Postiz channel resolves from DEALLAB_IG_CHANNEL_ID (unset -> skipped, not errored).
+  Never mix Layer8Culture or Layer8Culture Radio voice, visuals, hashtags, or topics into
+  this client lane.
 
 ## Repo conventions
 - Generated posts go in queue/ — layer8culture as YYYY-MM-DD.json, lofi as
-  lofi-YYYY-MM-DD.json (schema in the matching generation prompt). Each post has a
+  lofi-YYYY-MM-DD.json, Deal Lab as deallab-YYYY-MM-DD.json (schema in the
+  matching generation prompt). Each post has a
   "format": single | carousel | reel | story. Published posts archive to posted/.
   publish.yml globs all queue/*.json on merge, so both prefixes publish automatically.
 - Media outputs land in assets/generated/, named by post ID: <id>.png (single/
@@ -58,9 +66,10 @@ Afrofuturistic LoFi stream.
   Python dep); it animates the still from openai_gen.py.
 - The approval PR body is an auto-built visual preview (image(s) + exact caption +
   hashtags + schedule per post), produced by scripts/build_pr_preview.py and wired
-  into generate-content.yml and generate-lofi.yml (gh pr create --body-file; the lofi
-  run passes --brand "Layer8CultureRadio" for the title). It is stdlib-only and embeds
-  images by the pushed commit SHA via raw.githubusercontent.com (needs a public repo).
+  into generate-content.yml, generate-lofi.yml, and generate-deallab.yml (gh pr
+  create --body-file; client/lofi runs pass a brand label for the title). It is
+  stdlib-only and embeds images by the pushed commit SHA via raw.githubusercontent.com
+  (needs a public repo).
   queue/<...>.summary.md is the short intro narrative shown above the per-post preview.
 - Performance data lives in analytics/ (insights.json, followers.json,
   insights-digest.md), produced by scripts/fetch_insights.py from Instagram

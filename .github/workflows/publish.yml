@@ -26,6 +26,7 @@ jobs:
           TIKTOK_CHANNEL_ID: ${{ secrets.TIKTOK_CHANNEL_ID }}
           YOUTUBE_LAYER8_CHANNEL_ID: ${{ secrets.YOUTUBE_LAYER8_CHANNEL_ID }}
           YOUTUBE_LOFI_CHANNEL_ID: ${{ secrets.YOUTUBE_LOFI_CHANNEL_ID }}
+          DEALLAB_IG_CHANNEL_ID: ${{ secrets.DEALLAB_IG_CHANNEL_ID }}
         run: |
           pip install requests
           shopt -s nullglob
