@@ -17,8 +17,8 @@ prompt) by the generation step before this script runs.
 
 After each image renders, the script composites branded typography onto it
 (infographic / title-card style): a Space Grotesk headline + optional Inter
-supporting line from the post's visual.headline / visual.subtext fields, plus
-the Layer8Culture wordmark. The image models are prompted NOT to render text
+supporting line from the post's visual.headline / visual.subtext fields. The
+image models are prompted NOT to render text
 (theirs is garbled), so all on-image type is laid down here with bundled fonts
 under assets/fonts/.
 
@@ -65,7 +65,7 @@ DEFAULT_SIZE = "1024x1024"
 
 # 2K master: gpt-image-2 caps natively at a 1536px long edge, so we LANCZOS-
 # upscale each rendered still to IMAGE_LONG_EDGE (default 2048) *before*
-# compositing brand type/wordmark, keeping typography crisp at full resolution.
+# compositing brand type, keeping typography crisp at full resolution.
 # Aspect ratio is preserved. Disable with OPENAI_IMAGE_2K=0 (empty/unset = on).
 IMAGE_2K = os.environ.get("OPENAI_IMAGE_2K", "1").strip().lower() not in (
     "0", "false", "no", "off")
@@ -116,33 +116,28 @@ def _make_image_client():
 
 
 # --- Branding composite -----------------------------------------------------
-# After each image is generated, overlay the official Layer8Culture wordmark so
-# branding is consistent and crisp (the models are prompted NOT to render text;
-# see brand/visual-style.md). The overlay is skipped silently if the wordmark
-# asset is missing, so generation never depends on it.
+# After each image is generated, the engine composites brand typography. The
+# image models are prompted NOT to render text; see brand/visual-style.md.
+# Wordmark compositing is disabled by default per current brand direction.
 WORDMARK_PATH = pathlib.Path("assets/library/layer8-wordmark.png")
 # Wordmark width as a fraction of the base image width, tuned per aspect ratio
 # (taller/narrower formats get a slightly larger mark for legibility).
 LOGO_WIDTH_FRAC = {"1:1": 0.26, "9:16": 0.40, "16:9": 0.20}
 LOGO_MARGIN_FRAC = 0.04  # margin from the edges, as a fraction of base width
 DEFAULT_LOGO_POSITION = "top-right"
-# Per-account default wordmark placement. A post can still override with
-# visual.logo_position; this only sets the fallback when none is given.
+# Per-account default wordmark placement. Kept for backwards-compatible queue
+# parsing, but no wordmark asset is applied while ACCOUNT_WORDMARK maps to None.
 ACCOUNT_LOGO_POSITION = {
     "layer8culture": "top-right",
     "lofi": "top-right",
 }
-# Per-account wordmark asset. ``None`` means no wordmark is composited for that
-# account (e.g. the lofi brand, Layer8CultureRadio, uses its own "8 soundwave"
-# mark — drop its PNG here and point this at it when ready). Accounts not listed
-# fall back to the main Layer8Culture wordmark.
+# Per-account wordmark asset. None means no wordmark is composited for that
+# account. Accounts not listed also skip the wordmark.
 ACCOUNT_WORDMARK = {
-    "layer8culture": WORDMARK_PATH,
+    "layer8culture": None,
     "lofi": None,
 }
-# Wordmark opacity (0.0 transparent .. 1.0 opaque). Posts may override with
-# visual.logo_opacity, or set the boolean visual.logo_subtle flag to apply the
-# subtle preset for an understated, watermark-style mark.
+# Wordmark opacity support is retained only for backwards-compatible queue parsing.
 DEFAULT_LOGO_OPACITY = 1.0
 SUBTLE_LOGO_OPACITY = 0.55
 
@@ -380,8 +375,8 @@ def _upscale_to_2k(path: pathlib.Path) -> None:
 
 def _render_image(client, model: str, image_id: str, visual: dict,
                   account: str | None, out_dir: pathlib.Path) -> str | None:
-    """Render one OpenAI image for ``visual``, composite the branded headline
-    typography + wordmark, and return the written path (or None on API failure).
+    """Render one OpenAI image for ``visual``, composite branded typography,
+    and return the written path (or None on API failure).
 
     Shared by every format: single posts, story frames, reel base stills, and each
     individual carousel slide. ``image_id`` becomes the output filename stem, so
@@ -446,8 +441,8 @@ def _render_image(client, model: str, image_id: str, visual: dict,
 
         out_path.write_bytes(image_bytes)
 
-        # Upscale to a 2K master before laying brand type so typography + wordmark
-        # are composited at full resolution (gpt-image-2 caps at 1536px natively).
+        # Upscale to a 2K master before laying brand type so typography is
+        # composited at full resolution (gpt-image-2 caps at 1536px natively).
         try:
             _upscale_to_2k(out_path)
         except Exception as e:  # noqa: BLE001 - never lose a good image over upscale
@@ -475,10 +470,10 @@ def _render_image(client, model: str, image_id: str, visual: dict,
             except Exception as e:  # noqa: BLE001 - never lose a good image over text
                 print(f"  ! {image_id}: headline overlay skipped ({e})")
 
-        # Overlay the official wordmark (models are prompted not to render text).
-        # Resolved per account: an account mapped to None (e.g. lofi) is skipped.
+        # Wordmark overlay is disabled by default. Backwards-compatible logo fields
+        # are parsed but ignored while ACCOUNT_WORDMARK maps accounts to None.
         try:
-            wordmark_path = ACCOUNT_WORDMARK.get(account, WORDMARK_PATH)
+            wordmark_path = ACCOUNT_WORDMARK.get(account)
             position = visual.get(
                 "logo_position",
                 ACCOUNT_LOGO_POSITION.get(account, DEFAULT_LOGO_POSITION),
@@ -498,8 +493,7 @@ def _render_image(client, model: str, image_id: str, visual: dict,
                 print(f"  > {image_id}: wordmark composited "
                       f"(position={position}, opacity={opacity:.2f})")
             elif wordmark_path is None:
-                print(f"  > {image_id}: no wordmark for account "
-                      f"'{account}', skipped overlay")
+                print(f"  > {image_id}: no wordmark configured, skipped overlay")
             else:
                 print(f"  > {image_id}: wordmark asset missing, "
                       f"no overlay (would use position={position}, "

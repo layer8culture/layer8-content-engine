@@ -43,9 +43,9 @@ Afrofuturistic LoFi stream.
   scripts/generation-prompt-lofi.md; queue/lofi-<date>.json; steered by
   calendar/topics-lofi.md. account is "lofi"; posts are platform "instagram" plus, when a
   run has a loop-reel, ONE platform "youtube" Short cross-posting it (resolves from
-  YOUTUBE_LOFI_CHANNEL_ID; lofi TikTok stays paused/provisioning-only). The lofi account
-  has NO composited wordmark for now (openai_gen.py ACCOUNT_WORDMARK maps lofi->None);
-  its Postiz IG channel resolves from the LOFI_IG_CHANNEL_ID secret.
+  YOUTUBE_LOFI_CHANNEL_ID; lofi TikTok stays paused/provisioning-only). Posts have
+  no composited wordmark; brand identity comes from scene design and headline type.
+  Its Postiz IG channel resolves from the LOFI_IG_CHANNEL_ID secret.
 
 ## Repo conventions
 - Generated posts go in queue/ — layer8culture as YYYY-MM-DD.json, lofi as
