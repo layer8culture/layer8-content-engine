@@ -55,6 +55,17 @@ jobs:
           fi
           echo "Confirmed $QUEUE_FILE was written ($(wc -c < "$QUEUE_FILE") bytes)."
 
+      - name: Verify summary has no internal process warnings
+        run: |
+          SUMMARY_FILE="queue/$(date -d tomorrow +%F).summary.md"
+          if [ -f "$SUMMARY_FILE" ]; then
+            if grep -Eiq 'permission issue|write access|session artifact|\\.copilot/session-state|copy that file|manual.*queue|tool name|allow-tool' "$SUMMARY_FILE"; then
+              echo "::error::$SUMMARY_FILE contains internal process or permission-warning text. Re-run generation after fixing the summary."
+              sed -n '1,80p' "$SUMMARY_FILE"
+              exit 1
+            fi
+          fi
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:

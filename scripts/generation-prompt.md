@@ -29,8 +29,9 @@ READ FIRST (in this order):
    HARD into what's working: repeat the best-performing formats, categories, hooks,
    and posting hours; avoid the lowest-reach patterns. This is the steering signal.
 6. calendar/topics.md — this week's steering input
-7. The most recent file in transcripts/ — pillar content; mine it for quotable
-   moments, tips, hooks, and Reel clip ideas
+7. The most recent file in transcripts/ — REQUIRED pillar content. Mine it for
+   quotable moments, personal story, hooks, and Reel clip ideas. At least one
+   content item in the batch must be clearly rooted in this latest transcript.
 8. posted/log.json if it exists — do NOT repeat recent angles, quotes, hooks, or
    secondary taglines used in the last 7 days
 8. For anything ambiguous, brand/brand-guidelines-v2.md is the canonical source
@@ -44,6 +45,22 @@ on-brand items to anchor the day's posts. Tie each newsy post back to the
 Layer8Culture thesis (builders over consumers; AI fluency; build in public).
 If web access is unavailable or returns nothing useful, fall back to
 calendar/topics.md plus the latest transcript — never block on the web.
+
+NEWS + TRANSCRIPT PAIRING:
+At least one post must pair a timely AI news item with a concrete proof point
+from the latest Tech Thursday transcript. Example pattern:
+"AI agents are moving from chat to workflows" + "we automated the video or lofi
+workflow live with Copilot CLI." Do not make the news abstract. Bring it back to
+what builders can actually do.
+
+VIRALITY ADJUSTMENT WHILE ANALYTICS ARE LIMITED:
+If analytics/insights-digest.md has no matched platform metrics, use repository
+signals and the competitor benchmark lens as a proxy. Prioritize:
+- short-form compression, one idea per video, no soft setup
+- social currency, a line that makes the viewer feel early or in-the-know
+- practical builder value, one concrete move or framework
+- identity transformation, consumer -> user -> builder -> developer
+- shareability, a post someone would send to another builder
 
 THEN GENERATE:
 WRITE the files to disk with the write tool — do NOT print the JSON to the chat or paste
@@ -286,6 +303,12 @@ RULES:
 - Anchor at least 1 post in the AI news you researched, and pull at least 1 post
   from a transcript moment — specifics beat generalities. Quote sparingly, paraphrase
   in brand voice.
+- The latest Tech Thursday transcript should shape the batch, not just supply a
+  backup quote. Use it for at least one viral master or carousel, and prefer a
+  second lightweight mention in a story or caption when it fits.
+- Favor transcript angles that reinforce the builder identity: not just watching
+  AI, building with it; Copilot CLI as a build partner; GitHub as a creative
+  workflow surface; Layer8Culture Radio as a live proof of orchestration.
 - Every IG image/carousel visual uses "source": "openai" with fresh, topic-specific
   imagery (the viral videos use Sora; the IG-Reel/YouTube cross-posts use "reuse" and add
   no visual). Exactly one "high" hero/day; the rest "medium". NEVER reuse library assets
@@ -312,3 +335,8 @@ a one-line note on how the day's format mix advances the weekly reach/saves/loya
 balance. You do NOT need to describe each image or caption here — the approval PR
 auto-builds a per-post visual preview (image(s) + exact caption + hashtags) from the
 queue via scripts/build_pr_preview.py.
+
+The summary is reviewer-facing content only. NEVER include internal process notes,
+tool permission warnings, write-path attempts, session artifact paths, Copilot
+debugging commentary, or instructions to copy files manually. If a write attempt
+fails but a later write succeeds, omit the earlier failure entirely.
