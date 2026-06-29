@@ -82,9 +82,9 @@
 # (the engine renders its own on-brand imagery; no YouTube footage is reposted).
 # Edit MOOD_RULES in the script or override entries by hand if needed.
 #
-  - title: Rainy Night Coding Radio | Afrofuturist Lo-Fi Focus Beats #Shorts
-    url: https://www.youtube.com/watch?v=r1OszhjCxEw
-    mood: rainy night
+  - title: Afrofuturist Sunrise Build Beats | Lo-Fi Morning Coding Radio #Shorts
+    url: https://www.youtube.com/watch?v=Y-9_HpTTT6k
+    mood: sunrise
     note: drive viewers to the full session; link in bio.
 
 ## Session focus / pillars to feature
