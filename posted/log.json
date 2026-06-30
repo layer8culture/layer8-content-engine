@@ -8848,5 +8848,101 @@
       "file": "assets/generated/20260630-lofi-instagram-4.png"
     },
     "scheduled": true
+  },
+  {
+    "id": "20260703-layer8culture-instagram-guide",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-07-03T11:00:00-04:00",
+    "text": "MCP is how AI stops guessing and starts using tools.\n\nThis week's AI field guide is about MCP Explained Without the Hype.\n\nThe carousel gives you the short version.\nThe guide gives you the practical map.\n\nComment MCP and I will send you the full AI field guide.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#BuildWithAI",
+      "#AIBuilders",
+      "#AItools",
+      "#PromptEngineering",
+      "#AIagents",
+      "#BuildInPublic"
+    ],
+    "hashtags_in_first_comment": true,
+    "comment_to_dm": {
+      "campaign": "weekly_guide_mcp_explained_without_the_hype",
+      "keyword": "MCP",
+      "offer": "MCP Field Guide",
+      "guide_url": "https://www.layer8culture.io/guides/mcp-explained-without-the-hype/",
+      "dm_prompt": "Here is the AI field guide: https://www.layer8culture.io/guides/mcp-explained-without-the-hype/ What are you trying to get better at with AI right now?",
+      "public_reply": "Sent. Check your DMs.",
+      "route": "ai_field_guide_nurture"
+    },
+    "visual": {
+      "source": "openai",
+      "aspect": "1:1",
+      "quality": "high",
+      "slides": [
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: MCP Explained Without the Hype. Slide idea: MCP WITHOUT HYPE. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "MCP WITHOUT HYPE",
+          "subtext": "AI needs tools, not just text.",
+          "accent": "MCP",
+          "role": "cover"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: MCP Explained Without the Hype. Slide idea: THE PROBLEM. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a macro detail of a workflow coming together.",
+          "headline": "THE PROBLEM",
+          "subtext": "Models guess when context is missing.",
+          "accent": "THE",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: MCP Explained Without the Hype. Slide idea: THE SHIFT. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "THE SHIFT",
+          "subtext": "Tools turn AI into a workflow surface.",
+          "accent": "THE",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: MCP Explained Without the Hype. Slide idea: WHAT MCP DOES. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a macro detail of a workflow coming together.",
+          "headline": "WHAT MCP DOES",
+          "subtext": "It gives AI a standard way to connect.",
+          "accent": "WHAT",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: MCP Explained Without the Hype. Slide idea: WHY BUILDERS CARE. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "WHY BUILDERS CARE",
+          "subtext": "Less copy-paste. More orchestration.",
+          "accent": "WHY",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: MCP Explained Without the Hype. Slide idea: START SMALL. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a macro detail of a workflow coming together.",
+          "headline": "START SMALL",
+          "subtext": "Connect one useful tool first.",
+          "accent": "START",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: MCP Explained Without the Hype. Slide idea: COMMENT MCP. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "COMMENT MCP",
+          "subtext": "Get the full field guide.",
+          "accent": "COMMENT",
+          "role": "cta"
+        }
+      ],
+      "files": [
+        "assets\\generated\\20260703-layer8culture-instagram-guide-1.png",
+        "assets\\generated\\20260703-layer8culture-instagram-guide-2.png",
+        "assets\\generated\\20260703-layer8culture-instagram-guide-3.png",
+        "assets\\generated\\20260703-layer8culture-instagram-guide-4.png",
+        "assets\\generated\\20260703-layer8culture-instagram-guide-5.png",
+        "assets\\generated\\20260703-layer8culture-instagram-guide-6.png",
+        "assets\\generated\\20260703-layer8culture-instagram-guide-7.png"
+      ],
+      "file": "assets\\generated\\20260703-layer8culture-instagram-guide-1.png"
+    },
+    "scheduled": true
   }
 ]
