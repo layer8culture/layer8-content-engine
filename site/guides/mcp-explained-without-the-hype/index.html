@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MCP Explained Without the Hype | Layer8Culture</title>
+  <meta name="description" content="A builder&#x27;s field guide to MCP, what it connects, when to use it, and how to start without overbuilding.">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="shell">
+    <nav class="nav">
+      <a class="mark" href="/">Layer8Culture</a>
+      <div>The Eighth Layer AI Field Guide</div>
+    </nav>
+    <section class="hero">
+      <div class="eyebrow">AI Field Guide</div>
+      <h1>MCP Explained Without the Hype</h1>
+      <p class="lede">MCP is how AI stops guessing and starts using tools.</p>
+      <p class="lede">A builder&#x27;s field guide to MCP, what it connects, when to use it, and how to start without overbuilding.</p>
+      <div class="meta">
+        <span class="pill">Keyword: MCP</span>
+        <span class="pill">AI Fluency Education</span>
+        <span class="pill">8 minute reference</span>
+        <span class="pill">Updated for the current MCP ecosystem</span>
+      </div>
+    </section>
+
+    <div class="mini-grid"><article class="mini-card"><h3>The plain-English version</h3><p>MCP gives AI apps a standard way to reach tools, files, data, and workflows through controlled servers.</p></article>
+<article class="mini-card"><h3>The builder move</h3><p>Do not start by connecting everything. Start with one repeated workflow and one safe tool.</p></article>
+<article class="mini-card"><h3>The risk to manage</h3><p>Tool access turns AI from drafting partner into operator. Permissions, review, and logs matter.</p></article></div>
+
+    
+    <section class="section">
+      <div class="eyebrow">Mental model</div>
+      <h2>The model asks. The client brokers. The server exposes capabilities.</h2>
+      <p>MCP is an open protocol for connecting AI hosts to servers that expose capabilities. The point is not magic. The point is a shared contract, so builders do not need custom glue code for every app, tool, and data source.</p>
+      
+      <ul><li>Host: the AI app or agent experience where the user works.</li>
+<li>Client: the protocol-speaking connector inside that host.</li>
+<li>Server: the service that exposes capabilities over MCP.</li>
+<li>Capability: a tool, resource, or prompt the assistant can discover and use.</li></ul>
+      
+    </section>
+
+    <section class="section">
+      <div class="eyebrow">Building blocks</div>
+      <h2>Tools, resources, and prompts are the core pieces.</h2>
+      <p>A useful MCP setup is not magic. It is a small menu of capabilities the assistant can call when the workflow needs them.</p>
+      <div class="mini-grid"><article class="mini-card"><h3>Tool</h3><p>An action with defined inputs and outputs, like search issues, query a database, create a branch, or open a browser page.</p></article>
+<article class="mini-card"><h3>Resource</h3><p>Readable context, like a file, schema, document, ticket, or knowledge base entry.</p></article>
+<article class="mini-card"><h3>Prompt</h3><p>A reusable instruction pattern, like summarize this repo, draft a release note, or analyze this issue queue.</p></article></div>
+      <ul><li>If the model needs to do something, think tool.</li>
+<li>If the model needs to read something, think resource.</li>
+<li>If the team needs a repeatable instruction pattern, think prompt.</li></ul>
+      
+    </section>
+
+    <section class="section">
+      <div class="eyebrow">Decision rule</div>
+      <h2>Use MCP when the workflow repeats.</h2>
+      <p>If you only need one answer, chat may be enough. If the assistant repeatedly needs the same tool, file, API, or system of record, MCP starts to make sense.</p>
+      
+      <ul><li>Good fit: repeated work with clear inputs and outputs.</li>
+<li>Good fit: read-only access to context the assistant needs often.</li>
+<li>Good fit: team workflows where the same tool connection can be reused.</li>
+<li>Bad fit: one-off tasks, unclear data boundaries, or sensitive writes without approval.</li></ul>
+      
+    </section>
+
+    <section class="section">
+      <div class="eyebrow">Builder checklist</div>
+      <h2>Start with one safe integration.</h2>
+      <p>The first win is not a giant agent stack. The first win is a narrow capability that removes repeated copy-paste and still gives humans control.</p>
+      
+      
+      <ul class="checklist"><li>Name one workflow you repeat every week.</li>
+<li>Write the outcome in one sentence.</li>
+<li>List the minimum context the assistant needs.</li>
+<li>Define the exact jobs the server should support.</li>
+<li>Start with the minimum set of tools and resources.</li>
+<li>Write tight input schemas and predictable outputs.</li>
+<li>Choose read-only access first.</li>
+<li>Decide transport and authentication before rollout.</li>
+<li>Add a human review point before any write action.</li>
+<li>Log what the tool did and what it touched.</li>
+<li>Test with an inspector or low-risk workflow before broader use.</li></ul>
+    </section>
+
+    <section class="section">
+      <div class="eyebrow">Trust layer</div>
+      <h2>MCP makes permissions a product decision.</h2>
+      <p>Once an assistant can use tools, security stops being an afterthought. The safest MCP workflow is scoped, inspectable, and easy to turn off.</p>
+      
+      <ul><li>Use authentication for every sensitive endpoint.</li>
+<li>Authorize per tool and per resource, not only per server.</li>
+<li>Use least privilege credentials.</li>
+<li>Add explicit allowlists for dangerous actions.</li>
+<li>Keep secrets out of prompts and generated content.</li>
+<li>Prefer read-only until the workflow proves value.</li>
+<li>Require approval before writes, deletes, payments, or messages.</li>
+<li>Use rate limits, timeouts, and clear failure behavior.</li>
+<li>Keep logs so a human can understand what happened.</li></ul>
+      
+    </section>
+    
+    <section class="section prompt-block">
+      <div class="eyebrow">Starter prompt</div>
+      <h2>Use this to plan your first workflow</h2>
+      <p>I want to design one safe MCP workflow. Ask me for the workflow, the tool or data source, the minimum context needed, the action the assistant should take, the risk level, the approval point, and the log I should keep. Then give me a small first version that starts read-only.</p>
+    </section>
+    
+    <section class="section">
+      <div class="eyebrow">Glossary</div>
+      <h2>Keep these terms straight</h2>
+      <dl class="glossary"><div class="glossary-item"><dt>MCP</dt><dd>Model Context Protocol, a standard for connecting AI apps to external capabilities.</dd></div>
+<div class="glossary-item"><dt>Host</dt><dd>The AI app or agent environment where the user works.</dd></div>
+<div class="glossary-item"><dt>Client</dt><dd>The protocol layer that connects the host to MCP servers.</dd></div>
+<div class="glossary-item"><dt>Server</dt><dd>The service that exposes tools, resources, or prompts.</dd></div>
+<div class="glossary-item"><dt>Tool</dt><dd>A callable action the assistant can use.</dd></div>
+<div class="glossary-item"><dt>Resource</dt><dd>Context the assistant can read.</dd></div>
+<div class="glossary-item"><dt>Prompt</dt><dd>A reusable workflow instruction.</dd></div>
+<div class="glossary-item"><dt>Transport</dt><dd>How the client and server communicate, often local stdio or remote HTTP.</dd></div>
+<div class="glossary-item"><dt>Scope</dt><dd>The boundary around what the assistant can access or do.</dd></div></dl>
+    </section>
+    
+    <section class="section">
+      <div class="eyebrow">GitHub repo patterns</div>
+      <h2>Repos worth studying</h2>
+      <div class="repo-grid"><article class="repo-card"><a href="https://github.com/modelcontextprotocol/servers">modelcontextprotocol/servers</a><div class="repo-meta">87,889 stars | TypeScript</div><p>Reference servers show the core patterns and also warn that examples are not production-ready by default.</p></article>
+<article class="repo-card"><a href="https://github.com/modelcontextprotocol/typescript-sdk">modelcontextprotocol/typescript-sdk</a><div class="repo-meta">12,763 stars | TypeScript</div><p>The TypeScript SDK is useful for understanding the server and client primitives in a common web stack.</p></article>
+<article class="repo-card"><a href="https://github.com/modelcontextprotocol/python-sdk">modelcontextprotocol/python-sdk</a><div class="repo-meta">23,490 stars | Python</div><p>The Python SDK is useful for data, automation, and scripting workflows.</p></article>
+<article class="repo-card"><a href="https://github.com/github/github-mcp-server">github/github-mcp-server</a><div class="repo-meta">31,087 stars | Go</div><p>GitHub&#x27;s server shows how issues, pull requests, files, and reviews become an AI-accessible workflow surface.</p></article>
+<article class="repo-card"><a href="https://github.com/modelcontextprotocol/inspector">modelcontextprotocol/inspector</a><div class="repo-meta">10,228 stars | TypeScript</div><p>Inspector-style tooling reminds builders to test the server before putting it inside real work.</p></article></div>
+    </section>
+
+    <section class="section sources">
+      <div class="eyebrow">Sources</div>
+      <h2>Read next</h2>
+      <div class="source-grid"><article class="source-card"><a href="https://modelcontextprotocol.io/docs/getting-started/intro">Model Context Protocol Docs</a><p>Use the official docs for the core mental model, host, client, server, tools, resources, and prompts.</p></article>
+<article class="source-card"><a href="https://modelcontextprotocol.io/examples">MCP Example Servers</a><p>Use examples to see how different servers expose real capabilities, then decide what belongs in your own workflow.</p></article>
+<article class="source-card"><a href="https://github.com/modelcontextprotocol/servers">modelcontextprotocol/servers</a><p>Reference servers are useful for learning patterns, but the repo warns that examples are not production-ready by default.</p></article>
+<article class="source-card"><a href="https://github.com/github/github-mcp-server">GitHub MCP Server</a><p>A practical example of turning issues, pull requests, files, and reviews into an AI-accessible workflow surface.</p></article></div>
+    </section>
+
+    <section class="cta">
+      <div class="eyebrow">Layer8Culture</div>
+      <h2>Technology has seven layers. We're the eighth.</h2>
+      <p>Follow Layer8Culture for practical AI fluency, creator systems, and build-in-public experiments.</p>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="shell">Layer8Culture</div>
+  </footer>
+</body>
+</html>
