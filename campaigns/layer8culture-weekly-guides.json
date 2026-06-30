@@ -1,0 +1,284 @@
+{
+  "series": {
+    "name": "The Eighth Layer AI Field Guide",
+    "account": "layer8culture",
+    "platform": "instagram",
+    "format": "carousel",
+    "cadence": "weekly",
+    "default_public_reply": "Sent. Check your DMs.",
+    "default_route": "ai_field_guide_nurture"
+  },
+  "campaigns": [
+    {
+      "slug": "mcp-explained-without-the-hype",
+      "title": "MCP Explained Without the Hype",
+      "category": "AI Fluency Education",
+      "keyword": "MCP",
+      "offer": "MCP Field Guide",
+      "hook": "MCP is how AI stops guessing and starts using tools.",
+      "guide_promise": "A plain-English guide to Model Context Protocol, why it matters, and how builders should think about tool-connected AI.",
+      "angle": "Explain MCP as a practical bridge between models, tools, data, and workflows.",
+      "slides": [
+        ["MCP WITHOUT HYPE", "AI needs tools, not just text."],
+        ["THE PROBLEM", "Models guess when context is missing."],
+        ["THE SHIFT", "Tools turn AI into a workflow surface."],
+        ["WHAT MCP DOES", "It gives AI a standard way to connect."],
+        ["WHY BUILDERS CARE", "Less copy-paste. More orchestration."],
+        ["START SMALL", "Connect one useful tool first."],
+        ["COMMENT MCP", "Get the full field guide."]
+      ],
+      "guide": {
+        "read_time": "8 minute reference",
+        "updated_label": "Updated for the current MCP ecosystem",
+        "hero_promise": "A builder's field guide to MCP, what it connects, when to use it, and how to start without overbuilding.",
+        "summary_cards": [
+          {
+            "label": "The plain-English version",
+            "text": "MCP gives AI apps a standard way to reach tools, files, data, and workflows through controlled servers."
+          },
+          {
+            "label": "The builder move",
+            "text": "Do not start by connecting everything. Start with one repeated workflow and one safe tool."
+          },
+          {
+            "label": "The risk to manage",
+            "text": "Tool access turns AI from drafting partner into operator. Permissions, review, and logs matter."
+          }
+        ],
+        "sections": [
+          {
+            "eyebrow": "Mental model",
+            "heading": "The model asks. The client brokers. The server exposes capabilities.",
+            "body": "MCP is an open protocol for connecting AI hosts to servers that expose capabilities. The point is not magic. The point is a shared contract, so builders do not need custom glue code for every app, tool, and data source.",
+            "bullets": [
+              "Host: the AI app or agent experience where the user works.",
+              "Client: the protocol-speaking connector inside that host.",
+              "Server: the service that exposes capabilities over MCP.",
+              "Capability: a tool, resource, or prompt the assistant can discover and use."
+            ]
+          },
+          {
+            "eyebrow": "Building blocks",
+            "heading": "Tools, resources, and prompts are the core pieces.",
+            "body": "A useful MCP setup is not magic. It is a small menu of capabilities the assistant can call when the workflow needs them.",
+            "cards": [
+              {
+                "label": "Tool",
+                "text": "An action with defined inputs and outputs, like search issues, query a database, create a branch, or open a browser page."
+              },
+              {
+                "label": "Resource",
+                "text": "Readable context, like a file, schema, document, ticket, or knowledge base entry."
+              },
+              {
+                "label": "Prompt",
+                "text": "A reusable instruction pattern, like summarize this repo, draft a release note, or analyze this issue queue."
+              }
+            ],
+            "bullets": [
+              "If the model needs to do something, think tool.",
+              "If the model needs to read something, think resource.",
+              "If the team needs a repeatable instruction pattern, think prompt."
+            ]
+          },
+          {
+            "eyebrow": "Decision rule",
+            "heading": "Use MCP when the workflow repeats.",
+            "body": "If you only need one answer, chat may be enough. If the assistant repeatedly needs the same tool, file, API, or system of record, MCP starts to make sense.",
+            "bullets": [
+              "Good fit: repeated work with clear inputs and outputs.",
+              "Good fit: read-only access to context the assistant needs often.",
+              "Good fit: team workflows where the same tool connection can be reused.",
+              "Bad fit: one-off tasks, unclear data boundaries, or sensitive writes without approval."
+            ]
+          },
+          {
+            "eyebrow": "Builder checklist",
+            "heading": "Start with one safe integration.",
+            "body": "The first win is not a giant agent stack. The first win is a narrow capability that removes repeated copy-paste and still gives humans control.",
+            "checklist": [
+              "Name one workflow you repeat every week.",
+              "Write the outcome in one sentence.",
+              "List the minimum context the assistant needs.",
+              "Define the exact jobs the server should support.",
+              "Start with the minimum set of tools and resources.",
+              "Write tight input schemas and predictable outputs.",
+              "Choose read-only access first.",
+              "Decide transport and authentication before rollout.",
+              "Add a human review point before any write action.",
+              "Log what the tool did and what it touched.",
+              "Test with an inspector or low-risk workflow before broader use."
+            ]
+          },
+          {
+            "eyebrow": "Trust layer",
+            "heading": "MCP makes permissions a product decision.",
+            "body": "Once an assistant can use tools, security stops being an afterthought. The safest MCP workflow is scoped, inspectable, and easy to turn off.",
+            "bullets": [
+              "Use authentication for every sensitive endpoint.",
+              "Authorize per tool and per resource, not only per server.",
+              "Use least privilege credentials.",
+              "Add explicit allowlists for dangerous actions.",
+              "Keep secrets out of prompts and generated content.",
+              "Prefer read-only until the workflow proves value.",
+              "Require approval before writes, deletes, payments, or messages.",
+              "Use rate limits, timeouts, and clear failure behavior.",
+              "Keep logs so a human can understand what happened."
+            ]
+          }
+        ],
+        "starter_prompt": "I want to design one safe MCP workflow. Ask me for the workflow, the tool or data source, the minimum context needed, the action the assistant should take, the risk level, the approval point, and the log I should keep. Then give me a small first version that starts read-only.",
+        "glossary": [
+          ["MCP", "Model Context Protocol, a standard for connecting AI apps to external capabilities."],
+          ["Host", "The AI app or agent environment where the user works."],
+          ["Client", "The protocol layer that connects the host to MCP servers."],
+          ["Server", "The service that exposes tools, resources, or prompts."],
+          ["Tool", "A callable action the assistant can use."],
+          ["Resource", "Context the assistant can read."],
+          ["Prompt", "A reusable workflow instruction."],
+          ["Transport", "How the client and server communicate, often local stdio or remote HTTP."],
+          ["Scope", "The boundary around what the assistant can access or do."]
+        ],
+        "repo_reading_list": [
+          {
+            "repo": "modelcontextprotocol/servers",
+            "why": "Reference servers show the core patterns and also warn that examples are not production-ready by default."
+          },
+          {
+            "repo": "modelcontextprotocol/typescript-sdk",
+            "why": "The TypeScript SDK is useful for understanding the server and client primitives in a common web stack."
+          },
+          {
+            "repo": "modelcontextprotocol/python-sdk",
+            "why": "The Python SDK is useful for data, automation, and scripting workflows."
+          },
+          {
+            "repo": "github/github-mcp-server",
+            "why": "GitHub's server shows how issues, pull requests, files, and reviews become an AI-accessible workflow surface."
+          },
+          {
+            "repo": "modelcontextprotocol/inspector",
+            "why": "Inspector-style tooling reminds builders to test the server before putting it inside real work."
+          }
+        ],
+        "source_notes": [
+          {
+            "name": "Model Context Protocol Docs",
+            "url": "https://modelcontextprotocol.io/docs/getting-started/intro",
+            "note": "Use the official docs for the core mental model, host, client, server, tools, resources, and prompts."
+          },
+          {
+            "name": "MCP Example Servers",
+            "url": "https://modelcontextprotocol.io/examples",
+            "note": "Use examples to see how different servers expose real capabilities, then decide what belongs in your own workflow."
+          },
+          {
+            "name": "modelcontextprotocol/servers",
+            "url": "https://github.com/modelcontextprotocol/servers",
+            "note": "Reference servers are useful for learning patterns, but the repo warns that examples are not production-ready by default."
+          },
+          {
+            "name": "GitHub MCP Server",
+            "url": "https://github.com/github/github-mcp-server",
+            "note": "A practical example of turning issues, pull requests, files, and reviews into an AI-accessible workflow surface."
+          }
+        ]
+      }
+    },
+    {
+      "slug": "five-ai-skills-beyond-prompting",
+      "title": "5 AI Skills That Make You More Than a Prompt User",
+      "category": "AI Fluency Education",
+      "keyword": "SKILLS",
+      "offer": "AI Skills Field Guide",
+      "hook": "Using AI is not the skill. Knowing what to ask is.",
+      "guide_promise": "A practical AI fluency ladder for moving from consumer to operator.",
+      "angle": "Teach durable AI skills: context, decomposition, tool choice, review, and workflow design.",
+      "slides": [
+        ["AI SKILLS", "Prompting is only the beginning."],
+        ["1. CONTEXT", "Tell the model what matters."],
+        ["2. DECOMPOSE", "Break work into smaller moves."],
+        ["3. CHOOSE TOOLS", "Chat is not always the answer."],
+        ["4. REVIEW", "Trust needs verification."],
+        ["5. WORKFLOW", "Repeatable beats clever."],
+        ["COMMENT SKILLS", "Get the full field guide."]
+      ]
+    },
+    {
+      "slug": "ai-tool-stack-for-builders",
+      "title": "The AI Tool Stack for Builders Who Actually Ship",
+      "category": "AI Tool Experiments",
+      "keyword": "TOOLS",
+      "offer": "AI Tool Stack Guide",
+      "hook": "Your AI stack is your new operating system.",
+      "guide_promise": "A guide to when to use chat, agents, MCP tools, automations, and code.",
+      "angle": "Help builders match tools to jobs instead of chasing every new app.",
+      "slides": [
+        ["AI TOOL STACK", "Do not use every tool. Use the right one."],
+        ["CHAT", "Best for thinking and drafting."],
+        ["AGENTS", "Best for multi-step work."],
+        ["MCP", "Best for tool-connected context."],
+        ["AUTOMATION", "Best for repeatable handoffs."],
+        ["CODE", "Best when reliability matters."],
+        ["COMMENT TOOLS", "Get the full field guide."]
+      ]
+    },
+    {
+      "slug": "do-this-not-that-ai-workflow",
+      "title": "Do This, Not That: AI Workflow Edition",
+      "category": "Creator Systems",
+      "keyword": "FIXES",
+      "offer": "AI Workflow Fixes Guide",
+      "hook": "Stop asking AI for answers. Start giving it a job.",
+      "guide_promise": "A practical list of common AI workflow mistakes and the better move.",
+      "angle": "Use contrast and before-after fixes to create saveable, shareable education.",
+      "slides": [
+        ["DO THIS, NOT THAT", "AI gets better when the workflow gets clearer."],
+        ["NOT: VAGUE ASK", "Do: give the job and outcome."],
+        ["NOT: ONE GIANT PROMPT", "Do: break it into steps."],
+        ["NOT: NO SOURCES", "Do: bring the context."],
+        ["NOT: BLIND TRUST", "Do: review the output."],
+        ["NOT: RESTART DAILY", "Do: save the workflow."],
+        ["COMMENT FIXES", "Get the full field guide."]
+      ]
+    },
+    {
+      "slug": "seven-prompting-habits-that-make-ai-useful",
+      "title": "7 Prompting Habits That Make AI Useful",
+      "category": "AI Fluency Education",
+      "keyword": "PROMPTS",
+      "offer": "Prompting Habits Guide",
+      "hook": "Better prompts start before you type.",
+      "guide_promise": "A field guide for context, constraints, examples, review, and iteration.",
+      "angle": "Make prompt education feel practical, mature, and workflow-centered.",
+      "slides": [
+        ["BETTER PROMPTS", "Start before you type."],
+        ["NAME THE JOB", "Tell AI what role it plays."],
+        ["GIVE CONTEXT", "Do not make it guess."],
+        ["SET CONSTRAINTS", "Shape the output."],
+        ["SHOW EXAMPLES", "Give it a pattern."],
+        ["REVIEW THE WORK", "AI is a draft partner."],
+        ["COMMENT PROMPTS", "Get the full field guide."]
+      ]
+    },
+    {
+      "slug": "ai-fluency-consumer-user-builder-operator",
+      "title": "AI Fluency: Consumer, User, Builder, Operator",
+      "category": "AI Fluency Education",
+      "keyword": "FLUENCY",
+      "offer": "AI Fluency Field Guide",
+      "hook": "Most people stop at using AI. Builders learn to operate it.",
+      "guide_promise": "A maturity model for moving from consumption to creation.",
+      "angle": "Turn the Layer8Culture builder identity thesis into a practical self-assessment.",
+      "slides": [
+        ["AI FLUENCY", "Where are you on the ladder?"],
+        ["CONSUMER", "You watch the tools change."],
+        ["USER", "You ask better questions."],
+        ["BUILDER", "You make the tool produce work."],
+        ["OPERATOR", "You design the system."],
+        ["THE MOVE", "Climb one level this week."],
+        ["COMMENT FLUENCY", "Get the full field guide."]
+      ]
+    }
+  ]
+}

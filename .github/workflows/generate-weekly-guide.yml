@@ -1,0 +1,76 @@
+name: Generate Weekly AI Field Guide
+
+on:
+  schedule:
+    - cron: "0 14 * * 2"
+  workflow_dispatch:
+    inputs:
+      campaign_index:
+        description: "Optional campaign index from campaigns/layer8culture-weekly-guides.json"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  generate-weekly-guide:
+    runs-on: ubuntu-latest
+    env:
+      TZ: America/New_York
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Research weekly guide topic
+        run: python scripts/research_weekly_guide.py
+
+      - name: Build guide and carousel queue
+        run: |
+          ARGS=""
+          if [ -n "${{ inputs.campaign_index }}" ]; then
+            ARGS="--campaign-index ${{ inputs.campaign_index }}"
+          fi
+          python scripts/build_weekly_guide.py $ARGS
+
+      - name: Generate carousel visuals
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
+          AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
+          AZURE_OPENAI_IMAGE_DEPLOYMENT: ${{ secrets.AZURE_OPENAI_IMAGE_DEPLOYMENT }}
+          AZURE_OPENAI_API_VERSION: ${{ vars.AZURE_OPENAI_API_VERSION }}
+          OPENAI_IMAGE_QUALITY: ${{ vars.OPENAI_IMAGE_QUALITY }}
+          OPENAI_IMAGE_2K: ${{ vars.OPENAI_IMAGE_2K }}
+          OPENAI_IMAGE_LONG_EDGE: ${{ vars.OPENAI_IMAGE_LONG_EDGE }}
+        run: |
+          pip install openai requests pillow
+          QUEUE_FILE=$(ls -t queue/weekly-guide-*.json | head -n 1)
+          python scripts/openai_gen.py "$QUEUE_FILE"
+
+      - name: Open approval PR
+        env:
+          GH_TOKEN: ${{ secrets.ENGINE_PR_TOKEN }}
+        run: |
+          DATE=$(date +%F)
+          BRANCH="weekly-guide/$DATE"
+          git config user.name "layer8-engine"
+          git config user.email "engine@layer8culture.io"
+          git checkout -b "$BRANCH"
+          git add campaigns/ analytics/ queue/ site/
+          git add -f assets/generated
+          git commit -m "Weekly AI field guide for $DATE"
+          git push origin "$BRANCH"
+          SHA=$(git rev-parse HEAD)
+          QUEUE_FILE=$(ls -t queue/weekly-guide-*.json | head -n 1)
+          python scripts/build_pr_preview.py "$QUEUE_FILE" \
+            --repo "${{ github.repository }}" \
+            --sha "$SHA" \
+            --out pr-body.md
+          gh pr create --title "Weekly AI field guide for $DATE" \
+            --body-file pr-body.md \
+            --base main --head "$BRANCH"
