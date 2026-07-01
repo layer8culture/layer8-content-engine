@@ -37,6 +37,15 @@ Selected stack:
 - Microsoft Clarity.
 - Google Search Console.
 
+## Azure-native resources created
+
+- Log Analytics workspace: `law-aigraph-layer8culture`
+- Application Insights resource: `appi-aigraph-layer8culture`
+- Resource group: `rg-layer8culture`
+- Region: `eastus2`
+
+The browser telemetry connection string is embedded in `site/aigraph-analytics.js`. This value is not a server secret. It identifies the public browser telemetry destination for page views and AIGraph CTA events.
+
 ## Activation steps
 
 ### Azure-native
@@ -44,7 +53,8 @@ Selected stack:
 1. Keep `scripts/aigraph_audit.py` running weekly through GitHub Actions.
 2. Review `analytics/aigraph/latest.md`.
 3. Use Azure Static Web Apps metrics for request-level trend checks.
-4. Add Application Insights or a first-party event endpoint only if page-level event data cannot be captured with Clarity and Search Console.
+4. Use Application Insights for page views and CTA custom events from `site/aigraph-analytics.js`.
+5. Add a first-party event endpoint later only if richer event storage is needed.
 
 ### Microsoft Clarity
 
