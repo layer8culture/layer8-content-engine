@@ -19,14 +19,14 @@ the caption clean and drop the tags into that first comment instead.
 post["collaborators"] (list of IG handles) maps to IG collab tags.
 
 Env vars: POSTIZ_URL, POSTIZ_API_KEY
-Optional env: LOFI_IG_CHANNEL_ID — the Postiz channel ID for the lofi
+Optional env: LOFI_IG_CHANNEL_ID, the Postiz channel ID for the lofi
 (Layer8CultureRadio) Instagram account; overrides its INTEGRATIONS placeholder.
-Optional env: TIKTOK_CHANNEL_ID — the Postiz channel ID for the layer8culture
+Optional env: TIKTOK_CHANNEL_ID, the Postiz channel ID for the layer8culture
 TikTok account; fills its INTEGRATIONS placeholder (unset -> TikTok posts skipped).
-Optional env: YOUTUBE_LAYER8_CHANNEL_ID / YOUTUBE_LOFI_CHANNEL_ID — the Postiz
+Optional env: YOUTUBE_LAYER8_CHANNEL_ID / YOUTUBE_LOFI_CHANNEL_ID, the Postiz
 channel IDs for each brand's YouTube channel; fill their INTEGRATIONS placeholders
 (unset -> that brand's YouTube Shorts are skipped, not errored).
-Optional env: DEALLAB_IG_CHANNEL_ID — the Postiz channel ID for The Real Estate
+Optional env: DEALLAB_IG_CHANNEL_ID, the Postiz channel ID for The Real Estate
 Deal Lab Instagram account. Unset -> Deal Lab posts are skipped, not errored.
 Note: integration IDs map your accounts/platforms to Postiz channels.
 Fill INTEGRATIONS after connecting your accounts in the Postiz UI
@@ -36,8 +36,19 @@ import json
 import os
 import sys
 import pathlib
-import time
 import requests
+from datetime import datetime, timedelta, timezone
+from typing import Any
+
+from publish_helpers import (
+    VIDEO_EXTS,
+    append_new_log_records,
+    archive_queue_file,
+    build_caption,
+    load_log,
+    resolve_local_paths,
+    scheduled_post_ids,
+)
 
 
 def _require_env(name: str) -> str:
@@ -54,12 +65,12 @@ POSTIZ_URL = _require_env("POSTIZ_URL").rstrip("/")
 HEADERS = {"Authorization": _require_env("POSTIZ_API_KEY")}
 
 # account+platform -> Postiz integration (channel) ID. FILL THESE IN.
-# Note: ("layer8culture", "tiktok") is active — the layer8culture pipeline now
+# Note: ("layer8culture", "tiktok") is active. The layer8culture pipeline now
 # generates TikTok videos (see calendar/topics.md + scripts/generation-prompt.md).
 # Its channel ID is supplied via the TIKTOK_CHANNEL_ID secret below (kept out of
-# code). YouTube is active for BOTH brands — the pipelines cross-post reels as
+# code). YouTube is active for BOTH brands. The pipelines cross-post reels as
 # YouTube Shorts; channel IDs come from the YOUTUBE_*_CHANNEL_ID secrets below.
-# ("lofi", "tiktok") stays provisioning-only — nothing generates for lofi TikTok
+# ("lofi", "tiktok") stays provisioning-only. Nothing generates for lofi TikTok
 # unless topics-lofi.md explicitly asks for it.
 INTEGRATIONS = {
     ("layer8culture", "tiktok"): "REPLACE_ME",
@@ -82,7 +93,7 @@ if _lofi_ig:
 
 # The layer8culture TikTok channel ID is supplied via the TIKTOK_CHANNEL_ID secret
 # (kept out of code). When unset the mapping stays REPLACE_ME and TikTok posts are
-# skipped — not errored — so the engine ships TikTok posts only once the channel is
+# skipped, not errored, so the engine ships TikTok posts only once the channel is
 # connected in Postiz and the secret is set.
 _tiktok_channel = os.environ.get("TIKTOK_CHANNEL_ID")
 if _tiktok_channel:
@@ -105,8 +116,6 @@ _deallab_ig = os.environ.get("DEALLAB_IG_CHANNEL_ID")
 if _deallab_ig:
     INTEGRATIONS[("deallab", "instagram")] = _deallab_ig
 
-VIDEO_EXTS = (".mp4", ".mov")
-
 # Per-platform base post settings required by the Postiz API. For Instagram the
 # api requires settings.post_type ("post" or "story"); we add it per-format in
 # platform_settings(). The others are placeholders for when those channels wire up.
@@ -116,7 +125,7 @@ VIDEO_EXTS = (".mp4", ".mov")
 # honesty). content_posting_method is "UPLOAD": Postiz sends the video to the
 # creator's TikTok inbox as a DRAFT (endpoint /post/publish/inbox/video/init/), so it
 # appears under Drafts in the TikTok mobile app for you to review and publish by hand.
-# This is the working flow for an UNAUDITED app — finishing the post manually lets you
+# This is the working flow for an UNAUDITED app. Finishing the post manually lets you
 # publish PUBLICLY, whereas an unaudited DIRECT_POST can only post SELF_ONLY (private)
 # and never lands in Drafts. privacy_level is IGNORED in UPLOAD mode but is still
 # required by Postiz's TikTokDto validation, so we keep a valid value. Once the app
@@ -156,6 +165,76 @@ TIKTOK_INBOX_CAP = 5
 # verified). YouTube caps the combined length of all tags at 500 chars.
 YOUTUBE_TITLE_MAX = 100
 YOUTUBE_TAGS_MAX = 500
+
+
+def parse_postiz_datetime(value: str) -> datetime:
+    """Parse an ISO datetime and normalize it to UTC."""
+    raw = str(value).strip()
+    if raw.endswith("Z"):
+        raw = f"{raw[:-1]}+00:00"
+    dt = datetime.fromisoformat(raw)
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(timezone.utc)
+
+
+def utc_iso(dt: datetime) -> str:
+    return dt.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
+
+
+def normalize_postiz_content(value: str | None) -> str:
+    if not value:
+        return ""
+    normalized = str(value).replace("\r\n", "\n").replace("\r", "\n")
+    return "\n".join(line.rstrip() for line in normalized.split("\n")).strip()
+
+
+def list_postiz_posts(start_dt: datetime, end_dt: datetime) -> list[dict]:
+    r = requests.get(
+        f"{POSTIZ_URL}/api/public/v1/posts",
+        headers=HEADERS,
+        params={"startDate": utc_iso(start_dt), "endDate": utc_iso(end_dt)},
+        timeout=60,
+    )
+    r.raise_for_status()
+    payload = r.json()
+    posts = payload.get("posts") if isinstance(payload, dict) else []
+    return [p for p in posts if isinstance(p, dict)]
+
+
+def is_matching_existing_postiz_post(
+    candidate: dict,
+    integration_id: str,
+    caption: str,
+    schedule_time: str,
+) -> bool:
+    if str(candidate.get("state") or "").upper() in {"ERROR", "FAILED"}:
+        return False
+    integration = candidate.get("integration") or {}
+    if not isinstance(integration, dict) or integration.get("id") != integration_id:
+        return False
+    if normalize_postiz_content(candidate.get("content")) != normalize_postiz_content(caption):
+        return False
+    publish_date = candidate.get("publishDate")
+    if not publish_date:
+        return False
+    return parse_postiz_datetime(publish_date) == parse_postiz_datetime(schedule_time)
+
+
+def find_existing_postiz_duplicate(
+    integration_id: str,
+    caption: str,
+    schedule_time: str,
+) -> dict | None:
+    scheduled_at = parse_postiz_datetime(schedule_time)
+    existing_posts = list_postiz_posts(
+        scheduled_at - timedelta(hours=12),
+        scheduled_at + timedelta(hours=12),
+    )
+    for candidate in existing_posts:
+        if is_matching_existing_postiz_post(candidate, integration_id, caption, schedule_time):
+            return candidate
+    return None
 
 
 def _youtube_title(post: dict) -> str:
@@ -264,102 +343,41 @@ def upload_media(filepath: str) -> dict:
     return r.json()  # contains id + path
 
 
-def resolve_local_paths(post: dict) -> list[str]:
-    """Ordered list of existing local media paths for the post.
-
-    Carousels use visual.files (one path per slide); every other format uses the
-    single visual.file. Falls back to a naive assets/library match when the post
-    is sourced from the library.
-    """
-    visual = post.get("visual", {})
-    if post.get("format") == "carousel":
-        files = [f for f in (visual.get("files") or [])
-                 if f and pathlib.Path(f).exists()]
-        if files:
-            return files
-        # fall through to single-file handling if slide files are missing
-
-    path = visual.get("file")
-    if not path and visual.get("source") == "library":
-        # naive library match: first file whose name contains a hint word
-        hint = (visual.get("library_hint") or "").lower().split()
-        lib = pathlib.Path("assets/library")
-        for f in lib.glob("*"):
-            if any(w in f.name.lower() for w in hint) or not hint:
-                path = str(f)
-                break
-    if path and pathlib.Path(path).exists():
-        return [path]
-    return []
+def first_nested_value(payload: Any, keys: tuple[str, ...]) -> Any:
+    if isinstance(payload, dict):
+        for key in keys:
+            if payload.get(key):
+                return payload[key]
+        for value in payload.values():
+            nested = first_nested_value(value, keys)
+            if nested:
+                return nested
+    if isinstance(payload, list):
+        for item in payload:
+            nested = first_nested_value(item, keys)
+            if nested:
+                return nested
+    return None
 
 
-def build_caption(post: dict) -> tuple[str, str | None]:
-    """Return (caption, first_comment). Hashtags go in the caption by default, or
-    into the first comment when hashtags_in_first_comment is set (keeps captions
-    clean — a common growth tactic)."""
-    caption = post["text"]
-    hashtags = post.get("hashtags") or []
-    first_comment = (post.get("first_comment") or "").strip()
-    tag_line = " ".join(hashtags)
-    if post.get("hashtags_in_first_comment") and hashtags:
-        first_comment = (f"{first_comment}\n\n{tag_line}".strip()
-                         if first_comment else tag_line)
-    elif hashtags:
-        caption += "\n\n" + tag_line
-    return caption, (first_comment or None)
+def postiz_response_metadata(payload: Any) -> dict:
+    metadata = {}
+    postiz_id = first_nested_value(payload, ("id", "_id", "postId", "post_id"))
+    if postiz_id:
+        metadata["postiz_post_id"] = str(postiz_id)
+    if isinstance(payload, dict):
+        status = payload.get("status") or payload.get("state")
+        if status:
+            metadata["postiz_status"] = str(status)
+    return metadata
 
 
-def load_log(log_path: pathlib.Path) -> list[dict]:
-    if not log_path.exists():
-        return []
-    payload = json.loads(log_path.read_text())
-    return payload if isinstance(payload, list) else []
-
-
-def scheduled_post_ids(log: list[dict]) -> set[str]:
-    return {
-        str(record.get("id"))
-        for record in log
-        if isinstance(record, dict) and record.get("id") and record.get("scheduled") is True
-    }
-
-
-def append_new_log_records(log: list[dict], results: list[dict]) -> list[dict]:
-    """Append results without duplicating post IDs already present in the log."""
-    seen = {str(record.get("id")) for record in log if isinstance(record, dict) and record.get("id")}
-    for result in results:
-        post_id = str(result.get("id") or "")
-        if not post_id:
-            log.append(result)
-            continue
-        if post_id in seen:
-            print(f"  ! {post_id}: already present in posted/log.json, not appending duplicate")
-            continue
-        log.append(result)
-        seen.add(post_id)
-    return log
-
-
-def archive_queue_file(qpath: pathlib.Path, posted_dir: pathlib.Path) -> pathlib.Path:
-    """Move queue file to posted/, avoiding same-name archive collisions."""
-    target = posted_dir / qpath.name
-    if not target.exists():
-        qpath.rename(target)
-        return target
-
-    run_id = os.environ.get("GITHUB_RUN_ID") or str(int(time.time()))
-    target = posted_dir / f"{qpath.stem}-run-{run_id}{qpath.suffix}"
-    qpath.rename(target)
-    print(f"  ! archive {posted_dir / qpath.name} already exists; moved queue to {target}")
-    return target
-
-
-def schedule(post: dict) -> bool:
+def schedule(post: dict) -> dict:
     key = (post["account"], post["platform"])
     integration_id = INTEGRATIONS.get(key)
     if not integration_id or integration_id == "REPLACE_ME":
         print(f"  ! no integration mapped for {key}, skipping {post['id']}")
-        return False
+        return {"scheduled": False, "skip_reason": "missing_integration"}
 
     fmt = post.get("format", "single")
     paths = resolve_local_paths(post)
@@ -369,11 +387,11 @@ def schedule(post: dict) -> bool:
         label = post["platform"]
         if not paths:
             print(f"  ! {label} post {post['id']} has no resolved media, skipping")
-            return False
+            return {"scheduled": False, "skip_reason": "missing_media"}
         if not is_video:
             print(f"  ! {label} post {post['id']} media is not a video "
                   f"({', '.join(VIDEO_EXTS)}), skipping")
-            return False
+            return {"scheduled": False, "skip_reason": "non_video_media"}
 
     # A reel needs a video; if the mp4 didn't render, fall back to publishing the
     # base still as a normal image post so the post still goes out.
@@ -381,12 +399,28 @@ def schedule(post: dict) -> bool:
         print(f"  ! reel {post['id']} has no video, publishing image as a feed post")
         fmt = "single"
 
+    caption, first_comment = build_caption(post)
+    existing = find_existing_postiz_duplicate(
+        integration_id,
+        caption,
+        post["schedule_time"],
+    )
+    if existing:
+        postiz_id = str(existing.get("id") or "")
+        state = str(existing.get("state") or "existing").lower()
+        print(f"  ! {post['id']}: matching {state} Postiz post exists, skipping duplicate")
+        return {
+            "scheduled": False,
+            "integration_id": integration_id,
+            "skip_reason": "postiz_duplicate",
+            **({"postiz_post_id": postiz_id} if postiz_id else {}),
+        }
+
     media = []
     for p in paths:
         m = upload_media(p)
         media.append({"id": m["id"], "path": m["path"]})
 
-    caption, first_comment = build_caption(post)
     value = [{"content": caption, "image": media}]
     if first_comment:
         value.append({"content": first_comment, "image": []})
@@ -406,16 +440,29 @@ def schedule(post: dict) -> bool:
                       headers={**HEADERS, "Content-Type": "application/json"},
                       json=payload, timeout=60)
     if r.ok:
+        try:
+            response_payload = r.json()
+        except ValueError:
+            response_payload = {}
         extra = f" +comment" if first_comment else ""
         print(f"  ✓ scheduled {post['id']} ({fmt}, {len(media)} media{extra}) "
               f"for {post['schedule_time']}")
-        return True
+        return {
+            "scheduled": True,
+            "integration_id": integration_id,
+            **postiz_response_metadata(response_payload),
+        }
     print(f"  ✗ {post['id']}: {r.status_code} {r.text[:200]}")
-    return False
+    return {
+        "scheduled": False,
+        "integration_id": integration_id,
+        "skip_reason": "postiz_error",
+        "postiz_status_code": r.status_code,
+    }
 
 def main(queue_file: str) -> None:
     qpath = pathlib.Path(queue_file)
-    posts = json.loads(qpath.read_text())
+    posts = json.loads(qpath.read_text(encoding="utf-8"))
     posted_dir = pathlib.Path("posted")
     posted_dir.mkdir(exist_ok=True)
     log_path = posted_dir / "log.json"
@@ -445,10 +492,10 @@ def main(queue_file: str) -> None:
                       f"spam_risk_too_many_pending_share)")
                 results.append({**p, "scheduled": False, "skip_reason": "tiktok_inbox_cap"})
                 continue
-        results.append({**p, "scheduled": schedule(p)})
+        results.append({**p, **schedule(p)})
 
     log = append_new_log_records(log, results)
-    log_path.write_text(json.dumps(log, indent=2))
+    log_path.write_text(json.dumps(log, indent=2), encoding="utf-8")
     archive_queue_file(qpath, posted_dir)
     print(f"Done: {sum(p['scheduled'] for p in results)}/{len(results)} scheduled.")
 
