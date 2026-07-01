@@ -1,6 +1,6 @@
 # AIGraph SEO and AEO Baseline
 
-Generated: 2026-07-01T18:12:58.896768+00:00
+Generated: 2026-07-01T19:03:10.099546+00:00
 Base URL: https://www.layer8culture.io
 
 ## Summary
@@ -22,7 +22,7 @@ Base URL: https://www.layer8culture.io
 | https://www.layer8culture.io/aigraph/monthly-monitoring/ | 200 | Monthly AI Visibility Monitoring / AIGraph | yes | yes | 2 |
 | https://www.layer8culture.io/aigraph/case-studies/ | 200 | AIGraph Case Studies / Layer8Culture | yes | yes | 1 |
 | https://www.layer8culture.io/aigraph/case-studies/layer8culture-baseline/ | 200 | Layer8Culture AIGraph Baseline Case Study | yes | yes | 1 |
-| https://www.layer8culture.io/aigraph/contact/ | 200 | Request an AIGraph Audit / Layer8Culture | yes | yes | 1 |
+| https://www.layer8culture.io/aigraph/contact/ | 200 | Request an AIGraph Audit / Layer8Culture | yes | yes | 2 |
 | https://www.layer8culture.io/aigraph/resources/what-is-ai-visibility/ | 200 | What Is AI Visibility? / AIGraph | yes | yes | 1 |
 | https://www.layer8culture.io/aigraph/resources/aeo-vs-seo/ | 200 | AEO vs SEO / AIGraph | yes | yes | 1 |
 | https://www.layer8culture.io/aigraph/resources/ai-visibility-checklist/ | 200 | AI Visibility Checklist / AIGraph | yes | yes | 1 |

@@ -20,7 +20,40 @@
     "@type": "ContactPage",
     "name": "Request an AIGraph Audit",
     "url": "https://www.layer8culture.io/aigraph/contact/",
-    "description": "Request an AIGraph AI Visibility Audit or monthly monitoring plan."
+    "description": "Request an AIGraph AI Visibility Audit or monthly monitoring plan.",
+    "mainEntity": {
+      "@type": "Service",
+      "name": "AIGraph AI Visibility Audit",
+      "provider": {
+        "@type": "Organization",
+        "name": "Layer8Culture"
+      },
+      "serviceType": "AI visibility audit"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Who should request an AIGraph audit?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "AIGraph is for businesses that want to know whether AI answer engines accurately describe, cite, and recommend them for relevant buyer questions."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens after requesting an audit?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Layer8Culture reviews the business website, category, and competitor context, then follows up about the AI Visibility Audit scope, prompt set, and next steps."
+        }
+      }
+    ]
   }
   </script>
   <script src="https://js.monitor.azure.com/scripts/b/ai.3.gbl.min.js" crossorigin="anonymous"></script>
@@ -35,10 +68,44 @@
     <section class="hero">
       <div class="eyebrow">Founding audit request</div>
       <h1>Start with an AI visibility baseline.</h1>
-      <p class="lede">Tell us the business, category, and competitors you want AIGraph to evaluate. This first version opens your email client after tracking the form submit event.</p>
+      <p class="lede">Tell us the business, category, and competitors you want AIGraph to evaluate. This request starts the audit intake and creates the context needed to measure how AI answer engines understand the business.</p>
+    </section>
+
+    <section class="section split">
+      <div>
+        <div class="eyebrow">Who this is for</div>
+        <h2>Businesses that need to know what AI says before buyers do.</h2>
+        <p>AIGraph is useful when customers are likely to ask AI systems for recommendations, comparisons, local options, service providers, or category advice. The audit shows whether the business appears, whether competitors appear instead, which sources are cited, and whether the answer is accurate.</p>
+      </div>
+      <div class="notice">
+        <h3>Best fit</h3>
+        <p>Founder-led businesses, agencies, consultants, local service firms, creator-led brands, and B2B teams with clear competitors and public proof points.</p>
+      </div>
     </section>
 
     <section class="section">
+      <div class="eyebrow">What happens next</div>
+      <h2>The request turns into a measured audit plan.</h2>
+      <div class="mini-grid">
+        <article class="mini-card">
+          <h3>1. Intake</h3>
+          <p>We review the website, business category, target market, and competitors.</p>
+        </article>
+        <article class="mini-card">
+          <h3>2. Prompt set</h3>
+          <p>We build a balanced prompt set across branded, category, niche, informational, and comparison questions.</p>
+        </article>
+        <article class="mini-card">
+          <h3>3. Baseline</h3>
+          <p>We check AI answer visibility, citations, competitor mentions, and accuracy before recommending changes.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="eyebrow">Request form</div>
+      <h2>Send the audit context</h2>
+      <p>Use the form to prepare an email request. No sensitive data is required. A public website, business category, and competitor list are enough to start.</p>
       <form id="aigraph-contact-form" class="stack">
         <label>
           Name<br>
@@ -71,6 +138,18 @@
         </label>
         <button class="button" data-aigraph-event="contact_form_submit" type="submit">Prepare audit request</button>
       </form>
+    </section>
+
+    <section class="section">
+      <div class="eyebrow">Audit scope</div>
+      <h2>What the first audit measures</h2>
+      <ul class="checklist">
+        <li>Whether AI answer engines mention the business for relevant prompts.</li>
+        <li>Whether the answer is accurate and current.</li>
+        <li>Which competitors appear more often.</li>
+        <li>Which sources and citations support the answers.</li>
+        <li>Which website, content, schema, and proof signals should be improved first.</li>
+      </ul>
     </section>
   </main>
   <footer class="footer"><div class="shell">Layer8Culture</div></footer>
