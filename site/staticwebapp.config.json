@@ -1,7 +1,15 @@
 {
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/guides/*", "/assets/*", "/styles.css"]
+    "exclude": [
+      "/aigraph/*",
+      "/guides/*",
+      "/assets/*",
+      "/styles.css",
+      "/robots.txt",
+      "/sitemap.xml",
+      "/llms.txt"
+    ]
   },
   "globalHeaders": {
     "X-Content-Type-Options": "nosniff",

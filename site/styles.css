@@ -228,6 +228,69 @@ li {
   font-weight: 900;
 }
 
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  color: var(--blue);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.notice {
+  border: 1px solid rgba(0, 71, 255, 0.42);
+  border-radius: 22px;
+  padding: 22px;
+  background: rgba(0, 71, 255, 0.10);
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(245, 245, 245, 0.28);
+  border-radius: 999px;
+  padding: 12px 18px;
+  background: rgba(0, 71, 255, 0.20);
+  color: var(--white);
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.button.secondary {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--muted);
+}
+
 .repo-meta {
   margin-top: 8px;
   color: var(--blue);
@@ -267,6 +330,7 @@ li {
   .mini-grid,
   .repo-grid,
   .source-grid,
+  .split,
   .glossary {
     grid-template-columns: 1fr;
   }
