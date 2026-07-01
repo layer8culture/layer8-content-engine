@@ -12,8 +12,8 @@ from pathlib import Path
 
 FIELD_ALIASES = {
     "date": {"date", "day"},
-    "page": {"page", "pages", "url", "landing page"},
-    "query": {"query", "queries", "search query"},
+    "page": {"page", "pages", "url", "landing page", "top pages"},
+    "query": {"query", "queries", "search query", "top queries"},
     "clicks": {"clicks"},
     "impressions": {"impressions"},
     "ctr": {"ctr"},
@@ -43,7 +43,25 @@ def number(value: str) -> float:
         return 0.0
 
 
+def dimension_for_path(path: Path) -> str:
+    name = path.name.lower()
+    if "chart" in name:
+        return "chart"
+    if "quer" in name:
+        return "query"
+    if "page" in name:
+        return "page"
+    if "countr" in name:
+        return "country"
+    if "device" in name:
+        return "device"
+    if "appearance" in name:
+        return "search_appearance"
+    return "unknown"
+
+
 def import_csv(path: Path) -> list[dict[str, object]]:
+    dimension = dimension_for_path(path)
     with path.open("r", encoding="utf-8-sig", newline="") as handle:
         reader = csv.DictReader(handle)
         headers = reader.fieldnames or []
@@ -67,14 +85,20 @@ def import_csv(path: Path) -> list[dict[str, object]]:
                     "ctr": ctr_value,
                     "position": number(row.get(fields["position"] or "", "")),
                     "source_file": str(path),
+                    "dimension": dimension,
                 }
             )
         return rows
 
 
 def summarize(rows: list[dict[str, object]]) -> dict[str, object]:
-    clicks = sum(float(row["clicks"]) for row in rows)
-    impressions = sum(float(row["impressions"]) for row in rows)
+    aggregate_rows = [row for row in rows if row.get("dimension") == "chart"]
+    if not aggregate_rows:
+        aggregate_rows = [row for row in rows if row.get("dimension") == "page"]
+    if not aggregate_rows:
+        aggregate_rows = [row for row in rows if row.get("dimension") == "query"]
+    clicks = sum(float(row["clicks"]) for row in aggregate_rows)
+    impressions = sum(float(row["impressions"]) for row in aggregate_rows)
     aigraph_rows = [
         row
         for row in rows
@@ -86,6 +110,7 @@ def summarize(rows: list[dict[str, object]]) -> dict[str, object]:
     return {
         "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(),
         "rows": len(rows),
+        "aggregate_dimension": aggregate_rows[0].get("dimension") if aggregate_rows else "none",
         "clicks": clicks,
         "impressions": impressions,
         "ctr": clicks / impressions if impressions else 0,
@@ -96,7 +121,11 @@ def summarize(rows: list[dict[str, object]]) -> dict[str, object]:
 
 
 def write_markdown(summary: dict[str, object], rows: list[dict[str, object]], path: Path) -> None:
-    top_rows = sorted(rows, key=lambda row: float(row["impressions"]), reverse=True)[:20]
+    top_rows = sorted(
+        [row for row in rows if row.get("dimension") in {"query", "page"}],
+        key=lambda row: float(row["impressions"]),
+        reverse=True,
+    )[:20]
     lines = [
         "# AIGraph Google Search Console KPI Import",
         "",
@@ -105,6 +134,7 @@ def write_markdown(summary: dict[str, object], rows: list[dict[str, object]], pa
         "## Summary",
         "",
         f"- Rows: {summary['rows']}",
+        f"- Aggregate dimension: {summary['aggregate_dimension']}",
         f"- Clicks: {summary['clicks']:.0f}",
         f"- Impressions: {summary['impressions']:.0f}",
         f"- CTR: {summary['ctr']:.2%}",
@@ -114,12 +144,13 @@ def write_markdown(summary: dict[str, object], rows: list[dict[str, object]], pa
         "",
         "## Top rows by impressions",
         "",
-        "| Page | Query | Clicks | Impressions | CTR | Position |",
-        "|---|---|---:|---:|---:|---:|",
+        "| Dimension | Page | Query | Clicks | Impressions | CTR | Position |",
+        "|---|---|---|---:|---:|---:|---:|",
     ]
     for row in top_rows:
         lines.append(
-            "| {page} | {query} | {clicks:.0f} | {impressions:.0f} | {ctr:.2%} | {position:.1f} |".format(
+            "| {dimension} | {page} | {query} | {clicks:.0f} | {impressions:.0f} | {ctr:.2%} | {position:.1f} |".format(
+                dimension=str(row.get("dimension", "")),
                 page=str(row.get("page", "")).replace("|", "/"),
                 query=str(row.get("query", "")).replace("|", "/"),
                 clicks=float(row["clicks"]),
