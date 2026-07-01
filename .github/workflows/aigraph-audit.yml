@@ -18,6 +18,7 @@ jobs:
       - name: Run AIGraph audit
         run: |
           python scripts/aigraph_audit.py --output-dir analytics/aigraph || true
+          python scripts/aigraph_recommendations.py --input-dir analytics/aigraph --output-dir analytics/aigraph || true
 
       - name: Upload audit artifact
         uses: actions/upload-artifact@v4
