@@ -1,0 +1,35 @@
+{
+  "generated_at": "2026-07-01T19:10:00Z",
+  "status": [
+    {
+      "engine": "ChatGPT",
+      "status": "not_run_no_api_or_browser_session",
+      "autonomous_path": "Use OpenAI or Azure OpenAI API credentials, or a user-authenticated browser session."
+    },
+    {
+      "engine": "Perplexity",
+      "status": "not_run_no_api_or_browser_session",
+      "autonomous_path": "Use Perplexity API credentials, or a user-authenticated browser session."
+    },
+    {
+      "engine": "Gemini",
+      "status": "not_run_no_api_or_browser_session",
+      "autonomous_path": "Use Gemini API credentials, Google AI Studio credentials, or a user-authenticated browser session."
+    },
+    {
+      "engine": "Claude",
+      "status": "not_run_no_api_or_browser_session",
+      "autonomous_path": "Use Anthropic API credentials, or a user-authenticated browser session."
+    },
+    {
+      "engine": "Google AI results",
+      "status": "not_run_no_serp_or_browser_session",
+      "autonomous_path": "Use a Google Search Console/Search API/SERP provider integration, or a user-authenticated browser session."
+    },
+    {
+      "engine": "Autonomous web-cited AI-search proxy",
+      "status": "planned_for_autonomous_run",
+      "autonomous_path": "Use public web-cited search responses to estimate early answer visibility without claiming engine-specific coverage."
+    }
+  ]
+}

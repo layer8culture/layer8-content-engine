@@ -1,0 +1,634 @@
+{
+  "business": {
+    "name": "Layer8Culture",
+    "site": "https://www.layer8culture.io/",
+    "offer": "AIGraph AI Visibility Intelligence",
+    "competitors": [
+      "Profound",
+      "Otterly.ai",
+      "Peec AI"
+    ]
+  },
+  "engines": [
+    "Autonomous web-cited AI-search proxy"
+  ],
+  "prompts": [
+    {
+      "group": "branded",
+      "prompt": "What is Layer8Culture?"
+    },
+    {
+      "group": "branded",
+      "prompt": "What does AIGraph by Layer8Culture do?"
+    },
+    {
+      "group": "branded",
+      "prompt": "Is Layer8Culture a good source for AI visibility and creator-tech systems?"
+    },
+    {
+      "group": "branded",
+      "prompt": "What are the strengths and weaknesses of Layer8Culture?"
+    },
+    {
+      "group": "branded",
+      "prompt": "Who does Layer8Culture serve?"
+    },
+    {
+      "group": "category",
+      "prompt": "What companies help businesses track AI search visibility?"
+    },
+    {
+      "group": "category",
+      "prompt": "Who provides AI visibility audits for small businesses?"
+    },
+    {
+      "group": "category",
+      "prompt": "What tools monitor whether brands appear in ChatGPT and Perplexity answers?"
+    },
+    {
+      "group": "category",
+      "prompt": "What is the best way to measure answer engine optimization?"
+    },
+    {
+      "group": "category",
+      "prompt": "Which companies help with AI search visibility monitoring?"
+    },
+    {
+      "group": "niche",
+      "prompt": "Who helps creator-led businesses improve AI visibility?"
+    },
+    {
+      "group": "niche",
+      "prompt": "What AI visibility service should a small agency use for clients?"
+    },
+    {
+      "group": "niche",
+      "prompt": "Who can audit how AI tools describe my business online?"
+    },
+    {
+      "group": "niche",
+      "prompt": "What services help local businesses show up in AI answers?"
+    },
+    {
+      "group": "niche",
+      "prompt": "Who helps businesses understand if AI assistants recommend competitors?"
+    },
+    {
+      "group": "informational",
+      "prompt": "How do I know if my business appears in AI search results?"
+    },
+    {
+      "group": "informational",
+      "prompt": "How can I improve the way ChatGPT describes my company?"
+    },
+    {
+      "group": "informational",
+      "prompt": "What metrics matter for AI visibility?"
+    },
+    {
+      "group": "informational",
+      "prompt": "How does AEO differ from SEO?"
+    },
+    {
+      "group": "informational",
+      "prompt": "What should an AI visibility audit include?"
+    },
+    {
+      "group": "comparison",
+      "prompt": "Compare AIGraph with Profound for AI visibility monitoring."
+    },
+    {
+      "group": "comparison",
+      "prompt": "What are alternatives to Profound for smaller businesses?"
+    },
+    {
+      "group": "comparison",
+      "prompt": "Shortlist three AI visibility monitoring options for a small business."
+    },
+    {
+      "group": "comparison",
+      "prompt": "Which AI visibility tools are best for agencies?"
+    },
+    {
+      "group": "comparison",
+      "prompt": "Should a business use an AI visibility audit or an ongoing monitoring tool?"
+    }
+  ],
+  "results": [
+    {
+      "group": "branded",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "What is Layer8Culture?",
+      "business_mentioned": true,
+      "business_cited": true,
+      "answer_accuracy": "medium",
+      "citations": [
+        "https://www.layer8culture.io/"
+      ],
+      "competitors_mentioned": [
+        "Twitch",
+        "TikTok"
+      ],
+      "confidence": "high",
+      "notes": "Proxy search can identify Layer8Culture from the live site and social profiles, but the description remains broad."
+    },
+    {
+      "group": "branded",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "What does AIGraph by Layer8Culture do?",
+      "business_mentioned": false,
+      "business_cited": false,
+      "answer_accuracy": "low",
+      "citations": [
+        "https://www.layer8culture.io/aigraph/"
+      ],
+      "competitors_mentioned": [
+        "Profound"
+      ],
+      "confidence": "low",
+      "notes": "Proxy search confused AIGraph with an unrelated researchgraph.org AIGraph result. Layer8Culture AIGraph is newly launched and not yet clearly established in public answer sources."
+    },
+    {
+      "group": "branded",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "Is Layer8Culture a good source for AI visibility and creator-tech systems?",
+      "business_mentioned": true,
+      "business_cited": true,
+      "answer_accuracy": "medium",
+      "citations": [
+        "https://www.layer8culture.io/"
+      ],
+      "competitors_mentioned": [
+        "Twitch",
+        "TikTok"
+      ],
+      "confidence": "high",
+      "notes": "Proxy search can identify Layer8Culture from the live site and social profiles, but the description remains broad."
+    },
+    {
+      "group": "branded",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "What are the strengths and weaknesses of Layer8Culture?",
+      "business_mentioned": true,
+      "business_cited": true,
+      "answer_accuracy": "medium",
+      "citations": [
+        "https://www.layer8culture.io/"
+      ],
+      "competitors_mentioned": [
+        "Twitch",
+        "TikTok"
+      ],
+      "confidence": "high",
+      "notes": "Proxy search can identify Layer8Culture from the live site and social profiles, but the description remains broad."
+    },
+    {
+      "group": "branded",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "Who does Layer8Culture serve?",
+      "business_mentioned": true,
+      "business_cited": true,
+      "answer_accuracy": "medium",
+      "citations": [
+        "https://www.layer8culture.io/"
+      ],
+      "competitors_mentioned": [
+        "Twitch",
+        "TikTok"
+      ],
+      "confidence": "high",
+      "notes": "Proxy search can identify Layer8Culture from the live site and social profiles, but the description remains broad."
+    },
+    {
+      "group": "category",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "What companies help businesses track AI search visibility?",
+      "business_mentioned": false,
+      "business_cited": false,
+      "answer_accuracy": "unknown",
+      "citations": [
+        "https://otterly.ai/blog/10-best-ai-search-monitoring-and-llm-monitoring-solutions/",
+        "https://otterly.ai/best-geo-and-ai-visibility-platforms-compared-2026/",
+        "https://www.quattr.com/blog/ai-visibility-tools"
+      ],
+      "competitors_mentioned": [
+        "OtterlyAI",
+        "Profound",
+        "Peec AI",
+        "Semrush",
+        "Ahrefs Brand Radar",
+        "Promptwatch"
+      ],
+      "confidence": "high",
+      "notes": "Category answers are dominated by established AI visibility platforms. AIGraph/Layer8Culture are not naturally recognized yet."
+    },
+    {
+      "group": "category",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "Who provides AI visibility audits for small businesses?",
+      "business_mentioned": true,
+      "business_cited": false,
+      "answer_accuracy": "medium",
+      "citations": [
+        "https://verbatimdigital.com/articles/best-ai-visibility-service-providers",
+        "https://www.semrush.com/blog/best-ai-visibility-tools/"
+      ],
+      "competitors_mentioned": [
+        "Semrush",
+        "OtterlyAI",
+        "Profound",
+        "Peec AI",
+        "Scrunch AI"
+      ],
+      "confidence": "low",
+      "notes": "Proxy response mentioned AIGraph/Layer8Culture when prompted, but citations did not point to Layer8Culture. Treat as low-confidence category visibility."
+    },
+    {
+      "group": "category",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "What tools monitor whether brands appear in ChatGPT and Perplexity answers?",
+      "business_mentioned": false,
+      "business_cited": false,
+      "answer_accuracy": "unknown",
+      "citations": [
+        "https://otterly.ai/blog/10-best-ai-search-monitoring-and-llm-monitoring-solutions/",
+        "https://otterly.ai/best-geo-and-ai-visibility-platforms-compared-2026/",
+        "https://www.quattr.com/blog/ai-visibility-tools"
+      ],
+      "competitors_mentioned": [
+        "OtterlyAI",
+        "Profound",
+        "Peec AI",
+        "Semrush",
+        "Ahrefs Brand Radar",
+        "Promptwatch"
+      ],
+      "confidence": "high",
+      "notes": "Category answers are dominated by established AI visibility platforms. AIGraph/Layer8Culture are not naturally recognized yet."
+    },
+    {
+      "group": "category",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "What is the best way to measure answer engine optimization?",
+      "business_mentioned": false,
+      "business_cited": false,
+      "answer_accuracy": "unknown",
+      "citations": [
+        "https://otterly.ai/blog/10-best-ai-search-monitoring-and-llm-monitoring-solutions/",
+        "https://otterly.ai/best-geo-and-ai-visibility-platforms-compared-2026/",
+        "https://www.quattr.com/blog/ai-visibility-tools"
+      ],
+      "competitors_mentioned": [
+        "OtterlyAI",
+        "Profound",
+        "Peec AI",
+        "Semrush",
+        "Ahrefs Brand Radar",
+        "Promptwatch"
+      ],
+      "confidence": "high",
+      "notes": "Category answers are dominated by established AI visibility platforms. AIGraph/Layer8Culture are not naturally recognized yet."
+    },
+    {
+      "group": "category",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "Which companies help with AI search visibility monitoring?",
+      "business_mentioned": false,
+      "business_cited": false,
+      "answer_accuracy": "unknown",
+      "citations": [
+        "https://otterly.ai/blog/10-best-ai-search-monitoring-and-llm-monitoring-solutions/",
+        "https://otterly.ai/best-geo-and-ai-visibility-platforms-compared-2026/",
+        "https://www.quattr.com/blog/ai-visibility-tools"
+      ],
+      "competitors_mentioned": [
+        "OtterlyAI",
+        "Profound",
+        "Peec AI",
+        "Semrush",
+        "Ahrefs Brand Radar",
+        "Promptwatch"
+      ],
+      "confidence": "high",
+      "notes": "Category answers are dominated by established AI visibility platforms. AIGraph/Layer8Culture are not naturally recognized yet."
+    },
+    {
+      "group": "niche",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "Who helps creator-led businesses improve AI visibility?",
+      "business_mentioned": false,
+      "business_cited": false,
+      "answer_accuracy": "unknown",
+      "citations": [],
+      "competitors_mentioned": [],
+      "confidence": "medium",
+      "notes": "Proxy response gave generic advice about AI visibility services and local business optimization, but did not naturally cite Layer8Culture/AIGraph as a provider."
+    },
+    {
+      "group": "niche",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "What AI visibility service should a small agency use for clients?",
+      "business_mentioned": false,
+      "business_cited": false,
+      "answer_accuracy": "unknown",
+      "citations": [],
+      "competitors_mentioned": [],
+      "confidence": "medium",
+      "notes": "Proxy response gave generic advice about AI visibility services and local business optimization, but did not naturally cite Layer8Culture/AIGraph as a provider."
+    },
+    {
+      "group": "niche",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "Who can audit how AI tools describe my business online?",
+      "business_mentioned": false,
+      "business_cited": false,
+      "answer_accuracy": "unknown",
+      "citations": [],
+      "competitors_mentioned": [],
+      "confidence": "medium",
+      "notes": "Proxy response gave generic advice about AI visibility services and local business optimization, but did not naturally cite Layer8Culture/AIGraph as a provider."
+    },
+    {
+      "group": "niche",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "What services help local businesses show up in AI answers?",
+      "business_mentioned": false,
+      "business_cited": false,
+      "answer_accuracy": "unknown",
+      "citations": [],
+      "competitors_mentioned": [],
+      "confidence": "medium",
+      "notes": "Proxy response gave generic advice about AI visibility services and local business optimization, but did not naturally cite Layer8Culture/AIGraph as a provider."
+    },
+    {
+      "group": "niche",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "Who helps businesses understand if AI assistants recommend competitors?",
+      "business_mentioned": false,
+      "business_cited": false,
+      "answer_accuracy": "unknown",
+      "citations": [],
+      "competitors_mentioned": [],
+      "confidence": "medium",
+      "notes": "Proxy response gave generic advice about AI visibility services and local business optimization, but did not naturally cite Layer8Culture/AIGraph as a provider."
+    },
+    {
+      "group": "informational",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "How do I know if my business appears in AI search results?",
+      "business_mentioned": false,
+      "business_cited": false,
+      "answer_accuracy": "unknown",
+      "citations": [],
+      "competitors_mentioned": [],
+      "confidence": "medium",
+      "notes": "Proxy response explains the concept but does not mention Layer8Culture/AIGraph. This is a content opportunity."
+    },
+    {
+      "group": "informational",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "How can I improve the way ChatGPT describes my company?",
+      "business_mentioned": false,
+      "business_cited": false,
+      "answer_accuracy": "unknown",
+      "citations": [],
+      "competitors_mentioned": [],
+      "confidence": "medium",
+      "notes": "Proxy response explains the concept but does not mention Layer8Culture/AIGraph. This is a content opportunity."
+    },
+    {
+      "group": "informational",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "What metrics matter for AI visibility?",
+      "business_mentioned": false,
+      "business_cited": false,
+      "answer_accuracy": "unknown",
+      "citations": [
+        "https://hashmeta.com/blog/performance-metrics-for-answer-engines-the-complete-aeo-measurement-framework/",
+        "https://www.stackmatix.com/blog/aeo-metrics-kpis",
+        "https://blog.hubspot.com/marketing/answer-engine-optimization-tools"
+      ],
+      "competitors_mentioned": [
+        "Writesonic",
+        "HubSpot",
+        "OtterlyAI",
+        "Peec",
+        "Profound",
+        "Goodie AI",
+        "Scrunch AI"
+      ],
+      "confidence": "high",
+      "notes": "Informational AEO answers cite established metrics/tool articles, not AIGraph yet."
+    },
+    {
+      "group": "informational",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "How does AEO differ from SEO?",
+      "business_mentioned": false,
+      "business_cited": false,
+      "answer_accuracy": "unknown",
+      "citations": [
+        "https://hashmeta.com/blog/performance-metrics-for-answer-engines-the-complete-aeo-measurement-framework/",
+        "https://www.stackmatix.com/blog/aeo-metrics-kpis",
+        "https://blog.hubspot.com/marketing/answer-engine-optimization-tools"
+      ],
+      "competitors_mentioned": [
+        "Writesonic",
+        "HubSpot",
+        "OtterlyAI",
+        "Peec",
+        "Profound",
+        "Goodie AI",
+        "Scrunch AI"
+      ],
+      "confidence": "high",
+      "notes": "Informational AEO answers cite established metrics/tool articles, not AIGraph yet."
+    },
+    {
+      "group": "informational",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "What should an AI visibility audit include?",
+      "business_mentioned": false,
+      "business_cited": false,
+      "answer_accuracy": "unknown",
+      "citations": [
+        "https://hashmeta.com/blog/performance-metrics-for-answer-engines-the-complete-aeo-measurement-framework/",
+        "https://www.stackmatix.com/blog/aeo-metrics-kpis",
+        "https://blog.hubspot.com/marketing/answer-engine-optimization-tools"
+      ],
+      "competitors_mentioned": [
+        "Writesonic",
+        "HubSpot",
+        "OtterlyAI",
+        "Peec",
+        "Profound",
+        "Goodie AI",
+        "Scrunch AI"
+      ],
+      "confidence": "high",
+      "notes": "Informational AEO answers cite established metrics/tool articles, not AIGraph yet."
+    },
+    {
+      "group": "comparison",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "Compare AIGraph with Profound for AI visibility monitoring.",
+      "business_mentioned": true,
+      "business_cited": false,
+      "answer_accuracy": "medium",
+      "citations": [
+        "https://nicklafferty.com/blog/best-ai-visibility-optimization-platforms/",
+        "https://www.rankability.com/blog/profound-ai-review/",
+        "https://otterly.ai/best-geo-and-ai-visibility-platforms-compared-2026/"
+      ],
+      "competitors_mentioned": [
+        "Profound",
+        "OtterlyAI",
+        "Peec AI",
+        "Promptwatch"
+      ],
+      "confidence": "low",
+      "notes": "Proxy response compared AIGraph and Profound, but AIGraph details were generic and not supported by Layer8Culture citations. Profound dominates authority."
+    },
+    {
+      "group": "comparison",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "What are alternatives to Profound for smaller businesses?",
+      "business_mentioned": true,
+      "business_cited": false,
+      "answer_accuracy": "medium",
+      "citations": [
+        "https://nicklafferty.com/blog/best-ai-visibility-optimization-platforms/",
+        "https://www.rankability.com/blog/profound-ai-review/",
+        "https://otterly.ai/best-geo-and-ai-visibility-platforms-compared-2026/"
+      ],
+      "competitors_mentioned": [
+        "Profound",
+        "OtterlyAI",
+        "Peec AI",
+        "Promptwatch"
+      ],
+      "confidence": "low",
+      "notes": "Proxy response compared AIGraph and Profound, but AIGraph details were generic and not supported by Layer8Culture citations. Profound dominates authority."
+    },
+    {
+      "group": "comparison",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "Shortlist three AI visibility monitoring options for a small business.",
+      "business_mentioned": false,
+      "business_cited": false,
+      "answer_accuracy": "unknown",
+      "citations": [
+        "https://otterly.ai/best-geo-and-ai-visibility-platforms-compared-2026/",
+        "https://surferstack.com/guides/peec-ai-vs-promptwatch-vs-profound-vs-otterly-ai-in-2026-which-platform-actually-moves-you-from-tracking-to-ranking",
+        "https://www.quattr.com/blog/ai-visibility-tools"
+      ],
+      "competitors_mentioned": [
+        "OtterlyAI",
+        "Peec AI",
+        "Promptwatch",
+        "Semrush",
+        "Ahrefs Brand Radar"
+      ],
+      "confidence": "high",
+      "notes": "Comparison prompts shortlist established tools. AIGraph is not yet naturally included."
+    },
+    {
+      "group": "comparison",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "Which AI visibility tools are best for agencies?",
+      "business_mentioned": false,
+      "business_cited": false,
+      "answer_accuracy": "unknown",
+      "citations": [
+        "https://otterly.ai/best-geo-and-ai-visibility-platforms-compared-2026/",
+        "https://surferstack.com/guides/peec-ai-vs-promptwatch-vs-profound-vs-otterly-ai-in-2026-which-platform-actually-moves-you-from-tracking-to-ranking",
+        "https://www.quattr.com/blog/ai-visibility-tools"
+      ],
+      "competitors_mentioned": [
+        "OtterlyAI",
+        "Peec AI",
+        "Promptwatch",
+        "Semrush",
+        "Ahrefs Brand Radar"
+      ],
+      "confidence": "high",
+      "notes": "Comparison prompts shortlist established tools. AIGraph is not yet naturally included."
+    },
+    {
+      "group": "comparison",
+      "engine": "Autonomous web-cited AI-search proxy",
+      "engine_type": "proxy",
+      "status": "completed_proxy",
+      "prompt": "Should a business use an AI visibility audit or an ongoing monitoring tool?",
+      "business_mentioned": false,
+      "business_cited": false,
+      "answer_accuracy": "unknown",
+      "citations": [
+        "https://hashmeta.com/blog/performance-metrics-for-answer-engines-the-complete-aeo-measurement-framework/",
+        "https://www.stackmatix.com/blog/aeo-metrics-kpis"
+      ],
+      "competitors_mentioned": [
+        "OtterlyAI",
+        "Peec AI",
+        "Profound"
+      ],
+      "confidence": "medium",
+      "notes": "Audit versus monitoring answers discuss the category but do not naturally cite AIGraph yet."
+    }
+  ],
+  "generated_at": "2026-07-01T19:11:03.226054+00:00",
+  "baseline_type": "autonomous_web_cited_proxy",
+  "limitations": [
+    "This is not true engine-specific ChatGPT, Perplexity, Gemini, Claude, or Google AI Overview data.",
+    "The baseline uses public web-cited search responses and should be replaced or supplemented when direct engine access is available.",
+    "Some mentions were prompted by including AIGraph in the query and are marked low-confidence."
+  ]
+}

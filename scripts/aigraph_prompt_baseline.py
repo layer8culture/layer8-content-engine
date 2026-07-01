@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import json
+import re
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
@@ -28,9 +29,12 @@ def summarize(data: dict[str, Any]) -> dict[str, Any]:
     citations = 0
     inaccurate = 0
     competitors = Counter()
+    source_domains = Counter()
+    status_counts = Counter()
 
     for item in results:
         group = str(item.get("group", "unknown"))
+        status_counts[str(item.get("status", "completed"))] += 1
         mentioned = bool(item.get("business_mentioned"))
         cited = bool(item.get("business_cited"))
         accurate = item.get("answer_accuracy", "unknown")
@@ -44,6 +48,10 @@ def summarize(data: dict[str, Any]) -> dict[str, Any]:
             inaccurate += 1
         for competitor in item.get("competitors_mentioned", []) or []:
             competitors[str(competitor)] += 1
+        for citation in item.get("citations", []) or []:
+            domain = citation_domain(str(citation))
+            if domain:
+                source_domains[domain] += 1
         group_counts[group]["runs"] += 1
 
     completed = len(results)
@@ -66,9 +74,20 @@ def summarize(data: dict[str, Any]) -> dict[str, Any]:
             }
             for group, counts in sorted(group_counts.items())
         },
+        "status_counts": status_counts.most_common(),
         "competitors": competitors.most_common(),
+        "source_domains": source_domains.most_common(),
         "search_terms": [term for term in [name, offer] if term],
     }
+
+
+def citation_domain(value: str) -> str:
+    match = re.search(r"https?://([^/\s]+)", value)
+    if match:
+        return match.group(1).lower().removeprefix("www.")
+    if "." in value and " " not in value:
+        return value.lower().removeprefix("www.")
+    return ""
 
 
 def write_markdown(summary: dict[str, Any], data: dict[str, Any], path: Path) -> None:
@@ -80,6 +99,7 @@ def write_markdown(summary: dict[str, Any], data: dict[str, Any], path: Path) ->
         "## Summary",
         "",
         f"- Business: {summary['business'].get('name', '')}",
+        f"- Baseline type: {data.get('baseline_type', 'manual_or_engine')}",
         f"- Expected runs: {summary['expected_runs']}",
         f"- Completed runs: {summary['completed_runs']}",
         f"- Completion rate: {summary['completion_rate']:.1%}",
@@ -87,11 +107,21 @@ def write_markdown(summary: dict[str, Any], data: dict[str, Any], path: Path) ->
         f"- Citation rate: {summary['citation_rate']:.1%}",
         f"- Inaccurate answer count: {summary['inaccurate_count']}",
         "",
+        "## Limitations",
+        "",
+    ]
+    limitations = data.get("limitations") or []
+    if limitations:
+        lines.extend(f"- {item}" for item in limitations)
+    else:
+        lines.append("- No limitations recorded.")
+    lines.extend([
+        "",
         "## Prompt group summary",
         "",
         "| Group | Runs | Mention rate | Citation rate |",
         "|---|---:|---:|---:|",
-    ]
+    ])
     for group, item in summary["group_summary"].items():
         lines.append(f"| {group} | {item['runs']} | {item['mention_rate']:.1%} | {item['citation_rate']:.1%} |")
     lines.extend(["", "## Competitors mentioned", ""])
@@ -100,6 +130,37 @@ def write_markdown(summary: dict[str, Any], data: dict[str, Any], path: Path) ->
             lines.append(f"- {competitor}: {count}")
     else:
         lines.append("- No competitor mentions recorded yet.")
+    lines.extend(["", "## Source domains", ""])
+    if summary["source_domains"]:
+        for domain, count in summary["source_domains"][:20]:
+            lines.append(f"- {domain}: {count}")
+    else:
+        lines.append("- No source domains recorded yet.")
+    lines.extend(["", "## Interpretation", ""])
+    if data.get("baseline_type") == "autonomous_web_cited_proxy":
+        lines.extend(
+            [
+                "- Branded Layer8Culture visibility is the strongest current signal.",
+                "- AIGraph category and niche visibility is still weak, which is expected because the offer just launched.",
+                "- Competitor and tool-list answers are dominated by established AEO/AI visibility platforms.",
+                "- AIGraph needs more indexable explanatory content, external citations, and case-study proof before it should appear naturally in category and comparison answers.",
+            ]
+        )
+    else:
+        lines.append("- Interpret results against prompt group, engine, and source coverage.")
+    lines.extend(["", "## Recommended next actions", ""])
+    lines.extend(
+        [
+            "1. Re-run this baseline after Google indexes the new AIGraph pages.",
+            "2. Publish at least one warm-business case study with before/after prompt visibility.",
+            "3. Add external citations and profiles that clearly describe AIGraph as an AI visibility audit and monitoring offer.",
+            "4. Create deeper resources around AI visibility metrics, audit examples, and ChatGPT visibility tracking.",
+            "5. Replace proxy rows with true ChatGPT, Perplexity, Gemini, Claude, and Google AI rows when authenticated access or APIs are available.",
+        ]
+    )
+    lines.extend(["", "## Status counts", ""])
+    for status, count in summary["status_counts"]:
+        lines.append(f"- {status}: {count}")
     lines.extend(["", "## How to fill results", ""])
     lines.append("For each prompt and engine, add an object to `results` with these fields:")
     lines.append("")
@@ -113,6 +174,8 @@ def write_markdown(summary: dict[str, Any], data: dict[str, Any], path: Path) ->
         "answer_accuracy": "unknown",
         "citations": [],
         "competitors_mentioned": [],
+        "status": "completed",
+        "engine_type": "true_engine_or_proxy",
         "notes": ""
     }, indent=2))
     lines.append("```")
