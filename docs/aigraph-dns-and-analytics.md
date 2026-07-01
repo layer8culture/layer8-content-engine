@@ -43,6 +43,7 @@ Selected stack:
 - Application Insights resource: `appi-aigraph-layer8culture`
 - Resource group: `rg-layer8culture`
 - Region: `eastus2`
+- Microsoft Clarity project ID: `xfqgiykq4y`
 
 The browser telemetry connection string is embedded in `site/aigraph-analytics.js`. This value is not a server secret. It identifies the public browser telemetry destination for page views and AIGraph CTA events.
 
@@ -58,9 +59,9 @@ The browser telemetry connection string is embedded in `site/aigraph-analytics.j
 
 ### Microsoft Clarity
 
-1. Create a Clarity project for `layer8culture.io`.
-2. Add the Clarity project ID to the site head or a small shared analytics include.
-3. Track clicks on AIGraph CTA links with `data-aigraph-event` attributes.
+1. Clarity project ID `xfqgiykq4y` is wired through `site/aigraph-analytics.js`.
+2. Track clicks on AIGraph CTA links with `data-aigraph-event` attributes.
+3. Review Clarity for sessions, scroll depth, dead clicks, rage clicks, and CTA behavior.
 
 ### Google Search Console
 

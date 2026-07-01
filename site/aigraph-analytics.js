@@ -1,5 +1,17 @@
 (function () {
+  var clarityProjectId = "xfqgiykq4y";
   var connectionString = "InstrumentationKey=fd7f9a68-fd29-4ad4-a440-ab802ba036b3;IngestionEndpoint=https://eastus2-3.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus2.livediagnostics.monitor.azure.com/;ApplicationId=fc6e462b-4c6b-4299-a072-1673ccda94e5";
+
+  (function (c, l, a, r, i, t, y) {
+    c[a] = c[a] || function () {
+      (c[a].q = c[a].q || []).push(arguments);
+    };
+    t = l.createElement(r);
+    t.async = 1;
+    t.src = "https://www.clarity.ms/tag/" + i;
+    y = l.getElementsByTagName(r)[0];
+    y.parentNode.insertBefore(t, y);
+  })(window, document, "clarity", "script", clarityProjectId);
 
   function init() {
     if (!window.Microsoft || !window.Microsoft.ApplicationInsights) {
@@ -39,6 +51,9 @@
             path: window.location.pathname,
             text: (target.textContent || "").trim().slice(0, 120)
           });
+          if (window.clarity) {
+            window.clarity("event", target.getAttribute("data-aigraph-event"));
+          }
           if (shouldDelayNavigation) {
             event.preventDefault();
             try {
