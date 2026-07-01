@@ -1,0 +1,25 @@
+{
+  "scores": {
+    "performance": 94,
+    "accessibility": 100,
+    "best-practices": 58,
+    "seo": 100
+  },
+  "best_practice_findings": [
+    {
+      "id": "deprecations",
+      "title": "Uses deprecated APIs",
+      "displayValue": "1 warning found"
+    },
+    {
+      "id": "third-party-cookies",
+      "title": "Uses third-party cookies",
+      "displayValue": "8 cookies found"
+    },
+    {
+      "id": "inspector-issues",
+      "title": "Issues were logged in the `Issues` panel in Chrome Devtools",
+      "displayValue": null
+    }
+  ]
+}
