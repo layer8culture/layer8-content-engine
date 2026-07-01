@@ -291,6 +291,37 @@ th {
   color: var(--muted);
 }
 
+.stack {
+  display: grid;
+  gap: 18px;
+}
+
+label {
+  color: var(--muted);
+  font-weight: 800;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  margin-top: 8px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 13px 14px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--white);
+  font: inherit;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button.button {
+  cursor: pointer;
+}
+
 .repo-meta {
   margin-top: 8px;
   color: var(--blue);

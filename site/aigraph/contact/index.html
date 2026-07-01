@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Request an AIGraph Audit | Layer8Culture</title>
+  <meta name="description" content="Request an AIGraph AI Visibility Audit or monthly monitoring plan for your business.">
+  <link rel="canonical" href="https://www.layer8culture.io/aigraph/contact/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Request an AIGraph Audit">
+  <meta property="og:description" content="Request an AI Visibility Audit or monthly monitoring plan for your business.">
+  <meta property="og:url" content="https://www.layer8culture.io/aigraph/contact/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Request an AIGraph Audit">
+  <meta name="twitter:description" content="Request an AI Visibility Audit or monthly monitoring plan for your business.">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Request an AIGraph Audit",
+    "url": "https://www.layer8culture.io/aigraph/contact/",
+    "description": "Request an AIGraph AI Visibility Audit or monthly monitoring plan."
+  }
+  </script>
+  <script src="https://js.monitor.azure.com/scripts/b/ai.3.gbl.min.js" crossorigin="anonymous"></script>
+  <script defer src="/aigraph-analytics.js"></script>
+</head>
+<body>
+  <main class="shell">
+    <nav class="nav">
+      <a class="mark" href="/aigraph/">AIGraph</a>
+      <div>Request an audit</div>
+    </nav>
+    <section class="hero">
+      <div class="eyebrow">Founding audit request</div>
+      <h1>Start with an AI visibility baseline.</h1>
+      <p class="lede">Tell us the business, category, and competitors you want AIGraph to evaluate. This first version opens your email client after tracking the form submit event.</p>
+    </section>
+
+    <section class="section">
+      <form id="aigraph-contact-form" class="stack">
+        <label>
+          Name<br>
+          <input required name="name" autocomplete="name">
+        </label>
+        <label>
+          Email<br>
+          <input required type="email" name="email" autocomplete="email">
+        </label>
+        <label>
+          Business website<br>
+          <input required type="url" name="website" placeholder="https://example.com">
+        </label>
+        <label>
+          Service category<br>
+          <input name="category" placeholder="Example: real estate investing, medspa, AI consulting">
+        </label>
+        <label>
+          Competitors<br>
+          <textarea name="competitors" rows="4" placeholder="List 2-3 competitors or alternatives."></textarea>
+        </label>
+        <label>
+          What are you interested in?<br>
+          <select name="interest">
+            <option>AI Visibility Audit</option>
+            <option>Monthly Monitoring</option>
+            <option>Founding Case Study</option>
+            <option>Not sure yet</option>
+          </select>
+        </label>
+        <button class="button" data-aigraph-event="contact_form_submit" type="submit">Prepare audit request</button>
+      </form>
+    </section>
+  </main>
+  <footer class="footer"><div class="shell">Layer8Culture</div></footer>
+  <script>
+    (function () {
+      var form = document.getElementById("aigraph-contact-form");
+      if (!form) return;
+      if (window.aigraphTrack) {
+        window.aigraphTrack("contact_form_view", { path: window.location.pathname });
+      }
+      var started = false;
+      form.addEventListener("input", function () {
+        if (!started && window.aigraphTrack) {
+          started = true;
+          window.aigraphTrack("contact_form_start", { path: window.location.pathname });
+        }
+      });
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var data = new FormData(form);
+        var subject = "AIGraph audit request: " + (data.get("website") || "");
+        var body = [
+          "Name: " + (data.get("name") || ""),
+          "Email: " + (data.get("email") || ""),
+          "Website: " + (data.get("website") || ""),
+          "Category: " + (data.get("category") || ""),
+          "Competitors: " + (data.get("competitors") || ""),
+          "Interest: " + (data.get("interest") || "")
+        ].join("\n");
+        if (window.aigraphTrack) {
+          window.aigraphTrack("contact_form_submit", {
+            path: window.location.pathname,
+            interest: data.get("interest") || ""
+          });
+        }
+        window.setTimeout(function () {
+          window.location.href = "mailto:hello@layer8culture.io?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+        }, 250);
+      });
+    })();
+  </script>
+</body>
+</html>

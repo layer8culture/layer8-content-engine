@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-01T16:16:52.484320+00:00",
+  "generated_at": "2026-07-01T18:12:58.896768+00:00",
   "base_url": "https://www.layer8culture.io",
   "pages": [
     {
@@ -7,7 +7,7 @@
       "status": 200,
       "final_url": "https://www.layer8culture.io/",
       "content_type": "text/html",
-      "bytes": 3752,
+      "bytes": 3833,
       "error": "",
       "title": "Layer8Culture | AI Fluency, Creator Systems, and AIGraph",
       "title_length": 56,
@@ -33,7 +33,7 @@
       "status": 200,
       "final_url": "https://www.layer8culture.io/aigraph/",
       "content_type": "text/html",
-      "bytes": 6268,
+      "bytes": 8395,
       "error": "",
       "title": "AIGraph | AI Visibility Intelligence by Layer8Culture",
       "title_length": 53,
@@ -44,16 +44,18 @@
       "h1": [
         "Know how AI answer engines see your business."
       ],
-      "h2_count": 4,
-      "structured_data_count": 1,
+      "h2_count": 5,
+      "structured_data_count": 3,
       "og_title_present": true,
       "twitter_title_present": true,
-      "internal_link_count": 4,
+      "internal_link_count": 8,
       "internal_links": [
         "/",
-        "/aigraph/ai-visibility-audit/",
+        "/aigraph/contact/",
         "/aigraph/monthly-monitoring/",
-        "/aigraph/resources/ai-visibility-checklist/"
+        "/aigraph/resources/aeo-vs-seo/",
+        "/aigraph/resources/ai-visibility-checklist/",
+        "/aigraph/resources/what-is-ai-visibility/"
       ]
     },
     {
@@ -61,7 +63,7 @@
       "status": 200,
       "final_url": "https://www.layer8culture.io/aigraph/ai-visibility-audit/",
       "content_type": "text/html",
-      "bytes": 4127,
+      "bytes": 5118,
       "error": "",
       "title": "AI Visibility Audit | AIGraph",
       "title_length": 29,
@@ -73,12 +75,13 @@
         "Find out what AI says before your buyers do."
       ],
       "h2_count": 3,
-      "structured_data_count": 1,
+      "structured_data_count": 2,
       "og_title_present": true,
       "twitter_title_present": true,
-      "internal_link_count": 2,
+      "internal_link_count": 4,
       "internal_links": [
         "/aigraph/",
+        "/aigraph/contact/",
         "/aigraph/monthly-monitoring/"
       ]
     },
@@ -87,7 +90,7 @@
       "status": 200,
       "final_url": "https://www.layer8culture.io/aigraph/monthly-monitoring/",
       "content_type": "text/html",
-      "bytes": 3973,
+      "bytes": 4984,
       "error": "",
       "title": "Monthly AI Visibility Monitoring | AIGraph",
       "title_length": 42,
@@ -99,12 +102,13 @@
         "AI visibility changes. Monitor it monthly."
       ],
       "h2_count": 3,
-      "structured_data_count": 1,
+      "structured_data_count": 2,
       "og_title_present": true,
       "twitter_title_present": true,
-      "internal_link_count": 1,
+      "internal_link_count": 2,
       "internal_links": [
-        "/aigraph/"
+        "/aigraph/",
+        "/aigraph/contact/"
       ]
     },
     {
@@ -112,7 +116,7 @@
       "status": 200,
       "final_url": "https://www.layer8culture.io/aigraph/case-studies/",
       "content_type": "text/html",
-      "bytes": 3231,
+      "bytes": 3282,
       "error": "",
       "title": "AIGraph Case Studies | Layer8Culture",
       "title_length": 36,
@@ -127,10 +131,11 @@
       "structured_data_count": 1,
       "og_title_present": true,
       "twitter_title_present": true,
-      "internal_link_count": 2,
+      "internal_link_count": 3,
       "internal_links": [
         "/aigraph/",
-        "/aigraph/case-studies/layer8culture-baseline/"
+        "/aigraph/case-studies/layer8culture-baseline/",
+        "/aigraph/contact/"
       ]
     },
     {
@@ -138,7 +143,7 @@
       "status": 200,
       "final_url": "https://www.layer8culture.io/aigraph/case-studies/layer8culture-baseline/",
       "content_type": "text/html",
-      "bytes": 5419,
+      "bytes": 5439,
       "error": "",
       "title": "Layer8Culture AIGraph Baseline Case Study",
       "title_length": 41,
@@ -156,7 +161,84 @@
       "internal_link_count": 2,
       "internal_links": [
         "/aigraph/",
-        "/aigraph/ai-visibility-audit/"
+        "/aigraph/contact/"
+      ]
+    },
+    {
+      "url": "https://www.layer8culture.io/aigraph/contact/",
+      "status": 200,
+      "final_url": "https://www.layer8culture.io/aigraph/contact/",
+      "content_type": "text/html",
+      "bytes": 4970,
+      "error": "",
+      "title": "Request an AIGraph Audit | Layer8Culture",
+      "title_length": 40,
+      "description": "Request an AIGraph AI Visibility Audit or monthly monitoring plan for your business.",
+      "description_length": 84,
+      "canonical": "https://www.layer8culture.io/aigraph/contact/",
+      "h1_count": 1,
+      "h1": [
+        "Start with an AI visibility baseline."
+      ],
+      "h2_count": 0,
+      "structured_data_count": 1,
+      "og_title_present": true,
+      "twitter_title_present": true,
+      "internal_link_count": 1,
+      "internal_links": [
+        "/aigraph/"
+      ]
+    },
+    {
+      "url": "https://www.layer8culture.io/aigraph/resources/what-is-ai-visibility/",
+      "status": 200,
+      "final_url": "https://www.layer8culture.io/aigraph/resources/what-is-ai-visibility/",
+      "content_type": "text/html",
+      "bytes": 3760,
+      "error": "",
+      "title": "What Is AI Visibility? | AIGraph",
+      "title_length": 32,
+      "description": "AI visibility is how accurately AI answer engines describe, cite, and recommend a business when buyers ask questions.",
+      "description_length": 117,
+      "canonical": "https://www.layer8culture.io/aigraph/resources/what-is-ai-visibility/",
+      "h1_count": 1,
+      "h1": [
+        "What is AI visibility?"
+      ],
+      "h2_count": 3,
+      "structured_data_count": 1,
+      "og_title_present": true,
+      "twitter_title_present": true,
+      "internal_link_count": 2,
+      "internal_links": [
+        "/aigraph/",
+        "/aigraph/contact/"
+      ]
+    },
+    {
+      "url": "https://www.layer8culture.io/aigraph/resources/aeo-vs-seo/",
+      "status": 200,
+      "final_url": "https://www.layer8culture.io/aigraph/resources/aeo-vs-seo/",
+      "content_type": "text/html",
+      "bytes": 3763,
+      "error": "",
+      "title": "AEO vs SEO | AIGraph",
+      "title_length": 20,
+      "description": "AEO is the answer-engine layer on top of SEO. Learn how AEO and SEO work together for AI visibility.",
+      "description_length": 100,
+      "canonical": "https://www.layer8culture.io/aigraph/resources/aeo-vs-seo/",
+      "h1_count": 1,
+      "h1": [
+        "AEO does not replace SEO. It exposes the next layer."
+      ],
+      "h2_count": 3,
+      "structured_data_count": 1,
+      "og_title_present": true,
+      "twitter_title_present": true,
+      "internal_link_count": 2,
+      "internal_links": [
+        "/aigraph/",
+        "/aigraph/contact/"
       ]
     },
     {
@@ -164,7 +246,7 @@
       "status": 200,
       "final_url": "https://www.layer8culture.io/aigraph/resources/ai-visibility-checklist/",
       "content_type": "text/html",
-      "bytes": 3353,
+      "bytes": 3433,
       "error": "",
       "title": "AI Visibility Checklist | AIGraph",
       "title_length": 33,
@@ -182,7 +264,7 @@
       "internal_link_count": 2,
       "internal_links": [
         "/aigraph/",
-        "/aigraph/ai-visibility-audit/"
+        "/aigraph/contact/"
       ]
     },
     {
@@ -190,7 +272,7 @@
       "status": 200,
       "final_url": "https://www.layer8culture.io/guides/mcp-explained-without-the-hype/",
       "content_type": "text/html",
-      "bytes": 12193,
+      "bytes": 12171,
       "error": "",
       "title": "MCP Explained Without the Hype | Layer8Culture",
       "title_length": 46,
@@ -215,7 +297,7 @@
       "status": 200,
       "final_url": "https://www.layer8culture.io/robots.txt",
       "content_type": "text/plain",
-      "bytes": 78,
+      "bytes": 74,
       "error": "",
       "title": "",
       "title_length": 0,
@@ -236,7 +318,7 @@
       "status": 200,
       "final_url": "https://www.layer8culture.io/sitemap.xml",
       "content_type": "text/xml",
-      "bytes": 841,
+      "bytes": 1085,
       "error": "",
       "title": "",
       "title_length": 0,
@@ -257,7 +339,7 @@
       "status": 200,
       "final_url": "https://www.layer8culture.io/llms.txt",
       "content_type": "text/plain",
-      "bytes": 1130,
+      "bytes": 1285,
       "error": "",
       "title": "",
       "title_length": 0,
