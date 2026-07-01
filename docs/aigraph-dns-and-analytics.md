@@ -65,10 +65,12 @@ The browser telemetry connection string is embedded in `site/aigraph-analytics.j
 
 ### Google Search Console
 
-1. Add a URL-prefix property for `https://www.layer8culture.io/` or a domain property for `layer8culture.io`.
-2. Use either DNS verification through HostGator or an HTML verification file under `site/`.
-3. Submit `https://www.layer8culture.io/sitemap.xml`.
-4. Track AIGraph queries, impressions, clicks, CTR, indexed URLs, and page coverage.
+1. Domain is already verified under `layer8culture@gmail.com`.
+2. Submit `https://www.layer8culture.io/sitemap.xml` inside Google Search Console.
+3. Track AIGraph queries, impressions, clicks, CTR, indexed URLs, and page coverage.
+4. Export Search Console performance CSVs into `analytics/aigraph/gsc-exports/` or connect the Search Console API later.
+
+Note: the legacy public sitemap ping endpoints are deprecated. Google returned `404` for `https://www.google.com/ping?sitemap=...`, and Bing returned `410` for `https://www.bing.com/ping?sitemap=...`. Use Search Console UI or API submission instead.
 
 ## No DNS change required for the first launch
 
