@@ -1,9 +1,13 @@
-name: Publish to Postiz (on approval merge)
+name: Publish approved social posts
 
 on:
   push:
     branches: [main]
     paths: ["queue/**"]
+
+concurrency:
+  group: publish-main
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -13,6 +17,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Refresh main
+        run: |
+          git fetch origin main
+          git pull --ff-only origin main
 
       - uses: actions/setup-python@v5
         with:
@@ -27,21 +38,45 @@ jobs:
           YOUTUBE_LAYER8_CHANNEL_ID: ${{ secrets.YOUTUBE_LAYER8_CHANNEL_ID }}
           YOUTUBE_LOFI_CHANNEL_ID: ${{ secrets.YOUTUBE_LOFI_CHANNEL_ID }}
           DEALLAB_IG_CHANNEL_ID: ${{ secrets.DEALLAB_IG_CHANNEL_ID }}
+          DEALLAB_PUBLISHER: ${{ vars.DEALLAB_PUBLISHER }}
+          GHL_ACCESS_TOKEN: ${{ secrets.GHL_ACCESS_TOKEN }}
+          GHL_LOCATION_ID: ${{ secrets.GHL_LOCATION_ID }}
+          GHL_DEALLAB_INSTAGRAM_ACCOUNT_ID: ${{ secrets.GHL_DEALLAB_INSTAGRAM_ACCOUNT_ID }}
+          GHL_BASE_URL: ${{ vars.GHL_BASE_URL }}
+          GHL_API_VERSION: ${{ vars.GHL_API_VERSION }}
+          GHL_MEDIA_BASE_URL: ${{ vars.GHL_MEDIA_BASE_URL }}
         run: |
           pip install requests
-          shopt -s nullglob
-          files=(queue/*.json)
-          if [ ${#files[@]} -eq 0 ]; then echo "No queue file."; exit 0; fi
-          # Publish every approved queue file; the script archives each to posted/.
+          mapfile -t files < <(python scripts/changed_queue_files.py --fallback-all)
+          if [ ${#files[@]} -eq 0 ]; then echo "No changed queue file."; exit 0; fi
+          # Publish only the queue files introduced or changed by this push.
+          DEAL_LAB_PUBLISHER="${DEALLAB_PUBLISHER,,}"
           for QUEUE_FILE in "${files[@]}"; do
             echo "Publishing $QUEUE_FILE"
-            python scripts/post_to_postiz.py "$QUEUE_FILE"
+            if [[ "$QUEUE_FILE" == queue/deallab-*.json && ( "$DEAL_LAB_PUBLISHER" == "gohighlevel" || "$DEAL_LAB_PUBLISHER" == "ghl" ) ]]; then
+              python scripts/post_to_ghl.py "$QUEUE_FILE"
+            else
+              python scripts/post_to_postiz.py "$QUEUE_FILE"
+            fi
           done
+          python scripts/postiz_dedupe.py --apply
 
       - name: Commit archive
         run: |
           git config user.name "layer8-engine"
           git config user.email "engine@layer8culture.io"
           git add posted/ queue/
-          git diff --cached --quiet || git commit -m "Archive published posts"
-          git push
+          if git diff --cached --quiet; then
+            echo "No archive changes."
+            exit 0
+          fi
+          git commit -m "Archive published posts"
+          for attempt in 1 2 3; do
+            if git push; then
+              exit 0
+            fi
+            echo "Push failed on attempt $attempt, rebasing before retry."
+            git pull --rebase --autostash origin main
+          done
+          echo "Archive push failed after retries."
+          exit 1
