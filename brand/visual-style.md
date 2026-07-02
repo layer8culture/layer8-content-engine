@@ -47,15 +47,27 @@ detail, or busy elements there) so a branded headline can be composited over it.
 
 ## TYPOGRAPHY OVERLAY (composited after generation - do NOT ask the model to render it)
 # The image models render garbled text, so openai_gen.py composites clean brand
-# type onto each image, infographic / title-card style. The generation step
-# supplies the words via the post's visual.headline / visual.subtext fields.
-# - Headline: Space Grotesk Bold, UPPERCASE, wide tracking, large and cinematic.
-#   Soft White #F5F5F5, with an optional single Electric Blue #0047FF accent word
-#   (visual.accent). Keep it SHORT — ideally 2–5 words, max ~7.
+# type onto each image. The generation step supplies the words via the post's
+# visual.headline / visual.subtext fields.
+# - Main Layer8Culture social standard: Bebas Neue condensed all-caps headlines
+#   across both brand title-card and Editorial Drop layouts.
+# - Accent color for main account typography is Electric Blue only.
+# - Use a mix of `visual.typography_preset: "brand_title_card"` and
+#   `visual.typography_preset: "editorial_drop"` across a batch.
 # - Subtext: Inter, one short supporting line (optional), Soft White.
 # - A deep-black bottom scrim is added automatically for legibility. No wordmark is
 #   composited on posts. Because the message lives in the typography, the generated
 #   background should be atmospheric and varied, not literal.
+
+## EDITORIAL DROP TYPOGRAPHY STANDARD
+# Editorial Drop is one of the standard Layer8Culture social layouts, paired with
+# the brand title-card layout for variety. It uses Bebas Neue condensed display
+# headlines, oversized all-caps type, strong bottom gradient, white plus Electric
+# Blue emphasis words, an optional small kicker label, and an optional footer cue
+# such as "SWIPE FOR MORE". It should feel like a premium creator-tech editorial
+# card, not a generic AI art title slide.
+# Sora may create motion or effect previews, but it must not render the words.
+# All readable text is composited afterward by the renderer.
 
 ## PER-FORMAT VISUAL NOTES (single / carousel / reel / story)
 # Same color system, BASE PROMPT, and NEGATIVE PROMPT apply to every format.
@@ -64,6 +76,8 @@ detail, or busy elements there) so a branded headline can be composited over it.
 #   look cohesive (same palette/energy) but give each slide a DISTINCT scene so the
 #   set doesn't look like one image repeated. Slide 1 (cover) = the boldest, most
 #   scroll-stopping frame; the final slide = a clean CTA frame.
+#   For Editorial Drop carousels, slides may set `media_type: "video"` to export
+#   that slide as an MP4 in the ordered carousel.
 # - reel: the openai_prompt makes the BASE STILL that gets animated (Ken Burns +
 #   on-screen beats). Compose it 9:16 with the LOWER THIRD kept clean for the
 #   headline AND the UPPER THIRD kept calm/simple — animated text "beats" are
@@ -180,8 +194,9 @@ lighting"
 #   caption/first_comment.
 
 ## Typography note (for graphics with text)
-Space Grotesk for headlines (uppercase, wide tracking for labels), Inter for
-body. Headlines large and cinematic against deep negative space.
+Bebas Neue for main social headlines, Inter for supporting copy. Space Grotesk may
+remain for secondary labels or legacy surfaces. Headlines are large and cinematic
+against deep negative space.
 
 ## File naming standards (Section 27)
 - Tech Thursday: tech-thursday-thumbnail-YYYY-MM-DD.png

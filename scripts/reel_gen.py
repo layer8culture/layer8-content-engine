@@ -36,9 +36,11 @@ HEIGHT = 1920
 FPS = 30
 MAX_REEL_SEC = 60.0
 MAX_CLIP_SEC = 45.0
+CAROUSEL_VIDEO_SEC = 4.0
 
 OUT_DIR = pathlib.Path("assets/generated")
 FONT_PATH = pathlib.Path("assets/fonts/SpaceGrotesk-Variable.ttf")
+DISPLAY_FONT_PATH = pathlib.Path("assets/fonts/BebasNeue-Regular.ttf")
 TRANSCRIPTS_DIR = pathlib.Path("transcripts")
 LOFI_BEDS = [
     pathlib.Path("assets/library/lofi-bed.mp3"),
@@ -274,6 +276,7 @@ def drawtext_filter(
     fontsize: int,
     start: float | None = None,
     end: float | None = None,
+    font_path: pathlib.Path = FONT_PATH,
 ) -> str:
     alpha = "1"
     enable = ""
@@ -289,7 +292,7 @@ def drawtext_filter(
 
     return (
         "drawtext="
-        f"fontfile='{escape_filter_path(FONT_PATH)}'"
+        f"fontfile='{escape_filter_path(font_path)}'"
         f":text='{escape_drawtext(text)}'"
         f":fontcolor={SOFT_WHITE}"
         f":fontsize={fontsize}"
@@ -303,7 +306,8 @@ def drawtext_filter(
     )
 
 
-def motion_video_filter(duration: float, beats: list[str]) -> str:
+def motion_video_filter(duration: float, beats: list[str],
+                        font_path: pathlib.Path = FONT_PATH) -> str:
     frames = max(1, int(math.ceil(duration * FPS)))
     zoom = (
         "zoompan="
@@ -333,9 +337,18 @@ def motion_video_filter(duration: float, beats: list[str]) -> str:
                     62,
                     start=start,
                     end=end,
+                    font_path=font_path,
                 )
             )
     return ",".join(filters)
+
+
+def typography_font_for(post: dict) -> pathlib.Path:
+    visual = post.get("visual") or {}
+    preset = str(visual.get("typography_preset") or "").strip()
+    if (preset == "editorial_drop" or post.get("account") == "layer8culture") and DISPLAY_FONT_PATH.exists():
+        return DISPLAY_FONT_PATH
+    return FONT_PATH
 
 
 def audio_filter(duration: float) -> str:
@@ -348,7 +361,9 @@ def audio_filter(duration: float) -> str:
 
 
 def export_cover(video_path: pathlib.Path, cover_path: pathlib.Path, post_id: str,
-                 timestamp: float = 0.1) -> bool:
+                 timestamp: float = 0.1,
+                 size: tuple[int, int] = (WIDTH, HEIGHT)) -> bool:
+    width, height = size
     args = [
         "ffmpeg",
         "-y",
@@ -359,7 +374,7 @@ def export_cover(video_path: pathlib.Path, cover_path: pathlib.Path, post_id: st
         "-frames:v",
         "1",
         "-vf",
-        f"scale={WIDTH}:{HEIGHT}:force_original_aspect_ratio=increase,crop={WIDTH}:{HEIGHT}",
+        f"scale={width}:{height}:force_original_aspect_ratio=increase,crop={width}:{height}",
         str(cover_path),
     ]
     return run_ffmpeg(args, post_id, "cover export")
@@ -374,12 +389,12 @@ def find_lofi_bed() -> pathlib.Path | None:
 
 # --- Viral overlay (huge burned-in text beats on a Sora clip) ----------------
 # layer8culture's short-form videos use the viral format (brand/viral-formats.md):
-# Sora renders the cinematic 9:16 clip, then we burn big Space Grotesk text beats
+# Sora renders the cinematic 9:16 clip, then we burn big Bebas Neue text beats
 # onto it on a 3-beat arc (hook / transformation cue / punchline-CTA). Text sits in
 # the upper band, clear of the bottom caption/UI zone. Font auto-fits so the longest
 # line always stays inside the frame (no horizontal overflow).
-VIRAL_OVERLAY_FONTSIZE_MAX = 76
-VIRAL_OVERLAY_FONTSIZE_MIN = 44
+VIRAL_OVERLAY_FONTSIZE_MAX = 118
+VIRAL_OVERLAY_FONTSIZE_MIN = 56
 VIRAL_OVERLAY_WRAP = 15           # max chars per line before wrapping
 VIRAL_OVERLAY_Y = "h*0.16"
 VIRAL_DEFAULT_SPAN = 10.0  # fallback total seconds when beats omit timings
@@ -388,7 +403,7 @@ VIRAL_DEFAULT_SPAN = 10.0  # fallback total seconds when beats omit timings
 def _fit_fontsize(wrapped: str) -> int:
     """Largest font (within bounds) whose widest line fits ~84% of the frame width.
 
-    Space Grotesk uppercase glyphs average ~0.56*fontsize wide, so the widest line
+    Condensed uppercase glyphs average ~0.56*fontsize wide, so the widest line
     is ~0.56*fontsize*len; solve for fontsize and clamp. Prevents the overflow seen
     when a long hook was rendered at a fixed big size.
     """
@@ -431,10 +446,11 @@ def _coerce_beats(raw) -> list[dict]:
 
 
 def overlay_beats_on_video(video_path: pathlib.Path, raw_beats,
-                           out_path: pathlib.Path, post_id: str) -> bool:
+                           out_path: pathlib.Path, post_id: str,
+                           font_path: pathlib.Path = FONT_PATH) -> bool:
     """Burn the viral big-text beats onto an existing (Sora) mp4 via ffmpeg.
 
-    Each beat shows between its start/end as a large centered Space Grotesk overlay
+    Each beat shows between its start/end as a large centered display-type overlay
     (with the shared box + shadow style); Sora's audio is preserved. Returns True on
     success, False if there are no usable beats or ffmpeg fails.
     """
@@ -451,6 +467,7 @@ def overlay_beats_on_video(video_path: pathlib.Path, raw_beats,
                 _fit_fontsize(wrapped),
                 start=b["start"],
                 end=b["end"],
+                font_path=font_path,
             )
         )
     args = [
@@ -498,7 +515,7 @@ def generate_motion(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None
         audio_input = "1:a"
 
     filter_complex = (
-        f"[0:v]{motion_video_filter(duration, beats)}[v];"
+        f"[0:v]{motion_video_filter(duration, beats, typography_font_for(post))}[v];"
         f"[{audio_input}]{audio_filter(duration)}[a]"
     )
     args.extend([
@@ -526,7 +543,8 @@ def generate_motion(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None
     ])
     if not run_ffmpeg(args, post_id, "motion render"):
         return None
-    if not export_cover(out_path, cover_path, post_id):
+    cover_ts = 0.75 if beats else 0.1
+    if not export_cover(out_path, cover_path, post_id, timestamp=cover_ts):
         return None
     print(f"  + {post_id} -> {out_path}")
     return str(out_path), str(cover_path)
@@ -568,7 +586,8 @@ def clip_times(clip: dict, reel: dict) -> tuple[float, float] | None:
     return start, end
 
 
-def clip_video_filter(headline: str | None) -> str:
+def clip_video_filter(headline: str | None,
+                      font_path: pathlib.Path = FONT_PATH) -> str:
     filters = [
         f"scale={WIDTH}:{HEIGHT}:force_original_aspect_ratio=increase",
         f"crop={WIDTH}:{HEIGHT}",
@@ -579,7 +598,8 @@ def clip_video_filter(headline: str | None) -> str:
             drawtext_filter(
                 wrap_text(headline, max_chars=18, max_lines=3),
                 "h-(text_h+220)",
-                64,
+                92,
+                font_path=font_path,
             )
         )
     return ",".join(filters)
@@ -642,7 +662,7 @@ def generate_clip(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None:
         audio_chain = "[0:a]loudnorm=I=-16:TP=-1.5:LRA=11[a]"
 
     filter_complex = (
-        f"[0:v]{clip_video_filter(visual.get('headline'))}[v];"
+        f"[0:v]{clip_video_filter(visual.get('headline'), typography_font_for(post))}[v];"
         f"{audio_chain}"
     )
     args.extend([
@@ -816,7 +836,13 @@ def generate_sora(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None:
             beats = reel.get("overlay_beats")
             if beats:
                 tmp = out_dir / f"{post_id}-textovl.mp4"
-                if overlay_beats_on_video(out_path, beats, tmp, post_id):
+                if overlay_beats_on_video(
+                    out_path,
+                    beats,
+                    tmp,
+                    post_id,
+                    typography_font_for(post),
+                ):
                     tmp.replace(out_path)
                     coerced = _coerce_beats(beats)
                     if coerced:
@@ -861,6 +887,73 @@ def generate(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None:
     except Exception as e:  # noqa: BLE001 - one bad reel must not abort the queue
         print(f"  x {post_id}: reel generation failed ({e})")
         return None
+
+
+def _carousel_canvas(aspect: str) -> tuple[int, int]:
+    if aspect == "1:1":
+        return 1080, 1080
+    return WIDTH, HEIGHT
+
+
+def render_carousel_video_slide(post: dict, slide: dict, index: int,
+                                out_dir: pathlib.Path) -> str | None:
+    """Turn a rendered carousel still into an MP4 slide."""
+    post_id = str(post.get("id", "")).strip()
+    if not post_id:
+        return None
+    slide_id = f"{post_id}-{index}"
+    still_path = out_dir / f"{slide_id}.png"
+    if not still_path.exists():
+        print(f"  ! {slide_id}: carousel video still missing")
+        return None
+    visual = post.get("visual") or {}
+    aspect = str(slide.get("aspect") or visual.get("aspect") or "1:1")
+    width, height = _carousel_canvas(aspect)
+    duration = float(slide.get("duration_sec") or CAROUSEL_VIDEO_SEC)
+    out_path = out_dir / f"{slide_id}.mp4"
+    cover_path = out_dir / f"{slide_id}-cover.png"
+    vf = (
+        f"scale={width}:{height}:force_original_aspect_ratio=increase,"
+        f"crop={width}:{height},format=yuv420p"
+    )
+    args = [
+        "ffmpeg", "-y", "-loop", "1", "-t", f"{duration:.2f}",
+        "-i", str(still_path), "-vf", vf, "-r", str(FPS),
+        "-c:v", "libx264", "-preset", "medium", "-crf", "18",
+        "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(out_path),
+    ]
+    if not run_ffmpeg(args, slide_id, "carousel video slide"):
+        return None
+    if not export_cover(out_path, cover_path, slide_id, timestamp=0.2, size=(width, height)):
+        return None
+    print(f"  + {slide_id} -> {out_path} (carousel video)")
+    return str(out_path)
+
+
+def render_carousel_video_slides(post: dict, out_dir: pathlib.Path) -> bool:
+    """Replace selected carousel still paths with video paths in visual.files."""
+    if post.get("format") != "carousel":
+        return False
+    visual = post.get("visual") or {}
+    slides = visual.get("slides") or []
+    if not slides:
+        return False
+    files = list(visual.get("files") or [])
+    changed = False
+    for index, slide in enumerate(slides, 1):
+        if str(slide.get("media_type") or "").lower() != "video":
+            continue
+        path = render_carousel_video_slide(post, slide, index, out_dir)
+        if not path:
+            continue
+        while len(files) < index:
+            files.append(str(out_dir / f"{post['id']}-{len(files) + 1}.png"))
+        files[index - 1] = path
+        changed = True
+    if changed:
+        visual["files"] = files
+        visual["file"] = files[0]
+    return changed
 
 
 def resolve_crosspost(post: dict, out_dir: pathlib.Path) -> bool:
@@ -919,6 +1012,10 @@ def main(queue_file: str) -> None:
                 visual = post.setdefault("visual", {})
                 visual["file"] = file_path
                 visual["cover"] = cover_path
+
+    # Pass 1b: convert selected carousel slides into ordered MP4 slide files.
+    for post in posts:
+        render_carousel_video_slides(post, OUT_DIR)
 
     # Pass 2: resolve cross-posts (e.g. TikTok) that reuse a pass-1 reel's mp4.
     # Run second so it's independent of post order in the queue.

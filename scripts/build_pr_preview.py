@@ -53,7 +53,7 @@ def carousel_slide_files(post: dict, post_id: str, assets_dir: pathlib.Path) -> 
     """Ordered carousel slide filenames (``<id>-1.png`` …).
 
     Prefers the paths the generator wrote back to ``visual.files``; otherwise
-    discovers ``<id>-N.png`` on disk; otherwise falls back to the declared slide
+    discovers ``<id>-N`` media on disk; otherwise falls back to the declared slide
     count so a preview can still be built offline (missing files are flagged by
     the caller).
     """
@@ -62,7 +62,11 @@ def carousel_slide_files(post: dict, post_id: str, assets_dir: pathlib.Path) -> 
     if files:
         return [_basename(f) for f in files]
     discovered = sorted(
-        (p.name for p in assets_dir.glob(f"{post_id}-*.png")),
+        (
+            p.name for p in assets_dir.glob(f"{post_id}-*.*")
+            if p.suffix.lower() in (".png", ".jpg", ".jpeg", ".mp4", ".mov")
+            and not p.stem.endswith("-cover")
+        ),
         key=lambda n: _slide_index(n, post_id),
     )
     if discovered:
@@ -72,7 +76,7 @@ def carousel_slide_files(post: dict, post_id: str, assets_dir: pathlib.Path) -> 
 
 
 def _slide_index(name: str, post_id: str) -> int:
-    m = re.match(rf"^{re.escape(post_id)}-(\d+)\.png$", name)
+    m = re.match(rf"^{re.escape(post_id)}-(\d+)\.(png|jpe?g|mp4|mov)$", name, re.I)
     return int(m.group(1)) if m else 1 << 30
 
 
@@ -103,12 +107,25 @@ def render_media(post: dict, repo: str, sha: str, assets_dir: pathlib.Path) -> s
         cells = []
         for i, fname in enumerate(slides, 1):
             if exists(fname):
-                cells.append(
-                    f"{_img(raw_url(repo, sha, fname), WIDTH_SLIDE, f'Slide {i}')}"
-                    f"<br><sub>Slide {i}</sub>"
-                )
+                suffix = pathlib.PurePosixPath(fname).suffix.lower()
+                if suffix in (".mp4", ".mov"):
+                    stem = pathlib.PurePosixPath(fname).stem
+                    cover = f"{stem}-cover.png"
+                    if exists(cover):
+                        media = _img(raw_url(repo, sha, cover), WIDTH_SLIDE, f"Slide {i} video")
+                    else:
+                        media = "🎬"
+                    cells.append(
+                        f"{media}<br><sub>Slide {i} video: "
+                        f"<a href=\"{raw_url(repo, sha, fname)}\">watch</a></sub>"
+                    )
+                else:
+                    cells.append(
+                        f"{_img(raw_url(repo, sha, fname), WIDTH_SLIDE, f'Slide {i}')}"
+                        f"<br><sub>Slide {i}</sub>"
+                    )
             else:
-                cells.append(f"⚠️ <sub>Slide {i} image missing</sub>")
+                cells.append(f"⚠️ <sub>Slide {i} media missing</sub>")
         return " ".join(cells)
 
     if fmt == "reel":
@@ -149,6 +166,28 @@ def render_hashtags(post: dict) -> str | None:
     return f"**Hashtags:** {line}"
 
 
+def render_comment_to_dm(post: dict) -> str | None:
+    """Display reviewed comment-to-DM campaign copy when present."""
+    campaign = post.get("comment_to_dm")
+    if not isinstance(campaign, dict) or not campaign:
+        return None
+
+    labels = [
+        ("Campaign", campaign.get("campaign")),
+        ("Keyword", campaign.get("keyword")),
+        ("Offer", campaign.get("offer")),
+        ("Guide URL", campaign.get("guide_url")),
+        ("Public reply", campaign.get("public_reply")),
+        ("DM prompt", campaign.get("dm_prompt")),
+        ("Route", campaign.get("route")),
+    ]
+    lines = ["**Comment-to-DM:**"]
+    for label, value in labels:
+        if value:
+            lines.append(f"- **{label}:** {value}")
+    return "\n".join(lines)
+
+
 def render_post(post: dict, n: int, repo: str, sha: str, assets_dir: pathlib.Path) -> str:
     fmt = post.get("format", DEFAULT_FORMAT)
     emoji, label = FORMAT_META.get(fmt, FORMAT_META[DEFAULT_FORMAT])
@@ -172,6 +211,9 @@ def render_post(post: dict, n: int, repo: str, sha: str, assets_dir: pathlib.Pat
     first_comment = post.get("first_comment")
     if first_comment:
         lines += ["", f"**First comment:** {first_comment}"]
+    comment_to_dm = render_comment_to_dm(post)
+    if comment_to_dm:
+        lines += ["", comment_to_dm]
     if post.get("trial_reel"):
         lines += ["", "_Trial reel: shown to non-followers first._"]
     collaborators = post.get("collaborators") or []
