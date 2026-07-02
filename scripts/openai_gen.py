@@ -16,7 +16,7 @@ composed per brand/visual-style.md (base prompt + add-on + scene + negative
 prompt) by the generation step before this script runs.
 
 After each image renders, the script composites branded typography onto it
-(infographic / title-card style): a Space Grotesk headline + optional Inter
+(infographic / title-card style): a Bebas Neue headline + optional Inter
 supporting line from the post's visual.headline / visual.subtext fields. The
 image models are prompted NOT to render text
 (theirs is garbled), so all on-image type is laid down here with bundled fonts
@@ -186,16 +186,17 @@ def composite_wordmark(
 
 # --- Infographic typography overlay -----------------------------------------
 # The image models are prompted NOT to render text (their typography is garbled);
-# instead we composite clean, on-brand headline typography onto each image so the
-# post reads like a branded infographic / title card. Headlines use Space Grotesk
-# (uppercase, wide tracking per brand/visual-style.md), supporting copy uses
-# Inter. Colors follow the brand system (Soft White text, Electric Blue accent on
-# a deep-black scrim). Both fonts are OFL-licensed and bundled under assets/fonts.
+# instead we composite clean, on-brand headline typography onto each image. Main
+# Layer8Culture posts use Bebas Neue headlines across both title-card and Editorial
+# Drop layouts. Supporting copy uses Inter. Colors follow the brand system. Fonts
+# are OFL-licensed and bundled under assets/fonts.
 FONTS_DIR = pathlib.Path("assets/fonts")
 SPACE_GROTESK_PATH = FONTS_DIR / "SpaceGrotesk-Variable.ttf"
 INTER_PATH = FONTS_DIR / "Inter-Variable.ttf"
+BEBAS_NEUE_PATH = FONTS_DIR / "BebasNeue-Regular.ttf"
 SOFT_WHITE = (245, 245, 245, 255)
 ELECTRIC_BLUE = (0, 71, 255, 255)
+EDITORIAL_DIM = (180, 190, 200, 255)
 # Where the headline block sits. "lower-left" reads like a title card; the prompt
 # is told to keep that region as clean negative space.
 DEFAULT_OVERLAY_POSITION = "lower-left"
@@ -302,6 +303,16 @@ def render_infographic(image_path: pathlib.Path, headline: str,
     font_h, size_h, track_h, lines_h = _fit_headline(
         draw, headline_text, max_w,
         start_size=int(w * 0.085), min_size=int(w * 0.042), max_lines=3)
+    if BEBAS_NEUE_PATH.exists():
+        size = size_h
+        while size >= int(w * 0.040):
+            candidate = ImageFont.truetype(str(BEBAS_NEUE_PATH), size)
+            tracking = size * 0.005
+            lines = _wrap(draw, headline_text, candidate, max_w, tracking)
+            if len(lines) <= 3:
+                font_h, size_h, track_h, lines_h = candidate, size, tracking, lines
+                break
+            size -= 2
     hlh = int(size_h * 1.16)
 
     sub_lines: list[str] = []
@@ -350,10 +361,151 @@ def render_infographic(image_path: pathlib.Path, headline: str,
     return True
 
 
+def _accent_token_set(value) -> set[str]:
+    if isinstance(value, list):
+        raw = " ".join(str(v) for v in value)
+    else:
+        raw = str(value or "")
+    return {
+        t.strip(string.punctuation).lower()
+        for t in raw.split()
+        if t.strip(string.punctuation)
+    }
+
+
+def render_editorial_drop(image_path: pathlib.Path, visual: dict) -> bool:
+    """Composite the bold condensed Layer8Culture social typography."""
+    if not (BEBAS_NEUE_PATH.exists() and INTER_PATH.exists()):
+        return False
+    headline = str(visual.get("headline") or "").strip()
+    if not headline:
+        return False
+    base = Image.open(image_path).convert("RGBA")
+    w, h = base.size
+    overlay = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    draw_overlay = ImageDraw.Draw(overlay)
+
+    # Strong bottom fade gives the headline a poster-like anchor.
+    start = int(h * 0.46)
+    for y in range(start, h):
+        alpha = int(230 * (y - start) / max(1, h - start))
+        draw_overlay.line([(0, y), (w, y)], fill=(0, 0, 0, alpha))
+    base = Image.alpha_composite(base, overlay)
+    draw = ImageDraw.Draw(base)
+
+    margin = int(w * 0.055)
+    max_w = w - 2 * margin
+    accent_tokens = _accent_token_set(
+        visual.get("accent_words") or visual.get("accent")
+    )
+
+    kicker = str(visual.get("kicker") or "").strip().upper()
+    footer = str(visual.get("footer") or "").strip().upper()
+    subtext = str(visual.get("subtext") or "").strip()
+    layout = str(visual.get("layout") or "bottom_blast").strip()
+
+    font_k = _load_font(INTER_PATH, max(18, int(w * 0.025)), "Bold")
+    font_h, size_h, track_h, lines_h = _fit_headline(
+        draw,
+        headline.upper(),
+        max_w,
+        start_size=int(w * 0.145),
+        min_size=int(w * 0.060),
+        max_lines=4,
+    )
+    if BEBAS_NEUE_PATH.exists():
+        size = size_h
+        while size >= int(w * 0.058):
+            candidate = ImageFont.truetype(str(BEBAS_NEUE_PATH), size)
+            tracking = size * 0.005
+            lines = _wrap(draw, headline.upper(), candidate, max_w, tracking)
+            if len(lines) <= 4:
+                font_h, size_h, track_h, lines_h = candidate, size, tracking, lines
+                break
+            size -= 2
+
+    size_s = max(20, int(w * 0.032))
+    font_s = _load_font(INTER_PATH, size_s, "Semi Bold")
+    sub_lines = _wrap(draw, subtext.upper(), font_s, max_w, size_s * 0.005) if subtext else []
+
+    line_h = int(size_h * 0.86)
+    sub_h = int(size_s * 1.25)
+    footer_h = max(14, int(w * 0.018))
+    block_h = len(lines_h) * line_h + len(sub_lines) * sub_h
+    if kicker:
+        block_h += int(w * 0.050)
+    if footer:
+        block_h += int(w * 0.035)
+    bottom_margin = int(h * 0.045 if layout != "top_text_media_card" else h * 0.065)
+    top = max(int(h * 0.08), h - bottom_margin - block_h)
+
+    if layout == "top_text_media_card":
+        card_margin = margin
+        card_top = int(h * 0.34)
+        card_bottom = int(h * 0.90)
+        draw.rounded_rectangle(
+            [card_margin, card_top, w - card_margin, card_bottom],
+            radius=int(w * 0.035),
+            outline=(245, 245, 245, 80),
+            width=max(2, int(w * 0.004)),
+        )
+        top = int(h * 0.085)
+
+    if kicker:
+        draw.text((margin, top), kicker, font=font_k, fill=EDITORIAL_DIM)
+        top += int(w * 0.050)
+
+    y = top
+    for line in lines_h:
+        _draw_tracked_line(
+            draw,
+            margin,
+            y,
+            line,
+            font_h,
+            track_h,
+            SOFT_WHITE,
+            accent_tokens,
+            ELECTRIC_BLUE,
+        )
+        y += line_h
+
+    if sub_lines:
+        y += int(w * 0.020)
+        for line in sub_lines[:2]:
+            _draw_tracked_line(
+                draw,
+                margin,
+                y,
+                line,
+                font_s,
+                size_s * 0.005,
+                SOFT_WHITE,
+                set(),
+                SOFT_WHITE,
+            )
+            y += sub_h
+
+    if footer:
+        font_f = ImageFont.truetype(str(BEBAS_NEUE_PATH), footer_h)
+        fw = draw.textlength(footer, font=font_f)
+        draw.text(((w - fw) / 2, h - int(h * 0.035)), footer, font=font_f, fill=SOFT_WHITE)
+
+    base.convert("RGB").save(image_path)
+    return True
+
+
 def _decode_b64_image(result) -> bytes:
     """Extract and decode the base64 PNG bytes from an OpenAI images response."""
     b64 = result.data[0].b64_json
     return base64.b64decode(b64)
+
+
+def typography_preset_for(account: str | None, visual: dict) -> str:
+    preset = str(visual.get("typography_preset") or "").strip()
+    if preset:
+        return preset
+    return "brand_title_card"
 
 
 def _upscale_to_2k(path: pathlib.Path) -> None:
@@ -454,13 +606,16 @@ def _render_image(client, model: str, image_id: str, visual: dict,
         headline = visual.get("headline")
         if headline:
             try:
-                applied = render_infographic(
-                    out_path,
-                    headline,
-                    visual.get("subtext"),
-                    visual.get("overlay_position", DEFAULT_OVERLAY_POSITION),
-                    visual.get("accent"),
-                )
+                if typography_preset_for(account, visual) == "editorial_drop":
+                    applied = render_editorial_drop(out_path, visual)
+                else:
+                    applied = render_infographic(
+                        out_path,
+                        headline,
+                        visual.get("subtext"),
+                        visual.get("overlay_position", DEFAULT_OVERLAY_POSITION),
+                        visual.get("accent"),
+                    )
                 if applied:
                     print(f"  > {image_id}: headline composited "
                           f"({headline[:48]!r})")
@@ -540,6 +695,8 @@ def render_carousel(client, model: str, post: dict, out_dir: pathlib.Path) -> li
         "quality": visual.get("quality", IMAGE_QUALITY),
         "overlay_position": visual.get("overlay_position", DEFAULT_OVERLAY_POSITION),
     }
+    if visual.get("typography_preset") is not None:
+        base["typography_preset"] = visual["typography_preset"]
     for k in ("logo_position", "logo_subtle", "logo_opacity"):
         if visual.get(k) is not None:
             base[k] = visual[k]

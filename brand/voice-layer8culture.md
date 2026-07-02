@@ -48,6 +48,18 @@ plainly so the post surfaces in search. One CTA per post — don't stack asks.
 7. Behind the Scenes  8. Sponsor Thank-Yous  9. LoFi Stream Promos
 10. Community Questions
 
+## Social typography standard
+Main Layer8Culture social posts use bold Bebas Neue condensed all-caps headlines
+across a mix of brand title-card and Editorial Drop layouts. Use Electric Blue as
+the only typography accent color. Keep the words short and premium. Let the layout
+carry confidence.
+
+### AI Tool Experiments product-news rule
+When covering a new AI tool, model feature, creator app, GitHub release, or workflow
+automation update, use the AI Tool Drop shape: what changed, what it does, why builders
+should care, one thing to try this week, and the bigger signal. Do not stop at news.
+Make the post useful enough to save.
+
 ## Tech Thursday tone
 Live, direct, educational, builder-focused, accessible, high-signal,
 energetic but premium. Positioning: "Tech Thursday is the weekly Layer8Culture

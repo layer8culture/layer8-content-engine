@@ -53,6 +53,31 @@ from the latest Tech Thursday transcript. Example pattern:
 workflow live with Copilot CLI." Do not make the news abstract. Bring it back to
 what builders can actually do.
 
+AI TOOL DROP TEMPLATE:
+Use this when the researched news is a concrete AI product launch, model feature,
+creator tool update, GitHub release, or workflow automation feature. These posts map
+to the "AI Tool Experiments" category and should feel like concise creator-tech news,
+but with more save value than a simple announcement.
+
+Required structure:
+- Hook: name the tool or launch in the first line so the post is searchable.
+- What changed: one plain-language sentence on the announcement.
+- What it does: the practical capability, not the vendor's marketing language.
+- Builder value: why creators, developers, operators, or founders should care.
+- Try this: one specific action the audience can test this week.
+- Signal: what this says about AI moving from prompts into workflows.
+
+Format choice:
+- Carousel when the post explains a workflow, decision rule, or stack move worth saving.
+- Reel when the post is a fast news drop with one strong visual metaphor.
+- Story as a follow-up poll or question after a carousel or reel.
+
+Guardrails:
+- Do not copy the source announcement or competitor caption. Rewrite in Layer8Culture voice.
+- No generic AI-news aggregation. Every Tool Drop needs a practical builder takeaway.
+- Avoid hype words like game-changing, revolutionary, or transformation platform.
+- If the post has no clear "try this" step, choose a different news item.
+
 VIRALITY ADJUSTMENT WHILE ANALYTICS ARE LIMITED:
 If analytics/insights-digest.md has no matched platform metrics, use repository
 signals and the competitor benchmark lens as a proxy. Prioritize:
@@ -105,6 +130,14 @@ Common fields on EVERY post:
   "hashtags": ["..."],                         // from brand/hashtags.md, tiered + rotated
   "hashtags_in_first_comment": true,            // OPTIONAL — keeps the caption clean
   "first_comment": "OPTIONAL extra first comment (a question to spark replies, etc.)",
+  "comment_to_dm": {                         // OPTIONAL, Instagram only. See COMMENT-TO-DM CAMPAIGNS.
+    "campaign": "ig_comment_dm_build_map",
+    "keyword": "BUILD",
+    "offer": "AI Builder Workflow Map",
+    "dm_prompt": "Want the workflow map? Here it is: <approved public link>. What are you trying to build with AI right now?",
+    "public_reply": "Sent. Check your DMs.",
+    "route": "builder_nurture"
+  },
   "trial_reel": false,                          // OPTIONAL, reels only — show to non-followers first
   "collaborators": [],                          // OPTIONAL list of IG handles for collab posts
   "visual": { ...see per-format spec... }
@@ -118,9 +151,9 @@ Common fields on EVERY post:
        THIS post's concrete topic and differ noticeably from the other posts. The
        background is atmospheric, NOT literal text. Leave the lower-left / lower
        third as clean dark negative space for the composited headline.",
-  "headline": "REQUIRED. Short punchy headline composited in brand type (Space
-       Grotesk, UPPERCASE). 2-5 words ideal, max ~7. The visual hook — make it land
-       on its own; do NOT restate the caption.",
+  "headline": "REQUIRED. Short punchy headline composited in the Editorial Drop
+       brand type system. 2-6 words ideal, max ~8. The visual hook should land on
+       its own; do NOT restate the caption.",
   "subtext": "OPTIONAL one short supporting line in Inter (<= ~8 words).",
   "accent": "OPTIONAL single word taken verbatim from the headline, rendered Electric
        Blue. Must appear in the headline.",
@@ -151,6 +184,31 @@ ways…" / "how to…"). Each value slide = one idea, one headline, one supporti
 Final slide = an explicit CTA (Save this, Follow for more, Share to a builder). Make
 the whole set teach something concrete and re-openable. Each slide still needs a
 headline; vary the scene per slide so the set doesn't look repetitive.
+
+AI Tool Drop carousel pattern:
+1. Cover: "[Tool] just changed [workflow]"
+2. What happened
+3. What it actually does
+4. Why builders should care
+5. Try this this week
+6. The bigger signal
+7. Save this for your AI stack
+
+Use this pattern only when the tool or launch has real workflow value. Keep the copy
+plain and useful. The audience should be able to save the carousel and apply one move
+after reading it.
+
+Editorial Drop visual treatment:
+- Layer8Culture social uses a mix of `visual.typography_preset: "brand_title_card"`
+  and `visual.typography_preset: "editorial_drop"` across the batch.
+- Both presets use bold Bebas Neue condensed headlines.
+- Use Electric Blue as the only accent color.
+- Use Editorial Drop for the most newsy, product-drop, or mixed media carousel posts.
+- Use brand title card for calmer belief, story, and framework posts.
+- Add `kicker`, `accent_words`, `footer`, and optional `layout` on slides when helpful.
+- Mixed media carousels may use `media_type: "video"` on selected slides. The engine
+  renders the still first, then exports that slide as an MP4 in `visual.files`.
+- Keep Sora and image prompts text-free. The renderer composites readable typography.
 
 ### visual for "reel" (vertical video — uses the VIRAL FORMAT, brand/viral-formats.md)
 {
@@ -254,6 +312,32 @@ CAPTIONS:
   never hype. Each platform gets its OWN caption (don't copy across).
 - Hashtags: a small tuned set of 3-5 — branded (#Layer8Culture) + broad reach tags
   (#AI #BuildInPublic #TechTok). Set hashtags_in_first_comment:true to keep captions clean.
+
+## COMMENT-TO-DM CAMPAIGNS (Instagram only, optional)
+The main Instagram account can run a reviewed comment-to-DM campaign for ONE eligible post
+in a batch. This is for builder-first lead generation, not spam. Use it only when the post
+has a concrete resource to send and the caption can end with a single clear keyword CTA.
+
+Default starter campaign:
+- Campaign: `ig_comment_dm_build_map`
+- Keyword: `BUILD`
+- Offer: `AI Builder Workflow Map`
+- Route: `builder_nurture`
+- Best fit: a high-scoring Instagram Reel cross-post in Build in Public, Creator Systems,
+  or AI Fluency Education, or a save-worthy carousel that explains a workflow.
+
+Rules:
+- Max one `comment_to_dm` post per queue unless explicitly instructed.
+- Instagram only. Do not add `comment_to_dm` to TikTok, YouTube, X, lofi, or client posts.
+- The caption must end with the keyword CTA, for example:
+  `Comment BUILD and I will send you the workflow map.`
+- Keep one CTA. Do not also ask the same post to follow, save, share, and reply.
+- The resource link in `dm_prompt` must be an approved public link or a placeholder for
+  human review. Never include secrets, tokens, private file links, or expiring URLs.
+- The DM copy should be short, useful, and human:
+  `Want the workflow map? Here it is: <approved public link>. What are you trying to build with AI right now?`
+- `public_reply` should be calm and minimal, usually `Sent. Check your DMs.`
+- The approval PR preview will show the campaign metadata, so write copy that is ready for review.
 
 ## YOUTUBE SHORTS (1-2/day — cross-post the top viral videos)
 YouTube is a low-volume, high-quality Shorts lane. Emit **1-2** YouTube Shorts for the
