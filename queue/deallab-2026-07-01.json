@@ -1,0 +1,158 @@
+[
+  {
+    "id": "20260701-deallab-instagram-1",
+    "account": "deallab",
+    "category": "Investor Education",
+    "platform": "instagram",
+    "format": "single",
+    "schedule_time": "2026-07-01T08:00:00-04:00",
+    "text": "The 1% rule will lie to you if you stop there.\n\nHere's the shortcut: monthly rent should be about 1% of purchase price. A $200K property should rent for roughly $2,000/month. It's a fast filter, not a final answer.\n\nWhat it misses: property taxes, insurance, vacancy, maintenance, and management. A property can pass the 1% rule and still lose money once you run the real cash flow.\n\nUse it to screen deals fast. Then run the actual numbers before you get attached.\n\nSave this before your next walkthrough.",
+    "hashtags": [
+      "#TheRealEstateDealLab",
+      "#DealLab",
+      "#RealEstateInvesting",
+      "#RealEstateInvestor",
+      "#DealAnalysis",
+      "#InvestmentProperty",
+      "#RentalProperty",
+      "#BuyAndHold"
+    ],
+    "hashtags_in_first_comment": true,
+    "first_comment": "#TheRealEstateDealLab #DealLab #RealEstateInvesting #RealEstateInvestor #DealAnalysis #InvestmentProperty #RentalProperty #BuyAndHold",
+    "visual": {
+      "source": "openai",
+      "openai_prompt": "Create a premium real estate deal-room visual for The Real Estate Deal Lab. Dark navy background, refined gold accents, serious investor education mood, clean editorial composition, subtle document and numbers texture, professional real estate operator energy, trust and clarity. Show a marked-up pro forma sheet with a rent-to-price ratio calculation, a small calculator, and a Florida residential exterior silhouette in the background. The image should feel premium, practical, and grounded, not flashy.",
+      "headline": "THE 1% RULE ISN'T THE WHOLE STORY",
+      "subtext": "Screen fast. Verify with real numbers.",
+      "accent": "1%",
+      "quality": "high",
+      "aspect": "1:1",
+      "file": "assets/generated/20260701-deallab-instagram-1.png"
+    }
+  },
+  {
+    "id": "20260701-deallab-instagram-2",
+    "account": "deallab",
+    "category": "Deal Analyzer / Number Breakdown",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-07-01T11:00:00-04:00",
+    "text": "ARV is a guess until you prove it.\n\nToo many first-time investors anchor to a rehab budget before they've locked the after-repair value. That's backwards. Here's the order that protects your capital:\n\n1. Pull 3-5 true comps (same condition class, sold in the last 6 months, similar square footage).\n2. Set ARV from the comps, not from hope.\n3. Scope the rehab against that ARV, not the other way around.\n4. Apply the 70% rule: Max offer = (ARV x 0.70) - repair costs.\n5. If the number doesn't work, the deal doesn't work yet. Renegotiate or walk.\n\nThis is the exact sequence we run every property through in the Deal Analyzer.\n\nTry the Deal Analyzer.",
+    "hashtags": [
+      "#TheRealEstateDealLab",
+      "#DealLab",
+      "#DealAnalysis",
+      "#RealEstateDeals",
+      "#FixAndFlip",
+      "#RealEstateInvesting",
+      "#RealEstateInvestor",
+      "#BrevardCountyRealEstate"
+    ],
+    "hashtags_in_first_comment": true,
+    "first_comment": "#TheRealEstateDealLab #DealLab #DealAnalysis #RealEstateDeals #FixAndFlip #RealEstateInvesting #RealEstateInvestor #BrevardCountyRealEstate",
+    "visual": {
+      "source": "openai",
+      "aspect": "1:1",
+      "quality": "high",
+      "slides": [
+        {
+          "openai_prompt": "Create a premium real estate deal-room visual for The Real Estate Deal Lab. Dark navy background, refined gold accents, serious investor education mood, clean editorial composition, marked-up comparable sales sheet with property photos and a magnifying glass over one row, calculator resting nearby, professional operator energy, trust and clarity. Premium, practical, grounded, not flashy.",
+          "headline": "ARV IS A GUESS UNTIL YOU PROVE IT",
+          "subtext": "The 5-step sequence that protects your capital",
+          "role": "cover"
+        },
+        {
+          "openai_prompt": "Create a premium real estate deal-room visual for The Real Estate Deal Lab. Dark navy background, refined gold accents, a stack of comparable sale printouts fanned across a desk with a pen circling matching details, clean editorial composition, professional operator energy.",
+          "headline": "STEP 1: PULL TRUE COMPS",
+          "subtext": "Same condition class. Sold in the last 6 months.",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a premium real estate deal-room visual for The Real Estate Deal Lab. Dark navy background, refined gold accents, a blueprint with a rehab scope sketched over it next to a printed ARV number card, calculator, clean editorial composition.",
+          "headline": "STEP 2-3: LOCK ARV, THEN SCOPE REHAB",
+          "subtext": "Never scope repairs before you know the ceiling.",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a premium real estate deal-room visual for The Real Estate Deal Lab. Dark navy background, refined gold accents, a clean numeric worksheet card showing a simple offer formula, calculator, subtle gauge motif, professional operator desk.",
+          "headline": "STEP 4: MAX OFFER = (ARV x 0.70) - REPAIRS",
+          "subtext": "If the number doesn't work, the deal doesn't work yet.",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a premium real estate deal-room visual for The Real Estate Deal Lab. Dark navy background, refined gold accents, a clean scorecard with a subtle 0-100 gauge motif, calculator, professional operator desk, inviting and clear.",
+          "headline": "TRY THE DEAL ANALYZER",
+          "subtext": "Run your next property through this exact sequence.",
+          "role": "cta"
+        }
+      ],
+      "files": [
+        "assets/generated/20260701-deallab-instagram-2-1.png",
+        "assets/generated/20260701-deallab-instagram-2-2.png",
+        "assets/generated/20260701-deallab-instagram-2-3.png",
+        "assets/generated/20260701-deallab-instagram-2-4.png",
+        "assets/generated/20260701-deallab-instagram-2-5.png"
+      ],
+      "file": "assets/generated/20260701-deallab-instagram-2-1.png"
+    }
+  },
+  {
+    "id": "20260701-deallab-instagram-3",
+    "account": "deallab",
+    "category": "Trust / Operator Credibility",
+    "platform": "instagram",
+    "format": "single",
+    "schedule_time": "2026-07-01T14:00:00-04:00",
+    "text": "I've sat across the table from more bad deals than good ones.\n\nThat's not a knock on the investors who brought them. Most of them just never had someone check the math before they got emotionally attached to the property.\n\nA good deal should survive the math, not just the walkthrough. That's the entire reason the Lab exists: a place to bring a property before you make an offer, not after you're already stuck in one.\n\nIf you want a second set of eyes on your numbers, that's exactly what we do inside the Lab.\n\nJoin the Lab.",
+    "hashtags": [
+      "#TheRealEstateDealLab",
+      "#DealLab",
+      "#RealEstateInvesting",
+      "#RealEstateInvestor",
+      "#DealAnalysis",
+      "#PropertyInvesting",
+      "#RealEstateDevelopment"
+    ],
+    "hashtags_in_first_comment": true,
+    "first_comment": "#TheRealEstateDealLab #DealLab #RealEstateInvesting #RealEstateInvestor #DealAnalysis #PropertyInvesting #RealEstateDevelopment",
+    "visual": {
+      "source": "openai",
+      "openai_prompt": "Create a premium real estate deal-room visual for The Real Estate Deal Lab. Dark navy background, refined gold accents, a private strategy desk with a closing table motif in soft focus behind it, a marked-up contract and a pro forma sheet side by side, calculator, professional real estate operator energy, trust and clarity, premium and grounded, not flashy.",
+      "headline": "A GOOD DEAL SURVIVES THE MATH",
+      "subtext": "Bring your numbers before you make the offer.",
+      "accent": "SURVIVES",
+      "quality": "high",
+      "aspect": "1:1",
+      "file": "assets/generated/20260701-deallab-instagram-3.png"
+    }
+  },
+  {
+    "id": "20260701-deallab-instagram-4",
+    "account": "deallab",
+    "category": "Lead Magnet / Free Resource",
+    "platform": "instagram",
+    "format": "story",
+    "schedule_time": "2026-07-01T17:00:00-04:00",
+    "text": "Before you call an agent, check this.\n\nQuick poll: when you look at a listing, what do you check first?\nA) The rent estimate\nB) The rehab cost\nC) The neighborhood\nD) Honestly, none of it yet\n\nMost deals fall apart because the order was wrong, not because the property was bad. Grab the free guide and run your next listing through the right sequence before you pick up the phone.\n\nGet the free guide.",
+    "hashtags": [
+      "#TheRealEstateDealLab",
+      "#DealLab",
+      "#RealEstateInvesting",
+      "#DealAnalysis",
+      "#InvestmentProperty",
+      "#BrevardCountyRealEstate"
+    ],
+    "hashtags_in_first_comment": true,
+    "first_comment": "#TheRealEstateDealLab #DealLab #RealEstateInvesting #DealAnalysis #InvestmentProperty #BrevardCountyRealEstate",
+    "visual": {
+      "source": "openai",
+      "openai_prompt": "Create a premium real estate deal-room visual for The Real Estate Deal Lab. Dark navy background, refined gold accents, vertical composition, a clean printed checklist resting on a desk next to a calculator and a property photo, professional real estate operator energy, trust and clarity, premium and grounded, not flashy, leave clean lower space for composited text.",
+      "headline": "CHECK THIS BEFORE YOU CALL",
+      "subtext": "Free guide: the right order to run a deal",
+      "accent": "CHECK",
+      "quality": "medium",
+      "aspect": "9:16",
+      "file": "assets/generated/20260701-deallab-instagram-4.png"
+    }
+  }
+]
