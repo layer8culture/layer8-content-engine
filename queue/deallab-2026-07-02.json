@@ -1,0 +1,155 @@
+[
+  {
+    "id": "20260702-deallab-instagram-1",
+    "account": "deallab",
+    "category": "Investor Education",
+    "platform": "instagram",
+    "format": "single",
+    "schedule_time": "2026-07-02T08:00:00-04:00",
+    "text": "Cap rate tells you about the property. Cash-on-cash tells you about your money.\n\nCap rate = net operating income / purchase price. It ignores financing entirely, which is useful for comparing properties but useless for judging your own return.\n\nCash-on-cash return = annual cash flow / total cash invested. If you put $60,000 into a deal (down payment, closing costs, rehab reserve) and it nets $8,400 in cash flow this year, that's a 14% cash-on-cash return.\n\nSame property, different leverage, different cash-on-cash number every time. Know which question you're actually asking before you compare two deals.\n\nTry the Deal Analyzer.",
+    "hashtags": [
+      "#TheRealEstateDealLab",
+      "#DealLab",
+      "#RealEstateInvesting",
+      "#RealEstateInvestor",
+      "#DealAnalysis",
+      "#InvestmentProperty",
+      "#BuyAndHold"
+    ],
+    "hashtags_in_first_comment": true,
+    "first_comment": "#TheRealEstateDealLab #DealLab #RealEstateInvesting #RealEstateInvestor #DealAnalysis #InvestmentProperty #BuyAndHold",
+    "visual": {
+      "source": "openai",
+      "openai_prompt": "Create a premium real estate deal-room visual for The Real Estate Deal Lab. Dark navy background, refined gold accents, serious investor education mood, clean editorial composition, subtle document and numbers texture, professional real estate operator energy, trust and clarity. Show two clean numeric worksheet cards side by side, one labeled with a percentage figure and property silhouette, calculator resting between them, Florida residential exterior silhouette faint in the background. The image should feel premium, practical, and grounded, not flashy. Leave clean lower space for composited text.",
+      "headline": "CAP RATE ISN'T YOUR RETURN",
+      "subtext": "Cash-on-cash tells you about your money.",
+      "accent": "CASH-ON-CASH",
+      "quality": "high",
+      "aspect": "1:1",
+      "file": "assets/generated/20260702-deallab-instagram-1.png"
+    }
+  },
+  {
+    "id": "20260702-deallab-instagram-2",
+    "account": "deallab",
+    "category": "Deal Analyzer / Number Breakdown",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-07-02T11:00:00-04:00",
+    "text": "Lenders don't care about your gut feeling. They care about this number.\n\nDSCR, Debt Service Coverage Ratio, measures whether a property's income can cover its own debt payments. The formula: net operating income / annual debt payments.\n\nExample: a property nets $18,000/year after expenses. Annual debt payments run $15,000. DSCR = 1.20. Most lenders want 1.20-1.25 or higher before they'll finance it.\n\nBelow 1.0 means the property can't cover its own mortgage from operations alone. That's a red flag to catch before you're under contract, not after.\n\nRun your DSCR before you lock the loan.\n\nTry the Deal Analyzer.",
+    "hashtags": [
+      "#TheRealEstateDealLab",
+      "#DealLab",
+      "#DealAnalysis",
+      "#RealEstateDeals",
+      "#RealEstateInvesting",
+      "#RealEstateInvestor",
+      "#InvestmentProperty"
+    ],
+    "hashtags_in_first_comment": true,
+    "first_comment": "#TheRealEstateDealLab #DealLab #DealAnalysis #RealEstateDeals #RealEstateInvesting #RealEstateInvestor #InvestmentProperty",
+    "visual": {
+      "source": "openai",
+      "aspect": "1:1",
+      "quality": "high",
+      "slides": [
+        {
+          "openai_prompt": "Create a premium real estate deal-room visual for The Real Estate Deal Lab. Dark navy background, refined gold accents, a lender's underwriting sheet on a desk with a pen circling a ratio figure, calculator nearby, clean editorial composition, professional operator energy, trust and clarity. Leave clean lower space for composited text.",
+          "headline": "THE NUMBER YOUR LENDER ACTUALLY CHECKS",
+          "subtext": "Debt Service Coverage Ratio, explained",
+          "role": "cover"
+        },
+        {
+          "openai_prompt": "Create a premium real estate deal-room visual for The Real Estate Deal Lab. Dark navy background, refined gold accents, a clean numeric worksheet card showing a simple division formula, calculator, pro forma sheet in soft focus behind it, professional operator desk.",
+          "headline": "WHAT DSCR MEASURES",
+          "subtext": "Net operating income divided by annual debt payments",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a premium real estate deal-room visual for The Real Estate Deal Lab. Dark navy background, refined gold accents, a clean scorecard with a subtle gauge motif pointing toward a healthy zone, calculator, professional operator desk, trust and clarity.",
+          "headline": "THE THRESHOLD MOST LENDERS WANT",
+          "subtext": "1.20 to 1.25 or higher, depending on the loan program",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a premium real estate deal-room visual for The Real Estate Deal Lab. Dark navy background, refined gold accents, a gauge motif dipping into a caution zone next to a marked-up pro forma sheet, calculator, professional operator desk, serious and grounded mood.",
+          "headline": "BELOW 1.0 IS A RED FLAG",
+          "subtext": "The property can't cover its own debt from operations",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a premium real estate deal-room visual for The Real Estate Deal Lab. Dark navy background, refined gold accents, a clean scorecard with a subtle 0-100 gauge motif, calculator, professional operator desk, inviting and clear.",
+          "headline": "TRY THE DEAL ANALYZER",
+          "subtext": "Check your DSCR before you lock the loan",
+          "role": "cta"
+        }
+      ],
+      "files": [
+        "assets/generated/20260702-deallab-instagram-2-1.png",
+        "assets/generated/20260702-deallab-instagram-2-2.png",
+        "assets/generated/20260702-deallab-instagram-2-3.png",
+        "assets/generated/20260702-deallab-instagram-2-4.png",
+        "assets/generated/20260702-deallab-instagram-2-5.png"
+      ],
+      "file": "assets/generated/20260702-deallab-instagram-2-1.png"
+    }
+  },
+  {
+    "id": "20260702-deallab-instagram-3",
+    "account": "deallab",
+    "category": "Contractor-to-Investor",
+    "platform": "instagram",
+    "format": "single",
+    "schedule_time": "2026-07-02T14:00:00-04:00",
+    "text": "You already read blueprints better than most agents on the deal.\n\nIf you've spent years in the trades, you already know what a rehab actually costs before a contractor quotes it, which structural issues are cosmetic and which ones are expensive, and how long a scope of work really takes. That's leverage most investors are paying consultants for.\n\nThe piece that's usually missing isn't the property knowledge. It's the ownership side: how to underwrite the deal, structure the offer, and finance it so your skill turns into equity instead of just a paycheck.\n\nIf you're ready to see what that transition actually looks like, let's talk through your situation directly.\n\nBook a 15-minute fit call.",
+    "hashtags": [
+      "#TheRealEstateDealLab",
+      "#DealLab",
+      "#ContractorToInvestor",
+      "#ConstructionBusiness",
+      "#RealEstateDevelopment",
+      "#PropertyInvesting"
+    ],
+    "hashtags_in_first_comment": true,
+    "first_comment": "#TheRealEstateDealLab #DealLab #ContractorToInvestor #ConstructionBusiness #RealEstateDevelopment #PropertyInvesting",
+    "visual": {
+      "source": "openai",
+      "openai_prompt": "Create a premium real estate deal-room visual for The Real Estate Deal Lab. Dark navy background, refined gold accents, serious investor education mood, clean editorial composition, subtle document and numbers texture, professional real estate operator energy, trust and clarity. Show a blueprint rolled open on a desk beside a hardhat and tool belt, with a clean investment worksheet and calculator layered next to it, Florida residential exterior silhouette faint in the background. The image should feel premium, practical, and grounded, not flashy. Leave clean lower space for composited text.",
+      "headline": "YOU ALREADY UNDERSTAND THE ASSET",
+      "subtext": "The next step is ownership.",
+      "accent": "OWNERSHIP",
+      "quality": "high",
+      "aspect": "1:1",
+      "file": "assets/generated/20260702-deallab-instagram-3.png"
+    }
+  },
+  {
+    "id": "20260702-deallab-instagram-4",
+    "account": "deallab",
+    "category": "Lead Magnet / Free Resource",
+    "platform": "instagram",
+    "format": "story",
+    "schedule_time": "2026-07-02T17:00:00-04:00",
+    "text": "What's the number you skip checking?\n\nQuick poll before your next walkthrough:\nA) Property taxes after reassessment\nB) Insurance in a coastal zone\nC) Realistic vacancy rate\nD) Cap-ex reserve for the roof/HVAC\n\nMost deals that look great on paper get quiet on one of these four. The free guide walks through where each one hides and how to build it into your numbers before you make an offer.\n\nGet the free guide.",
+    "hashtags": [
+      "#TheRealEstateDealLab",
+      "#DealLab",
+      "#RealEstateInvesting",
+      "#DealAnalysis",
+      "#BrevardCountyRealEstate",
+      "#FloridaRealEstate"
+    ],
+    "hashtags_in_first_comment": true,
+    "first_comment": "#TheRealEstateDealLab #DealLab #RealEstateInvesting #DealAnalysis #BrevardCountyRealEstate #FloridaRealEstate",
+    "visual": {
+      "source": "openai",
+      "openai_prompt": "Create a premium real estate deal-room visual for The Real Estate Deal Lab. Dark navy background, refined gold accents, vertical composition, a clean printed checklist resting on a desk next to a calculator and a property tax bill, professional real estate operator energy, trust and clarity, premium and grounded, not flashy, leave clean lower space for composited text.",
+      "headline": "THE NUMBER YOU'RE SKIPPING",
+      "subtext": "Free guide: the costs that hide in plain sight",
+      "accent": "SKIPPING",
+      "quality": "medium",
+      "aspect": "9:16",
+      "file": "assets/generated/20260702-deallab-instagram-4.png"
+    }
+  }
+]
