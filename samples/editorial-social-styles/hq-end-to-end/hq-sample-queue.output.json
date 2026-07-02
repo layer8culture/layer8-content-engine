@@ -1,0 +1,122 @@
+[
+  {
+    "id": "hq-style-reel-sample",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-07-04T11:00:00-04:00",
+    "text": "AI tools are becoming creator systems.\n\nThe shift is not better prompts. It is repeatable workflows.\n\nSave this if you are building your stack.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AI",
+      "#CreatorTools",
+      "#BuildInPublic"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "high",
+      "typography_preset": "editorial_drop",
+      "openai_prompt": "Create a cinematic Layer8Culture vertical visual in a deep black and deep navy creator-tech environment with electric blue accent lighting. A premium AI workflow command center floats as abstract panels and nodes around a Black creator silhouette, no readable text, no logos, documentary realism, high contrast, strong negative space in the upper band for composited typography, premium creator systems energy. Avoid generic startup office, cheap RGB, robots, garbled typography, rendered words, logos, and clutter.",
+      "headline": "AI TOOLS BECOME SYSTEMS",
+      "accent_words": [
+        "AI"
+      ],
+      "reel": {
+        "mode": "sora",
+        "seconds": 8,
+        "sora_prompt": "Vertical cinematic motion. Start on a dark creator-tech command center with electric blue workflow nodes pulsing in silence. The camera pushes through connected panels, turning scattered apps into one organized creator system. Premium documentary realism, deep black and navy, electric blue accents, no readable text, no logos.",
+        "overlay_beats": [
+          {
+            "text": "AI TOOLS",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "BECOME SYSTEMS",
+            "start": 2,
+            "end": 6
+          },
+          {
+            "text": "BUILD WITH IT",
+            "start": 6,
+            "end": 8
+          }
+        ]
+      },
+      "file": "assets\\generated\\hq-style-reel-sample.mp4",
+      "cover": "assets\\generated\\hq-style-reel-sample-cover.png"
+    }
+  },
+  {
+    "id": "hq-style-carousel-sample",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-07-04T11:15:00-04:00",
+    "text": "AI tools are moving from prompts to systems.\n\nThis sample shows the new Layer8Culture mixed media carousel style.\n\nSave this for your AI stack.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AI",
+      "#CreatorSystems",
+      "#AITools"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "openai",
+      "aspect": "1:1",
+      "quality": "high",
+      "typography_preset": "editorial_drop",
+      "slides": [
+        {
+          "role": "cover",
+          "media_type": "video",
+          "openai_prompt": "Create a square cinematic Layer8Culture editorial product-drop visual. Deep black and navy studio environment, electric blue abstract workflow graph, premium creator-tech atmosphere, no readable text, no logos, strong upper visual area and clean lower dark space for composited headline. Avoid garbled typography and clutter.",
+          "headline": "AI TOOLS ARE BECOMING CREATOR SYSTEMS",
+          "accent_words": [
+            "AI"
+          ],
+          "subtext": "One workflow. Many outputs.",
+          "footer": "SWIPE FOR MORE",
+          "duration_sec": 3
+        },
+        {
+          "role": "value",
+          "typography_preset": "brand_title_card",
+          "openai_prompt": "Create a square cinematic Layer8Culture visual of scattered app windows becoming a clean workflow map, deep black and navy, electric blue accents, premium studio lighting, no readable text, no logos, lower-left negative space for composited headline.",
+          "headline": "PROMPTS TO WORKFLOWS",
+          "accent": "PROMPTS",
+          "subtext": "The stack matters now."
+        },
+        {
+          "role": "value",
+          "openai_prompt": "Create a square cinematic Layer8Culture visual showing a creator system dashboard as abstract cards, timeline, model, assets, and publish nodes, electric blue connections, deep black premium background, no readable text, no logos, clean bottom area for composited headline.",
+          "headline": "ONE INPUT MANY OUTPUTS",
+          "accent_words": [
+            "ONE"
+          ],
+          "subtext": "Content becomes a system.",
+          "footer": "LAYER8CULTURE"
+        },
+        {
+          "role": "cta",
+          "typography_preset": "brand_title_card",
+          "openai_prompt": "Create a square cinematic Layer8Culture final CTA visual, deep black background, electric blue horizon line, premium minimal creator-tech atmosphere, no readable text, no logos, lower-left negative space for composited headline.",
+          "headline": "SAVE THIS FOR YOUR AI STACK",
+          "accent": "SAVE",
+          "subtext": "Build the future. Do not just consume it."
+        }
+      ],
+      "files": [
+        "assets\\generated\\hq-style-carousel-sample-1.mp4",
+        "assets\\generated\\hq-style-carousel-sample-2.png",
+        "assets\\generated\\hq-style-carousel-sample-3.png",
+        "assets\\generated\\hq-style-carousel-sample-4.png"
+      ],
+      "file": "assets\\generated\\hq-style-carousel-sample-1.mp4"
+    }
+  }
+]
