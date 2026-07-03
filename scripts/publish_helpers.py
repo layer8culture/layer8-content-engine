@@ -11,11 +11,43 @@ import time
 VIDEO_EXTS = (".mp4", ".mov")
 
 
+def local_media_path(path: str | os.PathLike) -> pathlib.Path:
+    """Return a local Path for repo media paths written on any OS."""
+    return pathlib.Path(str(path).replace("\\", "/"))
+
+
+def resolve_media_path(path: str | os.PathLike | None) -> str | None:
+    if not path:
+        return None
+    candidate = local_media_path(path)
+    return str(candidate) if candidate.exists() else None
+
+
+def missing_local_paths(post: dict) -> list[str]:
+    """Declared media paths that do not resolve on this runner."""
+    visual = post.get("visual", {})
+    if post.get("format") == "carousel":
+        return [
+            str(path)
+            for path in (visual.get("files") or [])
+            if path and not local_media_path(path).exists()
+        ]
+
+    path = visual.get("file")
+    if path and not local_media_path(path).exists():
+        return [str(path)]
+    return []
+
+
 def resolve_local_paths(post: dict) -> list[str]:
     """Ordered list of existing local media paths for the post."""
     visual = post.get("visual", {})
     if post.get("format") == "carousel":
-        files = [f for f in (visual.get("files") or []) if f and pathlib.Path(f).exists()]
+        files = [
+            resolved
+            for path in (visual.get("files") or [])
+            if (resolved := resolve_media_path(path))
+        ]
         if files:
             return files
 
@@ -27,8 +59,9 @@ def resolve_local_paths(post: dict) -> list[str]:
             if any(w in f.name.lower() for w in hint) or not hint:
                 path = str(f)
                 break
-    if path and pathlib.Path(path).exists():
-        return [path]
+    resolved = resolve_media_path(path)
+    if resolved:
+        return [resolved]
     return []
 
 

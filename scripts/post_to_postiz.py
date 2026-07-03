@@ -46,6 +46,7 @@ from publish_helpers import (
     archive_queue_file,
     build_caption,
     load_log,
+    missing_local_paths,
     resolve_local_paths,
     scheduled_post_ids,
 )
@@ -165,6 +166,7 @@ TIKTOK_INBOX_CAP = 5
 # verified). YouTube caps the combined length of all tags at 500 chars.
 YOUTUBE_TITLE_MAX = 100
 YOUTUBE_TAGS_MAX = 500
+FATAL_SKIP_REASONS = {"missing_media", "non_video_media", "postiz_error"}
 
 
 def parse_postiz_datetime(value: str) -> datetime:
@@ -372,26 +374,75 @@ def postiz_response_metadata(payload: Any) -> dict:
     return metadata
 
 
+def skip_result(
+    reason: str,
+    integration_id: str | None = None,
+    detail: str | None = None,
+) -> dict:
+    result = {"scheduled": False, "skip_reason": reason}
+    if integration_id:
+        result["integration_id"] = integration_id
+    if detail:
+        result["skip_detail"] = detail
+    return result
+
+
+def fatal_publish_failures(results: list[dict]) -> list[dict]:
+    return [
+        result
+        for result in results
+        if not result.get("scheduled")
+        and result.get("skip_reason") in FATAL_SKIP_REASONS
+    ]
+
+
+def missing_media_detail(paths: list[str]) -> str | None:
+    if not paths:
+        return None
+    return ", ".join(paths[:5]) + (" ..." if len(paths) > 5 else "")
+
+
+def instagram_media_failure(post: dict, fmt: str, paths: list[str], missing: list[str]) -> str | None:
+    visual = post.get("visual") or {}
+    if not paths:
+        return "no resolved media"
+    if fmt == "carousel":
+        declared = [path for path in (visual.get("files") or []) if path]
+        if not declared:
+            return "carousel has no visual.files"
+        if missing or len(paths) != len(declared):
+            detail = missing_media_detail(missing)
+            return f"missing declared carousel media: {detail}" if detail else "missing declared carousel media"
+    return None
+
+
 def schedule(post: dict) -> dict:
     key = (post["account"], post["platform"])
     integration_id = INTEGRATIONS.get(key)
     if not integration_id or integration_id == "REPLACE_ME":
         print(f"  ! no integration mapped for {key}, skipping {post['id']}")
-        return {"scheduled": False, "skip_reason": "missing_integration"}
+        return skip_result("missing_integration")
 
     fmt = post.get("format", "single")
     paths = resolve_local_paths(post)
+    missing = missing_local_paths(post)
     is_video = bool(paths) and paths[0].lower().endswith(VIDEO_EXTS)
+
+    if post["platform"] == "instagram":
+        media_failure = instagram_media_failure(post, fmt, paths, missing)
+        if media_failure:
+            print(f"  ! Instagram post {post['id']} has invalid media: {media_failure}")
+            return skip_result("missing_media", integration_id, media_failure)
 
     if post["platform"] in ("tiktok", "youtube"):
         label = post["platform"]
         if not paths:
             print(f"  ! {label} post {post['id']} has no resolved media, skipping")
-            return {"scheduled": False, "skip_reason": "missing_media"}
+            return skip_result("missing_media", integration_id)
         if not is_video:
             print(f"  ! {label} post {post['id']} media is not a video "
                   f"({', '.join(VIDEO_EXTS)}), skipping")
-            return {"scheduled": False, "skip_reason": "non_video_media"}
+            return skip_result("non_video_media", integration_id, ", ".join(paths[:5]))
 
     # A reel needs a video; if the mp4 didn't render, fall back to publishing the
     # base still as a normal image post so the post still goes out.
@@ -445,20 +496,17 @@ def schedule(post: dict) -> dict:
         except ValueError:
             response_payload = {}
         extra = f" +comment" if first_comment else ""
-        print(f"  ✓ scheduled {post['id']} ({fmt}, {len(media)} media{extra}) "
+        print(f"  + scheduled {post['id']} ({fmt}, {len(media)} media{extra}) "
               f"for {post['schedule_time']}")
         return {
             "scheduled": True,
             "integration_id": integration_id,
             **postiz_response_metadata(response_payload),
         }
-    print(f"  ✗ {post['id']}: {r.status_code} {r.text[:200]}")
-    return {
-        "scheduled": False,
-        "integration_id": integration_id,
-        "skip_reason": "postiz_error",
-        "postiz_status_code": r.status_code,
-    }
+    print(f"  x {post['id']}: {r.status_code} {r.text[:200]}")
+    result = skip_result("postiz_error", integration_id)
+    result["postiz_status_code"] = r.status_code
+    return result
 
 def main(queue_file: str) -> None:
     qpath = pathlib.Path(queue_file)
@@ -496,6 +544,16 @@ def main(queue_file: str) -> None:
 
     log = append_new_log_records(log, results)
     log_path.write_text(json.dumps(log, indent=2), encoding="utf-8")
+    failures = fatal_publish_failures(results)
+    if failures:
+        print(f"Fatal publish failures in {queue_file}; leaving queue file unarchived.")
+        for failure in failures:
+            print(
+                f"  ! {failure.get('id')}: {failure.get('skip_reason')}"
+                f"{' - ' + failure['skip_detail'] if failure.get('skip_detail') else ''}"
+            )
+        sys.exit(1)
+
     archive_queue_file(qpath, posted_dir)
     print(f"Done: {sum(p['scheduled'] for p in results)}/{len(results)} scheduled.")
 

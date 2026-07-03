@@ -1,5 +1,6 @@
 import os
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -13,6 +14,7 @@ os.environ.setdefault("POSTIZ_API_KEY", "test-key")
 import changed_queue_files  # noqa: E402
 import postiz_dedupe  # noqa: E402
 import post_to_postiz  # noqa: E402
+import publish_helpers  # noqa: E402
 
 
 class ChangedQueueFilesTests(unittest.TestCase):
@@ -56,6 +58,40 @@ class ChangedQueueFilesTests(unittest.TestCase):
 
 
 class PostToPostizTests(unittest.TestCase):
+    def test_resolve_local_paths_accepts_windows_style_relative_paths(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            original_cwd = os.getcwd()
+            try:
+                os.chdir(tmp)
+                assets = Path("assets") / "generated"
+                assets.mkdir(parents=True)
+                first = assets / "post-1-1.png"
+                second = assets / "post-1-2.png"
+                first.write_bytes(b"image-1")
+                second.write_bytes(b"image-2")
+
+                paths = publish_helpers.resolve_local_paths(
+                    {
+                        "format": "carousel",
+                        "visual": {
+                            "files": [
+                                "assets\\generated\\post-1-1.png",
+                                "assets\\generated\\post-1-2.png",
+                            ]
+                        },
+                    }
+                )
+            finally:
+                os.chdir(original_cwd)
+
+            self.assertEqual(
+                paths,
+                [
+                    str(Path("assets") / "generated" / "post-1-1.png"),
+                    str(Path("assets") / "generated" / "post-1-2.png"),
+                ],
+            )
+
     def test_append_new_log_records_skips_duplicate_ids(self):
         log = [{"id": "post-1", "scheduled": True}]
         results = [
@@ -118,6 +154,42 @@ class PostToPostizTests(unittest.TestCase):
             )
         )
 
+    def test_schedule_rejects_instagram_carousel_with_missing_media(self):
+        original_find = post_to_postiz.find_existing_postiz_duplicate
+        original_upload = post_to_postiz.upload_media
+
+        def fail_find(*_args):
+            raise AssertionError("duplicate lookup should not run when media is missing")
+
+        def fail_upload(_path):
+            raise AssertionError("upload should not run when media is missing")
+
+        post_to_postiz.find_existing_postiz_duplicate = fail_find
+        post_to_postiz.upload_media = fail_upload
+        try:
+            result = post_to_postiz.schedule(
+                {
+                    "id": "post-missing-media",
+                    "account": "layer8culture",
+                    "platform": "instagram",
+                    "format": "carousel",
+                    "schedule_time": "2026-06-29T10:00:00-04:00",
+                    "text": "Caption",
+                    "visual": {"files": ["assets\\generated\\missing.png"]},
+                }
+            )
+        finally:
+            post_to_postiz.find_existing_postiz_duplicate = original_find
+            post_to_postiz.upload_media = original_upload
+
+        self.assertEqual(result["scheduled"], False)
+        self.assertEqual(result["skip_reason"], "missing_media")
+        self.assertEqual(
+            result["integration_id"],
+            post_to_postiz.INTEGRATIONS[("layer8culture", "instagram")],
+        )
+        self.assertTrue(post_to_postiz.fatal_publish_failures([result]))
+
     def test_schedule_skips_existing_queued_duplicate_before_uploading(self):
         original_find = post_to_postiz.find_existing_postiz_duplicate
         original_upload = post_to_postiz.upload_media
@@ -137,18 +209,21 @@ class PostToPostizTests(unittest.TestCase):
         post_to_postiz.find_existing_postiz_duplicate = fake_find
         post_to_postiz.upload_media = fake_upload
         try:
-            result = post_to_postiz.schedule(
-                {
-                    "id": "post-1",
-                    "account": "layer8culture",
-                    "platform": "instagram",
-                    "format": "single",
-                    "schedule_time": "2026-06-29T10:00:00-04:00",
-                    "text": "Caption",
-                    "hashtags": ["#Layer8Culture"],
-                    "visual": {},
-                }
-            )
+            with tempfile.TemporaryDirectory() as tmp:
+                media = Path(tmp) / "post-1.png"
+                media.write_bytes(b"image")
+                result = post_to_postiz.schedule(
+                    {
+                        "id": "post-1",
+                        "account": "layer8culture",
+                        "platform": "instagram",
+                        "format": "single",
+                        "schedule_time": "2026-06-29T10:00:00-04:00",
+                        "text": "Caption",
+                        "hashtags": ["#Layer8Culture"],
+                        "visual": {"file": str(media)},
+                    }
+                )
         finally:
             post_to_postiz.find_existing_postiz_duplicate = original_find
             post_to_postiz.upload_media = original_upload
@@ -163,6 +238,45 @@ class PostToPostizTests(unittest.TestCase):
                 "postiz_post_id": "postiz-existing",
             },
         )
+
+    def test_main_leaves_queue_unarchived_on_fatal_publish_failure(self):
+        original_schedule = post_to_postiz.schedule
+
+        def fake_schedule(_post):
+            return {
+                "scheduled": False,
+                "integration_id": "ig-1",
+                "skip_reason": "missing_media",
+                "skip_detail": "no resolved media",
+            }
+
+        with tempfile.TemporaryDirectory() as tmp:
+            original_cwd = os.getcwd()
+            try:
+                os.chdir(tmp)
+                queue_dir = Path("queue")
+                queue_dir.mkdir()
+                qpath = queue_dir / "post.json"
+                qpath_abs = qpath.resolve()
+                archived_abs = Path("posted").resolve() / "post.json"
+                qpath.write_text(
+                    "[{\"id\":\"post-1\",\"account\":\"layer8culture\","
+                    "\"platform\":\"instagram\",\"format\":\"single\","
+                    "\"schedule_time\":\"2026-06-29T10:00:00-04:00\","
+                    "\"text\":\"Caption\",\"visual\":{}}]",
+                    encoding="utf-8",
+                )
+                post_to_postiz.schedule = fake_schedule
+
+                with self.assertRaises(SystemExit) as raised:
+                    post_to_postiz.main(str(qpath))
+            finally:
+                post_to_postiz.schedule = original_schedule
+                os.chdir(original_cwd)
+
+            self.assertNotEqual(raised.exception.code, 0)
+            self.assertTrue(qpath_abs.exists())
+            self.assertFalse(archived_abs.exists())
 
     def test_postiz_dedupe_groups_only_queued_duplicates_for_integration(self):
         posts = [
