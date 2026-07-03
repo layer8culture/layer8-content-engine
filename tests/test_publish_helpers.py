@@ -56,6 +56,30 @@ class ChangedQueueFilesTests(unittest.TestCase):
 
         self.assertEqual(files, [])
 
+    def test_git_changed_queue_files_filters_existing_queue_json(self):
+        files = changed_queue_files.git_changed_queue_files(
+            exists={"queue/recovery.json", "queue/other.json"}.__contains__,
+            changed_paths=[
+                "README.md",
+                "queue/recovery.json",
+                "queue/recovery.summary.md",
+                "queue\\other.json",
+            ],
+        )
+
+        self.assertEqual(files, ["queue/recovery.json", "queue/other.json"])
+
+    def test_queue_files_for_publish_uses_git_fallback_when_event_has_no_queue_paths(self):
+        event = {"commits": [], "head_commit": {}}
+
+        files = changed_queue_files.queue_files_for_publish(
+            event,
+            fallback_all=True,
+            git_fallback=lambda: ["queue/recovery.json"],
+        )
+
+        self.assertEqual(files, ["queue/recovery.json"])
+
 
 class PostToPostizTests(unittest.TestCase):
     def test_resolve_local_paths_accepts_windows_style_relative_paths(self):
