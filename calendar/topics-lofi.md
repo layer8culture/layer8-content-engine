@@ -82,9 +82,9 @@
 # (the engine renders its own on-brand imagery; no YouTube footage is reposted).
 # Edit MOOD_RULES in the script or override entries by hand if needed.
 #
-  - title: Afrofuturist Sunrise Build Beats | Lo-Fi Morning Coding Radio #Shorts
-    url: https://www.youtube.com/watch?v=Y-9_HpTTT6k
-    mood: sunrise
+  - title: Afrofuturist Culture Sessions: New York City Lofi to Vibe, Create & Connect ✨🎧 Vol. 1 #lofi 2026
+    url: https://www.youtube.com/watch?v=EtMP0ws8oEk
+    mood: night
     note: drive viewers to the full session; link in bio.
 
 ## Session focus / pillars to feature
