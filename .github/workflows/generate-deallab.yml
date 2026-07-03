@@ -1,10 +1,8 @@
 name: Generate Deal Lab Content
 
 on:
-  schedule:
-    # Daily morning run for America/New_York. Generates same-day Instagram content
-    # for The Real Estate Deal Lab only.
-    - cron: "30 11 * * *"
+  # Deal Lab content generation is paused intentionally.
+  # Keep manual dispatch available only for an explicit future restart.
   workflow_dispatch: {}
 
 permissions:
