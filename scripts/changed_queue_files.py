@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import subprocess
 from pathlib import Path
 from typing import Any, Callable, Iterable
 
@@ -70,6 +71,51 @@ def fallback_queue_files() -> list[str]:
     return sorted(str(path).replace("\\", "/") for path in Path("queue").glob("*.json"))
 
 
+def git_changed_paths() -> list[str]:
+    try:
+        result = subprocess.run(
+            ["git", "diff", "--name-only", "HEAD^", "HEAD"],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return []
+    return [line for line in result.stdout.splitlines() if line.strip()]
+
+
+def git_changed_queue_files(
+    exists: Callable[[str], bool] | None = None,
+    changed_paths: Iterable[str] | None = None,
+) -> list[str]:
+    exists = exists or (lambda path: Path(path).exists())
+    files: list[str] = []
+    seen: set[str] = set()
+    for raw_path in changed_paths if changed_paths is not None else git_changed_paths():
+        path = normalize_repo_path(raw_path)
+        if not is_queue_json(path) or path in seen:
+            continue
+        if not exists(path):
+            continue
+        seen.add(path)
+        files.append(path)
+    return files
+
+
+def queue_files_for_publish(
+    event: dict[str, Any] | None,
+    fallback_all: bool,
+    exists: Callable[[str], bool] | None = None,
+    git_fallback: Callable[[], list[str]] | None = None,
+) -> list[str]:
+    if event is not None:
+        files = changed_queue_files(event, exists=exists)
+        if files:
+            return files
+        return git_fallback() if git_fallback else git_changed_queue_files(exists=exists)
+    return fallback_queue_files() if fallback_all else []
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -85,9 +131,7 @@ def main() -> None:
     args = parser.parse_args()
 
     event = load_event(args.event)
-    files = changed_queue_files(event) if event is not None else []
-    if event is None and args.fallback_all:
-        files = fallback_queue_files()
+    files = queue_files_for_publish(event, args.fallback_all)
 
     for path in files:
         print(path)
