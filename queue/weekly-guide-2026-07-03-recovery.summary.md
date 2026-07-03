@@ -5,4 +5,4 @@
 - **Keyword:** `MCP`
 - **Hook:** MCP is how AI stops guessing and starts using tools.
 - **CTA:** Comment MCP and I will send you the full AI field guide.
-- **Recovery slot:** 2026-07-03T15:00:00-04:00
+- **Recovery slot:** 2026-07-03T17:00:00-04:00
