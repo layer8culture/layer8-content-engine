@@ -11837,5 +11837,52 @@
     "scheduled": true,
     "integration_id": "cmqd9915w0001o5717h436ivp",
     "postiz_post_id": "cmr66bt2x00djtf6dfale3out"
+  },
+  {
+    "id": "20260704-layer8culture-instagram-guide-carousel-jpeg",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-07-04T07:15:00-04:00",
+    "text": "MCP is how AI stops guessing and starts using tools.\n\nThis week's AI field guide is about MCP Explained Without the Hype.\n\nThe carousel gives you the short version.\nThe guide gives you the practical map.\n\nComment MCP and I will send you the full AI field guide.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#BuildWithAI",
+      "#AIBuilders",
+      "#AItools",
+      "#PromptEngineering",
+      "#AIagents",
+      "#BuildInPublic"
+    ],
+    "hashtags_in_first_comment": true,
+    "comment_to_dm": {
+      "campaign": "weekly_guide_mcp_explained_without_the_hype",
+      "keyword": "MCP",
+      "offer": "MCP Field Guide",
+      "guide_url": "https://www.layer8culture.io/guides/mcp-explained-without-the-hype/",
+      "dm_prompt": "Here is the AI field guide: https://www.layer8culture.io/guides/mcp-explained-without-the-hype/ What are you trying to get better at with AI right now?",
+      "public_reply": "Sent. Check your DMs.",
+      "route": "ai_field_guide_nurture"
+    },
+    "visual": {
+      "source": "openai",
+      "aspect": "1:1",
+      "quality": "high",
+      "files": [
+        "assets/generated/20260704-layer8culture-instagram-guide-carousel-jpeg-1.jpg",
+        "assets/generated/20260704-layer8culture-instagram-guide-carousel-jpeg-2.jpg",
+        "assets/generated/20260704-layer8culture-instagram-guide-carousel-jpeg-3.jpg",
+        "assets/generated/20260704-layer8culture-instagram-guide-carousel-jpeg-4.jpg",
+        "assets/generated/20260704-layer8culture-instagram-guide-carousel-jpeg-5.jpg",
+        "assets/generated/20260704-layer8culture-instagram-guide-carousel-jpeg-6.jpg",
+        "assets/generated/20260704-layer8culture-instagram-guide-carousel-jpeg-7.jpg"
+      ],
+      "file": "assets/generated/20260704-layer8culture-instagram-guide-carousel-jpeg-1.jpg"
+    },
+    "scheduled": true,
+    "integration_id": "cmqd9915w0001o5717h436ivp",
+    "postiz_post_id": "cmr68en9v00dltf6dnzwy1i6a"
   }
 ]
