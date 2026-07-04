@@ -1,9 +1,34 @@
 {
   "campaign": "weekly_guide_mcp_explained_without_the_hype",
   "keyword": "MCP",
+  "keyword_variants": [
+    "mcp",
+    "mcp guide",
+    "send mcp",
+    "mcp field guide",
+    "guide"
+  ],
   "offer": "MCP Field Guide",
   "guide_url": "https://www.layer8culture.io/guides/mcp-explained-without-the-hype/",
   "dm_prompt": "Here is the AI field guide: https://www.layer8culture.io/guides/mcp-explained-without-the-hype/ What are you trying to get better at with AI right now?",
   "public_reply": "Sent. Check your DMs.",
-  "route": "ai_field_guide_nurture"
+  "route": "ai_field_guide_nurture",
+  "active_queue_ids": [
+    "20260703-layer8culture-instagram-guide-emergency-jpeg",
+    "20260703-layer8culture-instagram-guide-emergency-single",
+    "20260703-layer8culture-instagram-guide-recovery"
+  ],
+  "primary_postiz_post_id": "cmr5m1fb400cytf6darsuegyu",
+  "active_postiz_post_ids": [
+    "cmr5m1fb400cytf6darsuegyu",
+    "cmr5hbie200cxtf6dlf41bj54",
+    "cmr568ldw00betf6dlpoofib2"
+  ],
+  "active_post_notes": {
+    "cmr5m1fb400cytf6darsuegyu": "20:45 ET JPEG fallback. Treat this as the active MCP comment-to-DM post.",
+    "cmr5hbie200cxtf6dlf41bj54": "18:25 ET PNG fallback.",
+    "cmr568ldw00betf6dlpoofib2": "17:30 ET carousel recovery."
+  },
+  "n8n_sync_required": true,
+  "updated_reason": "Emergency MCP reposts changed the live Instagram post id. n8n should match comments containing MCP on the active Postiz ids, especially the JPEG fallback."
 }

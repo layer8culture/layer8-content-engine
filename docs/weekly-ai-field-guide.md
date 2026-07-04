@@ -80,3 +80,13 @@ https://n8n.20-120-36-39.sslip.io/webhook/meta-instagram-comments
 
 The guide page is public, so the DM is a convenience and a conversation starter, not
 the only way to access the resource.
+
+When a guide post is retried or replaced, update n8n from:
+
+```text
+campaigns/layer8culture-active-guide-campaign.json
+```
+
+n8n should treat `primary_postiz_post_id` as the current lead-capture post and should
+also accept the ids in `active_postiz_post_ids` until the campaign is retired. Keyword
+matching should be case-insensitive and use `keyword_variants`.
