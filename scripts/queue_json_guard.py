@@ -81,14 +81,16 @@ def backup_invalid_file(path: Path, raw: str) -> Path:
 
 def validate_or_repair(path: Path, repair: bool) -> bool:
     raw = path.read_text(encoding="utf-8")
+    first_error: ValueError | None = None
     try:
         payload = load_json(raw, path)
         validate_queue_shape(payload, path)
         print(f"{path}: valid queue JSON ({len(payload)} posts)")
         return False
-    except ValueError as first_error:
+    except ValueError as exc:
         if not repair:
             raise
+        first_error = exc
 
     repaired = escape_control_chars_in_strings(raw)
     if repaired == raw:

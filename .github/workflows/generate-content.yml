@@ -22,10 +22,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
       - name: Install Copilot CLI
         run: npm install -g @github/copilot
 
       - name: Generate posts with Copilot CLI
+        id: copilot-generate
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ secrets.COPILOT_CLI_TOKEN }}
         # web-fetch + --allow-all-urls let the agent research the day's AI news.
@@ -39,33 +46,69 @@ jobs:
             --allow-all-urls \
             --no-ask-user
 
-      - name: Verify the queue file was written
+      - name: Verify, recover, and repair queue JSON
         env:
           GH_TOKEN: ${{ secrets.COPILOT_CLI_TOKEN }}
+          FIRST_COPILOT_OUTCOME: ${{ steps.copilot-generate.outcome }}
         # The Copilot step above MUST write queue/<tomorrow>.json. If the agent
-        # instead prints the JSON to the log (a known intermittent miss where it
-        # wrongly believes writes are blocked), nothing lands on disk. Fail loudly
-        # here with an actionable message instead of letting the downstream visuals
-        # step crash cryptically (python openai_gen.py "" -> IsADirectoryError: '.').
-        # Retry generation once in-place. The miss is intermittent, and a manual
-        # rerun usually succeeds.
+        # instead saves the complete JSON under ~/.copilot/session-state/.../files,
+        # recover the matching artifact before paying for a second generation. Retry
+        # Copilot once only when recovery cannot find a valid queue artifact, then
+        # attempt recovery one final time and fail with diagnostics if the queue is
+        # still missing or invalid.
         run: |
-          QUEUE_FILE="queue/$(date -d tomorrow +%F).json"
-          if [ ! -f "$QUEUE_FILE" ]; then
-            echo "::warning::Copilot CLI did not write $QUEUE_FILE on the first attempt. Retrying generation once."
+          set -u
+
+          QUEUE_DATE="$(date -d tomorrow +%F)"
+          QUEUE_FILE="queue/${QUEUE_DATE}.json"
+          SUMMARY_FILE="queue/${QUEUE_DATE}.summary.md"
+
+          run_copilot() {
             copilot -p "$(cat scripts/generation-prompt.md)" \
               -s \
               --allow-tool='read,write(queue/*),web-fetch' \
               --allow-all-urls \
               --no-ask-user
+          }
+
+          recover_queue() {
+            python scripts/recover_copilot_queue.py "$QUEUE_FILE" \
+              --summary-file "$SUMMARY_FILE" \
+              --date "$QUEUE_DATE"
+          }
+
+          if [ "$FIRST_COPILOT_OUTCOME" != "success" ]; then
+            echo "::warning::Initial Copilot CLI step ended with outcome '$FIRST_COPILOT_OUTCOME'; checking disk and session artifacts before retrying."
           fi
+
           if [ ! -f "$QUEUE_FILE" ]; then
-            echo "::error::Copilot CLI did not write $QUEUE_FILE. The generation step produced no queue file (it likely printed the JSON to the run log instead of writing it). Re-run the workflow to regenerate."
+            echo "::warning::Copilot CLI did not write $QUEUE_FILE. Attempting recovery from Copilot session artifacts."
+            if ! recover_queue; then
+              echo "::warning::No valid Copilot artifact recovered for $QUEUE_FILE. Retrying Copilot generation once."
+              set +e
+              run_copilot
+              RETRY_STATUS=$?
+              set -e
+              if [ "$RETRY_STATUS" -ne 0 ]; then
+                echo "::warning::Copilot CLI retry exited with status $RETRY_STATUS; attempting final session-artifact recovery."
+              fi
+              if [ ! -f "$QUEUE_FILE" ]; then
+                recover_queue || true
+              fi
+            fi
+          fi
+
+          if [ ! -f "$QUEUE_FILE" ]; then
+            echo "::error::Copilot CLI did not write or recover $QUEUE_FILE after one retry."
             echo "queue/ currently contains:"
             ls -la queue/ || true
+            echo "Matching Copilot session artifacts:"
+            find "$HOME/.copilot/session-state" -path "*/files/${QUEUE_DATE}.json" -type f -printf '%TY-%Tm-%Td %TH:%TM:%TS %p\n' 2>/dev/null | sort -r | head -20 || true
             exit 1
           fi
-          echo "Confirmed $QUEUE_FILE was written ($(wc -c < "$QUEUE_FILE") bytes)."
+
+          echo "Confirmed $QUEUE_FILE exists ($(wc -c < "$QUEUE_FILE") bytes)."
+          python scripts/queue_json_guard.py "$QUEUE_FILE" --repair
 
       - name: Verify summary has no internal process warnings
         run: |
@@ -77,11 +120,6 @@ jobs:
               exit 1
             fi
           fi
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
 
       - name: Install ffmpeg (for Reels)
         run: sudo apt-get update && sudo apt-get install -y ffmpeg
@@ -106,10 +144,8 @@ jobs:
           AZURE_OPENAI_VIDEO_SIZE: ${{ vars.AZURE_OPENAI_VIDEO_SIZE }}
         run: |
           pip install openai requests pillow
-          # Process tomorrow's queue (the file the Copilot step just generated).
-          # Fall back to the newest queue file if the dated one is missing.
+          # Process tomorrow's queue (the file the Copilot step just generated or recovered).
           QUEUE_FILE="queue/$(date -d tomorrow +%F).json"
-          [ -f "$QUEUE_FILE" ] || QUEUE_FILE=$(ls -t queue/*.json | head -n 1)
           echo "Generating images for $QUEUE_FILE"
           python scripts/openai_gen.py "$QUEUE_FILE"
           # Animate any format:"reel" posts into mp4s (uses the stills above).
@@ -143,7 +179,6 @@ jobs:
           # (immutable, survives branch deletion on merge; relies on a public repo).
           SHA=$(git rev-parse HEAD)
           QUEUE_FILE="queue/$DATE.json"
-          [ -f "$QUEUE_FILE" ] || QUEUE_FILE=$(ls -t queue/*.json | head -n 1)
           python scripts/build_pr_preview.py "$QUEUE_FILE" \
                  --repo "${{ github.repository }}" \
                  --sha "$SHA" \
