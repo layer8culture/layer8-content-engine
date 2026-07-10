@@ -82,9 +82,9 @@
 # (the engine renders its own on-brand imagery; no YouTube footage is reposted).
 # Edit MOOD_RULES in the script or override entries by hand if needed.
 #
-  - title: Afrofuturist Rainy Seattle Lofi | 3 Hours to Study, Work & Focus 🌧️ #lofi 2026
-    url: https://www.youtube.com/watch?v=W3fHew5MbmQ
-    mood: rainy night
+  - title: Afrofuturist Jazz Coding Lounge | Lo-Fi Focus Beats #Shorts
+    url: https://www.youtube.com/watch?v=XHWEjwlv4EQ
+    mood: jazz
     note: drive viewers to the full session; link in bio.
 
 ## Session focus / pillars to feature
