@@ -69,16 +69,42 @@ class ChangedQueueFilesTests(unittest.TestCase):
 
         self.assertEqual(files, ["queue/recovery.json", "queue/other.json"])
 
-    def test_queue_files_for_publish_uses_git_fallback_when_event_has_no_queue_paths(self):
-        event = {"commits": [], "head_commit": {}}
+    def test_queue_files_for_publish_uses_trigger_range_when_event_has_no_queue_paths(self):
+        event = {
+            "before": "a" * 40,
+            "after": "b" * 40,
+            "commits": [],
+            "head_commit": {},
+        }
+        calls = []
+
+        def git_fallback(before, after):
+            calls.append((before, after))
+            return ["README.md", "queue/recovery.json"]
 
         files = changed_queue_files.queue_files_for_publish(
             event,
             fallback_all=True,
-            git_fallback=lambda: ["queue/recovery.json"],
+            exists={"queue/recovery.json"}.__contains__,
+            git_fallback=git_fallback,
         )
 
         self.assertEqual(files, ["queue/recovery.json"])
+        self.assertEqual(calls, [("a" * 40, "b" * 40)])
+
+    def test_queue_files_for_publish_does_not_diff_unrelated_head(self):
+        event = {"commits": [], "head_commit": {}}
+
+        def fail_git_fallback(_before, _after):
+            raise AssertionError("git fallback should require the triggering commit range")
+
+        files = changed_queue_files.queue_files_for_publish(
+            event,
+            fallback_all=True,
+            git_fallback=fail_git_fallback,
+        )
+
+        self.assertEqual(files, [])
 
 
 class PostToPostizTests(unittest.TestCase):
