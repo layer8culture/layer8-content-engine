@@ -4,6 +4,12 @@ on:
   push:
     branches: [main]
     paths: ["queue/**"]
+  workflow_dispatch:
+    inputs:
+      queue_file:
+        description: Approved queue JSON file to recover
+        required: true
+        type: string
 
 concurrency:
   group: publish-main
@@ -22,9 +28,15 @@ jobs:
           fetch-depth: 2
 
       - name: Refresh main
+        env:
+          TRIGGER_BEFORE: ${{ github.event.before }}
+          TRIGGER_AFTER: ${{ github.event.after }}
         run: |
           git fetch origin main
           git pull --ff-only origin main
+          if [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
+            git fetch --no-tags --depth=1 origin "$TRIGGER_BEFORE" "$TRIGGER_AFTER"
+          fi
 
       - uses: actions/setup-python@v5
         with:
@@ -46,9 +58,22 @@ jobs:
           GHL_BASE_URL: ${{ vars.GHL_BASE_URL }}
           GHL_API_VERSION: ${{ vars.GHL_API_VERSION }}
           GHL_MEDIA_BASE_URL: ${{ vars.GHL_MEDIA_BASE_URL }}
+          RECOVERY_QUEUE_FILE: ${{ inputs.queue_file }}
         run: |
           pip install requests
-          mapfile -t files < <(python scripts/changed_queue_files.py --fallback-all)
+          if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
+            if [[ ! "$RECOVERY_QUEUE_FILE" =~ ^queue/[^/]+\.json$ ]]; then
+              echo "Recovery queue file must match queue/<name>.json."
+              exit 1
+            fi
+            if [[ ! -f "$RECOVERY_QUEUE_FILE" ]]; then
+              echo "Recovery queue file does not exist: $RECOVERY_QUEUE_FILE"
+              exit 1
+            fi
+            files=("$RECOVERY_QUEUE_FILE")
+          else
+            mapfile -t files < <(python scripts/changed_queue_files.py)
+          fi
           if [ ${#files[@]} -eq 0 ]; then echo "No changed queue file."; exit 0; fi
           # Publish only the queue files introduced or changed by this push.
           DEAL_LAB_PUBLISHER="${DEALLAB_PUBLISHER,,}"

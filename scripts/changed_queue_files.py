@@ -71,16 +71,21 @@ def fallback_queue_files() -> list[str]:
     return sorted(str(path).replace("\\", "/") for path in Path("queue").glob("*.json"))
 
 
-def git_changed_paths() -> list[str]:
-    try:
-        result = subprocess.run(
-            ["git", "diff", "--name-only", "HEAD^", "HEAD"],
-            check=True,
-            capture_output=True,
-            text=True,
-        )
-    except (OSError, subprocess.CalledProcessError):
-        return []
+def event_commit_range(event: dict[str, Any]) -> tuple[str, str] | None:
+    before = str(event.get("before") or "").strip()
+    after = str(event.get("after") or "").strip()
+    if not before or not after or before == "0" * 40 or after == "0" * 40:
+        return None
+    return before, after
+
+
+def git_changed_paths(before: str, after: str) -> list[str]:
+    result = subprocess.run(
+        ["git", "diff", "--name-only", before, after],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
     return [line for line in result.stdout.splitlines() if line.strip()]
 
 
@@ -106,13 +111,19 @@ def queue_files_for_publish(
     event: dict[str, Any] | None,
     fallback_all: bool,
     exists: Callable[[str], bool] | None = None,
-    git_fallback: Callable[[], list[str]] | None = None,
+    git_fallback: Callable[[str, str], list[str]] | None = None,
 ) -> list[str]:
     if event is not None:
-        files = changed_queue_files(event, exists=exists)
-        if files:
-            return files
-        return git_fallback() if git_fallback else git_changed_queue_files(exists=exists)
+        commit_range = event_commit_range(event)
+        if commit_range is not None:
+            before, after = commit_range
+            changed_paths = (
+                git_fallback(before, after)
+                if git_fallback
+                else git_changed_paths(before, after)
+            )
+            return git_changed_queue_files(exists=exists, changed_paths=changed_paths)
+        return changed_queue_files(event, exists=exists)
     return fallback_queue_files() if fallback_all else []
 
 
@@ -131,6 +142,8 @@ def main() -> None:
     args = parser.parse_args()
 
     event = load_event(args.event)
+    if event is None and not args.fallback_all:
+        parser.error("GitHub event payload is required unless --fallback-all is used.")
     files = queue_files_for_publish(event, args.fallback_all)
 
     for path in files:
