@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-07T16:25:17.471762+00:00",
+  "generated_at": "2026-07-14T15:21:18.370850+00:00",
   "focus": [
     "helpful AI tips",
     "AI skills",
@@ -18,18 +18,6 @@
   ],
   "sources": [
     {
-      "name": "GitHub Changelog - Copilot",
-      "url": "https://github.blog/changelog/label/copilot/",
-      "topics": [
-        "copilot",
-        "cli",
-        "agentic workflows"
-      ],
-      "score": 966,
-      "summary": "Use Case: copilot - GitHub Changelog Skip to content / Blog Changelog Docs Customer stories Try GitHub Copilot CLI Attend GitHub Universe Search Changelog Docs Customer stories Attend GitHub Universe Try GitHub Copilot CLI Back to blog Changelog Copy RSS feed URL Follow @ghchangelog on X All New Releases Improvements Retired Filters ( 0 selected ) Copilot Clear all Filters ( 0 selected ) Match: Any All Tags...",
-      "status": "ok"
-    },
-    {
       "name": "GitHub Blog - AI and ML",
       "url": "https://github.blog/ai-and-ml/",
       "topics": [
@@ -38,8 +26,20 @@
         "developer workflows",
         "mcp"
       ],
-      "score": 440,
+      "score": 455,
       "summary": "The latest on AI & ML - The GitHub Blog Skip to content / Blog Changelog Docs Customer stories Try GitHub Copilot CLI Attend GitHub Universe AI & ML AI & ML Learn about artificial intelligence and machine learning across the GitHub ecosystem and the wider industry. Generative AI Learn how to build with generative AI. GitHub Copilot Change how you work with GitHub Copilot. LLMs Everything developers need to know...",
+      "status": "ok"
+    },
+    {
+      "name": "GitHub Changelog - Copilot",
+      "url": "https://github.blog/changelog/label/copilot/",
+      "topics": [
+        "copilot",
+        "cli",
+        "agentic workflows"
+      ],
+      "score": 370,
+      "summary": "Use Case: copilot - GitHub Changelog Skip to content / Blog Changelog Docs Customer stories Try GitHub Copilot CLI Attend GitHub Universe Search Changelog Docs Customer stories Attend GitHub Universe Try GitHub Copilot CLI Back to blog Changelog Copy RSS feed URL Follow @ghchangelog on X All New Releases Improvements Retired Filters ( 0 selected ) Copilot Clear all Filters ( 0 selected ) Match: Any All Tags...",
       "status": "ok"
     },
     {
@@ -76,8 +76,8 @@
         "skills",
         "workflow"
       ],
-      "score": 169,
-      "summary": "Microsoft Copilot Blog | AI news and insights Skip to content Skip to main content Microsoft Copilot Copilot Copilot Home Get started How to get Copilot Features Try free version of Copilot Products Copilot on Windows Copilot Labs Resources Students Privacy & security Do more with Copilot AI art prompting guide Copilot blog For organizations More All Microsoft Global Microsoft 365 Azure Copilot Windows Surface...",
+      "score": 150,
+      "summary": "Microsoft Copilot Blog | AI news and insights Skip to content Skip to main content Copilot How to get Copilot Features Try free version of Copilot Copilot on Windows Copilot Labs Students Privacy & security Do more with Copilot AI art prompting guide Copilot blog For organizations Microsoft 365 Azure Copilot Windows Surface XBOX Deals Small Business Support Windows Apps Outlook OneDrive Microsoft Teams OneNote...",
       "status": "ok"
     },
     {
@@ -89,7 +89,7 @@
         "mcp"
       ],
       "score": 30,
-      "summary": "Newsroom \\ Anthropic Skip to main content Skip to footer Research Policy Commitments Learn News Try Claude Newsroom Press inquires press@anthropic.com Non-media inquiries How to get support Media assets Download press kit The Making of Claude Code Features Jul 6, 2026 The inside story of how Claude Code went from an internal CLI to Anthropic's coding agent, told by researchers, engineers and early users who built...",
+      "summary": "Newsroom \\ Anthropic Skip to main content Skip to footer Research Policy Commitments Learn News Try Claude Newsroom Press inquires press@anthropic.com Non-media inquiries How to get support Media assets Download press kit Inviting hard questions Announcements Jul 9, 2026 We\u2019re asking the public for their hardest questions about AI, and committing to show our work as we address them. Features Jul 6, 2026 The Making...",
       "status": "ok"
     },
     {
@@ -109,9 +109,9 @@
     {
       "full_name": "punkpeye/awesome-mcp-servers",
       "url": "https://github.com/punkpeye/awesome-mcp-servers",
-      "stars": 90414,
+      "stars": 90759,
       "language": null,
-      "updated_at": "2026-07-07T16:18:13Z",
+      "updated_at": "2026-07-14T14:33:31Z",
       "description": "A collection of MCP servers.",
       "topics": [
         "ai",
@@ -123,9 +123,9 @@
     {
       "full_name": "modelcontextprotocol/servers",
       "url": "https://github.com/modelcontextprotocol/servers",
-      "stars": 88158,
+      "stars": 88462,
       "language": "TypeScript",
-      "updated_at": "2026-07-07T16:21:45Z",
+      "updated_at": "2026-07-14T15:20:03Z",
       "description": "Model Context Protocol Servers",
       "topics": [],
       "lesson": "Study reference servers to understand how tools, resources, prompts, and permissions fit together.",
@@ -134,9 +134,9 @@
     {
       "full_name": "github/github-mcp-server",
       "url": "https://github.com/github/github-mcp-server",
-      "stars": 31267,
+      "stars": 31436,
       "language": "Go",
-      "updated_at": "2026-07-07T15:58:56Z",
+      "updated_at": "2026-07-14T14:00:37Z",
       "description": "GitHub's official MCP Server",
       "topics": [
         "github",
@@ -149,9 +149,9 @@
     {
       "full_name": "modelcontextprotocol/python-sdk",
       "url": "https://github.com/modelcontextprotocol/python-sdk",
-      "stars": 23551,
+      "stars": 23613,
       "language": "Python",
-      "updated_at": "2026-07-07T15:35:59Z",
+      "updated_at": "2026-07-14T15:14:29Z",
       "description": "The official Python SDK for Model Context Protocol servers and clients",
       "topics": [],
       "lesson": "Use SDK examples to see the client and server primitives without extra product noise.",
@@ -160,9 +160,9 @@
     {
       "full_name": "modelcontextprotocol/typescript-sdk",
       "url": "https://github.com/modelcontextprotocol/typescript-sdk",
-      "stars": 12812,
+      "stars": 12848,
       "language": "TypeScript",
-      "updated_at": "2026-07-07T15:32:45Z",
+      "updated_at": "2026-07-14T14:11:15Z",
       "description": "The official TypeScript SDK for Model Context Protocol servers and clients",
       "topics": [],
       "lesson": "Use SDK examples to see the client and server primitives without extra product noise.",
@@ -171,9 +171,9 @@
     {
       "full_name": "hangwin/mcp-chrome",
       "url": "https://github.com/hangwin/mcp-chrome",
-      "stars": 12058,
+      "stars": 12113,
       "language": "TypeScript",
-      "updated_at": "2026-07-07T11:46:49Z",
+      "updated_at": "2026-07-14T11:33:49Z",
       "description": "Chrome MCP Server is a Chrome extension-based Model Context Protocol (MCP) server that exposes your Chrome browser functionality to AI assistants like Claude, enabling complex browser automation, content analysis, and semantic search.",
       "topics": [],
       "lesson": "Browser automation is useful when the workflow needs pages, forms, screenshots, or live web context.",
@@ -182,9 +182,9 @@
     {
       "full_name": "modelcontextprotocol/inspector",
       "url": "https://github.com/modelcontextprotocol/inspector",
-      "stars": 10300,
+      "stars": 10373,
       "language": "TypeScript",
-      "updated_at": "2026-07-07T13:15:15Z",
+      "updated_at": "2026-07-14T13:39:10Z",
       "description": "Visual testing tool for MCP servers",
       "topics": [],
       "lesson": "Use inspection tools to test a server before trusting it inside a real workflow.",
@@ -193,9 +193,9 @@
     {
       "full_name": "modelcontextprotocol/registry",
       "url": "https://github.com/modelcontextprotocol/registry",
-      "stars": 6994,
+      "stars": 7017,
       "language": "Go",
-      "updated_at": "2026-07-07T16:01:15Z",
+      "updated_at": "2026-07-14T10:40:08Z",
       "description": "A community driven registry service for Model Context Protocol (MCP) servers.",
       "topics": [
         "mcp",
@@ -207,9 +207,9 @@
     {
       "full_name": "executeautomation/mcp-playwright",
       "url": "https://github.com/executeautomation/mcp-playwright",
-      "stars": 5572,
+      "stars": 5578,
       "language": "TypeScript",
-      "updated_at": "2026-07-07T09:43:25Z",
+      "updated_at": "2026-07-14T13:25:08Z",
       "description": "Playwright Model Context Protocol Server - Tool to automate Browsers and APIs in Claude Desktop, Cline, Cursor IDE and More \ud83d\udd0c",
       "topics": [],
       "lesson": "Browser automation is useful when the workflow needs pages, forms, screenshots, or live web context.",
@@ -218,9 +218,9 @@
     {
       "full_name": "microsoft/mcp",
       "url": "https://github.com/microsoft/mcp",
-      "stars": 3425,
+      "stars": 3456,
       "language": "C#",
-      "updated_at": "2026-07-07T13:50:28Z",
+      "updated_at": "2026-07-14T12:35:37Z",
       "description": "Catalog of official Microsoft MCP (Model Context Protocol) server implementations for AI-powered data access and tool integration",
       "topics": [],
       "lesson": "Enterprise MCP examples show how tool access maps to data boundaries and governance.",
