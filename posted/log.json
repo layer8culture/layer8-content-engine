@@ -16521,5 +16521,578 @@
     "scheduled": true,
     "integration_id": "cmqd9915w0001o5717h436ivp",
     "postiz_post_id": "cmrltcmw8005oo25uww2kfq6e"
+  },
+  {
+    "id": "20260716-layer8culture-tiktok-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-07-16T09:00:00-04:00",
+    "text": "StepX Neo just shipped the first phone built for agents, not apps.\n\nNo more tapping through five screens. The agent runs the task across all of them while you watch.\n\nThat's the shift: not smarter apps, an operating system that acts.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIagents",
+      "#TechTok",
+      "#AI"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "ai-fluency",
+    "hook_score": 87,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Vary the composition from post to post so the feed does not repeat. SCENE SPECIFICS: an unbranded matte-black smartphone floating alone in deep negative space, its screen just waking with faint electric-blue agent-graph nodes beginning to bloom and connect into a task chain, a silhouetted hand hovering nearby without touching it. Compose 9:16 vertical. Keep the upper third calm and simple (no faces/fine detail) and the lower third clean dark negative space \u2014 both bands will carry composited animated text overlays. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "headline": "The Phone Stopped Waiting",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Vertical 9:16 cinematic. An unbranded matte-black smartphone rests alone in dark negative space, screen dark. It wakes on its own \u2014 glowing electric-blue agent-graph nodes bloom across the display and connect into a task chain without any finger touching the glass. Camera pushes in slow on the light patterns, then pulls back to reveal a silhouetted hand hovering, watching, not tapping. Calm, awe-driven, documentary realism, shallow depth of field, electric blue + deep navy palette, subtle ambient hum and soft synth swell, no logos, no on-screen text, no copyrighted UI.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "STEPX WENT LIVE",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "AGENTS RUN IT",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "YOU DECIDE",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "file": "assets/generated/20260716-layer8culture-tiktok-1.mp4",
+      "cover": "assets/generated/20260716-layer8culture-tiktok-1-cover.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmql4fje10001oc79jxxx1mc4",
+    "postiz_post_id": "cmrltf1ea005qo25uwp57e2cm"
+  },
+  {
+    "id": "20260716-layer8culture-tiktok-2",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-07-16T11:00:00-04:00",
+    "text": "On Tech Thursday we ran the same brief across five different AI models back to back.\n\nEach one won a different round \u2014 one nailed motion, one nailed color, one nailed the code.\n\nNo single model does it all. That's not a flaw, that's the job.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#BuildInPublic",
+      "#AItools",
+      "#TechTok"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "build-in-public",
+    "hook_score": 84,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Vary the composition from post to post so the feed does not repeat. SCENE SPECIFICS: an overhead close view of a builder's desk at night, a curved monitor tiled with five separate AI generation panels each rendering a different clip in a different visual style, a cursor mid-drag pulling one output toward a timeline below. Compose 9:16 vertical. Keep the upper third calm and simple (no faces/fine detail) and the lower third clean dark negative space \u2014 both bands will carry composited animated text overlays. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "headline": "No Model Wins Alone",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Vertical 9:16 documentary macro. A curved monitor at night shows five tiled AI generation panels, each rendering a different clip in a different visual style; a cursor drags the best clip from each panel down into one timeline, which locks into a single glowing sequence. Shallow depth of field, electric blue highlights on dark glass, subtle ambient keyboard clicks and a deep bass swell, no logos, no on-screen text, no copyrighted UI.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "NO MODEL WINS",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "WE USE FIVE",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "RIGHT TOOL WINS",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "file": "assets/generated/20260716-layer8culture-tiktok-2.mp4",
+      "cover": "assets/generated/20260716-layer8culture-tiktok-2-cover.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmql4fje10001oc79jxxx1mc4",
+    "postiz_post_id": "cmrltf1m3005so25uh106370x"
+  },
+  {
+    "id": "20260716-layer8culture-tiktok-3",
+    "account": "layer8culture",
+    "category": "Creator Systems",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-07-16T13:00:00-04:00",
+    "text": "Microsoft just open-sourced an Agent Governance Toolkit.\n\nTranslation: as agents get more autonomy, someone still has to check their work.\n\nBuilders who skip this step aren't fast. They're exposed.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIagents",
+      "#DevCommunity",
+      "#TechTok"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "cinematic-coding",
+    "hook_score": 81,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Vary the composition from post to post so the feed does not repeat. SCENE SPECIFICS: extreme macro of a dark terminal window, lines of code scrolling and coalescing into a translucent shield of glowing electric-blue light particles, small light trails representing agents passing through and being checked off one by one. Compose 9:16 vertical. Keep the upper third calm and simple (no faces/fine detail) and the lower third clean dark negative space \u2014 both bands will carry composited animated text overlays. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "headline": "Rule The Agents Before They Run",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Vertical 9:16 cinematic macro. Lines of code scroll across a dark terminal, then coalesce into a translucent shield of light particles that pulses as small glowing trails, representing agents, pass through and get checked off one by one. Reflections on glass, shallow depth of field, electric blue particles on deep navy, ambient synth hum, no logos, no readable text, no copyrighted UI.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "RULE THE AGENTS",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "NOW OPEN SOURCE",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "CHECK THE AGENT",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "file": "assets/generated/20260716-layer8culture-tiktok-3.mp4",
+      "cover": "assets/generated/20260716-layer8culture-tiktok-3-cover.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmql4fje10001oc79jxxx1mc4",
+    "postiz_post_id": "cmrltf1yg005uo25utvoa66oj"
+  },
+  {
+    "id": "20260716-layer8culture-tiktok-4",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-07-16T15:30:00-04:00",
+    "text": "xAI just launched a Voice Agent Builder.\n\nYou talk. The agent turns it into a running task, no screen required.\n\nThe prompt box is disappearing. Your voice is the new interface.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#TechTok",
+      "#AI"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "ai-fluency",
+    "hook_score": 79,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Vary the composition from post to post so the feed does not repeat. SCENE SPECIFICS: a single warm-lit microphone standing alone in near-total darkness, a soft electric-blue voice waveform rippling outward from it and reshaping mid-air into a structured task graph with connecting nodes, no visible speaker. Compose 9:16 vertical. Keep the upper third calm and simple (no faces/fine detail) and the lower third clean dark negative space \u2014 both bands will carry composited animated text overlays. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "headline": "Voice Just Became a Build Tool",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Vertical 9:16 cinematic. A lone microphone stands in near-total darkness; a spoken voice sends a soft electric-blue waveform rippling outward that reshapes mid-air into a structured agent task graph with connecting nodes. Slow orbiting camera move, shallow depth of field, deep navy background, subtle voice hum and rising synth pad, no logos, no on-screen text, no visible speaker.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "JUST SPEAK NOW",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "AGENTS CAN HEAR",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "BUILD BY VOICE",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "file": "assets/generated/20260716-layer8culture-tiktok-4.mp4",
+      "cover": "assets/generated/20260716-layer8culture-tiktok-4-cover.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmql4fje10001oc79jxxx1mc4",
+    "postiz_post_id": "cmrltf28e005wo25uh0noljf2"
+  },
+  {
+    "id": "20260716-layer8culture-tiktok-5",
+    "account": "layer8culture",
+    "category": "Tech Thursday Promos",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-07-16T18:00:00-04:00",
+    "text": "Technology has seven layers. We're the eighth.\n\nAfrofuturism isn't a mood board here. It's the blueprint for who gets to build the next era.\n\nWe come through every Thursday to prove it, live.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#Afrofuturism",
+      "#TechCulture",
+      "#TechTok"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "black-tech-culture",
+    "hook_score": 85,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Vary the composition from post to post so the feed does not repeat. SCENE SPECIFICS: a luminous Afrofuturist city skyline glowing at golden hour, bold organic architecture, the standalone '8' motif rendered as a glowing monument at the skyline's center, warm gold light meeting electric blue haze. Compose 9:16 vertical. Keep the upper third calm and simple (no faces/fine detail) and the lower third clean dark negative space \u2014 both bands will carry composited animated text overlays. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "headline": "We Built This City",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Vertical 9:16 cinematic. A luminous Afrofuturist city skyline glows at golden hour; bold organic towers rise around a glowing standalone '8' monument at the center. Camera glides low across rooftops toward the monument as warm gold light meets electric blue haze. Documentary-cinematic realism, wide-to-close push, ambient city hum and a deep bass swell, no logos, no on-screen text, no copyrighted architecture.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "WE BUILT THIS",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "BUILT BY US",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "COME THROUGH",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "file": "assets/generated/20260716-layer8culture-tiktok-5.mp4",
+      "cover": "assets/generated/20260716-layer8culture-tiktok-5-cover.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmql4fje10001oc79jxxx1mc4",
+    "postiz_post_id": "cmrltf2ll005yo25uwewm4ypl"
+  },
+  {
+    "id": "20260716-layer8culture-instagram-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-07-16T10:00:00-04:00",
+    "text": "StepX Neo just shipped the first smartphone built for agents, not apps.\n\nWhat changed: agents can now act across your entire phone, not just inside one chat window.\n\nWhat it does: one instruction can move through calendar, messages, and payments without you tapping through each app.\n\nWhy builders should care: the interface is disappearing. What matters next is the workflow you hand the agent, not the screen you tap.\n\nTry this: pick ONE daily task you repeat by hand and write down every step before you let an agent touch it.\n\nThe signal: AI is leaving the prompt box and moving into how our devices actually run.\n\nSave this for your AI stack.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#AIFluency",
+      "#BuildWithAI",
+      "#AItools",
+      "#AIagents",
+      "#Automation",
+      "#ArtificialIntelligence",
+      "#AInews",
+      "#CreatorTech"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "openai",
+      "aspect": "1:1",
+      "quality": "high",
+      "typography_preset": "editorial_drop",
+      "slides": [
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, Black tech futurism, minimal composition, strong negative space, high contrast. SCENE SPECIFICS: an unbranded matte-black smartphone floating alone in deep negative space, its screen just beginning to glow with faint electric-blue light patterns, bold and mysterious. COMPOSITION FOR TYPOGRAPHY: leave the lower-left / lower third of the frame as clean, uncluttered negative space so a branded headline can be composited over it. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "StepX Just Rewired Your Phone",
+          "subtext": "the first agent-native OS",
+          "accent": "StepX",
+          "kicker": "AI TOOL DROP",
+          "role": "cover"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, Black tech futurism, minimal composition, strong negative space, high contrast. SCENE SPECIFICS: a close macro of a smartphone screen mid-transition, app icons dissolving into a single glowing electric-blue agent-graph structure. COMPOSITION FOR TYPOGRAPHY: leave the lower-left / lower third of the frame as clean, uncluttered negative space so a branded headline can be composited over it. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "Agents Are The OS Now",
+          "subtext": "not an app. the whole phone.",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, Black tech futurism, minimal composition, strong negative space, high contrast. SCENE SPECIFICS: an over-the-shoulder view of a confident Black creator holding a phone as glowing task-node lines visibly move from one app icon to another across the screen, calm focus. COMPOSITION FOR TYPOGRAPHY: leave the lower-left / lower third of the frame as clean, uncluttered negative space so a branded headline can be composited over it. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "One Ask, Cross-App Action",
+          "subtext": "agents move across apps for you",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, Black tech futurism, minimal composition, strong negative space, high contrast. SCENE SPECIFICS: an abstract electric-blue grid collapsing inward into a single glowing point, representing shrinking interfaces, minimal composition. COMPOSITION FOR TYPOGRAPHY: leave the lower-left / lower third of the frame as clean, uncluttered negative space so a branded headline can be composited over it. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "Interfaces Are Shrinking",
+          "subtext": "less tapping, more outcomes",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, Black tech futurism, minimal composition, strong negative space, high contrast. SCENE SPECIFICS: a close detail of a hand mid-task at a premium walnut desk, a small notebook open beside a smartphone, one task mapped out in glowing blue annotations. COMPOSITION FOR TYPOGRAPHY: leave the lower-left / lower third of the frame as clean, uncluttered negative space so a branded headline can be composited over it. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "Audit One Daily Task",
+          "subtext": "map it before you automate it",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, Black tech futurism, minimal composition, strong negative space, high contrast. SCENE SPECIFICS: an atmospheric wide shot of a dark studio with a single glowing agent-graph floating above a desk, prompts visibly reshaping into connected workflow nodes. COMPOSITION FOR TYPOGRAPHY: leave the lower-left / lower third of the frame as clean, uncluttered negative space so a branded headline can be composited over it. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "Prompts Become Workflows",
+          "subtext": "the shift keeps compounding",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, Black tech futurism, minimal composition, strong negative space, high contrast. SCENE SPECIFICS: a clean dark studio frame with the standalone 8 motif softly lit in electric blue on the wall, minimal and premium, ample negative space. COMPOSITION FOR TYPOGRAPHY: leave the lower-left / lower third of the frame as clean, uncluttered negative space so a branded headline can be composited over it. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "Save This For Your AI Stack",
+          "footer": "FOLLOW @LAYER8CULTURE",
+          "role": "cta"
+        }
+      ],
+      "files": [
+        "assets/generated/20260716-layer8culture-instagram-1-1.png",
+        "assets/generated/20260716-layer8culture-instagram-1-2.png",
+        "assets/generated/20260716-layer8culture-instagram-1-3.png",
+        "assets/generated/20260716-layer8culture-instagram-1-4.png",
+        "assets/generated/20260716-layer8culture-instagram-1-5.png",
+        "assets/generated/20260716-layer8culture-instagram-1-6.png",
+        "assets/generated/20260716-layer8culture-instagram-1-7.png"
+      ],
+      "file": "assets/generated/20260716-layer8culture-instagram-1-1.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmqd9915w0001o5717h436ivp",
+    "postiz_post_id": "cmrltf3df0060o25ud33ou5yc"
+  },
+  {
+    "id": "20260716-layer8culture-instagram-2",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-07-16T12:00:00-04:00",
+    "text": "The first phone built for agents just shipped.\n\nNot an app upgrade \u2014 a new operating system where AI moves across your apps for you.\n\nWe're not behind. We're early.\n\nFollow @layer8culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIagents",
+      "#BuildWithAI",
+      "#AIFluency",
+      "#ArtificialIntelligence"
+    ],
+    "hashtags_in_first_comment": true,
+    "trial_reel": true,
+    "visual": {
+      "source": "reuse",
+      "of": "20260716-layer8culture-tiktok-1",
+      "aspect": "9:16",
+      "file": "assets/generated/20260716-layer8culture-instagram-2.mp4",
+      "cover": "assets/generated/20260716-layer8culture-instagram-2-cover.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmqd9915w0001o5717h436ivp",
+    "postiz_post_id": "cmrltf3op0062o25ug66638xl"
+  },
+  {
+    "id": "20260716-layer8culture-instagram-3",
+    "account": "layer8culture",
+    "category": "Creator Systems",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-07-16T14:00:00-04:00",
+    "text": "Everyone's chasing the 'best' AI model. We stopped asking that question.\n\nOn Tech Thursday we ran the same brief across five different models back to back \u2014 video, image, and code \u2014 and watched each one fail somewhere different.\n\nNo single model does it all. That's not a flaw. That's the job: know which tool wins which round.\n\nBuilders who understand this stop wasting hours re-prompting the wrong model and start routing work to the right one on the first try.\n\nThis week, pick your own bench: one model for drafts, one for polish, one for code. Test it on one real task.\n\nThat's the actual AI fluency skill \u2014 not loyalty to a brand, judgment about the job.\n\nComment BUILD and I will send you the workflow map.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#BuildInPublic",
+      "#CreatorTech",
+      "#AIBuilders",
+      "#PromptEngineering",
+      "#DevCommunity",
+      "#AItools",
+      "#TechThursday",
+      "#AICommunity"
+    ],
+    "hashtags_in_first_comment": true,
+    "comment_to_dm": {
+      "campaign": "ig_comment_dm_build_map",
+      "keyword": "BUILD",
+      "offer": "AI Builder Workflow Map",
+      "dm_prompt": "Want the workflow map? Here it is: <approved public link>. What are you trying to build with AI right now?",
+      "public_reply": "Sent. Check your DMs.",
+      "route": "builder_nurture"
+    },
+    "visual": {
+      "source": "openai",
+      "aspect": "1:1",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "slides": [
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, Black tech futurism, minimal composition, strong negative space, high contrast. SCENE SPECIFICS: five separate glowing screens arranged in a dark studio, each casting a different-toned electric-blue light pattern, an overhead symbolic view. COMPOSITION FOR TYPOGRAPHY: leave the lower-left / lower third of the frame as clean, uncluttered negative space so a branded headline can be composited over it. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "Stop Using One Model",
+          "subtext": "why we run five, on purpose",
+          "accent": "Five",
+          "role": "cover"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, Black tech futurism, minimal composition, strong negative space, high contrast. SCENE SPECIFICS: a close macro of one screen split into five tiled panels, each rendering a different abstract AI output pattern. COMPOSITION FOR TYPOGRAPHY: leave the lower-left / lower third of the frame as clean, uncluttered negative space so a branded headline can be composited over it. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "Every Model Has A Lane",
+          "subtext": "video, image, code, none do it all",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, Black tech futurism, minimal composition, strong negative space, high contrast. SCENE SPECIFICS: an over-the-shoulder view of a confident Black creator at a curved monitor comparing five outputs side by side, focused energy. COMPOSITION FOR TYPOGRAPHY: leave the lower-left / lower third of the frame as clean, uncluttered negative space so a branded headline can be composited over it. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "We Tested Them Live",
+          "subtext": "same brief, five different outputs",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, Black tech futurism, minimal composition, strong negative space, high contrast. SCENE SPECIFICS: a detail shot of a hand selecting one glowing panel among five on a dark control surface, decisive gesture. COMPOSITION FOR TYPOGRAPHY: leave the lower-left / lower third of the frame as clean, uncluttered negative space so a branded headline can be composited over it. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "Pick By The Job, Not Hype",
+          "subtext": "the popular model isn't always right",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, Black tech futurism, minimal composition, strong negative space, high contrast. SCENE SPECIFICS: an atmospheric shelf of three glowing panel icons arranged like tools on a bench, premium minimal composition. COMPOSITION FOR TYPOGRAPHY: leave the lower-left / lower third of the frame as clean, uncluttered negative space so a branded headline can be composited over it. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "Build Your Own Bench",
+          "subtext": "know 3 models cold, not 1",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, Black tech futurism, minimal composition, strong negative space, high contrast. SCENE SPECIFICS: a wide dark studio shot, a single confident Black creator standing back from a wall of five monitors now dimmed except one glowing choice. COMPOSITION FOR TYPOGRAPHY: leave the lower-left / lower third of the frame as clean, uncluttered negative space so a branded headline can be composited over it. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "This Is The Real Skill",
+          "subtext": "fluency beats loyalty",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, Black tech futurism, minimal composition, strong negative space, high contrast. SCENE SPECIFICS: a clean dark studio frame with the standalone 8 motif softly lit in electric blue, ample negative space. COMPOSITION FOR TYPOGRAPHY: leave the lower-left / lower third of the frame as clean, uncluttered negative space so a branded headline can be composited over it. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "Comment BUILD For The Map",
+          "role": "cta"
+        }
+      ],
+      "files": [
+        "assets/generated/20260716-layer8culture-instagram-3-1.png",
+        "assets/generated/20260716-layer8culture-instagram-3-2.png",
+        "assets/generated/20260716-layer8culture-instagram-3-3.png",
+        "assets/generated/20260716-layer8culture-instagram-3-4.png",
+        "assets/generated/20260716-layer8culture-instagram-3-5.png",
+        "assets/generated/20260716-layer8culture-instagram-3-6.png",
+        "assets/generated/20260716-layer8culture-instagram-3-7.png"
+      ],
+      "file": "assets/generated/20260716-layer8culture-instagram-3-1.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmqd9915w0001o5717h436ivp",
+    "postiz_post_id": "cmrltf4ew0064o25u67jyniu1"
+  },
+  {
+    "id": "20260716-layer8culture-instagram-4",
+    "account": "layer8culture",
+    "category": "Tech Thursday Promos",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-07-16T17:00:00-04:00",
+    "text": "Technology has seven layers. We're the eighth.\n\nAfrofuturism isn't aesthetic here. It's the blueprint.\n\nFollow @layer8culture for the build.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#Afrofuturism",
+      "#TechCulture",
+      "#BuildInPublic",
+      "#DigitalCulture"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "reuse",
+      "of": "20260716-layer8culture-tiktok-5",
+      "aspect": "9:16",
+      "file": "assets/generated/20260716-layer8culture-instagram-4.mp4",
+      "cover": "assets/generated/20260716-layer8culture-instagram-4-cover.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmqd9915w0001o5717h436ivp",
+    "postiz_post_id": "cmrltf4ng0066o25uub3h7ean"
+  },
+  {
+    "id": "20260716-layer8culture-instagram-5",
+    "account": "layer8culture",
+    "category": "Community Questions",
+    "platform": "instagram",
+    "format": "story",
+    "schedule_time": "2026-07-16T19:00:00-04:00",
+    "text": "StepX just built a phone where agents act on their own across every app.\n\nVote: are you ready, or not yet?",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIagents"
+    ],
+    "first_comment": "Reply YES or NOT YET \ud83d\udc47",
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, Black tech futurism, minimal composition, strong negative space, high contrast. SCENE SPECIFICS: a matte-black smartphone resting on a dark walnut desk, a single beam of electric-blue light rising from the screen into darkness, quiet and contemplative, ample negative space above for a poll question. COMPOSITION FOR TYPOGRAPHY: leave the lower-left / lower third of the frame as clean, uncluttered negative space so a branded headline can be composited over it. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "headline": "Would You Let An Agent Run Your Phone?",
+      "subtext": "Yes / Not yet",
+      "file": "assets/generated/20260716-layer8culture-instagram-5.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmqd9915w0001o5717h436ivp",
+    "postiz_post_id": "cmrltf4w50068o25uk47arevd"
+  },
+  {
+    "id": "20260716-layer8culture-youtube-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "youtube",
+    "format": "reel",
+    "schedule_time": "2026-07-16T12:30:00-04:00",
+    "youtube_title": "StepX Neo: The First Agent-Native Smartphone #Shorts",
+    "text": "StepX Neo just launched the first phone OS built for AI agents, not apps.\n\nFollow Layer8Culture for daily AI builder breakdowns.",
+    "hashtags": [
+      "#Shorts",
+      "#Layer8Culture",
+      "#AI",
+      "#AIagents"
+    ],
+    "visual": {
+      "source": "reuse",
+      "of": "20260716-layer8culture-tiktok-1",
+      "aspect": "9:16",
+      "file": "assets/generated/20260716-layer8culture-youtube-1.mp4",
+      "cover": "assets/generated/20260716-layer8culture-youtube-1-cover.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmqlaqfas0001tf7fizmjs2ks",
+    "postiz_post_id": "cmrltf52i006ao25uc1g87k8l"
+  },
+  {
+    "id": "20260716-layer8culture-youtube-2",
+    "account": "layer8culture",
+    "category": "Tech Thursday Promos",
+    "platform": "youtube",
+    "format": "reel",
+    "schedule_time": "2026-07-16T17:30:00-04:00",
+    "youtube_title": "We Built This City: Layer8Culture's Afrofuturist Thesis #Shorts",
+    "text": "Technology has seven layers. We're the eighth.\n\nFollow Layer8Culture for the build.",
+    "hashtags": [
+      "#Shorts",
+      "#Layer8Culture",
+      "#Afrofuturism",
+      "#TechCulture"
+    ],
+    "visual": {
+      "source": "reuse",
+      "of": "20260716-layer8culture-tiktok-5",
+      "aspect": "9:16",
+      "file": "assets/generated/20260716-layer8culture-youtube-2.mp4",
+      "cover": "assets/generated/20260716-layer8culture-youtube-2-cover.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmqlaqfas0001tf7fizmjs2ks",
+    "postiz_post_id": "cmrltf5k1006bo25ukafhz42s"
   }
 ]
