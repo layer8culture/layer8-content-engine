@@ -82,8 +82,8 @@
 # (the engine renders its own on-brand imagery; no YouTube footage is reposted).
 # Edit MOOD_RULES in the script or override entries by hand if needed.
 #
-  - title: Afrofuturist Culture Sessions: Capetown Lofi to Vibe, Create & Connect ✨🎧 Vol. 1 #lofi 2026
-    url: https://www.youtube.com/watch?v=zSlahm0e-iI
+  - title: Afrofuturist Culture Sessions: Toronto Lofi to Vibe, Create & Connect ✨🎧 Vol. 1 #lofi #afrolofi 2026
+    url: https://www.youtube.com/watch?v=n3e68W6NAwc
     mood: night
     note: drive viewers to the full session; link in bio.
 
