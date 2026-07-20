@@ -82,9 +82,9 @@
 # (the engine renders its own on-brand imagery; no YouTube footage is reposted).
 # Edit MOOD_RULES in the script or override entries by hand if needed.
 #
-  - title: Afrofuturist Sunrise Build Beats: Coffee ☀️🎧 Vol. 1 2026
-    url: https://www.youtube.com/watch?v=_Je4j2gwd3M
-    mood: sunrise
+  - title: Afrofuturist Cosmic Focus Coding Radio | Lo-Fi Study Beats #Shorts
+    url: https://www.youtube.com/watch?v=Kfn2AOhd2FE
+    mood: night
     note: drive viewers to the full session; link in bio.
 
 ## Session focus / pillars to feature
