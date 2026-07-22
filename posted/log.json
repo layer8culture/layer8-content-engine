@@ -20121,5 +20121,103 @@
     "scheduled": true,
     "integration_id": "cmqgzb1xv000qo571zuz5lqfm",
     "postiz_post_id": "cmrudyr9700ato25uwb5upqg8"
+  },
+  {
+    "id": "20260724-layer8culture-instagram-guide",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-07-24T11:00:00-04:00",
+    "text": "Most people stop at using AI. Builders learn to operate it.\n\nThis week's AI field guide is about AI Fluency: Consumer, User, Builder, Operator.\n\nThe carousel gives you the short version.\nThe guide gives you the practical map.\n\nComment FLUENCY and I will send you the full AI field guide.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#BuildWithAI",
+      "#AIBuilders",
+      "#AItools",
+      "#PromptEngineering",
+      "#AIagents",
+      "#BuildInPublic"
+    ],
+    "hashtags_in_first_comment": true,
+    "comment_to_dm": {
+      "campaign": "weekly_guide_ai_fluency_consumer_user_builder_operator",
+      "keyword": "FLUENCY",
+      "offer": "AI Fluency Field Guide",
+      "guide_url": "https://www.layer8culture.io/guides/ai-fluency-consumer-user-builder-operator/",
+      "dm_prompt": "Here is the AI field guide: https://www.layer8culture.io/guides/ai-fluency-consumer-user-builder-operator/ What are you trying to get better at with AI right now?",
+      "public_reply": "Sent. Check your DMs.",
+      "route": "ai_field_guide_nurture"
+    },
+    "visual": {
+      "source": "openai",
+      "aspect": "1:1",
+      "quality": "high",
+      "slides": [
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: AI Fluency: Consumer, User, Builder, Operator. Slide idea: AI FLUENCY. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "AI FLUENCY",
+          "subtext": "Where are you on the ladder?",
+          "accent": "AI",
+          "role": "cover"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: AI Fluency: Consumer, User, Builder, Operator. Slide idea: CONSUMER. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a macro detail of a workflow coming together.",
+          "headline": "CONSUMER",
+          "subtext": "You watch the tools change.",
+          "accent": "CONSUMER",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: AI Fluency: Consumer, User, Builder, Operator. Slide idea: USER. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "USER",
+          "subtext": "You ask better questions.",
+          "accent": "USER",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: AI Fluency: Consumer, User, Builder, Operator. Slide idea: BUILDER. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a macro detail of a workflow coming together.",
+          "headline": "BUILDER",
+          "subtext": "You make the tool produce work.",
+          "accent": "BUILDER",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: AI Fluency: Consumer, User, Builder, Operator. Slide idea: OPERATOR. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "OPERATOR",
+          "subtext": "You design the system.",
+          "accent": "OPERATOR",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: AI Fluency: Consumer, User, Builder, Operator. Slide idea: THE MOVE. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a macro detail of a workflow coming together.",
+          "headline": "THE MOVE",
+          "subtext": "Climb one level this week.",
+          "accent": "THE",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: AI Fluency: Consumer, User, Builder, Operator. Slide idea: COMMENT FLUENCY. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "COMMENT FLUENCY",
+          "subtext": "Get the full field guide.",
+          "accent": "COMMENT",
+          "role": "cta"
+        }
+      ],
+      "files": [
+        "assets/generated/20260724-layer8culture-instagram-guide-1.png",
+        "assets/generated/20260724-layer8culture-instagram-guide-2.png",
+        "assets/generated/20260724-layer8culture-instagram-guide-3.png",
+        "assets/generated/20260724-layer8culture-instagram-guide-4.png",
+        "assets/generated/20260724-layer8culture-instagram-guide-5.png",
+        "assets/generated/20260724-layer8culture-instagram-guide-6.png",
+        "assets/generated/20260724-layer8culture-instagram-guide-7.png"
+      ],
+      "file": "assets/generated/20260724-layer8culture-instagram-guide-1.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmqd9915w0001o5717h436ivp",
+    "postiz_post_id": "cmrw87jix00avo25utxfl90sz"
   }
 ]
