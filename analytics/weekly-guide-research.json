@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-14T15:21:18.370850+00:00",
+  "generated_at": "2026-07-21T15:40:33.615595+00:00",
   "focus": [
     "helpful AI tips",
     "AI skills",
@@ -38,7 +38,7 @@
         "cli",
         "agentic workflows"
       ],
-      "score": 370,
+      "score": 447,
       "summary": "Use Case: copilot - GitHub Changelog Skip to content / Blog Changelog Docs Customer stories Try GitHub Copilot CLI Attend GitHub Universe Search Changelog Docs Customer stories Attend GitHub Universe Try GitHub Copilot CLI Back to blog Changelog Copy RSS feed URL Follow @ghchangelog on X All New Releases Improvements Retired Filters ( 0 selected ) Copilot Clear all Filters ( 0 selected ) Match: Any All Tags...",
       "status": "ok"
     },
@@ -109,9 +109,9 @@
     {
       "full_name": "punkpeye/awesome-mcp-servers",
       "url": "https://github.com/punkpeye/awesome-mcp-servers",
-      "stars": 90759,
+      "stars": 91035,
       "language": null,
-      "updated_at": "2026-07-14T14:33:31Z",
+      "updated_at": "2026-07-21T15:18:15Z",
       "description": "A collection of MCP servers.",
       "topics": [
         "ai",
@@ -123,9 +123,9 @@
     {
       "full_name": "modelcontextprotocol/servers",
       "url": "https://github.com/modelcontextprotocol/servers",
-      "stars": 88462,
+      "stars": 88705,
       "language": "TypeScript",
-      "updated_at": "2026-07-14T15:20:03Z",
+      "updated_at": "2026-07-21T15:23:08Z",
       "description": "Model Context Protocol Servers",
       "topics": [],
       "lesson": "Study reference servers to understand how tools, resources, prompts, and permissions fit together.",
@@ -134,9 +134,9 @@
     {
       "full_name": "github/github-mcp-server",
       "url": "https://github.com/github/github-mcp-server",
-      "stars": 31436,
+      "stars": 31602,
       "language": "Go",
-      "updated_at": "2026-07-14T14:00:37Z",
+      "updated_at": "2026-07-21T15:31:28Z",
       "description": "GitHub's official MCP Server",
       "topics": [
         "github",
@@ -149,9 +149,9 @@
     {
       "full_name": "modelcontextprotocol/python-sdk",
       "url": "https://github.com/modelcontextprotocol/python-sdk",
-      "stars": 23613,
+      "stars": 23674,
       "language": "Python",
-      "updated_at": "2026-07-14T15:14:29Z",
+      "updated_at": "2026-07-21T14:03:36Z",
       "description": "The official Python SDK for Model Context Protocol servers and clients",
       "topics": [],
       "lesson": "Use SDK examples to see the client and server primitives without extra product noise.",
@@ -160,9 +160,9 @@
     {
       "full_name": "modelcontextprotocol/typescript-sdk",
       "url": "https://github.com/modelcontextprotocol/typescript-sdk",
-      "stars": 12848,
+      "stars": 12907,
       "language": "TypeScript",
-      "updated_at": "2026-07-14T14:11:15Z",
+      "updated_at": "2026-07-21T14:24:32Z",
       "description": "The official TypeScript SDK for Model Context Protocol servers and clients",
       "topics": [],
       "lesson": "Use SDK examples to see the client and server primitives without extra product noise.",
@@ -171,9 +171,9 @@
     {
       "full_name": "hangwin/mcp-chrome",
       "url": "https://github.com/hangwin/mcp-chrome",
-      "stars": 12113,
+      "stars": 12179,
       "language": "TypeScript",
-      "updated_at": "2026-07-14T11:33:49Z",
+      "updated_at": "2026-07-21T14:33:14Z",
       "description": "Chrome MCP Server is a Chrome extension-based Model Context Protocol (MCP) server that exposes your Chrome browser functionality to AI assistants like Claude, enabling complex browser automation, content analysis, and semantic search.",
       "topics": [],
       "lesson": "Browser automation is useful when the workflow needs pages, forms, screenshots, or live web context.",
@@ -182,9 +182,9 @@
     {
       "full_name": "modelcontextprotocol/inspector",
       "url": "https://github.com/modelcontextprotocol/inspector",
-      "stars": 10373,
+      "stars": 10425,
       "language": "TypeScript",
-      "updated_at": "2026-07-14T13:39:10Z",
+      "updated_at": "2026-07-21T14:58:22Z",
       "description": "Visual testing tool for MCP servers",
       "topics": [],
       "lesson": "Use inspection tools to test a server before trusting it inside a real workflow.",
@@ -193,9 +193,9 @@
     {
       "full_name": "modelcontextprotocol/registry",
       "url": "https://github.com/modelcontextprotocol/registry",
-      "stars": 7017,
+      "stars": 7053,
       "language": "Go",
-      "updated_at": "2026-07-14T10:40:08Z",
+      "updated_at": "2026-07-21T13:59:35Z",
       "description": "A community driven registry service for Model Context Protocol (MCP) servers.",
       "topics": [
         "mcp",
@@ -207,9 +207,9 @@
     {
       "full_name": "executeautomation/mcp-playwright",
       "url": "https://github.com/executeautomation/mcp-playwright",
-      "stars": 5578,
+      "stars": 5596,
       "language": "TypeScript",
-      "updated_at": "2026-07-14T13:25:08Z",
+      "updated_at": "2026-07-21T12:10:29Z",
       "description": "Playwright Model Context Protocol Server - Tool to automate Browsers and APIs in Claude Desktop, Cline, Cursor IDE and More \ud83d\udd0c",
       "topics": [],
       "lesson": "Browser automation is useful when the workflow needs pages, forms, screenshots, or live web context.",
@@ -218,9 +218,9 @@
     {
       "full_name": "microsoft/mcp",
       "url": "https://github.com/microsoft/mcp",
-      "stars": 3456,
+      "stars": 3490,
       "language": "C#",
-      "updated_at": "2026-07-14T12:35:37Z",
+      "updated_at": "2026-07-21T14:53:43Z",
       "description": "Catalog of official Microsoft MCP (Model Context Protocol) server implementations for AI-powered data access and tool integration",
       "topics": [],
       "lesson": "Enterprise MCP examples show how tool access maps to data boundaries and governance.",
