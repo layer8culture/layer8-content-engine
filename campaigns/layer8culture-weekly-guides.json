@@ -279,6 +279,181 @@
         ["THE MOVE", "Climb one level this week."],
         ["COMMENT FLUENCY", "Get the full field guide."]
       ]
+    },
+    {
+      "slug": "build-your-ai-org-chart",
+      "title": "Build Your AI Org Chart",
+      "category": "AI Fluency Education",
+      "keyword": "ORGCHART",
+      "offer": "AI Org Chart Field Guide",
+      "hook": "Design AI agents like a team, not a pile of automations.",
+      "guide_promise": "A practical guide to turning scattered AI tasks into role-based agents with clear mandates, handoffs, guardrails, and decision rights.",
+      "angle": "Teach builders to design AI agents as an operating model, not a catalog of disconnected bots.",
+      "slides": [
+        ["AI ORG CHART", "Build agents like a team."],
+        ["THE PROBLEM", "Task-bots fragment ownership."],
+        ["THE SHIFT", "Design roles before tasks."],
+        ["ROLE DNA", "Every agent needs mandate, authority, and context."],
+        ["STARTING FOUR", "Begin with coordination, planning, delivery, and architecture."],
+        ["HANDOFFS MATTER", "Pilot a small team around one real initiative."],
+        ["COMMENT ORGCHART", "Get the full field guide."]
+      ],
+      "guide": {
+        "read_time": "7 minute reference",
+        "updated_label": "Built for teams designing AI agents",
+        "hero_promise": "A builder's field guide to designing AI agents as an org chart of roles, mandates, handoffs, and decision rights.",
+        "summary_cards": [
+          {
+            "label": "The plain-English version",
+            "text": "An AI org chart turns agents into accountable roles with clear outcomes, not loose bots built around isolated tasks."
+          },
+          {
+            "label": "The builder move",
+            "text": "Start with the outcome a great teammate would own, then define the mandate, inputs, outputs, authority, and handoffs."
+          },
+          {
+            "label": "The risk to manage",
+            "text": "Agents create leverage only when decision rights, approvals, access, and escalation paths are explicit."
+          }
+        ],
+        "sections": [
+          {
+            "eyebrow": "Mental model",
+            "heading": "Design agents like an organization, not a pile of automations.",
+            "body": "Most AI projects begin with tasks: write emails, summarize meetings, update project plans. Those wins matter, but they can turn into scattered bots with unclear ownership. A stronger system starts with functions, responsibilities, decision rights, and handoffs.",
+            "bullets": ["Do not start with what the agent does. Start with what the agent is accountable for.", "An email draft can be a capability. A Chief of Staff agent is a role with a mandate."]
+          },
+          {
+            "eyebrow": "Role anatomy",
+            "heading": "Every role-based agent needs a clear operating contract.",
+            "body": "Before you give an agent tools, define the role it plays in the system. The contract should make ownership, access, outputs, collaboration, approval, and escalation visible.",
+            "table": {
+              "headers": ["Element", "Question it answers"],
+              "rows": [
+                ["Mandate", "What outcome is the agent responsible for?"],
+                ["Decision rights", "What can it execute, recommend, or decide?"],
+                ["Inputs", "What context, information, and systems does it need?"],
+                ["Outputs", "What does it create, update, or deliver?"],
+                ["Capabilities", "What tasks can it perform in service of its role?"],
+                ["Collaborators", "Which people or agents does it work with?"],
+                ["Guardrails", "What requires approval?"],
+                ["Escalation path", "When and to whom does it raise risk or uncertainty?"]
+              ]
+            }
+          },
+          {
+            "eyebrow": "Org chart",
+            "heading": "A simple AI org chart starts with operating needs.",
+            "body": "The point is not to copy every title in a traditional hierarchy. Start with the coordination, delivery, product, technology, quality, and communication needs the business actually has.",
+            "code": "Leadership and coordination\n├── Chief of Staff Agent\n├── Strategic Research Agent\n└── Communications Agent\n\nPlanning and delivery\n├── Program Manager Agent\n├── Project Manager Agent\n└── Operations Analyst Agent\n\nProduct and technology\n├── Technical Architect Agent\n├── Product Operations Agent\n└── Quality and Risk Agent"
+          },
+          {
+            "eyebrow": "Foundational roles",
+            "heading": "Start with four roles that create coordination, delivery, and technical coherence.",
+            "cards": [
+              {
+                "label": "Chief of Staff Agent",
+                "text": "Turns leadership priorities, conversations, and decisions into coordinated action. It prepares briefs, tracks commitments, drafts updates, recommends next actions, and escalates strategic commitments, personnel decisions, and external promises."
+              },
+              {
+                "label": "Program Manager Agent",
+                "text": "Keeps cross-functional initiatives aligned to strategic outcomes. It translates strategy into milestones, manages dependencies and risks, recommends sequencing, and escalates scope, budget, priority, or resourcing changes."
+              },
+              {
+                "label": "Project Manager Agent",
+                "text": "Moves a defined project from plan to completed outcome. It maintains plans, tracks work, keeps documentation current, proposes timelines, and escalates significant delivery risks or cross-team impacts."
+              },
+              {
+                "label": "Technical Architect Agent",
+                "text": "Protects technical coherence as systems, tools, and integrations evolve. It evaluates options, documents architecture decisions, recommends standards, and escalates material security, cost, compliance, or irreversible platform decisions."
+              }
+            ]
+          },
+          {
+            "eyebrow": "How to build",
+            "heading": "Build your AI org chart from outcomes to handoffs.",
+            "checklist": [
+              "Start with outcomes, not tools. Name repeatable outcomes such as leadership alignment, reliable delivery, customer follow-through, and sound technical decisions.",
+              "Name the role that would own that outcome. If you hired a great person to own it, what job would they have?",
+              "Give the role a focused mandate. Ensure leadership decisions become owned actions is clearer than help the business.",
+              "Separate execution, recommendations, and escalation. Agents should move routine work forward without quietly assuming consequential authority.",
+              "Design the handoffs. Define what each role transfers, to whom, in what format, and what response it expects.",
+              "Pilot a small team first. Begin with two or three roles around one real initiative, then refine before scaling."
+            ]
+          },
+          {
+            "eyebrow": "Handoff flow",
+            "heading": "The essential handoff flow turns strategy into governed work.",
+            "body": "Role-based agents become useful when the transfer of context is explicit. Each handoff should make the next move clearer and keep consequential choices with a human leader.",
+            "code": "Chief of Staff\n  → turns leadership priorities into an initiative brief\nProgram Manager\n  → turns the brief into milestones, dependencies, and outcomes\nProject Manager\n  → turns the plan into delivery rhythm and tracked work\nTechnical Architect\n  → validates feasibility, standards, and technical tradeoffs\nHuman leader\n  → approves consequential choices and resolves conflicts"
+          },
+          {
+            "eyebrow": "Governance",
+            "heading": "Governance keeps agent leverage inside human accountability.",
+            "bullets": [
+              "Humans retain accountability for strategy, people, budgets, legal commitments, and high-impact external communication.",
+              "Approval requirements should be explicit before an agent sends, publishes, changes, or commits anything consequential.",
+              "Maintain a trace of important recommendations, decisions, and handoffs.",
+              "Give agents only the information and access needed for their mandate.",
+              "Measure agents by the outcomes they improve, not by the number of tasks they complete.",
+              "Make escalation easy when priorities conflict, context is missing, or risk is unclear."
+            ]
+          },
+          {
+            "eyebrow": "Common traps",
+            "heading": "Avoid the patterns that make agents harder to trust.",
+            "cards": [
+              {
+                "label": "The task-bot trap",
+                "text": "Separate email, meeting-notes, spreadsheet, and research agents fragment accountability. Those are capabilities, not roles."
+              },
+              {
+                "label": "The all-purpose assistant",
+                "text": "One agent that does everything becomes inconsistent and hard to trust."
+              },
+              {
+                "label": "The invisible manager",
+                "text": "An agent that makes commitments or reprioritizes work without clear approval rules creates avoidable risk."
+              },
+              {
+                "label": "The org-chart theater problem",
+                "text": "Executive-sounding labels are meaningless without mandate, context, authority boundaries, and handoffs."
+              }
+            ]
+          }
+        ],
+        "starter_prompt": "I want to design one role-based AI agent. Ask me for the agent's mandate, primary stakeholders, inputs, outputs, capabilities, decision rights, handoffs, guardrails, escalation path, and success measures. Then give me a first version that starts with recommendations, not autonomous action.",
+        "glossary": [
+          ["Role-based agent", "An AI agent designed around an accountable business role instead of a single task."],
+          ["Mandate", "The outcome the agent is responsible for improving or coordinating."],
+          ["Decision rights", "The boundary between what an agent may execute, recommend, decide, or escalate."],
+          ["Guardrails", "Rules that limit access, authority, risk, and external action before the agent acts."],
+          ["Escalation path", "The defined route for raising risk, uncertainty, conflicts, or consequential choices to a human."],
+          ["Handoff", "A structured transfer of context, output, ownership, or next steps between agents or people."],
+          ["Chief of Staff Agent", "A coordination role that turns leadership priorities and decisions into owned follow-through."],
+          ["Program Manager Agent", "A cross-functional planning role that keeps initiatives aligned to outcomes, dependencies, and risks."],
+          ["Project Manager Agent", "A delivery role that turns plans into tracked work, status rhythm, and completed outcomes."],
+          ["Technical Architect Agent", "A technical coherence role that reviews feasibility, standards, integrations, security, reliability, and tradeoffs."],
+          ["Operating model", "The system of roles, authority, handoffs, governance, and measures that makes agents work together."]
+        ],
+        "source_notes": [
+          {
+            "name": "Anthropic: Building effective agents",
+            "url": "https://www.anthropic.com/research/building-effective-agents",
+            "note": "A practical reference for deciding when agents should be workflows, when they should be autonomous, and how to keep designs simple."
+          },
+          {
+            "name": "OpenAI: New tools for building agents",
+            "url": "https://openai.com/index/new-tools-for-building-agents/",
+            "note": "A useful overview of the agent-building primitives builders need to understand before assigning tools, context, and actions."
+          },
+          {
+            "name": "NIST AI Risk Management Framework",
+            "url": "https://www.nist.gov/itl/ai-risk-management-framework",
+            "note": "A stable governance reference for thinking about risk, accountability, measurement, and trustworthy AI practices."
+          }
+        ]
+      }
     }
   ]
 }

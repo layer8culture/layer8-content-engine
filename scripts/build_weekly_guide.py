@@ -76,6 +76,30 @@ def cards_html(cards: list[dict]) -> str:
     ) + "</div>"
 
 
+def table_html(table: dict) -> str:
+    if not table:
+        return ""
+    headers = table.get("headers", [])
+    rows = table.get("rows", [])
+    head = ""
+    if headers:
+        head = "<thead><tr>" + "".join(
+            f"<th>{html.escape(str(cell))}</th>" for cell in headers
+        ) + "</tr></thead>"
+    body = "<tbody>" + "\n".join(
+        "<tr>" + "".join(f"<td>{html.escape(str(cell))}</td>" for cell in row) + "</tr>"
+        for row in rows
+    ) + "</tbody>"
+    return f'<div class="table-wrap"><table>{head}{body}</table></div>'
+
+
+def code_html(code) -> str:
+    if not code:
+        return ""
+    text = "\n".join(code) if isinstance(code, list) else str(code)
+    return f'<pre class="codeblock"><code>{html.escape(text)}</code></pre>'
+
+
 def section_html(section: dict) -> str:
     body = f'<p>{html.escape(section["body"])}</p>' if section.get("body") else ""
     bullets = ""
@@ -90,6 +114,8 @@ def section_html(section: dict) -> str:
       <h2>{html.escape(section["heading"])}</h2>
       {body}
       {cards_html(section.get("cards", []))}
+      {table_html(section.get("table", {}))}
+      {code_html(section.get("code", ""))}
       {bullets}
       {checklist}
     </section>"""
@@ -250,6 +276,22 @@ def render_guide(campaign: dict, research: dict) -> str:
       <h2>Repos worth studying</h2>
       <div class="repo-grid">{repo_html}</div>
     </section>"""
+    slug = campaign["slug"]
+    canonical = f"{BASE_URL}/guides/{slug}/"
+    raw_title = campaign["title"]
+    raw_desc = guide.get("hero_promise", campaign["guide_promise"])
+    article_ld = json.dumps(
+        {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": raw_title,
+            "description": raw_desc,
+            "author": {"@type": "Organization", "name": "Layer8Culture"},
+            "publisher": {"@type": "Organization", "name": "Layer8Culture"},
+            "mainEntityOfPage": canonical,
+        },
+        indent=2,
+    )
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -257,7 +299,18 @@ def render_guide(campaign: dict, research: dict) -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{title} | Layer8Culture</title>
   <meta name="description" content="{promise}">
+  <link rel="canonical" href="{canonical}">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{title}">
+  <meta property="og:description" content="{promise}">
+  <meta property="og:url" content="{canonical}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{title}">
+  <meta name="twitter:description" content="{promise}">
   <link rel="stylesheet" href="/styles.css">
+  <script type="application/ld+json">
+{article_ld}
+  </script>
 </head>
 <body>
   <main class="shell">
@@ -303,6 +356,14 @@ def render_guide(campaign: dict, research: dict) -> str:
 </body>
 </html>
 """
+
+
+def write_guide_page(campaign: dict, research: dict, site_root: Path) -> Path:
+    guide_dir = site_root / "guides" / campaign["slug"]
+    guide_dir.mkdir(parents=True, exist_ok=True)
+    guide_path = guide_dir / "index.html"
+    guide_path.write_text(render_guide(campaign, research), encoding="utf-8")
+    return guide_path
 
 
 def visual_prompt(campaign: dict, headline: str, index: int) -> str:
@@ -385,6 +446,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--campaign-index", type=int)
     parser.add_argument("--date")
+    parser.add_argument("--site-root", default=str(SITE_ROOT))
     args = parser.parse_args()
 
     campaigns = load_json(CAMPAIGNS_PATH)
@@ -412,9 +474,7 @@ def main() -> None:
         "route": "ai_field_guide_nurture",
     }
 
-    guide_dir = SITE_ROOT / "guides" / campaign["slug"]
-    guide_dir.mkdir(parents=True, exist_ok=True)
-    (guide_dir / "index.html").write_text(render_guide(campaign, research), encoding="utf-8")
+    guide_path = write_guide_page(campaign, research, Path(args.site_root))
 
     QUEUE_ROOT.mkdir(exist_ok=True)
     post = build_queue_post(
@@ -437,7 +497,7 @@ def main() -> None:
     (QUEUE_ROOT / f"weekly-guide-{date}.summary.md").write_text(summary, encoding="utf-8")
     active_path = Path("campaigns/layer8culture-active-guide-campaign.json")
     active_path.write_text(json.dumps(active_campaign, indent=2), encoding="utf-8")
-    print(f"Wrote {guide_dir / 'index.html'}")
+    print(f"Wrote {guide_path}")
     print(f"Wrote {queue_path}")
     print(f"Wrote {active_path}")
 
