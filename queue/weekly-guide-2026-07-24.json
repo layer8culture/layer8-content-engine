@@ -1,0 +1,87 @@
+[
+  {
+    "id": "20260724-layer8culture-instagram-guide",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-07-24T11:00:00-04:00",
+    "text": "Design AI agents like a team, not a pile of automations.\n\nThis week's AI field guide is about Build Your AI Org Chart.\n\nThe carousel gives you the short version.\nThe guide gives you the practical map.\n\nComment ORGCHART and I will send you the full AI field guide.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#BuildWithAI",
+      "#AIBuilders",
+      "#AItools",
+      "#PromptEngineering",
+      "#AIagents",
+      "#BuildInPublic"
+    ],
+    "hashtags_in_first_comment": true,
+    "comment_to_dm": {
+      "campaign": "weekly_guide_build_your_ai_org_chart",
+      "keyword": "ORGCHART",
+      "offer": "AI Org Chart Field Guide",
+      "guide_url": "https://www.layer8culture.io/guides/build-your-ai-org-chart/",
+      "dm_prompt": "Here is the AI field guide: https://www.layer8culture.io/guides/build-your-ai-org-chart/ What are you trying to get better at with AI right now?",
+      "public_reply": "Sent. Check your DMs.",
+      "route": "ai_field_guide_nurture"
+    },
+    "visual": {
+      "source": "openai",
+      "aspect": "1:1",
+      "quality": "high",
+      "slides": [
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: Build Your AI Org Chart. Slide idea: AI ORG CHART. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "AI ORG CHART",
+          "subtext": "Build agents like a team.",
+          "accent": "AI",
+          "role": "cover"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: Build Your AI Org Chart. Slide idea: THE PROBLEM. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a macro detail of a workflow coming together.",
+          "headline": "THE PROBLEM",
+          "subtext": "Task-bots fragment ownership.",
+          "accent": "THE",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: Build Your AI Org Chart. Slide idea: THE SHIFT. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "THE SHIFT",
+          "subtext": "Design roles before tasks.",
+          "accent": "THE",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: Build Your AI Org Chart. Slide idea: ROLE DNA. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a macro detail of a workflow coming together.",
+          "headline": "ROLE DNA",
+          "subtext": "Every agent needs mandate, authority, and context.",
+          "accent": "ROLE",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: Build Your AI Org Chart. Slide idea: STARTING FOUR. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "STARTING FOUR",
+          "subtext": "Begin with coordination, planning, delivery, and architecture.",
+          "accent": "STARTING",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: Build Your AI Org Chart. Slide idea: HANDOFFS MATTER. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a macro detail of a workflow coming together.",
+          "headline": "HANDOFFS MATTER",
+          "subtext": "Pilot a small team around one real initiative.",
+          "accent": "HANDOFFS",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: Build Your AI Org Chart. Slide idea: COMMENT ORGCHART. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "COMMENT ORGCHART",
+          "subtext": "Get the full field guide.",
+          "accent": "COMMENT",
+          "role": "cta"
+        }
+      ]
+    }
+  }
+]
