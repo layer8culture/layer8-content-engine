@@ -1,0 +1,88 @@
+[
+  {
+    "id": "20260807-layer8culture-instagram-guide",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-08-07T11:00:00-04:00",
+    "text": "Using AI is not the skill. Knowing what to ask is.\n\nThis week's AI field guide is about 5 AI Skills That Make You More Than a Prompt User.\n\nThe carousel gives you the short version.\nThe guide gives you the practical map.\n\nComment SKILLS and I will send you the full AI field guide.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#BuildWithAI",
+      "#AIBuilders",
+      "#AItools",
+      "#PromptEngineering",
+      "#AIagents",
+      "#BuildInPublic"
+    ],
+    "hashtags_in_first_comment": true,
+    "comment_to_dm": {
+      "campaign": "weekly_guide_five_ai_skills_beyond_prompting",
+      "keyword": "SKILLS",
+      "offer": "AI Skills Field Guide",
+      "guide_url": "https://www.layer8culture.io/guides/five-ai-skills-beyond-prompting/",
+      "dm_prompt": "Here is the AI field guide: https://www.layer8culture.io/guides/five-ai-skills-beyond-prompting/ What are you trying to get better at with AI right now?",
+      "public_reply": "Sent. Check your DMs.",
+      "route": "ai_field_guide_nurture"
+    },
+    "visual": {
+      "source": "library",
+      "aspect": "1:1",
+      "quality": "high",
+      "slides": [
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: 5 AI Skills That Make You More Than a Prompt User. Slide idea: AI SKILLS. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "AI SKILLS",
+          "subtext": "Prompting is only the beginning.",
+          "accent": "AI",
+          "role": "cover"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: 5 AI Skills That Make You More Than a Prompt User. Slide idea: 1. CONTEXT. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a macro detail of a workflow coming together.",
+          "headline": "1. CONTEXT",
+          "subtext": "Tell the model what matters.",
+          "accent": "1.",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: 5 AI Skills That Make You More Than a Prompt User. Slide idea: 2. DECOMPOSE. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "2. DECOMPOSE",
+          "subtext": "Break work into smaller moves.",
+          "accent": "2.",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: 5 AI Skills That Make You More Than a Prompt User. Slide idea: 3. CHOOSE TOOLS. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a macro detail of a workflow coming together.",
+          "headline": "3. CHOOSE TOOLS",
+          "subtext": "Chat is not always the answer.",
+          "accent": "3.",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: 5 AI Skills That Make You More Than a Prompt User. Slide idea: 4. REVIEW. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "4. REVIEW",
+          "subtext": "Trust needs verification.",
+          "accent": "4.",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: 5 AI Skills That Make You More Than a Prompt User. Slide idea: 5. WORKFLOW. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a macro detail of a workflow coming together.",
+          "headline": "5. WORKFLOW",
+          "subtext": "Repeatable beats clever.",
+          "accent": "5.",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: 5 AI Skills That Make You More Than a Prompt User. Slide idea: COMMENT SKILLS. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "COMMENT SKILLS",
+          "subtext": "Get the full field guide.",
+          "accent": "COMMENT",
+          "role": "cta"
+        }
+      ],
+      "library_hint": "default branded graphic"
+    }
+  }
+]
