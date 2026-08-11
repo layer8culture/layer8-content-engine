@@ -1,0 +1,88 @@
+[
+  {
+    "id": "20260814-layer8culture-instagram-guide",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-08-14T11:00:00-04:00",
+    "text": "Your AI stack is your new operating system.\n\nThis week's AI field guide is about The AI Tool Stack for Builders Who Actually Ship.\n\nThe carousel gives you the short version.\nThe guide gives you the practical map.\n\nComment TOOLS and I will send you the full AI field guide.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#BuildWithAI",
+      "#AIBuilders",
+      "#AItools",
+      "#PromptEngineering",
+      "#AIagents",
+      "#BuildInPublic"
+    ],
+    "hashtags_in_first_comment": true,
+    "comment_to_dm": {
+      "campaign": "weekly_guide_ai_tool_stack_for_builders",
+      "keyword": "TOOLS",
+      "offer": "AI Tool Stack Guide",
+      "guide_url": "https://www.layer8culture.io/guides/ai-tool-stack-for-builders/",
+      "dm_prompt": "Here is the AI field guide: https://www.layer8culture.io/guides/ai-tool-stack-for-builders/ What are you trying to get better at with AI right now?",
+      "public_reply": "Sent. Check your DMs.",
+      "route": "ai_field_guide_nurture"
+    },
+    "visual": {
+      "source": "library",
+      "aspect": "1:1",
+      "quality": "high",
+      "slides": [
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: The AI Tool Stack for Builders Who Actually Ship. Slide idea: AI TOOL STACK. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "AI TOOL STACK",
+          "subtext": "Do not use every tool. Use the right one.",
+          "accent": "AI",
+          "role": "cover"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: The AI Tool Stack for Builders Who Actually Ship. Slide idea: CHAT. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a macro detail of a workflow coming together.",
+          "headline": "CHAT",
+          "subtext": "Best for thinking and drafting.",
+          "accent": "CHAT",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: The AI Tool Stack for Builders Who Actually Ship. Slide idea: AGENTS. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "AGENTS",
+          "subtext": "Best for multi-step work.",
+          "accent": "AGENTS",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: The AI Tool Stack for Builders Who Actually Ship. Slide idea: MCP. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a macro detail of a workflow coming together.",
+          "headline": "MCP",
+          "subtext": "Best for tool-connected context.",
+          "accent": "MCP",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: The AI Tool Stack for Builders Who Actually Ship. Slide idea: AUTOMATION. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "AUTOMATION",
+          "subtext": "Best for repeatable handoffs.",
+          "accent": "AUTOMATION",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: The AI Tool Stack for Builders Who Actually Ship. Slide idea: CODE. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a macro detail of a workflow coming together.",
+          "headline": "CODE",
+          "subtext": "Best when reliability matters.",
+          "accent": "CODE",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: The AI Tool Stack for Builders Who Actually Ship. Slide idea: COMMENT TOOLS. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "COMMENT TOOLS",
+          "subtext": "Get the full field guide.",
+          "accent": "COMMENT",
+          "role": "cta"
+        }
+      ],
+      "library_hint": "default branded graphic"
+    }
+  }
+]
