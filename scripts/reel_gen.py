@@ -242,7 +242,10 @@ def escape_drawtext(text: str) -> str:
     # ("No such filter: '7.000)'"). Viral hooks are full of apostrophes, so this matters.
     text = text.replace("'", r"'\''")
     text = text.replace(":", r"\:")
-    text = text.replace("%", r"\%")
+    # NOTE: '%' is deliberately NOT escaped. drawtext runs with expansion=none (see
+    # drawtext_filter), so '%' is already literal. Escaping it as \% gets consumed by
+    # the filtergraph parser, drawtext then rejects the value with "Stray %", and the
+    # whole beat is silently dropped (e.g. a hook like "80% CHEAPER" renders empty).
     # Keep real newline characters: ffmpeg drawtext renders a literal newline as a
     # line break, but a backslash-n ("\\n") renders as a literal "n". wrap_text joins
     # lines with real newlines, so do NOT escape them.
@@ -294,6 +297,7 @@ def drawtext_filter(
         "drawtext="
         f"fontfile='{escape_filter_path(font_path)}'"
         f":text='{escape_drawtext(text)}'"
+        ":expansion=none"
         f":fontcolor={SOFT_WHITE}"
         f":fontsize={fontsize}"
         ":line_spacing=10"
@@ -307,7 +311,8 @@ def drawtext_filter(
 
 
 def motion_video_filter(duration: float, beats: list[str],
-                        font_path: pathlib.Path = FONT_PATH) -> str:
+                        font_path: pathlib.Path = FONT_PATH,
+                        overlay_filters: list[str] | None = None) -> str:
     frames = max(1, int(math.ceil(duration * FPS)))
     zoom = (
         "zoompan="
@@ -325,7 +330,9 @@ def motion_video_filter(duration: float, beats: list[str],
         "setpts=PTS-STARTPTS",
     ]
 
-    if beats:
+    if overlay_filters:
+        filters.extend(overlay_filters)
+    elif beats:
         slot = duration / len(beats)
         for index, beat in enumerate(beats):
             start = max(0.0, index * slot + 0.15)
@@ -445,20 +452,10 @@ def _coerce_beats(raw) -> list[dict]:
     return beats
 
 
-def overlay_beats_on_video(video_path: pathlib.Path, raw_beats,
-                           out_path: pathlib.Path, post_id: str,
-                           font_path: pathlib.Path = FONT_PATH) -> bool:
-    """Burn the viral big-text beats onto an existing (Sora) mp4 via ffmpeg.
-
-    Each beat shows between its start/end as a large centered display-type overlay
-    (with the shared box + shadow style); Sora's audio is preserved. Returns True on
-    success, False if there are no usable beats or ffmpeg fails.
-    """
-    beats = _coerce_beats(raw_beats)
-    if not beats:
-        return False
+def viral_overlay_filters(raw_beats, font_path: pathlib.Path = FONT_PATH) -> list[str]:
+    """Build the huge burned-in drawtext filters for the viral 3-beat arc."""
     filters = []
-    for b in beats:
+    for b in _coerce_beats(raw_beats):
         wrapped = wrap_text(b["text"], max_chars=VIRAL_OVERLAY_WRAP, max_lines=3)
         filters.append(
             drawtext_filter(
@@ -470,6 +467,29 @@ def overlay_beats_on_video(video_path: pathlib.Path, raw_beats,
                 font_path=font_path,
             )
         )
+    return filters
+
+
+def viral_beats_span(raw_beats) -> float | None:
+    """Total seconds the viral beats need, so a clip is never cut mid-arc."""
+    beats = _coerce_beats(raw_beats)
+    if not beats:
+        return None
+    return max(b["end"] for b in beats)
+
+
+def overlay_beats_on_video(video_path: pathlib.Path, raw_beats,
+                           out_path: pathlib.Path, post_id: str,
+                           font_path: pathlib.Path = FONT_PATH) -> bool:
+    """Burn the viral big-text beats onto an existing (Sora) mp4 via ffmpeg.
+
+    Each beat shows between its start/end as a large centered display-type overlay
+    (with the shared box + shadow style); Sora's audio is preserved. Returns True on
+    success, False if there are no usable beats or ffmpeg fails.
+    """
+    filters = viral_overlay_filters(raw_beats, font_path)
+    if not filters:
+        return False
     args = [
         "ffmpeg", "-y", "-i", str(video_path),
         "-vf", ",".join(filters),
@@ -491,6 +511,14 @@ def generate_motion(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None
 
     duration = clamp(float(reel.get("duration_sec", 8) or 8), 5.0, 15.0)
     beats = [str(beat) for beat in (reel.get("beats") or []) if str(beat).strip()]
+    font = typography_font_for(post)
+    overlay_filters = viral_overlay_filters(reel.get("overlay_beats"), font)
+    if overlay_filters:
+        # Viral format: the big burned-in arc drives the clip, so the render must run
+        # long enough to hold the final beat (duration_sec only paces the motion).
+        duration = clamp(viral_beats_span(reel.get("overlay_beats")) or VIRAL_DEFAULT_SPAN,
+                         5.0, 15.0)
+        beats = []
     out_path = out_dir / f"{post_id}.mp4"
     cover_path = out_dir / f"{post_id}-cover.png"
     audio_choice = str(reel.get("audio", "lofi")).lower()
@@ -515,7 +543,7 @@ def generate_motion(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None
         audio_input = "1:a"
 
     filter_complex = (
-        f"[0:v]{motion_video_filter(duration, beats, typography_font_for(post))}[v];"
+        f"[0:v]{motion_video_filter(duration, beats, font, overlay_filters)}[v];"
         f"[{audio_input}]{audio_filter(duration)}[a]"
     )
     args.extend([
@@ -543,7 +571,7 @@ def generate_motion(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None
     ])
     if not run_ffmpeg(args, post_id, "motion render"):
         return None
-    cover_ts = 0.75 if beats else 0.1
+    cover_ts = 0.75 if (beats or overlay_filters) else 0.1
     if not export_cover(out_path, cover_path, post_id, timestamp=cover_ts):
         return None
     print(f"  + {post_id} -> {out_path}")
