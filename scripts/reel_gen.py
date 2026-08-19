@@ -12,7 +12,8 @@ copies that source reel's mp4 + cover to this post's id (zero extra render cost)
 
 Requires: ffmpeg available on PATH. Uses Python stdlib + Pillow, and (for the
 Sora-2 reel backend) requests. Reels render via Azure Sora-2 when the
-AZURE_OPENAI_* env is configured, falling back to the ffmpeg "motion" renderer.
+AZURE_OPENAI_* env is configured, falling back to the ffmpeg "motion" renderer —
+which also means reels still render with no API at all (manual image mode).
 """
 import io
 import json
@@ -27,7 +28,10 @@ import time
 from dataclasses import dataclass
 from typing import Iterable
 
-import requests
+try:
+    import requests
+except ImportError:  # pragma: no cover - offline installs only need ffmpeg + Pillow
+    requests = None
 from PIL import Image, ImageOps
 
 
@@ -77,10 +81,21 @@ SORA_ALLOWED_SECONDS = (4, 8, 12)
 SORA_DEFAULT_SECONDS = 8
 SORA_POLL_INTERVAL = 10.0
 SORA_TIMEOUT_SEC = 600.0
+# One-shot notice when Sora is configured but the requests package is missing.
+_WARNED_NO_REQUESTS = False
 
 
 def sora_configured() -> bool:
-    return bool(AZURE_OPENAI_ENDPOINT and AZURE_OPENAI_API_KEY)
+    if not (AZURE_OPENAI_ENDPOINT and AZURE_OPENAI_API_KEY):
+        return False
+    if requests is None:
+        global _WARNED_NO_REQUESTS
+        if not _WARNED_NO_REQUESTS:
+            _WARNED_NO_REQUESTS = True
+            print("  ! Sora backend needs the requests package "
+                  "(pip install requests); using the ffmpeg motion renderer.")
+        return False
+    return True
 
 
 @dataclass

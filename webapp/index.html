@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Layer8 — Ad-hoc run</title>
+<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="mark">L8</span>
+    <div>
+      <h1>Ad-hoc run</h1>
+      <p class="sub">No-API image mode — generate by hand, finish in the engine.</p>
+    </div>
+  </div>
+  <div id="queue-badge" class="badge hidden"></div>
+</header>
+
+<main>
+  <!-- 0 ------------------------------------------------------------------ -->
+  <section class="step" id="step-generate" data-step="0">
+    <div class="step-head">
+      <h2><span class="num">0</span> Generate a batch</h2>
+      <button class="ghost" id="refresh-lanes">Refresh</button>
+    </div>
+    <p class="hint">
+      Runs the same Copilot CLI command the nightly workflow runs, writing a new
+      file into <code>queue/</code>. It takes a few minutes — it researches as it
+      writes. Already have a queue file? Skip to step 1.
+    </p>
+    <div id="copilot-warning" class="report bad hidden"></div>
+    <div id="lane-list" class="lane-list">
+      <p class="muted">Loading…</p>
+    </div>
+    <div class="genbar">
+      <label class="field">
+        <span>Date</span>
+        <input type="date" id="gen-date">
+      </label>
+      <span id="gen-target" class="meta muted"></span>
+      <button class="primary" id="run-generate" disabled>Generate</button>
+    </div>
+    <div id="generate-status" class="jobstatus"></div>
+    <pre id="generate-log" class="log hidden"></pre>
+  </section>
+
+  <!-- 1 ------------------------------------------------------------------ -->
+  <section class="step" id="step-queue" data-step="1">
+    <div class="step-head">
+      <h2><span class="num">1</span> Pick a queue</h2>
+      <button class="ghost" id="refresh-queues">Refresh</button>
+    </div>
+    <div id="queue-list" class="queue-list">
+      <p class="muted">Loading…</p>
+    </div>
+  </section>
+
+  <!-- 2 ------------------------------------------------------------------ -->
+  <section class="step locked" id="step-prompts" data-step="2">
+    <div class="step-head">
+      <h2><span class="num">2</span> Copy the prompts</h2>
+      <div class="actions">
+        <label class="check">
+          <input type="checkbox" id="pending-only" checked>
+          Only images still needed
+        </label>
+        <button class="primary" id="copy-all">Copy everything</button>
+      </div>
+    </div>
+    <p class="hint">
+      Paste this into ChatGPT in one go. It asks for a single <code>.zip</code> with
+      every file named exactly as the engine expects.
+    </p>
+    <pre id="batch-prompt" class="promptbox">…</pre>
+    <details class="fold">
+      <summary>Per-image prompts</summary>
+      <div id="image-list" class="image-list"></div>
+    </details>
+  </section>
+
+  <!-- 3 ------------------------------------------------------------------ -->
+  <section class="step locked" id="step-upload" data-step="3">
+    <div class="step-head">
+      <h2><span class="num">3</span> Drop the zip</h2>
+    </div>
+    <div id="dropzone" class="dropzone">
+      <p><strong>Drop ChatGPT's .zip here</strong></p>
+      <p class="muted">or</p>
+      <label class="filebtn">
+        Choose file<input type="file" id="zip-input" accept=".zip,application/zip" hidden>
+      </label>
+    </div>
+    <div id="upload-report" class="report hidden"></div>
+
+    <div id="reconcile" class="hidden">
+      <h3>Needs your eyes</h3>
+      <p class="hint">
+        These didn't match a slot, or matched by name but have the wrong shape.
+        Filenames alone aren't trusted — check the picture before assigning.
+      </p>
+      <div id="staged-list" class="staged-list"></div>
+    </div>
+  </section>
+
+  <!-- 4 ------------------------------------------------------------------ -->
+  <section class="step locked" id="step-ingest" data-step="4">
+    <div class="step-head">
+      <h2><span class="num">4</span> Finish the images</h2>
+      <button class="primary" id="run-ingest">Run ingest</button>
+    </div>
+    <p class="hint">
+      Crops to the brand aspect, upscales to a 2K master, composites the brand
+      typography, and writes the paths back into the queue file.
+    </p>
+    <div id="ingest-status" class="jobstatus"></div>
+    <pre id="ingest-log" class="log hidden"></pre>
+    <div id="still-grid" class="grid"></div>
+  </section>
+
+  <!-- 5 ------------------------------------------------------------------ -->
+  <section class="step locked" id="step-reels" data-step="5">
+    <div class="step-head">
+      <h2><span class="num">5</span> Render the reels</h2>
+      <button class="primary" id="run-reels">Render reels</button>
+    </div>
+    <p class="hint">
+      Runs ffmpeg for every <code>format: "reel"</code> post and copies the
+      cross-posts. This always re-renders, so it takes a minute.
+    </p>
+    <div id="reels-status" class="jobstatus"></div>
+    <pre id="reels-log" class="log hidden"></pre>
+    <div id="reel-grid" class="grid"></div>
+  </section>
+
+  <!-- 6 ------------------------------------------------------------------ -->
+  <section class="step locked" id="step-review" data-step="6">
+    <div class="step-head">
+      <h2><span class="num">6</span> Review</h2>
+      <button class="ghost" id="refresh-review">Refresh</button>
+    </div>
+    <div id="review-list" class="review-list"></div>
+    <div class="handoff">
+      <h3>Next: open the approval PR</h3>
+      <p class="hint">
+        This app never touches git. Your clone is shallow and behind
+        <code>origin/main</code>, so a correct PR is built in a worktree off
+        <code>origin/main</code> — ask the agent to open it, or run:
+      </p>
+      <div class="actions" style="margin-bottom:10px">
+        <label class="field inline">
+          <span>Shell</span>
+          <select id="pr-shell">
+            <option value="powershell">PowerShell</option>
+            <option value="bash">bash / zsh</option>
+          </select>
+        </label>
+        <button class="ghost" id="copy-pr">Copy commands</button>
+      </div>
+      <pre id="pr-commands" class="promptbox small"></pre>
+    </div>
+  </section>
+</main>
+
+<div id="toast" class="toast hidden"></div>
+<script src="/static/app.js"></script>
+</body>
+</html>
