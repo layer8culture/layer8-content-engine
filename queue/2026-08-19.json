@@ -1,0 +1,619 @@
+[
+  {
+    "id": "20260819-layer8culture-tiktok-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-08-19T07:30:00-04:00",
+    "text": "AI agents can now hire each other.\n\nGoogle handed the Agent2Agent protocol to the Agentic AI Foundation - the same neutral home as Anthropic's MCP. Two open standards, two different jobs. MCP is how one agent reaches your tools. A2A is how agents from different companies find each other, agree on what they can do, and hand off work.\n\nWe watched this happen live on Tech Thursday before it had a name. A GPT-5.6 session spun up a Claude sub-agent on its own, because that was the right model for that piece of the job.\n\nYour stack stopped being a model. It's a team now, and they don't all work for the same company.\n\nFollow @layer8culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIagents",
+      "#AgenticAI",
+      "#TechTok",
+      "#AInews"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "ai-fluency",
+    "hook_score": 92,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, and high contrast. Scene: a vast black void holding a dozen separate floating islands of light, each one a small dense cluster of glowing filaments in a slightly different hue - cool blue, pale cyan, warm amber - drifting alone with nothing between them; thin electric-blue threads have just begun to reach out from the nearest few and bridge the gap, forming the first arcs of a lattice; no people at all, purely abstract and architectural, the scale enormous and quiet, soft volumetric haze between the islands; upper third is deep navy with minimal detail for animated text; lower third is clean dark negative space for the cover headline; 9:16 vertical aspect. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, rendered text, signage lettering, and garbled typography.",
+      "headline": "AI AGENTS CAN HIRE EACH OTHER",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16, vast and quiet. First beat (0-2s): total blackness holding a scatter of isolated islands of light, each a dense knot of glowing filaments in a slightly different hue, completely disconnected, drifting alone. Transformation (2-7s): thin threads of electric-blue light shoot out from one island to the next and begin weaving the isolated knots into a single continuous lattice, connection racing outward across the frame while the camera cranes slowly backward to reveal how enormous the structure has become. Resolve (7-10s): the finished lattice pulses once in perfect unison, every island lighting on the same beat, one system instead of many. Deep navy and electric blue with faint amber accents, documentary realism, shallow depth of field, volumetric haze, no people, no text, no logos, subtle low ambient hum.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "AGENTS TALK NOW",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "ACROSS VENDORS",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "ORCHESTRATE IT",
+            "start": 7,
+            "end": 10
+          }
+        ],
+        "duration_sec": 8,
+        "beats": [
+          "AI AGENTS CAN HIRE EACH OTHER",
+          "YOUR STACK IS A TEAM NOW"
+        ],
+        "audio": "lofi"
+      },
+      "file": "assets\\generated\\20260819-layer8culture-tiktok-1.mp4",
+      "cover": "assets\\generated\\20260819-layer8culture-tiktok-1-cover.png"
+    }
+  },
+  {
+    "id": "20260819-layer8culture-instagram-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-08-19T09:00:00-04:00",
+    "text": "The Agent2Agent protocol just moved to a neutral foundation, and it changes how you should be building.\n\nGoogle handed A2A to the Agentic AI Foundation, where Anthropic's MCP already lives. Two open standards doing two different jobs: MCP connects one agent to your tools and data. A2A lets agents from different frameworks and different vendors discover each other, agree on what they can do, and hand a task across.\n\nVersion 1.0 shipped in March. More than 150 organizations already support it. Discovery runs on Agent Cards - a signed JSON file that describes what your agent does and how to reach it.\n\nThe practical read: stop hand-writing custom glue between every agent you build.\n\nThe bigger signal is simpler. One model was never the plan. The stack is becoming a network.\n\nSwipe for the whole breakdown.\n\nSave this for your AI stack.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIagents",
+      "#AgenticAI",
+      "#AInews",
+      "#AItools",
+      "#BuildWithAI",
+      "#AIBuilders",
+      "#Workflow",
+      "#DevCommunity",
+      "#Automation",
+      "#ArtificialIntelligence"
+    ],
+    "hashtags_in_first_comment": true,
+    "first_comment": "Are you running agents from more than one vendor yet, or still all-in on one?",
+    "visual": {
+      "source": "openai",
+      "aspect": "1:1",
+      "quality": "medium",
+      "typography_preset": "editorial_drop",
+      "slides": [
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, Black tech futurism, minimal composition, strong negative space, high contrast. Scene: two separate glowing forms facing each other across a dark gap - one a cool electric-blue cluster of filaments, the other a warmer amber cluster - and a single bright thread of light has just connected them across the middle of the frame, taut and new; volumetric haze, deep black falloff on all sides, no people, abstract and premium; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, robots, fake hologram overload.",
+          "kicker": "AI TOOL DROP",
+          "headline": "AGENTS FINALLY SPEAK THE SAME LANGUAGE",
+          "subtext": "A2A joined the Agentic AI Foundation",
+          "accent": "SAME",
+          "role": "cover",
+          "footer": "SWIPE FOR MORE"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast. Scene: a single luminous electric-blue object resting in an open hand made of light, the fingers uncurling and releasing it so it floats free into the dark; the hand is dissolving into soft particles as the object rises; abstract, restrained, cinematic rim lighting, deep shadow everywhere else; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, generic startup office, bright corporate lighting, cluttered composition, robots.",
+          "headline": "GOOGLE GAVE IT AWAY",
+          "subtext": "A2A now sits under neutral governance",
+          "accent": "AWAY",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space. Scene: two clean architectural pathways of light running side by side through total darkness - the left one descends into a dense field of small tool-like geometric objects, the right one runs horizontally between two equal glowing nodes; the two paths never touch, clearly doing different work; abstract diagrammatic beauty, no labels, no people, deep navy shadows; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, cluttered composition, cheap gamer RGB, random neon colors, robots.",
+          "headline": "TWO STANDARDS. TWO JOBS.",
+          "subtext": "MCP connects tools. A2A connects agents.",
+          "accent": "TWO",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, high contrast. Scene: an extreme macro of a single thin card of dark smoked glass floating edge-on in blackness, its border etched with a fine electric-blue seal pattern that glows as if freshly verified; a soft blue reflection beneath it on a black glass surface; precise, expensive, tactile, shallow depth of field; no readable characters anywhere on the card; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, generic startup office, bright corporate lighting, cluttered composition, cartoon props.",
+          "headline": "AGENT CARDS ARE THE HANDSHAKE",
+          "subtext": "A signed file listing what your agent can do",
+          "accent": "HANDSHAKE",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space. Scene: a tangled knot of mismatched cables and improvised connectors suspended in darkness, lit hard from one side, visibly dissolving from the bottom up into fine luminous particles that reform beneath it as one clean straight electric-blue line; the mess above, the simplicity below; no people, abstract product photography feel; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cheap gamer RGB, cluttered background, robots.",
+          "headline": "STOP WRITING GLUE CODE",
+          "subtext": "No more custom integration per vendor",
+          "accent": "GLUE",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, warm practical lighting, documentary realism, minimal composition. Scene: a close over-the-shoulder detail of a Black creator's hands setting one single glass card down onto a dark walnut desk, an electric-blue glow spreading out from where it lands like a signal going out; only the hands, the card and a sliver of forearm are lit against deep black; calm, deliberate, premium; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, generic startup office, bright corporate lighting, cluttered composition, robots.",
+          "headline": "PUBLISH ONE AGENT CARD",
+          "subtext": "Start with an agent you already run",
+          "accent": "ONE",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, minimal composition, strong negative space. Scene: a single standalone numeral 8 motif rendered as a thin luminous electric-blue outline floating centered-right in vast black space, with a faint web of connecting threads reaching outward from it into the dark on every side; restrained, confident, brand-forward, softly reflected below; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, generic startup office, bright corporate lighting, cluttered composition, robots.",
+          "headline": "SAVE THIS FOR YOUR STACK",
+          "subtext": "Follow @layer8culture for the build",
+          "accent": "SAVE",
+          "role": "cta"
+        }
+      ],
+      "files": [
+        "assets/generated/20260819-layer8culture-instagram-1-1.png",
+        "assets/generated/20260819-layer8culture-instagram-1-2.png",
+        "assets/generated/20260819-layer8culture-instagram-1-3.png",
+        "assets/generated/20260819-layer8culture-instagram-1-4.png",
+        "assets/generated/20260819-layer8culture-instagram-1-5.png",
+        "assets/generated/20260819-layer8culture-instagram-1-6.png",
+        "assets/generated/20260819-layer8culture-instagram-1-7.png"
+      ],
+      "file": "assets/generated/20260819-layer8culture-instagram-1-1.png"
+    }
+  },
+  {
+    "id": "20260819-layer8culture-tiktok-2",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-08-19T11:00:00-04:00",
+    "text": "Having a favorite AI model is a beginner move.\n\nThere are more than 350 serious models live right now. GLM-5.3, Qwen3.8, DeepSeek-V4-Pro, Gemini 3.7 Flash, Grok 4.6 - open weights trading blows with the closed labs every single month.\n\nBeginners pick one and defend it in the comments. Builders route: something cheap and fast for extraction, something deep for architecture, something local for anything private.\n\nNobody is loyal to a hammer.\n\nFollow @layer8culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#TechTok",
+      "#LLM",
+      "#BuildWithAI"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "transformation",
+    "hook_score": 93,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "high",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Scene: a narrow dark corridor opening into an enormous unlit hall, and hanging throughout that hall at every height are dozens of suspended points of light in different hues - cold blue, cyan, warm gold, pale white - each one its own small sun in the blackness; a single Black figure stands in silhouette at the threshold, small against the scale, just beginning to step through; the geometry is architectural and reverent rather than sci-fi, soft volumetric haze catching the light; upper third is deep navy with minimal detail for animated text; lower third is clean dark negative space for the cover headline; 9:16 vertical aspect. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, rendered text, signage lettering, and garbled typography.",
+      "headline": "MODEL LOYALTY IS A BEGINNER MOVE",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16, patient and reverent. First beat (0-2s): a lone silhouetted figure walks down a tight dark corridor lit by one small cold light directly ahead, everything else black, the frame feeling narrow and closed. Transformation (2-7s): the corridor mouth opens and the walls fall away into an enormous dark hall where dozens of suspended points of light hang at every height in different hues - cold blue, cyan, warm gold, pale white - the camera craning up and backward as the space keeps expanding, the figure shrinking against the scale. Resolve (7-10s): the figure raises one hand and a single light detaches, drifts down and settles into their palm, while every other light stays burning around them. Deep navy and electric blue with warm gold accents, documentary realism, shallow depth of field, volumetric haze, no text, no logos, deep cinematic bass and soft room tone.",
+        "seconds": 12,
+        "overlay_beats": [
+          {
+            "text": "MODEL LOYALTY",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "BEGINNER MOVE",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "ROUTE THE WORK",
+            "start": 7,
+            "end": 10
+          }
+        ],
+        "duration_sec": 10,
+        "beats": [
+          "MODEL LOYALTY IS A BEGINNER MOVE",
+          "ROUTE THE WORK INSTEAD"
+        ],
+        "audio": "lofi"
+      },
+      "file": "assets\\generated\\20260819-layer8culture-tiktok-2.mp4",
+      "cover": "assets\\generated\\20260819-layer8culture-tiktok-2-cover.png"
+    }
+  },
+  {
+    "id": "20260819-layer8culture-instagram-2",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-08-19T12:30:00-04:00",
+    "text": "Having a favorite AI model is a beginner move.\n\nThere are more than 350 serious models live right now, and the open-weight ones - GLM-5.3, Qwen3.8, DeepSeek-V4-Pro - keep trading blows with the closed labs month after month.\n\nSo the skill stopped being which model. It became routing.\n\nCheap and fast for extraction, tagging, summaries. Deep reasoning for architecture and the bugs that don't make sense. Something local for anything you don't want leaving your machine.\n\nBetting your whole workflow on one name is how you end up rebuilding it every quarter.\n\nNobody is loyal to a hammer.\n\nFollow @layer8culture for the build.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#LLM",
+      "#GenerativeAI",
+      "#BuildWithAI",
+      "#AIBuilders",
+      "#PromptEngineering",
+      "#DevCommunity",
+      "#FutureBuilders",
+      "#ArtificialIntelligence"
+    ],
+    "hashtags_in_first_comment": true,
+    "first_comment": "One model for everything, or a different one per job? What are you routing to right now?",
+    "trial_reel": true,
+    "visual": {
+      "source": "reuse",
+      "of": "20260819-layer8culture-tiktok-2",
+      "aspect": "9:16",
+      "file": "assets\\generated\\20260819-layer8culture-instagram-2.mp4",
+      "cover": "assets\\generated\\20260819-layer8culture-instagram-2-cover.png"
+    }
+  },
+  {
+    "id": "20260819-layer8culture-tiktok-3",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-08-19T14:00:00-04:00",
+    "text": "My GPT session hired a Claude agent without asking me.\n\nLive on Tech Thursday: I spun up a sub-agent inside a GPT-5.6 workflow and it came back running Claude. Not a bug. Sub-agents don't have to run the model you're on - they pick whatever fits that piece of the job.\n\nThat's the whole Agent2Agent idea, already happening in a terminal before the standard had a foundation behind it.\n\nOne workflow. Two labs. Nobody switched apps.\n\nFollow @layer8culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#BuildInPublic",
+      "#AIagents",
+      "#TechTok",
+      "#TechThursday"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "build-in-public",
+    "hook_score": 89,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, minimal composition, strong negative space, and high contrast. Scene: an extreme macro of a dark matte screen surface at a shallow angle, so shallow that the depth of field falls off within centimetres; a single electric-blue cursor block sits sharp in focus in the middle distance, and a second cursor block in a warmer pale-gold tone has appeared just behind it, slightly out of focus, clearly not the same thing; faint scanline texture and dust caught in the glow, no readable characters anywhere, raw unposed screen-recording feel rather than a designed graphic; upper third is deep navy with minimal detail for animated text; lower third is clean dark negative space for the cover headline; 9:16 vertical aspect. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, robots, fake hologram overload, random neon colors, garbled screen text, rendered text, signage lettering, and garbled typography.",
+      "headline": "MY GPT SESSION HIRED CLAUDE",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16, intimate macro, raw and unposed. First beat (0-2s): extreme close-up of a single electric-blue cursor block blinking alone on a dark matte screen surface at a shallow angle, dust in the light, everything else falling into blackness. Transformation (2-7s): a second cursor block in a warmer pale-gold tone fades up beside it and starts moving independently, working on its own; the focus racks smoothly between the two as they alternate, and the camera drifts slowly along the surface revealing that they are running side by side in the same space. Resolve (7-10s): both cursors stop at the same instant and pulse once together, then the gold one dims out, its work handed back. No readable characters or words anywhere. Deep navy, electric blue and warm gold, documentary realism, extreme shallow depth of field, no text, no logos, quiet keyboard sounds and a low room hum.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "IT HIRED CLAUDE",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "DIFFERENT LAB",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "PICK PER JOB",
+            "start": 7,
+            "end": 10
+          }
+        ],
+        "duration_sec": 8,
+        "beats": [
+          "MY GPT SESSION HIRED CLAUDE",
+          "ONE WORKFLOW. TWO LABS."
+        ],
+        "audio": "lofi"
+      },
+      "file": "assets\\generated\\20260819-layer8culture-tiktok-3.mp4",
+      "cover": "assets\\generated\\20260819-layer8culture-tiktok-3-cover.png"
+    }
+  },
+  {
+    "id": "20260819-layer8culture-instagram-3",
+    "account": "layer8culture",
+    "category": "Creator Systems",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-08-19T15:30:00-04:00",
+    "text": "Stop asking which AI model is best. Start asking which one you're routing to.\n\nThere are more than 350 serious models now and they leapfrog each other monthly. Betting an entire workflow on one name is how you end up rebuilding it every quarter.\n\nRouting is the skill. And this month the standards finally caught up with it - MCP connects an agent to your tools, A2A connects agents to each other, and both now sit under neutral open governance.\n\nOn Tech Thursday we watched it happen without either name attached: a sub-agent spun up inside a GPT-5.6 session and came back running Claude, because that was the right model for that piece of the work.\n\nSwipe for the four routing rules we actually use.\n\nComment MCP and I'll send you the field guide.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#CreatorTech",
+      "#AIagents",
+      "#AgenticAI",
+      "#BuildInPublic",
+      "#LearnInPublic",
+      "#Workflow",
+      "#AIFluency",
+      "#AItools",
+      "#ArtificialIntelligence"
+    ],
+    "hashtags_in_first_comment": true,
+    "comment_to_dm": {
+      "campaign": "weekly_guide_mcp_explained_without_the_hype",
+      "keyword": "MCP",
+      "offer": "MCP Field Guide",
+      "guide_url": "https://www.layer8culture.io/guides/mcp-explained-without-the-hype/",
+      "dm_prompt": "Here is the AI field guide: https://www.layer8culture.io/guides/mcp-explained-without-the-hype/ What are you trying to get better at with AI right now?",
+      "public_reply": "Sent. Check your DMs.",
+      "route": "ai_field_guide_nurture"
+    },
+    "visual": {
+      "source": "openai",
+      "aspect": "1:1",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "slides": [
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, Black tech futurism, minimal composition, strong negative space, high contrast. Scene: a single bright electric-blue line of light entering from the left and splitting cleanly into four separate branches that travel off toward four different small glowing destinations in the dark, each destination a slightly different hue and brightness; precise, architectural, calm, no people, soft volumetric haze, deep black falloff; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, robots.",
+          "headline": "FOUR RULES FOR ROUTING MODELS",
+          "subtext": "Stop betting your stack on one name",
+          "accent": "FOUR",
+          "role": "cover",
+          "footer": "SWIPE FOR MORE"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space. Scene: a fast horizontal streak of electric-blue light cutting across total darkness with hundreds of tiny identical particles riding it in a dense stream, motion blur trailing behind, the sense of enormous volume moving cheaply and quickly; abstract, no people, deep navy shadow beneath; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cheap gamer RGB, cluttered composition, robots.",
+          "headline": "CHEAP AND FAST FOR VOLUME",
+          "subtext": "Extraction, tagging, summaries, first drafts",
+          "accent": "VOLUME",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, high contrast. Scene: a single dense luminous knot of electric-blue filaments suspended in blackness, slowly and deliberately untangling itself into one clean ordered structure, the loose ends still curling; slow, heavy, expensive-feeling, the opposite of fast; no people, extreme shallow depth of field; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, cluttered composition, cheap gamer RGB, random neon colors, robots.",
+          "headline": "DEEP REASONING FOR DESIGN",
+          "subtext": "Architecture, debugging, hard tradeoffs",
+          "accent": "DESIGN",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, warm practical lighting, documentary realism, minimal composition. Scene: a closed matte-black laptop resting on a dark walnut desk in a black room, a contained electric-blue glow bleeding from the seam of the lid, and around the desk a faint spherical boundary of light that the glow does not cross; nothing leaves the circle; intimate, quiet, premium, no people; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, generic startup office, bright corporate lighting, cluttered composition, robots.",
+          "headline": "LOCAL FOR ANYTHING PRIVATE",
+          "subtext": "If it shouldn't leave the machine, it doesn't",
+          "accent": "LOCAL",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space. Scene: one electric-blue node in the dark reaching out and lighting a second node of a completely different warm-gold hue, the second node waking up and taking the work while the first dims slightly; a clear handoff rendered as pure light, nothing else in frame, deep navy haze; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, cheap gamer RGB, robots.",
+          "headline": "LET THE SUB-AGENT CHOOSE",
+          "subtext": "It doesn't have to run the model you're on",
+          "accent": "CHOOSE",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, minimal composition, strong negative space. Scene: an abstract Afrofuturistic environment where a small cluster of glowing tool-shaped forms sits low in the frame connected upward to one node, and that node is connected sideways to a row of equal peer nodes stretching into the dark; two distinct directions of connection, vertical and horizontal, clearly doing different work; no people, structural and designed; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, cluttered composition, random neon colors, robots, fake hologram overload.",
+          "headline": "TOOLS VS AGENTS",
+          "subtext": "MCP connects tools. A2A connects agents.",
+          "accent": "AGENTS",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, warm practical lighting, minimal composition. Scene: a close detail of a dark walnut desk edge in a black room with a single mug bearing a small standalone 8 motif catching a narrow shaft of electric-blue light, everything else falling into deep shadow; calm, human, premium, no people in frame; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, generic startup office, bright corporate lighting, cluttered composition, cartoon props, robots.",
+          "headline": "COMMENT MCP FOR THE GUIDE",
+          "subtext": "Follow @layer8culture for the build",
+          "accent": "MCP",
+          "role": "cta"
+        }
+      ],
+      "files": [
+        "assets/generated/20260819-layer8culture-instagram-3-1.png",
+        "assets/generated/20260819-layer8culture-instagram-3-2.png",
+        "assets/generated/20260819-layer8culture-instagram-3-3.png",
+        "assets/generated/20260819-layer8culture-instagram-3-4.png",
+        "assets/generated/20260819-layer8culture-instagram-3-5.png",
+        "assets/generated/20260819-layer8culture-instagram-3-6.png",
+        "assets/generated/20260819-layer8culture-instagram-3-7.png"
+      ],
+      "file": "assets/generated/20260819-layer8culture-instagram-3-1.png"
+    }
+  },
+  {
+    "id": "20260819-layer8culture-tiktok-4",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-08-19T17:00:00-04:00",
+    "text": "The most useful model I ran this week never touched the internet.\n\nFree desktop app. You download the model, you choose which one, and it turns everything you say into text straight into whatever you're working in. No API key. No account. No upload.\n\nEveryone is arguing about frontier models in the comments. Meanwhile there's a real one sitting on your laptop doing real work for zero dollars, and it keeps working when the wifi doesn't.\n\nOwn a piece of your own stack.\n\nFollow @layer8culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AItools",
+      "#TechTok",
+      "#BuildWithAI",
+      "#AIFluency"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "cinematic-coding",
+    "hook_score": 87,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, minimal composition, strong negative space, and high contrast. Scene: an extreme macro of the machined edge of a matte-black laptop lying closed in total darkness, a thin seam of intense electric-blue light escaping from between the lid and the body; inside that seam, visible as pure abstraction, a dense swarm of tiny luminous particles circulates and folds back on itself, contained, never escaping past the metal; the surrounding air is completely dark and empty with no cables, no ports, no network suggested anywhere; code as sculpture, faceless and premium, extreme shallow depth of field; upper third is deep navy with minimal detail for animated text; lower third is clean dark negative space for the cover headline; 9:16 vertical aspect. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, rendered text, signage lettering, and garbled typography.",
+      "headline": "A MODEL THAT NEVER LEAVES YOUR LAPTOP",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16, extreme macro, premium and abstract. First beat (0-2s): a thin blade of intense electric-blue light burning along the closed seam of a matte-black machined edge in total darkness, nothing else visible, held perfectly still. Transformation (2-7s): the camera glides slowly along that seam and the light widens just enough to reveal a dense swarm of luminous particles circulating inside, folding and recirculating on itself, pressing against the boundary and never crossing it; the surrounding darkness stays completely empty, no cables and no outward beams. Resolve (7-10s): the swarm settles into one slow steady pulse behind the seam, self-contained and calm, as the camera pulls back to leave the object alone in blackness. Deep navy and electric blue, documentary realism, extreme shallow depth of field, no people, no text, no logos, low mechanical hum and soft room tone.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "NO API KEY",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "RUNS OFFLINE",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "OWN YOUR STACK",
+            "start": 7,
+            "end": 10
+          }
+        ],
+        "duration_sec": 8,
+        "beats": [
+          "A MODEL THAT NEVER LEAVES YOUR LAPTOP",
+          "OWN A PIECE OF YOUR STACK"
+        ],
+        "audio": "lofi"
+      },
+      "file": "assets\\generated\\20260819-layer8culture-tiktok-4.mp4",
+      "cover": "assets\\generated\\20260819-layer8culture-tiktok-4-cover.png"
+    }
+  },
+  {
+    "id": "20260819-layer8culture-instagram-4",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-08-19T18:30:00-04:00",
+    "text": "AI agents can now hire each other.\n\nGoogle handed the Agent2Agent protocol to the Agentic AI Foundation this month - the same neutral home as Anthropic's MCP. Two open standards doing two different jobs. MCP is how one agent reaches your tools. A2A is how agents built by different companies discover each other and hand work across.\n\nWe saw it live on Tech Thursday before it had a name attached. A sub-agent spun up inside a GPT-5.6 session and came back running Claude, on its own, because that was the right model for that piece of the job.\n\nOne workflow. Two labs. Nobody switched apps.\n\nYour stack stopped being a model. It's a team now, and they don't all work for the same company.\n\nFollow @layer8culture for the build.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#AIagents",
+      "#AgenticAI",
+      "#AInews",
+      "#BuildWithAI",
+      "#AIBuilders",
+      "#Automation",
+      "#AICommunity",
+      "#ArtificialIntelligence"
+    ],
+    "hashtags_in_first_comment": true,
+    "first_comment": "Which two models would you have hand work off to each other?",
+    "trial_reel": true,
+    "visual": {
+      "source": "reuse",
+      "of": "20260819-layer8culture-tiktok-1",
+      "aspect": "9:16",
+      "file": "assets\\generated\\20260819-layer8culture-instagram-4.mp4",
+      "cover": "assets\\generated\\20260819-layer8culture-instagram-4-cover.png"
+    }
+  },
+  {
+    "id": "20260819-layer8culture-instagram-5",
+    "account": "layer8culture",
+    "category": "Community Questions",
+    "platform": "instagram",
+    "format": "story",
+    "schedule_time": "2026-08-19T19:30:00-04:00",
+    "text": "One model for everything, or a different one per job?\n\nThis week: 350+ models live, agents got an open protocol for handing work to each other, and a free offline model has been doing all my transcription.\n\nThe tools are done being the hard part.\n\nSo which are you - loyalist or router? Vote, then reply and tell me what you'd route first.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#BuildWithAI",
+      "#AICommunity",
+      "#FutureBuilders",
+      "#AIagents",
+      "#TechCreators",
+      "#ArtificialIntelligence"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, minimal composition, strong negative space, and high contrast. Scene: a dark floor of black glass seen from a low vantage, with a single luminous electric-blue path running forward and then forking sharply into two - the left branch continuing as one solid unbroken line into the distance, the right branch immediately splitting again into five thinner threads that fan out toward different distant glows; a quiet fork in the road rendered entirely in light, no people, soft volumetric haze, vast emptiness around it; upper half is deep navy with minimal detail; the entire lower third is clean dark negative space for the composited headline; 9:16 vertical aspect. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, robots, fake hologram overload, random neon colors, garbled screen text, rendered text, signage lettering, and garbled typography.",
+      "headline": "LOYALIST OR ROUTER?",
+      "subtext": "Vote. Then tell me why.",
+      "accent": "ROUTER",
+      "overlay_position": "lower-left",
+      "file": "assets/generated/20260819-layer8culture-instagram-5.png"
+    }
+  },
+  {
+    "id": "20260819-layer8culture-tiktok-5",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-08-19T20:00:00-04:00",
+    "text": "A country just decided half its government will run on AI agents.\n\nThe UAE is targeting agentic AI across 50% of federal services within two years. Not a pilot. Not a demo. Public services, at scale.\n\nSomewhere right now, someone is writing the agents that will decide how people get housing, permits, care, money. Those agents will carry whatever assumptions their builders had.\n\nThe question was never whether agents run things. It's whose values are inside them.\n\nWhere culture shapes the AI era.\n\nFollow @layer8culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#Afrofuturism",
+      "#TechCulture",
+      "#AgenticAI",
+      "#TechTok"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "black-tech-culture",
+    "hook_score": 91,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Scene: the interior of a monumental Afrofuturist civic hall at night - tall carved columns rising out of frame, a polished black stone floor holding warm gold reflections, and one entire wall covered in a vast relief of interlocking West African-inspired geometric patterns; electric-blue light has begun tracing along the carved channels of that pattern so it reads as a living network laid into the architecture; a single Black figure walks beneath it, small and dignified against the scale, seen from behind; grand, cultural, cinematic, warm gold meeting electric blue against deep navy shadow; upper third is dark architectural ceiling with minimal detail for animated text; lower third is clean dark negative space for the cover headline; 9:16 vertical aspect. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, rendered text, signage lettering, and garbled typography.",
+      "headline": "A NATION IS HIRING AGENTS",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16, monumental and reverent. First beat (0-2s): a tight shot on a carved stone relief of interlocking West African-inspired geometric patterns, lit only by warm gold light, completely still and ancient-feeling. Transformation (2-7s): electric-blue light ignites inside the carved channels and begins routing through the pattern, one path lighting the next, spreading across the surface like a network coming online, while the camera pulls back and cranes up to reveal the relief is an entire wall of a monumental Afrofuturist civic hall with tall columns and a polished black floor, a single small figure walking beneath it seen from behind. Resolve (7-10s): the figure stops and looks up as the whole wall pulses once in unison, gold and blue holding together. Warm gold and electric blue against deep navy, documentary realism, volumetric light, cinematic scale, no text, no logos, low choral drone and stone room tone.",
+        "seconds": 12,
+        "overlay_beats": [
+          {
+            "text": "50% AGENTIC",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "A WHOLE NATION",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "WHO BUILDS OURS",
+            "start": 7,
+            "end": 10
+          }
+        ],
+        "duration_sec": 10,
+        "beats": [
+          "A NATION IS HIRING AGENTS",
+          "WHOSE VALUES ARE INSIDE THEM"
+        ],
+        "audio": "lofi"
+      },
+      "file": "assets\\generated\\20260819-layer8culture-tiktok-5.mp4",
+      "cover": "assets\\generated\\20260819-layer8culture-tiktok-5-cover.png"
+    }
+  },
+  {
+    "id": "20260819-layer8culture-youtube-1",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "youtube",
+    "format": "reel",
+    "schedule_time": "2026-08-19T20:30:00-04:00",
+    "youtube_title": "Model Loyalty Is a Beginner Move - How Builders Route AI Models in 2026 #Shorts",
+    "text": "There are more than 350 serious AI models now, and the open-weight ones - GLM-5.3, Qwen3.8, DeepSeek-V4-Pro - keep trading blows with the closed labs every month.\n\nSo the skill stopped being which model. It became routing: cheap and fast for extraction, deep reasoning for architecture, something local for anything private.\n\nNobody is loyal to a hammer.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Shorts",
+      "#Layer8Culture",
+      "#AI",
+      "#LLM",
+      "#BuildWithAI",
+      "#AIFluency"
+    ],
+    "visual": {
+      "source": "reuse",
+      "of": "20260819-layer8culture-tiktok-2",
+      "aspect": "9:16",
+      "file": "assets\\generated\\20260819-layer8culture-youtube-1.mp4",
+      "cover": "assets\\generated\\20260819-layer8culture-youtube-1-cover.png"
+    }
+  },
+  {
+    "id": "20260819-layer8culture-youtube-2",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "youtube",
+    "format": "reel",
+    "schedule_time": "2026-08-19T21:00:00-04:00",
+    "youtube_title": "AI Agents Can Now Hire Each Other - Google's A2A Protocol Explained #Shorts",
+    "text": "Google handed the Agent2Agent protocol to the Agentic AI Foundation, the same neutral home as Anthropic's MCP.\n\nMCP is how one agent reaches your tools. A2A is how agents built by different companies discover each other and hand work across.\n\nWe saw it live on Tech Thursday before it had a name: a sub-agent spun up inside a GPT-5.6 session and came back running Claude, on its own.\n\nYour stack stopped being a model. It's a team now.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Shorts",
+      "#Layer8Culture",
+      "#AIagents",
+      "#AgenticAI",
+      "#AI",
+      "#BuildWithAI"
+    ],
+    "visual": {
+      "source": "reuse",
+      "of": "20260819-layer8culture-tiktok-1",
+      "aspect": "9:16",
+      "file": "assets\\generated\\20260819-layer8culture-youtube-2.mp4",
+      "cover": "assets\\generated\\20260819-layer8culture-youtube-2-cover.png"
+    }
+  }
+]
