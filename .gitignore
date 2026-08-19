@@ -6,11 +6,21 @@
 assets/generated/*
 !assets/generated/.gitkeep
 
+# Hand-generated images dropped for manual (no-API) image mode. Raw drops and
+# consumed sources are local scratch; the finished assets land in
+# assets/generated/ and are force-added into the approval PR.
+assets/manual-inbox/*
+!assets/manual-inbox/.gitkeep
+
 # Per-day generated PNGs in the queue (keep .json / .summary.md / .gitkeep)
 queue/*.png
 
 # Transient approval-PR body built by scripts/build_pr_preview.py (workflow only)
 pr-body.md
+
+# Local recycle bin for the ad-hoc web UI: queue files and media removed from
+# the browser land here with a manifest so a mistake stays recoverable.
+.trash/
 
 # Never commit large binaries / installers (GitHub rejects >100MB)
 *.exe

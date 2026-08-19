@@ -48,6 +48,28 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
 >   separate approval PR from `generate-deallab.yml`. It does not read Layer8Culture
 >   or Layer8Culture Radio brand docs.
 
+### No image API? Run it manually
+
+The visuals step can run with **no image API and no keys** (Pillow only). Instead of
+calling OpenAI, it writes a copy-paste prompt pack you paste into ChatGPT or Copilot;
+you save the results into `assets/manual-inbox/` and the engine finishes them
+identically to the API path (crop to aspect, 2K master, composited brand headline):
+
+```bash
+python scripts/openai_gen.py queue/2026-08-18.json --manual   # -> queue/2026-08-18.prompts.md
+#  ... generate the images by hand, save as assets/manual-inbox/<post-id>.png
+python scripts/manual_media_ingest.py queue/2026-08-18.json   # -> assets/generated/ + queue paths
+```
+
+Reels still render offline through the ffmpeg fallback. A normal run also falls back
+to this mode automatically when no credentials are configured. Full walkthrough:
+[`docs/manual-image-mode.md`](docs/manual-image-mode.md).
+
+Prefer clicking to typing? `python scripts/adhoc_server.py` serves a local web UI that
+runs the whole thing — generate a batch, copy one prompt block, drop the returned
+`.zip` back in, then ingest, render reels and prune the queue from the browser:
+[`docs/adhoc-web-ui.md`](docs/adhoc-web-ui.md).
+
 ## Setup (one-time)
 
 1. **Create a private GitHub repo** and push this folder to it.
@@ -160,7 +182,10 @@ transcripts/ + calendar/topics.md + brand/ + live AI-news research
   (`lofi-bed.mp3`) and Tech Thursday recordings (for clip Reels).
 - `assets/generated/` — OpenAI/Sora/ffmpeg outputs, named by post ID (images, carousel
   slides, reel mp4s + covers).
+- `assets/manual-inbox/` — drop zone for hand-generated images in manual (no-API)
+  image mode; gitignored, consumed drops move to `_ingested/`.
 - `scripts/` — the machinery (`openai_gen.py` images, `reel_gen.py` video,
+  `manual_media.py` + `manual_media_ingest.py` manual no-API image mode,
   `post_to_postiz.py` publishing, `list_postiz_channels.py` channel-ID lookup,
   `fetch_youtube.py` YouTube→"Now Live" refresh, `fetch_insights.py` analytics) +
   generation prompts (`generation-prompt.md` for layer8culture,
