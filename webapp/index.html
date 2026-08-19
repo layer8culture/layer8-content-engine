@@ -3,15 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Layer8 — Ad-hoc run</title>
+<title>Layer8Culture Content Engine</title>
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000000'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-family='Space Grotesk, Arial, sans-serif' font-weight='700' font-size='20' fill='%230047FF'%3E8%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
 <header class="topbar">
   <div class="brand">
-    <span class="mark">L8</span>
+    <span class="lockup">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="wordmark">Layer<span class="eight">8</span><span class="suffix">.Culture</span></span>
+    </span>
+    <span class="divider" aria-hidden="true"></span>
     <div>
-      <h1>Ad-hoc run</h1>
+      <h1>Content Engine</h1>
       <p class="sub">No-API image mode — generate by hand, finish in the engine.</p>
     </div>
   </div>
@@ -69,6 +76,7 @@
         <button class="primary" id="copy-all">Copy everything</button>
       </div>
     </div>
+    <p class="locknote">Pick a queue in step 1 to unlock this.</p>
     <p class="hint">
       Paste this into ChatGPT in one go. It asks for a single <code>.zip</code> with
       every file named exactly as the engine expects.
@@ -85,6 +93,7 @@
     <div class="step-head">
       <h2><span class="num">3</span> Drop the zip</h2>
     </div>
+    <p class="locknote">Pick a queue in step 1 to unlock this.</p>
     <div id="dropzone" class="dropzone">
       <p><strong>Drop ChatGPT's .zip here</strong></p>
       <p class="muted">or</p>
@@ -110,6 +119,7 @@
       <h2><span class="num">4</span> Finish the images</h2>
       <button class="primary" id="run-ingest">Run ingest</button>
     </div>
+    <p class="locknote">Pick a queue in step 1 to unlock this.</p>
     <p class="hint">
       Crops to the brand aspect, upscales to a 2K master, composites the brand
       typography, and writes the paths back into the queue file.
@@ -125,6 +135,7 @@
       <h2><span class="num">5</span> Render the reels</h2>
       <button class="primary" id="run-reels">Render reels</button>
     </div>
+    <p class="locknote">Pick a queue in step 1 to unlock this.</p>
     <p class="hint">
       Runs ffmpeg for every <code>format: "reel"</code> post and copies the
       cross-posts. This always re-renders, so it takes a minute.
@@ -140,6 +151,7 @@
       <h2><span class="num">6</span> Review</h2>
       <button class="ghost" id="refresh-review">Refresh</button>
     </div>
+    <p class="locknote">Pick a queue in step 1 to unlock this.</p>
     <div id="review-list" class="review-list"></div>
     <div class="handoff">
       <h3>Next: open the approval PR</h3>
@@ -163,7 +175,10 @@
   </section>
 </main>
 
-<div id="toast" class="toast hidden"></div>
+<div id="toast" class="toast hidden" role="status" aria-live="polite">
+  <span class="msg" id="toast-msg"></span>
+  <button type="button" class="dismiss" id="toast-dismiss" aria-label="Dismiss message">&times;</button>
+</div>
 <script src="/static/app.js"></script>
 </body>
 </html>

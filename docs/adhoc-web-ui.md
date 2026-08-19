@@ -1,4 +1,4 @@
-# Ad-hoc run web UI
+# Layer8Culture Content Engine — web UI
 
 A small **localhost** web app that drives a whole no-API image run from a browser:
 generate a batch, pick a queue, copy one prompt block into ChatGPT, drop the returned
@@ -11,6 +11,18 @@ rendering run as the same subprocesses you would type by hand. Brand rules live 
 
 Prerequisite reading: [`manual-image-mode.md`](manual-image-mode.md) — this UI automates
 exactly that workflow.
+
+## Branding
+
+The UI carries the layer8culture.io identity: the `LAYER8.CULTURE` lockup, electric
+blue `#0047FF` on deep black, and the type pairing from
+[`brand/brand-guidelines-v2.md`](../brand/brand-guidelines-v2.md) §14 — **Space Grotesk**
+for display and labels, **Inter** for body copy.
+
+Both typefaces are served from `assets/fonts/` by the server's `/fonts/` route, so the
+UI is correct with no network and no CDN. That route uses an explicit allowlist
+(`BRAND_FONTS` in `scripts/adhoc_server.py`) rather than a directory prefix, so it
+cannot be used to read anything else in the repo.
 
 ## Start it
 
