@@ -23,13 +23,20 @@ function esc(value) {
 }
 
 let toastTimer = null;
+function hideToast() {
+  clearTimeout(toastTimer);
+  $("#toast").classList.add("hidden");
+}
+
+/* Errors stay until dismissed — they're usually the only record of what went
+   wrong, and a 6s window was not long enough to read a stack-trace tail. */
 function toast(message, bad = false) {
   const el = $("#toast");
-  el.textContent = message;
+  $("#toast-msg").textContent = message;
   el.classList.toggle("bad", !!bad);
   el.classList.remove("hidden");
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.add("hidden"), bad ? 6000 : 2800);
+  if (!bad) toastTimer = setTimeout(hideToast, 2800);
 }
 
 async function api(path, options) {
@@ -64,10 +71,13 @@ async function copyText(text, label) {
   }
 }
 
+/* `inert` is what actually gates a locked step. The old pointer-events:none only
+   stopped the mouse, so Tab still reached the buttons inside and fired them. */
 function setLocked(locked) {
   $$(".step").forEach((step) => {
     if (step.dataset.step === "0" || step.dataset.step === "1") return;
     step.classList.toggle("locked", locked);
+    step.inert = locked;
   });
 }
 
@@ -162,7 +172,9 @@ async function loadQueues() {
   try {
     const data = await api("/api/queues");
     if (!data.queues.length) {
-      list.innerHTML = '<p class="muted">No queue files found in queue/.</p>';
+      list.innerHTML =
+        '<div class="empty"><strong>No queue files yet.</strong><br>' +
+        "Generate a batch in step 0, or drop a queue JSON into <code>queue/</code>.</div>";
       return;
     }
     list.innerHTML = "";
@@ -424,6 +436,19 @@ async function runJob(kind, statusEl, logEl, onDone) {
   );
 }
 
+/* Jobs disable every primary action while one is running, because the server
+   only ever runs one at a time. Blanket-enabling them afterwards was wrong: it
+   cleared the disable loadLanes() puts on #run-generate when the Copilot CLI
+   isn't usable, offering a run that cannot work. Restore the prior state. */
+function lockPrimaryButtons() {
+  const wasDisabled = new Map();
+  $$("button.primary").forEach((b) => {
+    wasDisabled.set(b, b.disabled);
+    b.disabled = true;
+  });
+  return () => wasDisabled.forEach((disabled, b) => (b.disabled = disabled));
+}
+
 /* Kicks off a job, then streams its log until it stops. `start` returns the
    POST response; everything after that is identical for every job kind. */
 async function startAndWatch(kind, start, statusEl, logEl, onDone) {
@@ -433,7 +458,7 @@ async function startAndWatch(kind, start, statusEl, logEl, onDone) {
   log.classList.remove("hidden");
   status.className = "jobstatus running";
   status.textContent = "Starting…";
-  $$("button.primary").forEach((b) => (b.disabled = true));
+  const restoreButtons = lockPrimaryButtons();
 
   let job;
   try {
@@ -441,7 +466,7 @@ async function startAndWatch(kind, start, statusEl, logEl, onDone) {
   } catch (e) {
     status.className = "jobstatus failed";
     status.textContent = e.message;
-    $$("button.primary").forEach((b) => (b.disabled = false));
+    restoreButtons();
     toast(e.message, true);
     return;
   }
@@ -457,7 +482,7 @@ async function startAndWatch(kind, start, statusEl, logEl, onDone) {
       clearInterval(state.polling);
       status.className = "jobstatus failed";
       status.textContent = e.message;
-      $$("button.primary").forEach((b) => (b.disabled = false));
+      restoreButtons();
       return;
     }
     if (snap.lines.length) {
@@ -467,7 +492,7 @@ async function startAndWatch(kind, start, statusEl, logEl, onDone) {
     cursor = snap.next;
     if (snap.status !== "running") {
       clearInterval(state.polling);
-      $$("button.primary").forEach((b) => (b.disabled = false));
+      restoreButtons();
       const ok = snap.status === "done";
       status.className = `jobstatus ${snap.status}`;
       status.textContent = ok
@@ -661,6 +686,10 @@ function renderPrCommands() {
 
 /* ---------------- wiring ---------------- */
 function init() {
+  // The step markup ships with class="locked"; mirror that into `inert` so the
+  // gate is real before a queue is ever picked.
+  setLocked(true);
+  $("#toast-dismiss").addEventListener("click", hideToast);
   $("#refresh-queues").addEventListener("click", loadQueues);
   $("#refresh-lanes").addEventListener("click", loadLanes);
   $("#gen-date").addEventListener("change", renderGenTarget);

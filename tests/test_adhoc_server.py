@@ -2,8 +2,9 @@
 
 Covers the pure, security-relevant helpers: zip entry sanitising, safe
 extraction, the aspect/shape check, path traversal guards, the batch prompt and
-the staging/assignment round trip. The HTTP layer and the subprocess job runner
-are exercised by hand (see docs/adhoc-web-ui.md), not here.
+the staging/assignment round trip, plus the /fonts/ allowlist over real HTTP.
+The rest of the HTTP layer and the subprocess job runner are exercised by hand
+(see docs/adhoc-web-ui.md), not here.
 
 Run with:
     python -m unittest tests.test_adhoc_server
@@ -11,13 +12,18 @@ Run with:
 import datetime as dt
 import io
 import json
+import mimetypes
 import os
 import pathlib
 import shutil
 import sys
 import tempfile
+import threading
 import unittest
+import urllib.error
+import urllib.request
 import zipfile
+from http.server import ThreadingHTTPServer
 from unittest import mock
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -591,3 +597,69 @@ class TrashTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class BrandFontRouteTests(unittest.TestCase):
+    """The /fonts/ route, which self-hosts the two brand typefaces.
+
+    Runs a real server on an ephemeral port: the allowlist is the whole security
+    boundary for this route, so it is worth exercising over HTTP rather than by
+    calling the handler directly.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        adhoc_server.Handler.quiet = True
+        mimetypes.add_type("font/ttf", ".ttf")
+        cls.server = ThreadingHTTPServer(("127.0.0.1", 0), adhoc_server.Handler)
+        cls.thread = threading.Thread(target=cls.server.serve_forever, daemon=True)
+        cls.thread.start()
+        cls.base = f"http://127.0.0.1:{cls.server.server_address[1]}"
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.server.shutdown()
+        cls.server.server_close()
+        cls.thread.join(timeout=5)
+
+    def get(self, path):
+        return urllib.request.urlopen(f"{self.base}{path}", timeout=10)
+
+    def test_every_allowlisted_font_is_served(self):
+        for url_name in adhoc_server.BRAND_FONTS:
+            with self.subTest(font=url_name):
+                res = self.get(f"/fonts/{url_name}")
+                self.assertEqual(res.status, 200)
+                self.assertIn("font", res.headers["Content-Type"])
+                # A TrueType file starts with 0x00010000 or "true"/"ttcf".
+                self.assertTrue(res.read(4) in (b"\x00\x01\x00\x00", b"true", b"ttcf"))
+
+    def test_allowlist_points_at_files_that_exist(self):
+        # A font rename would otherwise only show up as silent fallback type.
+        for source in adhoc_server.BRAND_FONTS.values():
+            with self.subTest(font=source):
+                self.assertTrue((adhoc_server.FONTS_DIR / source).is_file())
+
+    def test_unknown_font_name_is_rejected(self):
+        with self.assertRaises(urllib.error.HTTPError) as ctx:
+            self.get("/fonts/helvetica.ttf")
+        self.assertEqual(ctx.exception.code, 404)
+
+    def test_route_cannot_be_used_to_read_other_repo_files(self):
+        # The allowlist is a dict lookup, so a traversal string is simply not a
+        # key -- but assert it, because a switch to a path join would regress it.
+        for probe in ("../../scripts/adhoc_server.py", "..%2f..%2fREADME.md",
+                      "Inter-Variable.ttf", "space-grotesk.ttf/../inter.ttf"):
+            with self.subTest(probe=probe):
+                with self.assertRaises(urllib.error.HTTPError) as ctx:
+                    self.get(f"/fonts/{probe}")
+                self.assertIn(ctx.exception.code, (400, 404))
+
+    def test_verify_layout_requires_the_brand_fonts(self):
+        empty = pathlib.Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, empty, True)
+        with mock.patch.object(adhoc_server, "FONTS_DIR", empty):
+            with self.assertRaises(SystemExit) as ctx:
+                adhoc_server.verify_layout()
+        for source in adhoc_server.BRAND_FONTS.values():
+            self.assertIn(source, str(ctx.exception))

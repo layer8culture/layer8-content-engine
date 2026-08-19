@@ -60,6 +60,16 @@ INBOX_DIR = REPO_ROOT / manual_media.DEFAULT_INBOX
 OUT_DIR = REPO_ROOT / manual_media.DEFAULT_OUT_DIR
 WEBAPP_DIR = REPO_ROOT / "webapp"
 TRASH_DIR = REPO_ROOT / ".trash"
+FONTS_DIR = REPO_ROOT / "assets" / "fonts"
+
+# The brand typefaces the UI serves, per brand/brand-guidelines-v2.md section 14:
+# Space Grotesk for display, Inter for body. Self-hosted from assets/fonts/ so the
+# UI renders correctly offline, and mapped through an explicit allowlist rather
+# than a directory prefix so this route can never become a general file reader.
+BRAND_FONTS = {
+    "space-grotesk.ttf": "SpaceGrotesk-Variable.ttf",
+    "inter.ttf": "Inter-Variable.ttf",
+}
 
 # Zip entries that don't match an expected image land here until a human assigns
 # them. Kept inside the inbox so everything manual lives in one place, and named
@@ -1258,6 +1268,13 @@ class Handler(BaseHTTPRequestHandler):
                 return
             self._serve_file(asset)
             return
+        if parts[0] == "fonts" and len(parts) == 2:
+            source = BRAND_FONTS.get(parts[1])
+            if source is None:
+                self._error(404, "unknown font")
+                return
+            self._serve_file(FONTS_DIR / source)
+            return
         if parts[0] == "favicon.ico":
             self._send(204, b"", "image/x-icon")
             return
@@ -1396,6 +1413,18 @@ class Handler(BaseHTTPRequestHandler):
 # --------------------------------------------------------------------------
 # Entry point
 # --------------------------------------------------------------------------
+def _display_path(path: pathlib.Path) -> str:
+    """Repo-relative when possible, absolute otherwise.
+
+    A relative_to() that assumes every path sits under REPO_ROOT raises
+    ValueError and masks the error it was meant to report.
+    """
+    try:
+        return path.relative_to(REPO_ROOT).as_posix()
+    except ValueError:
+        return path.as_posix()
+
+
 def verify_layout() -> None:
     """Fail fast when the server isn't sitting in a content-engine checkout."""
     required = [
@@ -1403,10 +1432,11 @@ def verify_layout() -> None:
         SCRIPTS_DIR / "manual_media_ingest.py",
         SCRIPTS_DIR / "reel_gen.py",
         WEBAPP_DIR / "index.html",
+        *(FONTS_DIR / name for name in sorted(BRAND_FONTS.values())),
     ]
     missing = [p for p in required if not p.is_file()]
     if missing or not QUEUE_DIR.is_dir():
-        names = [p.relative_to(REPO_ROOT).as_posix() for p in missing]
+        names = [_display_path(p) for p in missing]
         if not QUEUE_DIR.is_dir():
             names.append("queue/")
         raise SystemExit(
@@ -1420,10 +1450,11 @@ def main(port: int = 8765, open_browser: bool = True, verbose: bool = False) -> 
     Handler.quiet = not verbose
     mimetypes.add_type("image/webp", ".webp")
     mimetypes.add_type("video/mp4", ".mp4")
+    mimetypes.add_type("font/ttf", ".ttf")
 
     server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
     url = f"http://127.0.0.1:{port}/"
-    print(f"Layer8 ad-hoc run UI  ->  {url}")
+    print(f"Layer8Culture Content Engine  ->  {url}")
     print(f"  repo:  {REPO_ROOT}")
     print(f"  inbox: {INBOX_DIR.relative_to(REPO_ROOT).as_posix()}/")
     print("Local only, no authentication. Ctrl+C to stop.")
