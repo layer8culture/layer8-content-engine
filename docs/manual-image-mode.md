@@ -7,11 +7,11 @@ engine finishes them exactly like the API path would — crop to aspect, upscale
 a 2K master, composite the brand headline, and write the paths back into the queue.
 
 Nothing else changes: the same queue schema, the same `assets/generated/` outputs,
-the same approval PR, the same publisher.
+the same publisher.
 
 > **There is a web UI for this.** `python scripts/adhoc_server.py` runs the whole
 > workflow below from a browser — including consuming the single `.zip` ChatGPT
-> returns, instead of saving each file by hand. See
+> returns, instead of saving each file by hand, and publishing the reviewed batch. See
 > [`adhoc-web-ui.md`](adhoc-web-ui.md). The commands below remain the reference path.
 
 ## What you need
@@ -19,7 +19,7 @@ the same approval PR, the same publisher.
 - Python 3.12 (3.11 works) and `pip install pillow` — **no `openai` package, no keys**
 - ffmpeg only if the batch contains reels
 
-## The three commands
+## The commands
 
 ```bash
 # 1. Write the prompt pack (no API calls, queue is left untouched)
@@ -33,6 +33,10 @@ python scripts/manual_media_ingest.py queue/2026-08-18.json
 # 4. Optional: reels (ffmpeg only, no Sora needed) and the PR preview
 python scripts/reel_gen.py queue/2026-08-18.json
 python scripts/build_pr_preview.py queue/2026-08-18.json --repo <owner/repo> --sha <sha> --out pr-body.md
+
+# 5. Publish the finished batch (validates, then commits and pushes to main)
+python scripts/ship_queue.py queue/2026-08-18.json --dry-run
+python scripts/ship_queue.py queue/2026-08-18.json
 ```
 
 ## Step 1 — the prompt pack

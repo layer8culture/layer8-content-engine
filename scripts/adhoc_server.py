@@ -655,6 +655,7 @@ def assign_staged(specs: list[manual_media.ImageSpec], filename: str,
 JOB_SCRIPTS = {
     "ingest": "manual_media_ingest.py",
     "reels": "reel_gen.py",
+    "publish": "ship_queue.py",
 }
 
 _jobs: dict[str, dict] = {}
@@ -717,8 +718,9 @@ def start_command_job(kind: str, command: list[str], *, label: str,
                 _jobs[job_id]["finished"] = time.time()
             return
         assert proc.stdout is not None
-        for line in proc.stdout:
-            append(line.rstrip("\n"))
+        with proc.stdout:
+            for line in proc.stdout:
+                append(line.rstrip("\n"))
         proc.wait()
 
         status = "done" if proc.returncode == 0 else "failed"
@@ -739,7 +741,8 @@ def start_command_job(kind: str, command: list[str], *, label: str,
     return job_id
 
 
-def start_job(kind: str, qpath: pathlib.Path) -> str:
+def start_job(kind: str, qpath: pathlib.Path,
+              extra: list[str] | None = None) -> str:
     """Run one engine script against a queue file (the ingest / reels buttons)."""
     if kind not in JOB_SCRIPTS:
         raise ValueError(f"unknown job kind: {kind!r}")
@@ -747,14 +750,15 @@ def start_job(kind: str, qpath: pathlib.Path) -> str:
     if not script.is_file():
         raise ValueError(f"missing script: {script.name}")
 
+    extra = list(extra or [])
     rel_queue = qpath.relative_to(REPO_ROOT).as_posix()
     return start_command_job(
         kind,
-        [sys.executable, "-u", str(script), rel_queue],
+        [sys.executable, "-u", str(script), rel_queue, *extra],
         label=f"{kind} {qpath.name}",
         queue_name=qpath.name,
         display=" ".join([pathlib.Path(sys.executable).name, "-u",
-                          f"scripts/{JOB_SCRIPTS[kind]}", rel_queue]),
+                          f"scripts/{JOB_SCRIPTS[kind]}", rel_queue, *extra]),
     )
 
 
@@ -1402,8 +1406,12 @@ class Handler(BaseHTTPRequestHandler):
             })
             return
 
-        if action in JOB_SCRIPTS:
-            job_id = start_job(action, qpath)
+        if action in JOB_SCRIPTS or action == "publish-check":
+            # publish-check is the same script, told not to push: it reports
+            # whether the batch would survive publish.yml.
+            kind = "publish" if action == "publish-check" else action
+            extra = ["--dry-run"] if action == "publish-check" else None
+            job_id = start_job(kind, qpath, extra=extra)
             self._json({"job": job_payload(job_id)})
             return
 
@@ -1431,6 +1439,7 @@ def verify_layout() -> None:
         SCRIPTS_DIR / "manual_media.py",
         SCRIPTS_DIR / "manual_media_ingest.py",
         SCRIPTS_DIR / "reel_gen.py",
+        SCRIPTS_DIR / "ship_queue.py",
         WEBAPP_DIR / "index.html",
         *(FONTS_DIR / name for name in sorted(BRAND_FONTS.values())),
     ]
