@@ -2,7 +2,7 @@
 
 A small **localhost** web app that drives a whole no-API image run from a browser:
 generate a batch, pick a queue, copy one prompt block into ChatGPT, drop the returned
-`.zip` back in, and click through ingest and reel rendering.
+`.zip` back in, click through ingest and reel rendering, review every post, and publish.
 
 It is a front-end for the existing scripts, not a replacement. `manual_media.plan_images`
 stays the single source of truth for which images a queue needs, and ingest and reel
@@ -146,22 +146,39 @@ Runs `scripts/reel_gen.py` and streams its log, then plays the results inline.
 idempotent but not free. On a lane whose audio bed is absent you will see a
 "silent AAC track" note; that is expected, not an error.
 
-### 6. Review
+### 6. Review and publish
 
-Per-post preview: media, the exact caption, hashtags and schedule time, plus a
-copy-ready list of the commands to open the approval PR. Pick **PowerShell** or
-**bash** — it defaults to your platform, and the two are not interchangeable:
-PowerShell rejects `a && b` and `cp src1 src2 dest/`, which fail just quietly enough
-to push an empty branch and open a PR with nothing in it.
+Per-post preview: media, the exact caption, hashtags and schedule time. Each post also
+has a **Delete** button, for dropping a single post from the batch.
 
-The asset glob is derived from the post ids, not the queue filename — a lofi queue is
-`lofi-2026-08-18.json` but its media is `20260818-lofi-…`. The summary file is only
-copied when one exists.
+Because you review the whole batch here, there is **no approval PR**. Once every image
+is done, **Publish to main** commits the queue, its `.summary.md` and every asset
+belonging to those post ids, pushes to `main`, and `publish.yml` schedules the posts in
+Postiz. **Check without publishing** runs exactly the same validation and stops short of
+the push.
 
-Each post also has a **Delete** button, for dropping a single post from the batch.
+The button stays disabled while any image is still pending, because a queue with a
+missing file reaches Postiz and fails there with `missing_media`, leaving the day half
+posted. `ship_queue.py` re-checks the same thing server-side, and also rejects a
+carousel with a gap or a TikTok/YouTube post holding a still.
 
-**The app never touches git.** It only shows the commands. Publishing still requires a
-merged PR, exactly as the workflows enforce.
+**How the push is made safe.** This clone is routinely shallow and behind
+`origin/main`, so committing from it would revert whatever landed since. Instead the
+commit is built in a throwaway worktree created from a freshly fetched `origin/main`,
+pushed, and the worktree deleted — nothing in your working tree is ever pushed. If
+someone else lands a commit first, the push rebases and retries. Publishing the same
+batch twice is a no-op rather than an empty commit.
+
+The assets are gathered from the post ids, not the queue filename — a lofi queue is
+`lofi-2026-08-18.json` but its media is `20260818-lofi-…`. That also picks up files the
+queue never names, such as a reel's `-cover.png`.
+
+It can also be run without the UI:
+
+```bash
+python scripts/ship_queue.py queue/2026-08-20.json --dry-run   # validate only
+python scripts/ship_queue.py queue/2026-08-20.json             # publish
+```
 
 ## Deleting
 
@@ -178,11 +195,11 @@ actually records — never by globbing the post id, which would match `x-10` whi
 deleting `x-1`. Files a *remaining* post still references are left alone, so removing
 a cross-posted Reel cannot take its TikTok master's video down with it.
 
-`.trash/` is gitignored, so a deletion never reaches a PR. Prune it by hand.
+`.trash/` is gitignored, so a deletion is never published. Prune it by hand.
 
 > Deleting a post leaves `queue/<name>.summary.md` stale. That file is hand-written
 > narrative, not derived, so it is flagged rather than silently rewritten — edit it
-> before opening the PR.
+> before you publish.
 
 Deleting is not unpublishing: anything already archived in `posted/` is untouched.
 
@@ -203,16 +220,30 @@ Single user, localhost, no authentication — stated plainly because it matters:
   a job is running
 - generation and deletion are scoped to `queue/` and `assets/generated/`; deletions
   move files to `.trash/` rather than unlinking them
+- publishing is the one action that leaves this machine. It pushes only from a
+  worktree built off a freshly fetched `origin/main`, only the queue file and the
+  assets belonging to its post ids, and only after every declared file is confirmed
+  present — so an incomplete batch fails locally rather than in Postiz
+
+Publishing from the UI replaces the approval PR **for ad-hoc batches you reviewed in
+step 6**. The nightly workflows are unchanged: they still open a PR, because nobody
+has looked at that content yet.
 
 Do not expose the port. It runs your scripts by design.
 
 ## Tests
 
 ```bash
-python -m unittest tests.test_adhoc_server
+python -m unittest tests.test_adhoc_server tests.test_ship_queue
 ```
 
 Covers entry sanitising, safe extraction (including zip-slip), the shape check, the
 path guards, the batch prompt, the staging/assignment round trip, lane resolution and
-generation argv, and both deletions — including the shared-media case that must not
-be collateral.
+generation argv, both deletions — including the shared-media case that must not
+be collateral — and the publish route.
+
+`tests.test_ship_queue` builds a real repo against a bare remote and pushes into it, so
+the publish path is exercised end to end: it asserts an incomplete batch is refused, a
+finished one lands with its summary and assets, another day's assets are left behind,
+a second publish is a no-op, a push races and rebases, and — the one that matters most —
+that publishing from a checkout which is behind the remote does not revert it.

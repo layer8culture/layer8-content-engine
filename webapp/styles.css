@@ -349,6 +349,8 @@ select {
 }
 .handoff { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--line); }
 .handoff button { margin-top: 10px; }
+#publish-ready { margin: 14px 0 0; font-size: 13px; color: var(--ink-dim); }
+#publish-ready.warn { color: var(--warn); }
 
 /* ---------- toast ---------- */
 .toast {

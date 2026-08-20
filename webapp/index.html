@@ -153,24 +153,25 @@
     </div>
     <p class="locknote">Pick a queue in step 1 to unlock this.</p>
     <div id="review-list" class="review-list"></div>
-    <div class="handoff">
-      <h3>Next: open the approval PR</h3>
+    <div class="handoff" id="publish-panel">
+      <h3>Publish</h3>
       <p class="hint">
-        This app never touches git. Your clone is shallow and behind
-        <code>origin/main</code>, so a correct PR is built in a worktree off
-        <code>origin/main</code> — ask the agent to open it, or run:
+        You just reviewed every post above, so there's no approval PR. This
+        commits the queue and its media to <code>main</code> and
+        <code>publish.yml</code> schedules them in Postiz.
       </p>
-      <div class="actions" style="margin-bottom:10px">
-        <label class="field inline">
-          <span>Shell</span>
-          <select id="pr-shell">
-            <option value="powershell">PowerShell</option>
-            <option value="bash">bash / zsh</option>
-          </select>
-        </label>
-        <button class="ghost" id="copy-pr">Copy commands</button>
+      <p class="hint">
+        The commit is built in a throwaway worktree off a freshly fetched
+        <code>origin/main</code> — nothing in this clone is pushed, so being
+        behind or shallow can't revert anything.
+      </p>
+      <div class="actions">
+        <button class="primary" id="run-publish" disabled>Publish to main</button>
+        <button class="ghost" id="check-publish">Check without publishing</button>
       </div>
-      <pre id="pr-commands" class="promptbox small"></pre>
+      <p class="meta" id="publish-ready"></p>
+      <div id="publish-status" class="jobstatus"></div>
+      <pre id="publish-log" class="log hidden"></pre>
     </div>
   </section>
 </main>

@@ -3,7 +3,6 @@
 
 const state = {
   queue: null,      // selected queue filename
-  queueInfo: null,  // that queue's row from /api/queues
   lanes: [],        // generation lanes
   lane: null,       // selected lane id
   images: [],       // ImageSpec payloads
@@ -171,6 +170,7 @@ async function loadQueues() {
   list.innerHTML = '<p class="muted">Loading…</p>';
   try {
     const data = await api("/api/queues");
+    renderPublish();
     if (!data.queues.length) {
       list.innerHTML =
         '<div class="empty"><strong>No queue files yet.</strong><br>' +
@@ -179,11 +179,6 @@ async function loadQueues() {
     }
     list.innerHTML = "";
     data.queues.forEach((q) => list.appendChild(queueRow(q)));
-    const current = data.queues.find((q) => q.name === state.queue);
-    if (current) {
-      state.queueInfo = current;
-      renderPrCommands();
-    }
   } catch (e) {
     list.innerHTML = `<p class="muted">Could not load queues: ${esc(e.message)}</p>`;
   }
@@ -262,7 +257,7 @@ async function selectQueue(name) {
   setLocked(false);
   await Promise.all([refreshQueue(), loadBatchPrompt()]);
   await loadQueues();
-  renderPrCommands();
+  renderPublish();
   $("#step-prompts").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
@@ -518,6 +513,7 @@ async function refreshQueue() {
     renderStills();
     renderReels();
     renderReview();
+    renderPublish();
   } catch (e) {
     toast(e.message, true);
   }
@@ -614,74 +610,79 @@ async function deletePost(post) {
   }
 }
 
-/* The commands to open the approval PR. Emitted for the shell you're actually
-   using: PowerShell chokes on `a && b` and on `cp src1 src2 dest/`, both of
-   which fail quietly enough to push an empty branch. */
-function prCommands(shell) {
-  const stem = state.queue.replace(/\.json$/, "");
-  const branch = `posts/${stem}`;
-  const dir = `../pr-${stem}`;
-  const prefix = assetPrefix();
-  const glob = prefix ? `assets/generated/${prefix}-*` : "assets/generated/*";
-  const sources = [`queue/${state.queue}`];
-  if (state.queueInfo && state.queueInfo.summary) {
-    sources.push(`queue/${stem}.summary.md`);
-  }
-  const preview =
-    `python scripts/build_pr_preview.py queue/${state.queue}` +
-    " --repo layer8culture/layer8-content-engine --sha $sha --out pr-body.md";
-  const title = `Posts for ${stem}`;
+/* ---------------- step 6: publish ---------------- */
 
-  if (shell === "powershell") {
-    return [
-      "# built from origin/main in a worktree, because this clone is shallow",
-      "git fetch origin",
-      `git worktree add -b ${branch} ${dir} origin/main`,
-      `Copy-Item ${sources.join(",")} -Destination ${dir}/queue/ -Force`,
-      `Copy-Item ${glob} -Destination ${dir}/assets/generated/ -Force`,
-      `Push-Location ${dir}`,
-      "git add queue/",
-      "git add -f assets/generated",
-      `git commit -m "${title} - ready for review"`,
-      `git push -u origin ${branch}`,
-      "$sha = git rev-parse HEAD",
-      preview,
-      `gh pr create --base main --head ${branch} --title "${title}" --body-file pr-body.md`,
-      "Pop-Location",
-      `# once the PR is merged:  git worktree remove ${dir}`,
-    ].join("\n");
+/* Publishing is gated on the batch being finished, because a queue with a
+   missing image reaches Postiz and fails there with missing_media, leaving the
+   day half-posted. ship_queue.py refuses the same case server-side; this is
+   just the honest version of the button. */
+function publishReadiness() {
+  const pending = state.images.filter((i) => i.status === "pending").length;
+  if (!state.posts.length) {
+    return { ok: false, note: "This queue has no posts." };
   }
-  return [
-    "# built from origin/main in a worktree, because this clone is shallow",
-    "git fetch origin",
-    `git worktree add -b ${branch} ${dir} origin/main`,
-    `cp ${sources.join(" ")} ${dir}/queue/`,
-    `cp ${glob} ${dir}/assets/generated/`,
-    `pushd ${dir}`,
-    "git add queue/ && git add -f assets/generated",
-    `git commit -m "${title} - ready for review"`,
-    `git push -u origin ${branch}`,
-    "sha=$(git rev-parse HEAD)",
-    preview,
-    `gh pr create --base main --head ${branch} --title "${title}" --body-file pr-body.md`,
-    "popd",
-    `# once the PR is merged:  git worktree remove ${dir}`,
-  ].join("\n");
+  if (pending) {
+    return {
+      ok: false,
+      note: `${pending} image${pending === 1 ? "" : "s"} still pending — finish ` +
+            "steps 2 to 5 first.",
+    };
+  }
+  return {
+    ok: true,
+    note: `${state.posts.length} post${state.posts.length === 1 ? "" : "s"} ready ` +
+          `to publish from ${state.queue}.`,
+  };
 }
 
-/* Media is named from the post ids, not the queue filename -- a lofi queue is
-   `lofi-2026-08-18.json` but its assets are `20260818-lofi-...`. Read the real
-   ids rather than mangling the filename. */
-function assetPrefix() {
-  const withId = state.posts.find((p) => /^\d{8}-/.test(String(p.id || "")));
-  if (withId) return String(withId.id).slice(0, 8);
-  const m = state.queue.match(/(\d{4})-(\d{2})-(\d{2})/);
-  return m ? m[1] + m[2] + m[3] : "";
+function renderPublish() {
+  const btn = $("#run-publish");
+  const ready = $("#publish-ready");
+  if (!state.queue) {
+    btn.disabled = true;
+    ready.textContent = "";
+    ready.classList.remove("warn");
+    return;
+  }
+  const { ok, note } = publishReadiness();
+  btn.disabled = !ok;
+  btn.title = ok ? "" : note;
+  ready.textContent = note;
+  ready.classList.toggle("warn", !ok);
 }
 
-function renderPrCommands() {
+async function publishQueue(dryRun) {
   if (!state.queue) return;
-  $("#pr-commands").textContent = prCommands($("#pr-shell").value);
+  if (!dryRun) {
+    const { ok, note } = publishReadiness();
+    if (!ok) {
+      toast(note, true);
+      return;
+    }
+    const agreed = confirm(
+      `Publish ${state.queue} to main?\n\n` +
+        `${state.posts.length} post(s) and their media are committed to main, ` +
+        `and publish.yml schedules every one of them in Postiz. There is no ` +
+        `approval PR after this.`
+    );
+    if (!agreed) return;
+  }
+  const action = dryRun ? "publish-check" : "publish";
+  await startAndWatch(
+    dryRun ? "publish check" : "publish",
+    () =>
+      api(`/api/queue/${encodeURIComponent(state.queue)}/${action}`, {
+        method: "POST",
+      }),
+    "#publish-status",
+    "#publish-log",
+    async (snap) => {
+      if (!dryRun && snap.status === "done") {
+        // The queue leaves this machine's hands here; the workflow archives it.
+        await loadQueues();
+      }
+    }
+  );
 }
 
 /* ---------------- wiring ---------------- */
@@ -699,14 +700,8 @@ function init() {
   $("#copy-all").addEventListener("click", () =>
     copyText($("#batch-prompt").textContent, "Prompt pack")
   );
-  $("#copy-pr").addEventListener("click", () =>
-    copyText($("#pr-commands").textContent, "Commands")
-  );
-  // Default to the shell you're most likely standing in.
-  $("#pr-shell").value = /Win/i.test(navigator.platform || navigator.userAgent)
-    ? "powershell"
-    : "bash";
-  $("#pr-shell").addEventListener("change", renderPrCommands);
+  $("#run-publish").addEventListener("click", () => publishQueue(false));
+  $("#check-publish").addEventListener("click", () => publishQueue(true));
 
   const dz = $("#dropzone");
   const input = $("#zip-input");

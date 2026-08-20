@@ -19,6 +19,7 @@ import shutil
 import sys
 import tempfile
 import threading
+import time
 import unittest
 import urllib.error
 import urllib.request
@@ -663,3 +664,133 @@ class BrandFontRouteTests(unittest.TestCase):
                 adhoc_server.verify_layout()
         for source in adhoc_server.BRAND_FONTS.values():
             self.assertIn(source, str(ctx.exception))
+
+
+class PublishJobTests(unittest.TestCase):
+    """Step 6 publishes straight to main, so the wiring gets its own tests.
+
+    The real push is covered by tests/test_ship_queue.py against a throwaway
+    remote; here the concern is only that the route reaches the right script
+    with the right flags, and that a dry run genuinely cannot push.
+    """
+
+    def qpath(self):
+        return adhoc_server.QUEUE_DIR / "2026-08-20.json"
+
+    def spawn_args(self, *args, **kwargs):
+        with mock.patch.object(adhoc_server, "start_command_job") as spawn:
+            spawn.return_value = "jobid"
+            adhoc_server.start_job(*args, **kwargs)
+        return spawn.call_args
+
+    def test_publish_runs_ship_queue_against_the_chosen_queue(self):
+        call = self.spawn_args("publish", self.qpath())
+        kind, command = call.args[0], call.args[1]
+
+        self.assertEqual(kind, "publish")
+        self.assertTrue(command[2].endswith("ship_queue.py"))
+        self.assertEqual(command[3], "queue/2026-08-20.json")
+        self.assertNotIn("--dry-run", command)
+
+    def test_a_check_passes_dry_run_so_nothing_can_be_pushed(self):
+        call = self.spawn_args("publish", self.qpath(), extra=["--dry-run"])
+
+        self.assertEqual(call.args[1][-1], "--dry-run")
+        self.assertIn("--dry-run", call.kwargs["display"])
+
+    def test_ingest_and_reels_are_unchanged_by_the_extra_argument(self):
+        call = self.spawn_args("ingest", self.qpath())
+
+        self.assertTrue(call.args[1][2].endswith("manual_media_ingest.py"))
+        self.assertEqual(len(call.args[1]), 4)
+
+    def test_verify_layout_requires_the_publish_script(self):
+        empty = pathlib.Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, empty, True)
+        with mock.patch.object(adhoc_server, "SCRIPTS_DIR", empty):
+            with self.assertRaises(SystemExit) as ctx:
+                adhoc_server.verify_layout()
+        self.assertIn("ship_queue.py", str(ctx.exception))
+
+class PublishRouteTests(unittest.TestCase):
+    """POST /api/queue/<name>/publish and /publish-check over real HTTP.
+
+    start_job is stubbed, so no publish is ever attempted from the test run;
+    what is asserted is that the route picks the publish kind and that only
+    /publish-check adds --dry-run.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        adhoc_server.Handler.quiet = True
+        cls.server = ThreadingHTTPServer(("127.0.0.1", 0), adhoc_server.Handler)
+        cls.thread = threading.Thread(target=cls.server.serve_forever, daemon=True)
+        cls.thread.start()
+        cls.base = f"http://127.0.0.1:{cls.server.server_address[1]}"
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.server.shutdown()
+        cls.server.server_close()
+        cls.thread.join(timeout=5)
+
+    def setUp(self):
+        self.name = "zz-publish-route-test.json"
+        self.path = adhoc_server.QUEUE_DIR / self.name
+        self.path.write_text(json.dumps([{
+            "id": "20260820-layer8culture-instagram-1",
+            "account": "layer8culture",
+            "platform": "instagram",
+            "format": "single",
+            "schedule_time": "2026-08-20T09:00:00-04:00",
+            "text": "Caption",
+            "visual": {"source": "openai", "openai_prompt": "a scene"},
+        }]), encoding="utf-8")
+        self.addCleanup(self.path.unlink, True)
+
+    def post(self, action):
+        captured = {}
+
+        def fake_start_job(kind, qpath, extra=None):
+            captured["kind"] = kind
+            captured["queue"] = qpath.name
+            captured["extra"] = list(extra or [])
+            return adhoc_server.start_command_job(
+                "publish", [sys.executable, "-c", "pass"], label="stub")
+
+        with mock.patch.object(adhoc_server, "start_job", fake_start_job):
+            req = urllib.request.Request(
+                f"{self.base}/api/queue/{self.name}/{action}", data=b"",
+                method="POST")
+            body = json.loads(urllib.request.urlopen(req, timeout=10).read())
+        self.drain(body["job"]["id"])
+        return captured, body
+
+    def drain(self, job_id):
+        for _ in range(100):
+            if adhoc_server.job_payload(job_id)["status"] != "running":
+                return
+            time.sleep(0.05)
+        self.fail("stub job never finished")
+
+    def test_publish_starts_the_publish_job_without_dry_run(self):
+        captured, body = self.post("publish")
+
+        self.assertEqual(captured["kind"], "publish")
+        self.assertEqual(captured["queue"], self.name)
+        self.assertEqual(captured["extra"], [])
+        self.assertEqual(body["job"]["kind"], "publish")
+
+    def test_publish_check_reuses_the_publish_job_with_dry_run(self):
+        captured, _ = self.post("publish-check")
+
+        self.assertEqual(captured["kind"], "publish")
+        self.assertEqual(captured["extra"], ["--dry-run"])
+
+    def test_an_unknown_action_is_still_a_404(self):
+        with self.assertRaises(urllib.error.HTTPError) as ctx:
+            req = urllib.request.Request(
+                f"{self.base}/api/queue/{self.name}/publish-now", data=b"",
+                method="POST")
+            urllib.request.urlopen(req, timeout=10)
+        self.assertEqual(ctx.exception.code, 404)

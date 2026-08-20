@@ -67,8 +67,10 @@ to this mode automatically when no credentials are configured. Full walkthrough:
 
 Prefer clicking to typing? `python scripts/adhoc_server.py` serves a local web UI that
 runs the whole thing — generate a batch, copy one prompt block, drop the returned
-`.zip` back in, then ingest, render reels and prune the queue from the browser:
-[`docs/adhoc-web-ui.md`](docs/adhoc-web-ui.md).
+`.zip` back in, then ingest, render reels, prune the queue and publish from the
+browser: [`docs/adhoc-web-ui.md`](docs/adhoc-web-ui.md). Because you review every post
+in that UI, an ad-hoc batch publishes straight to `main` instead of going through the
+approval PR; the nightly workflows still open one.
 
 ## Setup (one-time)
 
