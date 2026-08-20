@@ -73,6 +73,63 @@ def validate_queue_shape(payload: object, source: Path) -> None:
             raise ValueError(f"{source}: post {index} visual must be an object")
 
 
+def visual_slide_prompts(visual: dict) -> bool:
+    """True when a carousel's slides carry generation prompts."""
+    slides = visual.get("slides")
+    if not isinstance(slides, list):
+        return False
+    return any(
+        isinstance(slide, dict) and str(slide.get("openai_prompt") or "").strip()
+        for slide in slides
+    )
+
+
+def carries_generation_prompt(visual: dict) -> bool:
+    return bool(str(visual.get("openai_prompt") or "").strip()) or visual_slide_prompts(visual)
+
+
+def contradictory_visual_sources(payload: list) -> list[str]:
+    """Post IDs whose visual.source can't produce media but ships a prompt anyway.
+
+    A "library" post is supposed to bring its own asset from assets/library/ and a
+    "reuse" cross-post gets its media from reel_gen.py; neither carries an
+    openai_prompt. So a non-"openai" source that *does* carry one is a generator
+    slip, and it fails silently: plan_images skips anything that isn't "openai",
+    so the manual image run produces nothing, and publishing then rejects every
+    post with missing_media.
+    """
+    flagged: list[str] = []
+    for post in payload:
+        if not isinstance(post, dict):
+            continue
+        visual = post.get("visual")
+        if not isinstance(visual, dict):
+            continue
+        source = str(visual.get("source", "")).strip().lower()
+        if source in ("openai", "reuse"):
+            continue
+        if carries_generation_prompt(visual):
+            flagged.append(str(post.get("id") or "<no id>"))
+    return flagged
+
+
+def repair_visual_sources(payload: list) -> list[str]:
+    """Point contradictory visuals back at "openai". Returns the repaired IDs."""
+    repaired: list[str] = []
+    for post in payload:
+        if not isinstance(post, dict):
+            continue
+        visual = post.get("visual")
+        if not isinstance(visual, dict):
+            continue
+        source = str(visual.get("source", "")).strip().lower()
+        if source in ("openai", "reuse") or not carries_generation_prompt(visual):
+            continue
+        visual["source"] = "openai"
+        repaired.append(str(post.get("id") or "<no id>"))
+    return repaired
+
+
 def backup_invalid_file(path: Path, raw: str) -> Path:
     backup = path.with_suffix(path.suffix + ".invalid")
     backup.write_text(raw, encoding="utf-8")
@@ -82,32 +139,61 @@ def backup_invalid_file(path: Path, raw: str) -> Path:
 def validate_or_repair(path: Path, repair: bool) -> bool:
     raw = path.read_text(encoding="utf-8")
     first_error: ValueError | None = None
+    syntax_repaired = False
+
     try:
         payload = load_json(raw, path)
         validate_queue_shape(payload, path)
-        print(f"{path}: valid queue JSON ({len(payload)} posts)")
-        return False
     except ValueError as exc:
         if not repair:
             raise
         first_error = exc
+        repaired = escape_control_chars_in_strings(raw)
+        if repaired == raw:
+            raise first_error
+        payload = load_json(repaired, path)
+        validate_queue_shape(payload, path)
+        backup = backup_invalid_file(path, raw)
+        syntax_repaired = True
+        print(
+            f"{path}: repaired queue JSON ({len(payload)} posts); "
+            f"original saved to {backup}"
+        )
 
-    repaired = escape_control_chars_in_strings(raw)
-    if repaired == raw:
-        raise first_error
+    flagged = contradictory_visual_sources(payload)
+    if flagged and not repair:
+        raise ValueError(
+            f"{path}: {len(flagged)} post(s) carry an openai_prompt but visual.source "
+            f'is not "openai", so no image would ever be generated: '
+            f"{', '.join(flagged)}"
+        )
 
-    payload = load_json(repaired, path)
-    validate_queue_shape(payload, path)
-    backup = backup_invalid_file(path, raw)
-    path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
-    print(f"{path}: repaired queue JSON ({len(payload)} posts); original saved to {backup}")
-    return True
+    source_repaired = repair_visual_sources(payload) if flagged else []
+    if source_repaired:
+        print(
+            f"{path}: reset visual.source to \"openai\" on {len(source_repaired)} "
+            f"post(s) that carry a generation prompt: {', '.join(source_repaired)}"
+        )
+
+    if syntax_repaired or source_repaired:
+        path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+        return True
+
+    print(f"{path}: valid queue JSON ({len(payload)} posts)")
+    return False
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("queue_file", type=Path)
-    parser.add_argument("--repair", action="store_true", help="Repair common JSON control-character issues.")
+    parser.add_argument(
+        "--repair",
+        action="store_true",
+        help=(
+            "Repair common JSON control-character issues, and reset visual.source "
+            'to "openai" where a post carries a generation prompt.'
+        ),
+    )
     args = parser.parse_args()
 
     try:
