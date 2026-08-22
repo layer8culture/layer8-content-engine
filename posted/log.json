@@ -25625,5 +25625,658 @@
     "scheduled": true,
     "integration_id": "cmqgzb1xv000qo571zuz5lqfm",
     "postiz_post_id": "cmt1uizr800h7o25umy0t0v23"
+  },
+  {
+    "id": "20260822-layer8culture-tiktok-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-08-22T07:25:00-04:00",
+    "text": "AI stopped asking for an API. It learned to use the screen.\n\nAlibaba released Qwen-UI-Agent this week. It operates a phone, a desktop and a browser by reading what's actually on screen and then tapping, typing and swiping the way a person does. Trained across more than a hundred real phones and 150 apps. 92.2% on real mobile tasks.\n\nWhich means the integration you were waiting on doesn't have to exist. If you can do it in the app, an agent can do it in the app.\n\nThe weights are public. The bottleneck was never the API.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIagents",
+      "#TechTok",
+      "#AInews",
+      "#BuildWithAI"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "ai-fluency",
+    "hook_score": 93,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "editorial_drop",
+      "headline": "AI LEARNED TO USE YOUR APPS",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, high contrast. Scene: a vast forest of thin vertical panes of dark frosted glass standing upright in black fog, hundreds of them receding into depth, every one blank and inert; an unseen pressure moves through the ranks and each pane blooms with a soft electric blue glow at the exact point it is touched, a ripple of contact travelling away through the forest; no people at all, purely architectural and atmospheric, volumetric haze, enormous scale, cold and quiet; upper third is deep navy with minimal detail so animated text stays legible; lower third is clean dark negative space for the cover headline; 9:16 vertical aspect. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16, architectural and cold. First beat (0-2s): a single thin pane of dark frosted glass stands alone in black fog, completely inert, camera locked tight and still. Transformation (2-7s): the camera pulls back to reveal hundreds of identical panes standing in ranks receding into the dark, and an unseen pressure begins moving through them, each pane blooming electric blue at the precise point of contact, the ripple accelerating outward through the whole forest. Resolve (7-10s): the camera settles wide as the last ranks light in sequence and the entire field holds one steady blue glow. Deep navy and electric blue, documentary realism, volumetric haze, shallow depth of field, enormous scale, no people, no text, no logos, a low sustained drone with soft percussive taps that quicken as the ripple spreads.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "NO API NEEDED",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "IT TAPS THE APP",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "BUILD THE FLOW",
+            "start": 7,
+            "end": 10
+          }
+        ],
+        "duration_sec": 8,
+        "beats": [
+          "AI LEARNED TO USE YOUR APPS",
+          "THE INTERFACE IS THE API"
+        ],
+        "audio": "lofi"
+      },
+      "file": "assets\\generated\\20260822-layer8culture-tiktok-1.mp4",
+      "cover": "assets\\generated\\20260822-layer8culture-tiktok-1-cover.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmql4fje10001oc79jxxx1mc4",
+    "postiz_post_id": "cmt3tem0j00h9o25uiudj7ta8"
+  },
+  {
+    "id": "20260822-layer8culture-instagram-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-08-22T09:05:00-04:00",
+    "text": "Qwen-UI-Agent can use your apps. No API required.\n\nAlibaba released it this week: a model that looks at a screen, phone or desktop or browser, and taps, types and swipes its way through a task the way a person does.\n\nWhat changed: agents used to need an API for every tool they touched. This one doesn't. It reads the interface instead.\n\nWhat it actually does: it was trained and tested across more than a hundred real phones and 150 apps. It scores 92.2% on real mobile tasks. It batches several steps per decision on long jobs, and it pauses for confirmation before anything sensitive like a payment or a delete.\n\nWhy builders should care: the integration you've been waiting on doesn't need to exist anymore. If you can do it in the app, an agent can do it in the app. That covers every tool that never shipped a developer API.\n\nTry this this week: pick one thing you repeat by hand and write down the exact taps, in order. Twelve steps or fewer. That list is the spec. Every agent workflow starts as a list a human wrote first.\n\nThe signal: agents are leaving the chat window and moving onto the surfaces we already use. The interface became the API.\n\nSave this for your AI stack.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIagents",
+      "#AgenticAI",
+      "#AItools",
+      "#BuildWithAI",
+      "#Automation",
+      "#AIBuilders",
+      "#ArtificialIntelligence",
+      "#AInews",
+      "#CreatorTech",
+      "#Workflow"
+    ],
+    "hashtags_in_first_comment": true,
+    "first_comment": "What's the one app you wish had an API? That's the workflow to point this at.",
+    "visual": {
+      "source": "openai",
+      "aspect": "1:1",
+      "quality": "medium",
+      "typography_preset": "editorial_drop",
+      "slides": [
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, minimal composition, strong negative space, high contrast. Scene: an extreme macro of one small circular point of electric blue pressure blooming on a sheet of black glass, concentric ripples spreading outward from it in perfect rings, the rest of the frame falling into absolute black; intimate, tactile, the exact instant of contact; no people; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "AI JUST LEARNED YOUR APPS",
+          "subtext": "Qwen-UI-Agent, explained in 6 slides",
+          "accent": "APPS",
+          "kicker": "AI TOOL DROP",
+          "role": "cover",
+          "footer": "SWIPE FOR MORE"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast. Scene: a single monolithic slab of dark stone resting alone in a black void, one face freshly cleaved open, the clean cut line burning a narrow electric blue where it was opened; heavy, deliberate, something newly released into the world; no people, volumetric haze, deep shadow falloff; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "ALIBABA SHIPPED IT",
+          "subtext": "Weights public. Benchmarks published.",
+          "accent": "SHIPPED",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast. Scene: a stack of translucent dark layers seen edge-on in a void, each layer holding a faint blue geometric diagram, and one clean horizontal line of light travelling slowly down through the stack reading each layer as it passes; abstract, forensic, the act of understanding a surface; no people, shallow depth of field; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cheap gamer RGB, cluttered composition, robots, fake hologram overload.",
+          "headline": "IT READS THE SCREEN",
+          "subtext": "Taps, types, swipes. 92.2% on real phones.",
+          "accent": "READS",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast. Scene: a dense tangle of thin dark cables suspended in a black void suddenly falling slack and dropping away out of frame, leaving one clean uninterrupted line of electric blue running straight between two small anchor points; the relief of complexity collapsing; no people, volumetric haze; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "INTEGRATION ISN'T THE GATE",
+          "subtext": "If you can do it, it can do it.",
+          "accent": "GATE",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast, warm practical lighting. Scene: an overhead top-down view of a wide dark walnut surface under one low warm lamp, with twelve small identical warm-lit marks pressed into it in a single deliberate row, each slightly deeper than the last; tactile and human, a repeated motion recorded by hand; no people; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload.",
+          "headline": "MAP ONE WORKFLOW",
+          "subtext": "Write the exact taps. 12 steps or fewer.",
+          "accent": "ONE",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, Black tech futurism, minimal composition, strong negative space, high contrast. Scene: a vast dark plain at night with a single small rectangular opening of light set into a far wall, and out of that narrow opening a wide river of electric blue light is spilling and spreading across the entire plain toward the viewer; escape and expansion, enormous scale; no people, volumetric haze; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cheap gamer RGB, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "AGENTS LEFT THE CHAT",
+          "subtext": "The interface became the API.",
+          "accent": "LEFT",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with a single electric blue accent, premium creator-tech atmosphere, documentary realism, minimal composition, extreme negative space, high contrast, warm practical lighting. Scene: an almost entirely black frame with one small matte object resting on a dark walnut surface under a low warm lamp, a single narrow edge of it catching electric blue; calm, unhurried, nothing else in the frame; no people; lower-left area is completely clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload.",
+          "headline": "SAVE THIS",
+          "subtext": "For your AI stack",
+          "accent": "SAVE",
+          "role": "cta"
+        }
+      ],
+      "files": [
+        "assets/generated/20260822-layer8culture-instagram-1-1.png",
+        "assets/generated/20260822-layer8culture-instagram-1-2.png",
+        "assets/generated/20260822-layer8culture-instagram-1-3.png",
+        "assets/generated/20260822-layer8culture-instagram-1-4.png",
+        "assets/generated/20260822-layer8culture-instagram-1-5.png",
+        "assets/generated/20260822-layer8culture-instagram-1-6.png",
+        "assets/generated/20260822-layer8culture-instagram-1-7.png"
+      ],
+      "file": "assets/generated/20260822-layer8culture-instagram-1-1.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmqd9915w0001o5717h436ivp",
+    "postiz_post_id": "cmt3tenf800hbo25uvd5ro8ez"
+  },
+  {
+    "id": "20260822-layer8culture-tiktok-2",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-08-22T10:12:00-04:00",
+    "text": "A third of the new internet is written by AI. Being average is free now.\n\nPew Research went through five years of the web and found that more than a third of pages created since ChatGPT show signs of AI writing or editing. A separate study puts about half of new articles in the same bucket.\n\nSo volume stopped being a moat. Everybody has the same machine.\n\nOn Thursday we pulled up a real business page on the show. Good design. And after ten seconds none of us could say what was being sold, who it was for, or when it happened.\n\nMore posts won't fix that. One clear sentence will.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AInews",
+      "#TechTok",
+      "#ContentCreation",
+      "#AIFluency"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "transformation",
+    "hook_score": 96,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "high",
+      "typography_preset": "brand_title_card",
+      "headline": "BEING AVERAGE IS FREE NOW",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, minimal composition, strong negative space, high contrast. Scene: an endless dark plain stretching to the horizon, covered edge to edge with thousands of identical low grey rectangular slabs, all the same height, all the same dull matte surface, half lost in cold ground fog; near the centre one single slab is lit from within with clean electric blue and the fog pulls back around it; the first pale line of dawn sits low on the horizon behind everything; no people, aerial three-quarter view, enormous scale, volumetric haze; upper third is deep navy with minimal detail so animated text stays legible; lower third is clean dark negative space for the cover headline; 9:16 vertical aspect. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16, vast and still. First beat (0-2s): a tight low shot across a field of identical dull grey slabs half buried in cold fog, all the same, nothing distinguishable, camera drifting slowly sideways. Transformation (2-7s): the camera rises steadily and the field opens out to the horizon, thousands of identical slabs revealed in every direction, the sheer sameness of it becoming the point; then one single slab near the centre ignites from within with clean electric blue and the fog pulls back around it in a slow expanding circle. Resolve (7-10s): the camera holds on that one lit slab as the first pale line of dawn breaks along the horizon behind the whole field. Deep navy, cold grey and electric blue, documentary realism, volumetric haze, aerial three-quarter framing, enormous scale, no people, no text, no logos, a low sustained drone that thins to a single clear held tone at the ignition.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "AVERAGE IS FREE",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "CLARITY ISN'T",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "SAY IT PLAIN",
+            "start": 7,
+            "end": 10
+          }
+        ],
+        "duration_sec": 8,
+        "beats": [
+          "BEING AVERAGE IS FREE NOW",
+          "CLARITY IS THE SCARCE PART"
+        ],
+        "audio": "lofi"
+      },
+      "file": "assets\\generated\\20260822-layer8culture-tiktok-2.mp4",
+      "cover": "assets\\generated\\20260822-layer8culture-tiktok-2-cover.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmql4fje10001oc79jxxx1mc4",
+    "postiz_post_id": "cmt3tenlo00hdo25u2owdsq8z"
+  },
+  {
+    "id": "20260822-layer8culture-instagram-2",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-08-22T11:20:00-04:00",
+    "text": "A third of the new internet is written by AI. Being average is free now.\n\nPew went through five years of the web: more than a third of pages made since ChatGPT show signs of AI writing or editing. A separate study puts about half of new articles there.\n\nVolume stopped being a moat the moment everybody got the same machine.\n\nWhat's scarce is a sentence a stranger understands in three seconds. We proved it live on Thursday. A real page, decent design, and not one of us could say what was being sold.\n\nShare this with a builder who's posting more and saying less.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AInews",
+      "#AIFluency",
+      "#ContentCreation",
+      "#CreatorEconomy",
+      "#BuildInPublic",
+      "#ArtificialIntelligence",
+      "#CreatorTech",
+      "#LearnInPublic"
+    ],
+    "hashtags_in_first_comment": true,
+    "first_comment": "Honest question: if a stranger landed on your page right now, could they say what you do in one sentence?",
+    "trial_reel": true,
+    "visual": {
+      "source": "reuse",
+      "of": "20260822-layer8culture-tiktok-2",
+      "aspect": "9:16",
+      "file": "assets\\generated\\20260822-layer8culture-instagram-2.mp4",
+      "cover": "assets\\generated\\20260822-layer8culture-instagram-2-cover.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmqd9915w0001o5717h436ivp",
+    "postiz_post_id": "cmt3tenvh00hfo25u1uxb46m3"
+  },
+  {
+    "id": "20260822-layer8culture-tiktok-3",
+    "account": "layer8culture",
+    "category": "Creator Systems",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-08-22T12:35:00-04:00",
+    "text": "One image. One sentence. A whole carousel.\n\nOn Thursday we took a single post that already worked and said: turn this concept into four images, same brand, same tone, same topic. It returned all four. Then we pasted those images back in and asked for the Instagram caption.\n\nThat's the move most people miss. You're not generating content from nothing. You're extending something that already landed.\n\nAnd the tools just got cheaper. SenseTime open-sourced an 8B model that generates and edits at native 4K, free to download.\n\nFollow @layer8culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AItools",
+      "#ContentCreation",
+      "#CreatorTech",
+      "#BuildWithAI"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "build-in-public",
+    "hook_score": 94,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "editorial_drop",
+      "headline": "ONE IMAGE, ONE CAROUSEL",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, minimal composition, strong negative space, high contrast, warm practical lighting. Scene: an overhead macro of one glossy black rectangular card lying alone on a wide dark walnut surface under a single low warm lamp, a clean electric blue rim of light running along its edge; beside it three more identical cards have slid into a precise row, each one catching a different fragment of the same blue light so the set reads as one idea repeated with variation; tactile, unstyled, real desk texture and grain, shallow depth of field; no people; upper third is calm and simple so animated text stays legible; lower third is clean dark negative space for the cover headline; 9:16 vertical aspect. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, robots, fake hologram overload, random neon colors, garbled screen text, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16, tactile and close. First beat (0-2s): an overhead macro of one glossy black card resting alone on dark walnut under a single low warm lamp, a thin electric blue line running along its edge, camera locked and still. Transformation (2-7s): the card lifts a fraction and three identical cards slide smoothly into a precise row beside it, one after another, each catching a slightly different fragment of the same blue light, the camera rising steadily to take in the full set. Resolve (7-10s): the camera continues rising until the four cards read as one deliberate composition on the wood, the lamp warm at the edge of frame, everything settling still. Deep black, warm walnut and electric blue, documentary realism, shallow depth of field, real surface grain, no people, no text, no logos, soft close ambience with a low wooden knock as each card lands.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "ONE IMAGE",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "ONE SENTENCE",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "FULL CAROUSEL",
+            "start": 7,
+            "end": 10
+          }
+        ],
+        "duration_sec": 8,
+        "beats": [
+          "ONE IMAGE, ONE CAROUSEL",
+          "EXTEND WHAT ALREADY WORKED"
+        ],
+        "audio": "lofi"
+      },
+      "file": "assets\\generated\\20260822-layer8culture-tiktok-3.mp4",
+      "cover": "assets\\generated\\20260822-layer8culture-tiktok-3-cover.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmql4fje10001oc79jxxx1mc4",
+    "postiz_post_id": "cmt3tergd00hho25ue62crkm4"
+  },
+  {
+    "id": "20260822-layer8culture-instagram-3",
+    "account": "layer8culture",
+    "category": "Creator Systems",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-08-22T13:28:00-04:00",
+    "text": "Nobody can tell what you sell. That's the whole problem.\n\nOn Tech Thursday we pulled up a real business page, live, on screen. Good design. Nice colors. Ten seconds in, none of us could say what the event was, who was performing, or when it happened.\n\nMeanwhile Pew found that more than a third of new web pages since ChatGPT show signs of AI writing. Volume is free now. Clarity isn't.\n\nRun the 3-second test on your own page:\n\n1. What is this? Name it plainly, not cleverly.\n2. Who is it for? For everyone means for no one.\n3. What's the proof? Reviews, years, receipts. Not adjectives.\n4. What's the one action? Five calls to action is zero.\n5. Then hand it to AI: make the offer clear and the experience emphasized, then give me a minimalist version for social.\n\nThat last prompt is the one we ran on the show. It pulled fifteen years of experience up to the top and cut everything that was competing with it.\n\nComment BUILD and I will send you the workflow map.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#CreatorTech",
+      "#ContentCreation",
+      "#BuildInPublic",
+      "#CreatorEconomy",
+      "#AIFluency",
+      "#BuildWithAI",
+      "#Automation",
+      "#AICommunity"
+    ],
+    "hashtags_in_first_comment": true,
+    "comment_to_dm": {
+      "campaign": "ig_comment_dm_build_map",
+      "keyword": "BUILD",
+      "offer": "AI Builder Workflow Map",
+      "dm_prompt": "Want the workflow map? Here it is: <approved public link>. What are you trying to build with AI right now?",
+      "public_reply": "Sent. Check your DMs.",
+      "route": "builder_nurture"
+    },
+    "visual": {
+      "source": "openai",
+      "aspect": "1:1",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "slides": [
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, minimal composition, strong negative space, high contrast, warm practical lighting. Scene: a single narrow horizontal band of warm light sweeping across a wide matte black surface, and inside that band only three simple solid forms are clearly legible while everything outside the band dissolves into total darkness; the visual idea of a very short window of attention; no people, deep shadow falloff, shallow depth of field; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "THE 3-SECOND TEST",
+          "subtext": "A real page failed it live on Thursday",
+          "accent": "3-SECOND",
+          "kicker": "CREATOR SYSTEMS",
+          "role": "cover",
+          "footer": "SWIPE FOR MORE"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast, warm practical lighting. Scene: one solid unmistakable object resting alone on dark walnut under a single hard clean light, its silhouette absolutely readable at a glance, a faint electric blue rim along one edge, nothing else anywhere in the frame; the idea of a thing that needs no explanation; no people, shallow depth of field; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "WHAT IS THIS?",
+          "subtext": "Name it plainly, not cleverly",
+          "accent": "PLAINLY",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast, warm practical lighting. Scene: one single warm-lit place setting laid on a long black table that runs away into darkness, every other position along the table left empty and unlit, a soft electric blue wash far down the length of it; intentional, specific, one person expected rather than a crowd; no people, low camera angle along the table; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "WHO IS IT FOR?",
+          "subtext": "For everyone means for no one",
+          "accent": "WHO",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast, warm practical lighting. Scene: a small stack of dark worn objects lit warm from one side, every surface carrying real marks, scratches and honest wear from long use, a thin electric blue edge catching the topmost one; time and repetition made physical; intimate macro framing, shallow depth of field, no people; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "WHAT'S THE PROOF?",
+          "subtext": "Reviews, years, receipts. Not adjectives.",
+          "accent": "PROOF",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast. Scene: five faint pale paths crossing a wide black floor from the bottom of the frame, four of them thinning and fading out into nothing partway across, the fifth continuing forward unbroken in clean electric blue toward a far dark threshold; austere, architectural, decision made visible; no people, volumetric haze; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cheap gamer RGB, cluttered composition, robots, fake hologram overload.",
+          "headline": "ONE ACTION ONLY",
+          "subtext": "Five calls to action is zero",
+          "accent": "ONE",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast, warm practical lighting. Scene: a heavy rough block of dark material with most of its mass chipped and carved away, the removed fragments scattered in shadow around it, leaving one small precise clean form standing at the centre under a narrow electric blue light; subtraction as craft; intimate macro framing, no people, shallow depth of field; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "THEN ASK AI TO CUT IT",
+          "subtext": "Make the offer clear. Then make it minimal.",
+          "accent": "CUT",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with a single electric blue accent, premium creator-tech atmosphere, documentary realism, minimal composition, extreme negative space, high contrast. Scene: an almost entirely black frame with one narrow shaft of electric blue light entering low from the left and coming to rest on a dark matte surface, calm and unhurried, nothing else in the frame; deliberately empty and premium; no people; lower-left area is completely clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload.",
+          "headline": "COMMENT BUILD",
+          "subtext": "and I'll send you the workflow map",
+          "accent": "BUILD",
+          "role": "cta"
+        }
+      ],
+      "files": [
+        "assets/generated/20260822-layer8culture-instagram-3-1.png",
+        "assets/generated/20260822-layer8culture-instagram-3-2.png",
+        "assets/generated/20260822-layer8culture-instagram-3-3.png",
+        "assets/generated/20260822-layer8culture-instagram-3-4.png",
+        "assets/generated/20260822-layer8culture-instagram-3-5.png",
+        "assets/generated/20260822-layer8culture-instagram-3-6.png",
+        "assets/generated/20260822-layer8culture-instagram-3-7.png"
+      ],
+      "file": "assets/generated/20260822-layer8culture-instagram-3-1.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmqd9915w0001o5717h436ivp",
+    "postiz_post_id": "cmt3tes7g00hjo25u5m9tm2f2"
+  },
+  {
+    "id": "20260822-layer8culture-tiktok-4",
+    "account": "layer8culture",
+    "category": "Behind the Scenes",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-08-22T14:40:00-04:00",
+    "text": "Do it the hard way once. Then never again.\n\nThe reason automations break is that nobody ran the job by hand first. You can't compress a process you've never actually done.\n\nWe build everything here the slow way to start. Manually, badly, all the way through. Then we go back and cut, and what survives is a workflow that holds, because by then we know which steps were load-bearing.\n\nAutomate what you understand. Not what you assume.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#BuildInPublic",
+      "#Automation",
+      "#TechTok",
+      "#CreatorTech"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "cinematic-coding",
+    "hook_score": 92,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "headline": "DO IT THE HARD WAY ONCE",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, minimal composition, strong negative space, high contrast, warm practical lighting. Scene: an extreme macro of a single deep groove being cut by hand into a slab of dark matte material, the raised burr and fine dust of the cut still sitting along its edges, one warm light raking hard across the surface to show every imperfection; beyond it the same surface continues into darkness where dozens of identical grooves have appeared instantly, perfectly even and lit from within in electric blue; craft first, then multiplication; no people, shallow depth of field, real material texture; upper third is calm and simple so animated text stays legible; lower third is clean dark negative space for the cover headline; 9:16 vertical aspect. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, robots, fake hologram overload, random neon colors, garbled screen text, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16, extreme macro and tactile. First beat (0-2s): one deep groove is being cut slowly by hand into dark matte material, raised burr and fine dust along its edges, a warm light raking hard across the surface, camera pressed right up against it. Transformation (2-7s): the cut finishes and the camera pulls back steadily along the slab, revealing the surface running on into darkness, where dozens of identical grooves snap into existence all at once, perfectly even, each one lighting from within in electric blue in a rapid sequence away from the hand-cut original. Resolve (7-10s): the camera holds wide on the full field of glowing parallel grooves, with the single rough hand-cut one still visible closest to frame, warm and imperfect against all the rest. Deep black, warm raking light and electric blue, documentary realism, real material grain and dust in the air, shallow depth of field, no people beyond an implied hand out of frame, no text, no logos, a slow scraping cut sound that resolves into a clean rising chime as the field lights.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "DO IT BY HAND",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "HARD WAY FIRST",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "THEN AUTOMATE",
+            "start": 7,
+            "end": 10
+          }
+        ],
+        "duration_sec": 8,
+        "beats": [
+          "DO IT THE HARD WAY ONCE",
+          "AUTOMATE WHAT YOU UNDERSTAND"
+        ],
+        "audio": "lofi"
+      },
+      "file": "assets\\generated\\20260822-layer8culture-tiktok-4.mp4",
+      "cover": "assets\\generated\\20260822-layer8culture-tiktok-4-cover.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmql4fje10001oc79jxxx1mc4",
+    "postiz_post_id": "cmt3tesdi00hlo25utpvf9vnh"
+  },
+  {
+    "id": "20260822-layer8culture-instagram-4",
+    "account": "layer8culture",
+    "category": "Creator Systems",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-08-22T15:55:00-04:00",
+    "text": "One image, one sentence, a whole carousel.\n\nTake a post that already worked. Ask for four images in the same brand and the same tone on the same topic. Then paste those images back in and ask for the caption.\n\nThat's the whole workflow. You're not starting from nothing every time. You're extending something that already landed.\n\nWe ran it live on Tech Thursday, and the tools just got cheaper: SenseTime open-sourced an 8B model that generates and edits at native 4K.\n\nFollow @layer8culture for the build.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AItools",
+      "#ContentCreation",
+      "#CreatorTech",
+      "#CreatorEconomy",
+      "#BuildWithAI",
+      "#GenerativeAI",
+      "#BuildInPublic",
+      "#AIBuilders"
+    ],
+    "hashtags_in_first_comment": true,
+    "first_comment": "What's the one post of yours that already worked? That's the one to turn into a set.",
+    "visual": {
+      "source": "reuse",
+      "of": "20260822-layer8culture-tiktok-3",
+      "aspect": "9:16",
+      "file": "assets\\generated\\20260822-layer8culture-instagram-4.mp4",
+      "cover": "assets\\generated\\20260822-layer8culture-instagram-4-cover.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmqd9915w0001o5717h436ivp",
+    "postiz_post_id": "cmt3tesnf00hno25u6carpi3e"
+  },
+  {
+    "id": "20260822-layer8culture-instagram-5",
+    "account": "layer8culture",
+    "category": "Community Questions",
+    "platform": "instagram",
+    "format": "story",
+    "schedule_time": "2026-08-22T16:38:00-04:00",
+    "text": "We put a real business page on screen Thursday.\n\nTen seconds in, nobody watching could tell what was being sold. Not the offer. Not the date. Not who it was for.\n\nSo settle this one for us.\n\nMORE POSTS  or  CLEARER POSTS?\n\nReply with the one you've actually been doing. We'll read a few on the next show.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#ContentCreation",
+      "#AICommunity",
+      "#CreatorTech",
+      "#BuildInPublic"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, minimal composition, strong negative space, high contrast. Scene: one tall dark wall standing in a black void, its left half covered edge to edge in an enormous dense grid of hundreds of faint identical grey marks all crowding each other, and its right half holding one single large deliberate mark glowing clean electric blue and completely alone; a wide clear black gutter of empty wall runs down the middle of the frame between them and a large calm expanse of black is left across the centre for an interactive sticker; no people, architectural, volumetric haze; lower third is clean dark negative space for the headline; 9:16 vertical aspect. Avoid rendered text, signage lettering, garbled typography, generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, robots, fake hologram overload, random neon colors.",
+      "headline": "MORE POSTS OR CLEARER POSTS?",
+      "subtext": "We ran the test live on Thursday.",
+      "accent": "CLEARER",
+      "overlay_position": "lower-center",
+      "file": "assets/generated/20260822-layer8culture-instagram-5.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmqd9915w0001o5717h436ivp",
+    "postiz_post_id": "cmt3tesuh00hpo25ufy2n637e"
+  },
+  {
+    "id": "20260822-layer8culture-tiktok-5",
+    "account": "layer8culture",
+    "category": "Community Questions",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-08-22T17:50:00-04:00",
+    "text": "Nobody is gatekeeping the tools anymore. They're gatekeeping taste.\n\nA studio-grade image model went open source this month. Eight billion parameters, native 4K, precise edits, free to download. Agents that operate real screens shipped the same week, weights public.\n\nThe tools are level now. What isn't level is knowing what's worth making, and being able to tell when it's wrong.\n\nThat part you build by making things. Not by collecting tools.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#Afrofuturism",
+      "#TechCulture",
+      "#AItools",
+      "#FutureBuilders"
+    ],
+    "hashtags_in_first_comment": true,
+    "first_comment": "Serious question: what would you make this weekend if cost stopped being the excuse?",
+    "viral_pillar": "black-tech-culture",
+    "hook_score": 91,
+    "visual": {
+      "source": "openai",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "editorial_drop",
+      "headline": "THE GATE MOVED TO TASTE",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with warm gold and electric blue accent lighting, premium creator-tech atmosphere, documentary realism, Black tech futurism, Afrofuturist grandeur, minimal composition, strong negative space, high contrast. Scene: a monumental gateway of carved dark stone standing alone on a vast plain at golden hour, its doors long gone, deep geometric West African-inspired relief work across its face with a subtle standalone figure-eight motif worked into the carving; a clean electric blue path runs through the empty opening and away toward a luminous African-futurist city skyline on the far horizon; one small solitary figure of a confident Black creator walks the path through the gate, tiny against the scale of it, seen from behind; wide cinematic framing, warm gold light raking the stone, volumetric haze; upper third is open sky with minimal detail so animated text stays legible; lower third is clean dark negative space for the cover headline; 9:16 vertical aspect. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16, monumental and warm. First beat (0-2s): a tight low shot on the carved stone face of an enormous gateway at golden hour, deep geometric West African-inspired relief filling the frame, warm gold light raking hard across it. Transformation (2-7s): the camera cranes up and back to reveal the full gateway standing alone on a vast plain with its doors long gone, and a clean electric blue path running straight through the empty opening toward a luminous African-futurist city skyline on the horizon; one small solitary figure seen from behind walks steadily through the gate along the path. Resolve (7-10s): the camera holds wide as the figure continues toward the distant glowing skyline, the empty gate behind them, gold and blue meeting across the plain. Warm gold and electric blue against deep navy, documentary realism, volumetric haze, enormous scale, cinematic and aspirational, no text, no logos, a warm low drone with distant wind and a single resonant tone as the gate is revealed.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "TOOLS ARE FREE",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "TASTE ISN'T",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "WHAT'S YOURS?",
+            "start": 7,
+            "end": 10
+          }
+        ],
+        "duration_sec": 8,
+        "beats": [
+          "THE GATE MOVED TO TASTE",
+          "MAKE SOMETHING THIS WEEKEND"
+        ],
+        "audio": "lofi"
+      },
+      "file": "assets\\generated\\20260822-layer8culture-tiktok-5.mp4",
+      "cover": "assets\\generated\\20260822-layer8culture-tiktok-5-cover.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmql4fje10001oc79jxxx1mc4",
+    "postiz_post_id": "cmt3tet1700hro25u5g2nelwp"
+  },
+  {
+    "id": "20260822-layer8culture-youtube-1",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "youtube",
+    "format": "reel",
+    "schedule_time": "2026-08-22T20:05:00-04:00",
+    "youtube_title": "A Third of the New Internet Is AI-Written - Why Clarity Beats Volume Now #Shorts",
+    "text": "Pew Research found that more than a third of web pages created since ChatGPT show signs of AI writing or editing, and a separate study puts about half of new articles in the same bucket.\n\nVolume stopped being a moat. A sentence a stranger understands in three seconds is the scarce part now.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Shorts",
+      "#Layer8Culture",
+      "#AI",
+      "#AInews",
+      "#ContentCreation",
+      "#AIFluency"
+    ],
+    "visual": {
+      "source": "reuse",
+      "of": "20260822-layer8culture-tiktok-2",
+      "aspect": "9:16",
+      "file": "assets\\generated\\20260822-layer8culture-youtube-1.mp4",
+      "cover": "assets\\generated\\20260822-layer8culture-youtube-1-cover.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmqlaqfas0001tf7fizmjs2ks",
+    "postiz_post_id": "cmt3tet7s00hto25usgufkjn4"
+  },
+  {
+    "id": "20260822-layer8culture-youtube-2",
+    "account": "layer8culture",
+    "category": "Creator Systems",
+    "platform": "youtube",
+    "format": "reel",
+    "schedule_time": "2026-08-22T21:40:00-04:00",
+    "youtube_title": "Turn One Image Into a Full Instagram Carousel With AI - Creator Workflow #Shorts",
+    "text": "One image, one sentence, a whole carousel. Take a post that already worked, ask AI for four images in the same brand and tone on the same topic, then paste them back in and ask for the caption.\n\nPlus: SenseTime open-sourced an 8B model that generates and edits at native 4K.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Shorts",
+      "#Layer8Culture",
+      "#AItools",
+      "#ContentCreation",
+      "#CreatorTech",
+      "#BuildWithAI"
+    ],
+    "visual": {
+      "source": "reuse",
+      "of": "20260822-layer8culture-tiktok-3",
+      "aspect": "9:16",
+      "file": "assets\\generated\\20260822-layer8culture-youtube-2.mp4",
+      "cover": "assets\\generated\\20260822-layer8culture-youtube-2-cover.png"
+    },
+    "scheduled": true,
+    "integration_id": "cmqlaqfas0001tf7fizmjs2ks",
+    "postiz_post_id": "cmt3tetja00huo25ur3z280xs"
   }
 ]
