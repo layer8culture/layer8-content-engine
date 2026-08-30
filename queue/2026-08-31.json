@@ -1,0 +1,537 @@
+[
+  {
+    "id": "20260831-layer8culture-tiktok-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-08-31T08:00:00-04:00",
+    "text": "Grok 4.6 just landed inside GitHub Copilot CLI.\n\nNow the model isn't the argument anymore. Which one you reach for is.\n\nFast draft? Small tier. Hard reasoning? The sharpest one. Same tool, different brain for different jobs.\n\nThat's the real skill in this era \u2014 not picking a favorite, knowing the bench.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#AIFluency",
+      "#BuildWithAI",
+      "#AIBuilders",
+      "#AItools",
+      "#ArtificialIntelligence",
+      "#LLM",
+      "#AInews"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "ai-fluency",
+    "hook_score": 88,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Cinematic Layer8Culture visual, deep black void environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, Black tech futurism, minimal composition, strong negative space, high contrast, no logos. Scene: a vast dark digital space where several distinct glowing model-nodes (abstract orbs of light, each a slightly different hue of electric blue and cool white, no readable labels or text) hover and orbit at different heights. A small silhouetted figure stands on a thin platform below, reaching toward one node as it brightens and locks into place while the others dim to standby. Wide establishing composition, shallow depth of field on the chosen node, upper third calm and open, lower third dark and clean for text overlay. Avoid generic startup office, cheap RGB, cluttered sci-fi, robots, garbled or rendered text, signage lettering.",
+      "headline": "COPILOT JUST ADDED GROK 4.6",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Vertical 9:16 cinematic. Deep black void filled with several glowing orb-like model-nodes at varying heights, each a distinct shade of electric blue and cool white, slowly drifting and pulsing. A small silhouetted figure on a thin platform reaches up; camera pushes in as one orb brightens, locks in, and the others dim to a soft standby glow, the light rearranging into a single steady beam pointing down at the figure. Documentary realism, shallow depth of field, electric blue and deep navy palette, subtle ambient hum and a soft low bass swell, no on-screen text, no logos.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "MODEL DROPPED",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "PICK YOUR MODEL",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "SKILL, NOT HYPE",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20260831-layer8culture-tiktok-2",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-08-31T10:30:00-04:00",
+    "text": "We let GitHub Copilot CLI generate our own content images this week.\n\nConnected it straight to the model. Told it what we wanted. First batch came back \u2014 fine, not right.\n\nSo we iterated live. New prompt. Different model. Kept going until it actually looked like us.\n\nThat's the build. Not the highlight reel \u2014 the real process.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#BuildInPublic",
+      "#LearnInPublic",
+      "#CreatorTech",
+      "#Automation",
+      "#GenerativeAI",
+      "#DevCommunity",
+      "#ContentCreation"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "build-in-public",
+    "hook_score": 84,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Cinematic Layer8Culture visual, deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, minimal composition, high contrast. Scene: extreme over-the-shoulder macro of hands on a dark mechanical keyboard, a terminal window scrolling commands on a monitor bathed in blue glow. Cut-feel composition where a wall of small generated image thumbnails materializes one by one beside the terminal like a contact sheet, most dim and grayscale, one thumbnail brightening in electric blue as it gets selected. Shallow depth of field on the keyboard and the brightening thumbnail, upper third calm, lower third clean dark negative space. Avoid generic startup office, garbled screen text, rendered lettering, cluttered composition, robots.",
+      "headline": "WE LET AI MAKE OUR OWN IMAGES",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Vertical 9:16 cinematic, documentary realism. Extreme macro of hands typing on a dark keyboard, terminal glow reflecting blue on skin. Quick push toward a wall of small generated image thumbnails appearing one at a time in a grid, most dim and gray; the camera settles as one thumbnail brightens in electric blue and pulls slightly forward from the grid, selected. Shallow depth of field, deep navy and electric blue palette, subtle keyboard clicks and a soft ambient hum, no on-screen text, no logos.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "AI MADE THIS",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "IT WASN'T RIGHT",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "FIXED IT LIVE",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20260831-layer8culture-tiktok-3",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-08-31T13:00:00-04:00",
+    "text": "Over half the code shipped this year had AI's hands on it.\n\nThat's not the scary part. The scary part is thinking that means you're not needed.\n\nSomeone still reads the diff. Someone still says yes. That's the job now.\n\nBe the half that approves it, not the half that just watches.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#FutureBuilders",
+      "#BuildWithAI",
+      "#ArtificialIntelligence",
+      "#AIagents",
+      "#Automation",
+      "#AgenticAI"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "transformation",
+    "hook_score": 79,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Cinematic Layer8Culture visual, deep black and deep navy environment, electric blue accent lighting, premium creator-tech atmosphere, documentary realism, high contrast, minimal composition. Scene: two adjoining spaces separated by a doorway/threshold. Left side dim, a soft cold phone-glow flickers on a passive silhouette scrolling. Right side lit warmer with electric blue accents, an active dashboard/monitor glowing, a silhouette standing engaged in front of it. Camera positioned at the threshold looking from dim toward lit. Lower third clean dark negative space, upper third calm. Avoid generic startup office, cheap RGB, cluttered sci-fi, garbled text, rendered lettering, robots.",
+      "headline": "HALF OF ALL CODE IS AI NOW",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Vertical 9:16 cinematic. A dim room with a passive silhouette lit only by cold phone-glow, scrolling absently. Camera pushes forward through a doorway/threshold into an adjoining brighter space where an active silhouette stands at a glowing dashboard washed in electric blue, hands moving with intent. The light shifts from cold flicker to warm steady blue as the camera crosses the threshold, a clean state-change transition. Documentary realism, shallow depth of field, deep navy and electric blue palette, subtle ambient tone rising into a soft bass swell, no on-screen text, no logos.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "HALF IS AI NOW",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "YOU APPROVE IT",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "BE THAT HALF",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20260831-layer8culture-tiktok-4",
+    "account": "layer8culture",
+    "category": "Creator Systems",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-08-31T16:00:00-04:00",
+    "text": "One model can't carry your whole build.\n\nWe switch mid-project \u2014 a fast tier for drafts, a sharper one for the parts that actually matter.\n\nThe craft isn't the prompt. It's knowing which tool earns the job.\n\nSave this if you're still defaulting to whatever's open.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#CreatorTech",
+      "#AIBuilders",
+      "#CodingLife",
+      "#PromptEngineering",
+      "#DevCommunity",
+      "#AIagents",
+      "#Workflow"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "cinematic-coding",
+    "hook_score": 75,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Cinematic Layer8Culture visual, deep black environment, electric blue accent lighting, premium creator-tech atmosphere, documentary realism, high contrast, minimal composition, faceless and abstract. Scene: extreme macro of a reflective dark glass surface with several thin ribbons of light in varying blue and cool-white hues weaving and crossing over each other, gradually converging into one single luminous line of structured light resembling flowing code without being legible text. Shallow depth of field, particles of light drifting, lower third clean dark negative space, upper third calm. Avoid generic startup office, cheap RGB, garbled screen text, rendered lettering, cluttered composition, robots.",
+      "headline": "ONE MODEL CAN'T DO IT ALL",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Vertical 9:16 cinematic, extreme macro on a dark reflective glass surface. Several thin ribbons of light in different blue and cool-white hues weave and cross each other in slow motion, drifting particles catching the light. Camera slowly pushes in as the ribbons gradually braid together into one single steady luminous line, glowing brighter and more structured. Shallow depth of field, electric blue and deep navy palette, subtle ambient shimmer tone and a soft bass swell, no on-screen text, no logos, no faces.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "NOT ONE MODEL",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "WE SWITCH TOOLS",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "FIT TOOL TO JOB",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20260831-layer8culture-tiktok-5",
+    "account": "layer8culture",
+    "category": "Community Questions",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-08-31T19:00:00-04:00",
+    "text": "Most people will spend this whole era watching.\n\nNot because they can't build \u2014 because they never tried.\n\nWe built anyway. Loud, in public, mistakes and all.\n\nWhat are you building right now? Tell us below.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#FutureBuilders",
+      "#BuildInPublic",
+      "#AICommunity",
+      "#TechCreators",
+      "#DigitalCulture",
+      "#Afrofuturism",
+      "#TechCulture"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "black-tech-culture",
+    "hook_score": 72,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Cinematic Layer8Culture visual, Afrofuturist grandeur, deep navy sky with warm gold and electric blue lighting, premium documentary realism, Black tech futurism, minimal composition, high contrast. Scene: an elevated view of a luminous African-futurist city skyline at golden hour, bold sweeping architecture, a monumental standalone '8' structure glowing electric blue among the towers. A lone builder silhouette stands on a rooftop terrace overlooking the skyline, calm and intentional, engaged not anonymous. Lower third clean dark negative space, upper third calm sky. Avoid generic startup office, cheap RGB, cluttered sci-fi armor, robots, garbled text, rendered lettering.",
+      "headline": "MOST WON'T EVEN TRY",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Vertical 9:16 cinematic. Elevated view of a luminous Afrofuturist city skyline at golden hour, bold architecture, a monumental glowing electric-blue '8' structure among the towers. A lone builder silhouette stands calm on a rooftop terrace, camera slowly pushes past them toward the skyline as the light shifts from warm gold to a deeper electric blue, subtle flying vehicles drifting in the distance. Documentary realism, shallow depth of field, warm gold and electric blue palette, subtle ambient city hum and a soft rising bass swell, no on-screen text, no logos.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "MOST WON'T TRY",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "WE BUILT ANYWAY",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "YOUR BUILD?",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20260831-layer8culture-instagram-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-08-31T08:30:00-04:00",
+    "text": "Grok 4.6 just joined GitHub Copilot CLI.\n\nOne toggle, no new subscription \u2014 now you can run it alongside GPT, Claude, and Gemini inside the same workflow.\n\nThe model isn't the moat anymore. Matching the right model to the job is.\n\nSwipe through for the move to try this week.\n\nSave this for your AI stack.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#AIFluency",
+      "#BuildWithAI",
+      "#AIBuilders",
+      "#AItools",
+      "#ArtificialIntelligence",
+      "#PromptEngineering",
+      "#LLM",
+      "#AInews"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "library",
+      "aspect": "1:1",
+      "quality": "high",
+      "typography_preset": "editorial_drop",
+      "slides": [
+        {
+          "openai_prompt": "Cinematic Layer8Culture visual, deep black environment, electric blue accent lighting, premium creator-tech atmosphere, documentary realism, high contrast, minimal composition. Scene: a dark control-panel-like surface with several glowing model-selector toggles in a row, one toggle mid-click brightening in electric blue while the rest sit dim and ready. Lower third clean dark negative space for headline. Avoid generic startup office, garbled text, rendered lettering, cheap RGB.",
+          "headline": "GROK 4.6 JUST JOINED COPILOT",
+          "subtext": "one more model in your stack",
+          "accent": "GROK",
+          "kicker": "AI TOOL DROP",
+          "role": "cover"
+        },
+        {
+          "openai_prompt": "Cinematic Layer8Culture visual, deep black and navy environment, electric blue accents, documentary realism, minimal composition. Scene: a close detail of a terminal window with a subtle model-name dropdown glowing blue, no legible words, resting on a dark walnut desk edge. Clean lower third negative space.",
+          "headline": "WHAT CHANGED",
+          "subtext": "Grok 4.6 is now selectable across Copilot CLI, IDE, and cloud",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Cinematic Layer8Culture visual, deep black environment, electric blue accents, documentary realism, minimal composition. Scene: an abstract split-screen composition, one side a fast-moving light trail (quick iteration), the other side a dense slow-forming structure of light (deep reasoning). Clean lower third negative space.",
+          "headline": "WHAT IT ACTUALLY DOES",
+          "subtext": "a fast, capable option you can swap in mid-task",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Cinematic Layer8Culture visual, deep black environment, electric blue accents, documentary realism, minimal composition. Scene: several small glowing orbs of slightly different hues arranged like chess pieces on a dark reflective surface, one orb stepping forward from the rest. Clean lower third negative space.",
+          "headline": "WHY BUILDERS CARE",
+          "subtext": "the model isn't the moat, the match is",
+          "accent": "MATCH",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Cinematic Layer8Culture visual, deep black environment, electric blue accents, documentary realism, minimal composition. Scene: two identical dark monitor screens side by side, each glowing a slightly different shade of electric blue, a hand mid-motion comparing them. Clean lower third negative space.",
+          "headline": "TRY THIS THIS WEEK",
+          "subtext": "run one prompt on two models, keep the winner",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Cinematic Layer8Culture visual, deep black environment, electric blue accents, documentary realism, minimal composition. Scene: an abstract network of small glowing nodes rearranging from a scattered cluster into an organized structured grid. Clean lower third negative space.",
+          "headline": "THE BIGGER SIGNAL",
+          "subtext": "multi-model fluency is the new skill",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Cinematic Layer8Culture visual, deep black environment, electric blue accents, documentary realism, minimal composition, clean bold CTA frame. Scene: a single glowing electric blue node pulsing steady at the center of an otherwise dark frame. Clean lower third negative space for CTA text.",
+          "headline": "SAVE THIS FOR YOUR AI STACK",
+          "footer": "FOLLOW @LAYER8CULTURE",
+          "role": "cta"
+        }
+      ],
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20260831-layer8culture-instagram-2",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-08-31T11:00:00-04:00",
+    "text": "Copilot CLI just added Grok 4.6 to the model list.\n\nMulti-model access, one tool. The edge now is knowing which model to reach for \u2014 not defending a favorite.\n\nSave this before your next build.\n\nFollow @layer8culture for the build.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#BuildWithAI",
+      "#AItools",
+      "#ArtificialIntelligence",
+      "#AIagents",
+      "#LLM",
+      "#AInews"
+    ],
+    "hashtags_in_first_comment": true,
+    "trial_reel": false,
+    "visual": {
+      "source": "reuse",
+      "of": "20260831-layer8culture-tiktok-1",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20260831-layer8culture-instagram-3",
+    "account": "layer8culture",
+    "category": "Creator Systems",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-08-31T12:00:00-04:00",
+    "text": "Stop defaulting to whatever model is already open.\n\nBefore you prompt, ask three things: is this fast or heavy, is it one task or a team of steps, and who's approving the output when it's done.\n\nThat's the whole decision rule our content engine runs on \u2014 a quick tier for drafts, the sharpest tier for the final pass, a human on every approval.\n\nComment BUILD and I'll send you the workflow map.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#BuildInPublic",
+      "#CreatorTech",
+      "#LearnInPublic",
+      "#Automation",
+      "#AIagents",
+      "#DevCommunity",
+      "#Workflow",
+      "#AgenticAI"
+    ],
+    "hashtags_in_first_comment": true,
+    "comment_to_dm": {
+      "campaign": "ig_comment_dm_build_map",
+      "keyword": "BUILD",
+      "offer": "AI Builder Workflow Map",
+      "dm_prompt": "Want the workflow map? Here it is: <approved public link>. What are you trying to build with AI right now?",
+      "public_reply": "Sent. Check your DMs.",
+      "route": "builder_nurture"
+    },
+    "visual": {
+      "source": "library",
+      "aspect": "1:1",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "slides": [
+        {
+          "openai_prompt": "Cinematic Layer8Culture visual, deep black environment, electric blue accent lighting, premium creator-tech atmosphere, documentary realism, minimal composition. Scene: a single glowing question-mark-shaped light trail hovering above a dark reflective desk surface, calm and deliberate. Clean lower third negative space for headline.",
+          "headline": "STOP DEFAULTING TO ONE MODEL",
+          "subtext": "a 3-question decision rule",
+          "accent": "ONE",
+          "role": "cover"
+        },
+        {
+          "openai_prompt": "Cinematic Layer8Culture visual, deep black environment, electric blue accents, documentary realism, minimal composition. Scene: two glowing light trails, one thin and fast-moving, one dense and slow-forming, side by side on a dark surface. Clean lower third negative space.",
+          "headline": "IS THIS FAST OR HEAVY?",
+          "subtext": "quick iteration gets the small tier, deep reasoning gets the sharp one",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Cinematic Layer8Culture visual, deep black environment, electric blue accents, documentary realism, minimal composition. Scene: a single glowing node branching into several smaller nodes arranged like a small org chart, faceless and abstract. Clean lower third negative space.",
+          "headline": "ONE TASK OR A TEAM?",
+          "subtext": "fan multi-step builds out to sub-agents working in parallel",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Cinematic Layer8Culture visual, deep black environment, electric blue accents, documentary realism, minimal composition. Scene: a hand hovering over a single glowing 'approve' button on a dark control surface, calm and deliberate. Clean lower third negative space.",
+          "headline": "WHO APPROVES IT?",
+          "subtext": "agents draft, a human still says yes",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Cinematic Layer8Culture visual, deep black environment, electric blue accents, documentary realism, minimal composition. Scene: a row of small glowing tool icons of varying hues arranged like a workbench, one slightly elevated as the chosen one. Clean lower third negative space.",
+          "headline": "BUILD YOUR OWN BENCH",
+          "subtext": "our content engine runs on more than one model",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Cinematic Layer8Culture visual, deep black environment, electric blue accents, documentary realism, minimal composition, clean bold CTA frame. Scene: a single glowing electric blue node pulsing steady at center. Clean lower third negative space for CTA text.",
+          "headline": "COMMENT BUILD",
+          "footer": "GET THE WORKFLOW MAP",
+          "role": "cta"
+        }
+      ],
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20260831-layer8culture-instagram-4",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-08-31T15:00:00-04:00",
+    "text": "This week we let AI generate our own content images \u2014 start to finish.\n\nConnected GitHub Copilot CLI straight to the model, told it what we wanted, and iterated until it actually looked like us.\n\nNo highlight reel. Just the build, in the open.\n\nFollow @layer8culture for the build.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#BuildInPublic",
+      "#LearnInPublic",
+      "#CreatorTech",
+      "#Automation",
+      "#GenerativeAI",
+      "#ContentCreation"
+    ],
+    "hashtags_in_first_comment": true,
+    "trial_reel": false,
+    "visual": {
+      "source": "reuse",
+      "of": "20260831-layer8culture-tiktok-2",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20260831-layer8culture-instagram-5",
+    "account": "layer8culture",
+    "category": "Tech Thursday Promos",
+    "platform": "instagram",
+    "format": "story",
+    "schedule_time": "2026-08-31T17:30:00-04:00",
+    "text": "Which model would YOU trust with your next build \u2014 Grok, Claude, or GPT? Tap to vote and we'll build with the winner live on Tech Thursday.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#BuildInPublic"
+    ],
+    "hashtags_in_first_comment": true,
+    "first_comment": "Vote's up on the story \u2014 tell us which model you'd trust with the build.",
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "openai_prompt": "Cinematic Layer8Culture visual, deep black environment, electric blue accent lighting, premium creator-tech atmosphere, documentary realism, minimal composition, high contrast. Scene: three small glowing model-selector orbs of slightly different hues floating side by side above a dark reflective desk, calm and simple, legible at a glance. Clean lower third negative space for headline and room for a poll sticker.",
+      "headline": "WHICH MODEL WOULD YOU TRUST?",
+      "subtext": "vote \u2014 we build with the winner live",
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20260831-layer8culture-youtube-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "youtube",
+    "format": "reel",
+    "schedule_time": "2026-08-31T09:00:00-04:00",
+    "youtube_title": "Copilot CLI Just Added Grok 4.6 \u2014 Here's Why It Matters #Shorts",
+    "text": "GitHub Copilot CLI added Grok 4.6 to its model lineup \u2014 multi-model access in one tool. Follow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Shorts",
+      "#Layer8Culture",
+      "#AIFluency",
+      "#BuildWithAI",
+      "#AItools"
+    ],
+    "visual": {
+      "source": "reuse",
+      "of": "20260831-layer8culture-tiktok-1",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20260831-layer8culture-youtube-2",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "youtube",
+    "format": "reel",
+    "schedule_time": "2026-08-31T13:30:00-04:00",
+    "youtube_title": "We Let AI Generate Our Own Content Images (Live Build) #Shorts",
+    "text": "We connected GitHub Copilot CLI straight to an image model and iterated live until it looked like us. Follow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Shorts",
+      "#Layer8Culture",
+      "#BuildInPublic",
+      "#Automation",
+      "#GenerativeAI"
+    ],
+    "visual": {
+      "source": "reuse",
+      "of": "20260831-layer8culture-tiktok-2",
+      "aspect": "9:16"
+    }
+  }
+]
