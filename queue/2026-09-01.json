@@ -1,0 +1,548 @@
+[
+  {
+    "id": "20260901-layer8culture-tiktok-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-09-01T07:15:00-04:00",
+    "text": "GitHub just retired six Copilot models. No vote, no opt-out.\n\nLegacy models are gone from chat, completions, and agent workflows this week. Thirty days notice, then the switch flips.\n\nThe people who already pick a model on purpose barely notice. Everyone else scrambles.\n\nOpen your last prompt. Guess which model you'd send it to on purpose, not by default.\n\nThe tool keeps moving under you. Fluency beats memorizing one model.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AItools",
+      "#DevCommunity",
+      "#AInews",
+      "#AIagents"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "ai-fluency",
+    "hook_score": 94,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "editorial_drop",
+      "headline": "GITHUB KILLED SIX MODELS",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, high contrast. Scene: an immense dark data-archive void filled with thousands of tiny glowing electric-blue nodes arranged in a vast grid stretching to the horizon; six nodes near the center go dark one by one as six new, brighter nodes ignite just beside them; no people, volumetric haze, enormous depth. Upper third stays calm and simple for animated text overlay; lower third is clean dark negative space for the cover headline; 9:16 vertical aspect. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16, vast and quiet. First beat (0-2s): a vast grid of tiny electric-blue nodes filling the frame, steady and humming, stretching to the horizon. Transformation (2-7s): six nodes near the center go dark in sequence while six new, brighter nodes ignite just beside them, the camera drifting slowly across the grid as the swap completes. Resolve (7-10s): the grid settles, brighter and slightly rearranged, camera holding steady. Deep navy and electric blue, documentary realism, no people, no text, no logos, a low electronic hum that shifts pitch as each node swaps.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "SIX MODELS GONE",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "GITHUB PICKED FOR YOU",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "LEARN TO CHOOSE",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20260901-layer8culture-instagram-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-09-01T08:30:00-04:00",
+    "text": "GitHub Copilot just retired six models. That's not routine maintenance -- that's a builder test.\n\nWhat changed: as of this week, six legacy Copilot models are gone from chat, completions and agent workflows, with a thirty-day notice window before the switch takes effect.\n\nWhat it actually does: it removes the model you'd been defaulting to out of habit, whether or not you'd noticed you were defaulting.\n\nWhy builders should care: model choice just became a real skill instead of a formality. Pick by the job -- fast and cheap for iteration, heavier reasoning for the hard problem -- instead of always reaching for whatever's biggest or most familiar.\n\nTry this this week: take one prompt you'd normally fire at your default model and run it against two others instead. Compare, don't guess.\n\nThe bigger signal: the tools underneath you keep changing whether you're paying attention or not. Fluency beats memorizing one model.\n\nSave this for your AI stack.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#BuildInPublic",
+      "#AIBuilders",
+      "#CreatorTech",
+      "#AItools",
+      "#DevCommunity",
+      "#Automation",
+      "#AIagents",
+      "#AInews"
+    ],
+    "hashtags_in_first_comment": true,
+    "first_comment": "What's the one model you keep defaulting to out of pure habit?",
+    "visual": {
+      "source": "library",
+      "aspect": "1:1",
+      "quality": "high",
+      "typography_preset": "editorial_drop",
+      "slides": [
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast. Scene: a macro of a dark machined control panel set flush in a void, six identical toggle switches in a row, all still glowing electric blue, the instant before the first one flips off; no people, shallow depth of field, deep shadow falloff; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "GITHUB RETIRED SIX MODELS",
+          "subtext": "What that means for your stack",
+          "accent": "RETIRED",
+          "kicker": "AI TOOL DROP",
+          "role": "cover",
+          "footer": "SWIPE FOR MORE"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast. Scene: the same machined control panel now mid-transition, three switches already dark and three still glowing electric blue, a clean diagonal line dividing lit from unlit; no people, extreme shallow depth of field; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cheap gamer RGB, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "SIX LEGACY MODELS ARE GONE",
+          "subtext": "Chat, completions, agent workflows shift.",
+          "accent": "GONE",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast. Scene: a single line of electric blue light forking into two paths in absolute black, one branch dimming to near darkness, the other brightening and thickening; no people, volumetric haze; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "FORCES A REAL CHOICE",
+          "subtext": "No more defaulting to what's familiar.",
+          "accent": "CHOICE",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast. Scene: three identical glass keys held in a row against a black void, each catching light in a subtly different color temperature, cool white, warm amber, electric blue, presented for comparison; no people, extreme macro, shallow depth of field; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cheap gamer RGB, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "MODEL CHOICE IS A SKILL NOW",
+          "subtext": "Pick by the job, not by habit.",
+          "accent": "SKILL",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, warm practical lighting, minimal composition, strong negative space, high contrast. Scene: two small glass vials of glowing liquid side by side on a dark walnut surface under one low lamp, one liquid warmer amber, one cooler blue, mid-comparison; no people, extreme macro, shallow depth of field; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "RUN YOUR OWN BAKE-OFF",
+          "subtext": "Same prompt, three models, compare.",
+          "accent": "BAKE-OFF",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast. Scene: a river of electric blue light continuously reshaping its own course through dark stone, never settling into one channel, motion frozen mid-shift; no people, volumetric haze, enormous depth; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "THE GROUND KEEPS MOVING",
+          "subtext": "Fluency beats memorizing one model.",
+          "accent": "MOVING",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, extremely minimal composition, overwhelming negative space, high contrast. Scene: one clean horizontal line of electric blue light suspended across the middle of a vast empty black frame, perfectly level, nothing else present; no people; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "SAVE THIS FOR YOUR STACK",
+          "subtext": "Follow @layer8culture for the build.",
+          "accent": "SAVE",
+          "role": "cta"
+        }
+      ],
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20260901-layer8culture-tiktok-2",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-09-01T09:45:00-04:00",
+    "text": "GitHub retired six models this week. We'd already run our own bake-off.\n\nTwenty-four hours straight on Tech Thursday, testing ChatGPT, Claude and Copilot on the same real builds back to back.\n\nThe read that stuck: ChatGPT nails the small details. Claude's the Harvard, Oxford one, thorough almost to a fault. Copilot's the one that ships the change into the repo.\n\nNone of that shows up in a benchmark. It shows up when you actually use all three on the same problem.\n\nRun your own 24-hour version. Same prompt, three models, keep score.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#BuildInPublic",
+      "#ChatGPT",
+      "#Claude",
+      "#TechTok"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "build-in-public",
+    "hook_score": 96,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "headline": "CLAUDE IS THE HARVARD ONE",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, minimal composition, strong negative space, high contrast. Scene: three separate glowing terminal windows floating side by side in absolute black, each with a distinct light quality, one cool white and dense with fine detail, one warm amber and unhurried, one electric blue and quick; no people, no legible text, extreme shallow depth of field. Upper third stays calm and simple for animated text overlay; lower third is clean dark negative space for the cover headline; 9:16 vertical aspect. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16, intimate and specific. First beat (0-2s): three glowing terminal windows floating in black, each a distinct light quality, cool white, warm amber, electric blue. Transformation (2-7s): the camera drifts slowly across all three as a faint dawn glow creeps in at the edges of the frame, suggesting hours passing. Resolve (7-10s): the electric blue window brightens slightly and holds focus as the other two soften into the dark. Deep navy base, documentary realism, no people, no legible text, no logos, quiet keyboard clicks fading into a low sunrise tone.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "24 HOURS STRAIGHT",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "CLAUDE'S THE HARVARD ONE",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "PICK ON PURPOSE",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20260901-layer8culture-instagram-2",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-09-01T11:00:00-04:00",
+    "text": "We didn't need a benchmark. We ran our own 24-hour bake-off.\n\nSame week GitHub retired six legacy Copilot models, we were on Tech Thursday for 24 hours straight, running ChatGPT, Claude and Copilot on the same real builds back to back.\n\nChatGPT nailed the small details. Claude was the Harvard, Oxford one -- thorough, almost bougie about it. Copilot was the one that actually shipped the change into the repo.\n\nThat's not a spec sheet. That's what shows up when you use all three on one real problem.\n\nShare this with a builder who still defaults to one model for everything.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#BuildInPublic",
+      "#AIBuilders",
+      "#AICommunity",
+      "#ChatGPT",
+      "#Claude",
+      "#DevCommunity",
+      "#LearnInPublic"
+    ],
+    "hashtags_in_first_comment": true,
+    "trial_reel": true,
+    "visual": {
+      "source": "reuse",
+      "of": "20260901-layer8culture-tiktok-2",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20260901-layer8culture-tiktok-3",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-09-01T12:15:00-04:00",
+    "text": "I built my son an app this week.\n\nFive minutes of talking through the idea into GPT-5.6, and it came back with an actual plan. A gamified math companion, his own question bank, running on localhost, headed to Azure next.\n\nFour passes later it's something he actually opens.\n\nThat's the whole shift. Not \"I have an idea.\" Shipped, playable, his.\n\nYou don't need a dev team. You need a plan someone else can build from and thirty minutes tonight.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#BuildWithAI",
+      "#TechTok",
+      "#LearnInPublic"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "transformation",
+    "hook_score": 95,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "headline": "I BUILT MY SON AN APP",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, human-centered AI themes, minimal composition, strong negative space, warm practical lighting, high contrast. Scene: a small figure in warm silhouette stands at a dim doorway holding a phone with a faint soft cloud of light hovering above it, an idea rather than text; ahead through the threshold a small desk resolves into warm focus where a tablet glows with clean colorful interactive shapes, a child's chair beside it lit warm gold; no faces, no legible text, shallow depth of field. Upper third stays calm and simple for animated text overlay; lower third is clean dark negative space for the cover headline; 9:16 vertical aspect. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16, warm and intimate. First beat (0-2s): a silhouetted figure at a dim doorway, a faint soft cloud of light hovering above a phone in their hand. Transformation (2-7s): the figure steps through the threshold and the room ahead resolves from dim to warmly lit, a tablet on a small desk brightening into a fully formed glowing interface, a child's chair beside it catching the warm light. Resolve (7-10s): camera holds steady on the lit desk and chair, calm and complete. Warm gold and electric blue balance, documentary realism, no faces, no legible text, no logos, a soft rising tone landing on a warm chord.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "5 MIN BRAIN DUMP",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "BECAME HIS APP",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "BUILD FOR SOMEONE",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20260901-layer8culture-instagram-3",
+    "account": "layer8culture",
+    "category": "Creator Systems",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-09-01T13:30:00-04:00",
+    "text": "Most people are still running AI like one chat window. Builders are running a team.\n\nWe build this content engine the same way: an agent that reads the news, one that drafts the caption, one that builds the visual, one that checks the schedule. Different jobs, same brief, running in parallel.\n\nGive your next project an org chart before you give it a prompt: name the roles you actually need -- someone to plan, someone to build, someone to check the work -- and assign an agent to each one.\n\nA human still reviews before anything ships. That part doesn't change.\n\nComment BUILD and I will send you the workflow map.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#BuildInPublic",
+      "#AIBuilders",
+      "#CreatorTech",
+      "#AIagents",
+      "#AgenticAI",
+      "#Workflow",
+      "#Automation",
+      "#FutureBuilders"
+    ],
+    "hashtags_in_first_comment": true,
+    "comment_to_dm": {
+      "campaign": "ig_comment_dm_build_map",
+      "keyword": "BUILD",
+      "offer": "AI Builder Workflow Map",
+      "dm_prompt": "Want the workflow map? Here it is: <approved public link>. What are you trying to build with AI right now?",
+      "public_reply": "Sent. Check your DMs.",
+      "route": "builder_nurture"
+    },
+    "visual": {
+      "source": "library",
+      "aspect": "1:1",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "slides": [
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast. Scene: an org-chart-like arrangement of small glowing electric-blue nodes connected by clean thin lines floating in black, one central node at the top with five branching below it; no people, volumetric haze; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "BUILD AN AGENT ORG CHART",
+          "subtext": "Stop running one chat window.",
+          "accent": "ORG CHART",
+          "kicker": "CREATOR SYSTEMS",
+          "role": "cover",
+          "footer": "SWIPE FOR MORE"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast. Scene: a single small glowing electric-blue chat bubble alone in a vast dark room, tiny against the emptiness around it; no people; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cheap gamer RGB, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "ONE CHAT ISN'T A TEAM",
+          "subtext": "Most people still run a single window.",
+          "accent": "TEAM",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast. Scene: five distinct small glowing panels each lit a subtly different shade of blue, arranged like department nameplates floating in the dark, no text on them; no people, shallow depth of field; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "GIVE EACH AGENT A JOB",
+          "subtext": "Architect, builder, tester, marketer.",
+          "accent": "JOB",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast. Scene: multiple thin electric-blue light trails running simultaneously side by side through layered dark glass panes, none crossing, all moving at once toward the same edge of frame; no people, extreme macro; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "RUN THEM IN PARALLEL",
+          "subtext": "Fan out the work, not the wait.",
+          "accent": "PARALLEL",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, warm practical lighting, minimal composition, strong negative space, high contrast. Scene: a single warm-lit hand hovering just above a dark recessed switch at the base of a small glowing node structure, held in the instant before commitment; no face in frame, extreme shallow depth of field; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "A HUMAN STILL SIGNS OFF",
+          "subtext": "Review before anything ships.",
+          "accent": "SIGNS OFF",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast. Scene: a small control-room-like arrangement, one central glowing switch surrounded by five smaller status lights each in a subtly different state, floating in a dark void; no people; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "THIS IS HOW WE RUN THE ENGINE",
+          "subtext": "News becomes posts, a human merges.",
+          "accent": "ENGINE",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, extremely minimal composition, overwhelming negative space, high contrast. Scene: one clean horizontal line of electric blue light suspended across the middle of a vast empty black frame, perfectly level, nothing else present; no people; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "COMMENT BUILD FOR THE MAP",
+          "subtext": "We'll send you the workflow.",
+          "accent": "BUILD",
+          "role": "cta"
+        }
+      ],
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20260901-layer8culture-tiktok-4",
+    "account": "layer8culture",
+    "category": "Creator Systems",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-09-01T15:00:00-04:00",
+    "text": "Ten agents. One prompt. Still one team.\n\nStop treating AI like a single chat window. Build an org chart instead: an architect agent, a builder, a tester, a marketer, all working the same brief in parallel.\n\nOne person can now run a fleet instead of a chat. That's the actual unlock, not a bigger model.\n\nGive your next project an org chart before you give it a prompt.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIagents",
+      "#AgenticAI",
+      "#Workflow",
+      "#TechTok"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "cinematic-coding",
+    "hook_score": 93,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "editorial_drop",
+      "headline": "TEN AGENTS. ONE PROMPT.",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, minimal composition, strong negative space, high contrast. Scene: extreme macro of a single glowing electric-blue line of light splitting at a sharp vertex into ten thin branching light trails that race outward through layered glass-like panes in absolute black, each trail moving at a slightly different speed; near the end the ten trails converge back into one clean checkmark shape of light; no people, no legible text, shallow depth of field, glass reflections. Upper third stays calm and simple for animated text overlay; lower third is clean dark negative space for the cover headline; 9:16 vertical aspect. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16, abstract and premium. First beat (0-2s): a single glowing line of electric-blue light in total black, sharp and still. Transformation (2-7s): the line splits at a vertex into ten thin branching trails racing outward through layered glass panes at different speeds, refracting and crossing. Resolve (7-10s): the ten trails converge back into one clean checkmark shape of light, holding steady. Deep black and electric blue, documentary realism, no people, no legible text, no logos, a rising synth pulse resolving into one clean tone.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "ONE PROMPT",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "TEN AGENTS SPLIT OFF",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "ORCHESTRATE, DON'T CHAT",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20260901-layer8culture-instagram-4",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-09-01T16:15:00-04:00",
+    "text": "I built my son an app this week, and it started as a five-minute voice memo.\n\nI talked through the idea, GPT-5.6 turned it into an actual plan, and four iterations later he's got a gamified math companion with his own AI-generated question bank, running on localhost, headed to Azure next.\n\nThat's the shift nobody's captioning correctly. It's not \"AI writes code now.\" It's \"you don't need a dev team to ship something a person you love actually uses.\"\n\nFollow @layer8culture for the build.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#BuildWithAI",
+      "#FutureBuilders",
+      "#LearnInPublic",
+      "#ArtificialIntelligence",
+      "#AICommunity",
+      "#CreatorTech"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "reuse",
+      "of": "20260901-layer8culture-tiktok-3",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20260901-layer8culture-tiktok-5",
+    "account": "layer8culture",
+    "category": "Community Questions",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-09-01T18:00:00-04:00",
+    "text": "Thirteen million builders share one hub. Nvidia wants to buy it.\n\nReports put Nvidia's offer for Hugging Face near $12.9 billion, more than double what its founders turned down last year to keep the platform neutral.\n\nHugging Face has been the open, hardware-agnostic home for models and datasets industry-wide. One owner changes what \"open\" means.\n\nWhat would you want to see stay neutral no matter who's writing the check?\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AInews",
+      "#TechCulture",
+      "#Afrofuturism",
+      "#TechTok"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "black-tech-culture",
+    "hook_score": 92,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "editorial_drop",
+      "headline": "13M BUILDERS. ONE BUYER.",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, Black tech futurism, minimal composition, strong negative space, high contrast. Scene: a luminous Afrofuturist city skyline at golden hour, at its center an open glowing plaza structure standing for a shared communal hub; the long shadow of a colossal unseen tower begins sweeping across the plaza from one side, warm gold light cooling into electric blue where the shadow falls; no people, enormous scale, volumetric haze. Upper third stays calm and simple for animated text overlay; lower third is clean dark negative space for the cover headline; 9:16 vertical aspect. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16, grand and cultural. First beat (0-2s): a luminous Afrofuturist city skyline at golden hour, a glowing open plaza structure standing bright at its center. Transformation (2-7s): the long shadow of a colossal unseen tower sweeps slowly across the plaza from one side, the warm gold light cooling into electric blue wherever the shadow falls, camera holding wide. Resolve (7-10s): the shadow stops just short of fully covering the plaza, a sliver of warm gold still holding at its center. Warm gold and electric blue, documentary realism, no people, no text, no logos, distant city ambience swelling then settling into a low held tone.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "13M BUILDERS SHARE IT",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "ONE BUYER WANTS IN",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "STAY IN THE ROOM",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20260901-layer8culture-instagram-5",
+    "account": "layer8culture",
+    "category": "Community Questions",
+    "platform": "instagram",
+    "format": "story",
+    "schedule_time": "2026-09-01T19:15:00-04:00",
+    "text": "Which one are you: the ChatGPT precision, the Claude 'too bougie for me' thoroughness, or the Copilot 'just ship it' energy? Vote above.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AICommunity",
+      "#AIFluency",
+      "#ChatGPT",
+      "#Claude"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "headline": "WHICH ONE ARE YOU?",
+      "subtext": "Tap to vote.",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast. Scene: three small glowing panels floating side by side in absolute black, each a distinct light quality, cool white, warm amber, electric blue, simple and legible at a glance; no people, no legible text. Leave room in the lower third for an interactive poll sticker; 9:16 aspect. Avoid rendered text, signage lettering, garbled typography, generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, robots, fake hologram overload, random neon colors.",
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20260901-layer8culture-youtube-1",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "youtube",
+    "format": "reel",
+    "schedule_time": "2026-09-01T21:00:00-04:00",
+    "youtube_title": "GitHub Retired 6 Copilot Models -- We Ran Our Own 24-Hour Bake-Off #Shorts",
+    "text": "GitHub retired six legacy Copilot models this week. We'd already spent 24 hours on Tech Thursday testing ChatGPT, Claude and Copilot side by side on real builds.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Shorts",
+      "#Layer8Culture",
+      "#BuildInPublic",
+      "#ChatGPT",
+      "#Claude",
+      "#DevCommunity"
+    ],
+    "visual": {
+      "source": "reuse",
+      "of": "20260901-layer8culture-tiktok-2",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20260901-layer8culture-youtube-2",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "youtube",
+    "format": "reel",
+    "schedule_time": "2026-09-01T21:55:00-04:00",
+    "youtube_title": "I Built My Son an App With a 5-Minute GPT-5.6 Brain Dump #Shorts",
+    "text": "A voice memo turned into a real plan, then a gamified math app for my son -- built and iterated with GPT-5.6, headed to Azure next.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Shorts",
+      "#Layer8Culture",
+      "#AIFluency",
+      "#BuildWithAI",
+      "#LearnInPublic"
+    ],
+    "visual": {
+      "source": "reuse",
+      "of": "20260901-layer8culture-tiktok-3",
+      "aspect": "9:16"
+    }
+  }
+]
