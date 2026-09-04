@@ -496,6 +496,8 @@ def _bottom_scrim(base: Image.Image, text_top: int | None = None) -> Image.Image
     ``text_top`` is the y the type block starts at; the scrim eases in above it
     and holds steady from there down.
     """
+    if base.mode != "RGBA":
+        base = base.convert("RGBA")
     w, h = base.size
     if text_top is None:
         text_top = int(h * 0.58)

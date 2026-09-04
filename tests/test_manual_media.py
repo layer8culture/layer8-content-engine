@@ -500,6 +500,14 @@ class HeadlineScrimTests(unittest.TestCase):
         b = openai_gen._scrim_alpha_map(128, 256, text_top=150, peak=170)
         self.assertEqual(list(a.getdata()), list(b.getdata()))
 
+    def test_scrim_accepts_a_non_rgba_plate(self):
+        # Both render_* callers hand over RGBA, but the helper is called
+        # directly by tooling and used to convert internally. Losing that
+        # turned an RGB plate into "ValueError: image has wrong mode".
+        rgb = self.plate(120, (256, 512)).convert("RGB")
+        out = openai_gen._bottom_scrim(rgb, text_top=300)
+        self.assertEqual("RGBA", out.mode)
+
     def test_top_anchored_layouts_do_not_become_full_frame_dimmers(self):
         # top_text_media_card puts its type at ~8% height; without the floor the
         # scrim would cover the whole frame at peak alpha.
