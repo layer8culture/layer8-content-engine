@@ -25,11 +25,13 @@ through a batch.
 Requires: pip install pillow (no image API, no openai package needed).
 """
 import argparse
+import contextlib
 import json
 import pathlib
 import sys
+import threading
 
-from PIL import Image, ImageOps
+from PIL import Image, ImageOps, __version__ as PILLOW_VERSION
 
 import manual_media
 import openai_gen
@@ -87,7 +89,7 @@ def normalize_resolution(im: Image.Image) -> Image.Image:
 
 
 # A drop this dark has almost no tonal range left for typography to sit on. These
-# are warning thresholds, never rejection thresholds -- a batch must always ship.
+# are warning thresholds, never rejection thresholds.
 DARK_MEAN_LUM = 26.0      # mean luminance below this reads as near-black
 DARK_SHADOW_SHARE = 0.80  # ...and this share of pixels already crushed to shadow
 DARK_SHADOW_LEVEL = 32    # what counts as "shadow"
@@ -124,66 +126,104 @@ def apply_branding(out_path: pathlib.Path, spec: manual_media.ImageSpec) -> None
     visual = spec.visual
     headline = visual.get("headline")
     if headline:
-        try:
-            if openai_gen.typography_preset_for(spec.account, visual) == "editorial_drop":
-                applied = openai_gen.render_editorial_drop(out_path, visual)
-            else:
-                applied = openai_gen.render_infographic(
-                    out_path,
-                    headline,
-                    visual.get("subtext"),
-                    visual.get("overlay_position", openai_gen.DEFAULT_OVERLAY_POSITION),
-                    visual.get("accent"),
-                )
-            if applied:
-                print(f"  > {spec.image_id}: headline composited ({str(headline)[:48]!r})")
-            else:
-                print(f"  ! {spec.image_id}: fonts missing under assets/fonts, "
-                      f"headline overlay skipped")
-        except Exception as e:  # noqa: BLE001 - never lose a good image over text
-            print(f"  ! {spec.image_id}: headline overlay skipped ({e})")
-
-    try:
-        wordmark_path = openai_gen.ACCOUNT_WORDMARK.get(spec.account)
-        position = visual.get(
-            "logo_position",
-            openai_gen.ACCOUNT_LOGO_POSITION.get(spec.account,
-                                                 openai_gen.DEFAULT_LOGO_POSITION),
-        )
-        if "logo_opacity" in visual:
-            opacity = float(visual["logo_opacity"])
-        elif visual.get("logo_subtle"):
-            opacity = openai_gen.SUBTLE_LOGO_OPACITY
+        if openai_gen.typography_preset_for(spec.account, visual) == "editorial_drop":
+            applied = openai_gen.render_editorial_drop(out_path, visual)
         else:
-            opacity = openai_gen.DEFAULT_LOGO_OPACITY
-        if openai_gen.composite_wordmark(out_path, spec.aspect, position, opacity,
-                                         wordmark_path):
-            print(f"  > {spec.image_id}: wordmark composited "
-                  f"(position={position}, opacity={opacity:.2f})")
-    except Exception as e:  # noqa: BLE001 - never lose a good image over branding
-        print(f"  ! {spec.image_id}: wordmark overlay skipped ({e})")
+            applied = openai_gen.render_infographic(
+                out_path, headline, visual.get("subtext"),
+                visual.get("overlay_position", openai_gen.DEFAULT_OVERLAY_POSITION),
+                visual.get("accent"),
+            )
+        if not applied:
+            raise RuntimeError("required headline typography failed; check assets/fonts")
+        print(f"  > {spec.image_id}: headline composited ({str(headline)[:48]!r})")
+
+    wordmark_path = openai_gen.ACCOUNT_WORDMARK.get(spec.account)
+    position = visual.get(
+        "logo_position",
+        openai_gen.ACCOUNT_LOGO_POSITION.get(spec.account, openai_gen.DEFAULT_LOGO_POSITION),
+    )
+    if "logo_opacity" in visual:
+        opacity = float(visual["logo_opacity"])
+    elif visual.get("logo_subtle"):
+        opacity = openai_gen.SUBTLE_LOGO_OPACITY
+    else:
+        opacity = openai_gen.DEFAULT_LOGO_OPACITY
+    if openai_gen.composite_wordmark(out_path, spec.aspect, position, opacity, wordmark_path):
+        print(f"  > {spec.image_id}: wordmark composited")
+
+
+_FONT_LOCK = threading.RLock()
+_FONT_KEYS = ("BEBAS_NEUE_PATH", "INTER_PATH", "SPACE_GROTESK_PATH")
+
+
+@contextlib.contextmanager
+def font_paths(repo_root: pathlib.Path | None):
+    """Use the target repository's fonts without changing the process cwd."""
+    with _FONT_LOCK:
+        original = {key: getattr(openai_gen, key) for key in _FONT_KEYS}
+        try:
+            if repo_root is not None:
+                for key, value in original.items():
+                    setattr(openai_gen, key, repo_root / value)
+            yield
+        finally:
+            for key, value in original.items():
+                setattr(openai_gen, key, value)
+
+
+def image_inputs(spec: manual_media.ImageSpec, source: pathlib.Path,
+                 repo_root: pathlib.Path) -> dict:
+    settings = {k: v for k, v in spec.visual.items()
+                if k not in ("file", "files", "cover", "reel", "slides",
+                             "media_type", "duration_sec")}
+    settings.update(account=spec.account, format=spec.fmt, aspect=spec.aspect,
+                    image_2k=openai_gen.IMAGE_2K, long_edge=openai_gen.IMAGE_LONG_EDGE)
+    renderer = {
+        "pillow": PILLOW_VERSION,
+        "code": {name: manual_media.file_fingerprint(pathlib.Path(path))
+                 for name, path in (("ingest", __file__),
+                                    ("typography", openai_gen.__file__),
+                                    ("plan", manual_media.__file__))},
+        "fonts": {key: manual_media.file_fingerprint(repo_root / getattr(openai_gen, key))
+                  for key in _FONT_KEYS} if spec.headline else {},
+    }
+    return {"source": manual_media.file_fingerprint(source),
+            "settings": manual_media.fingerprint(settings),
+            "renderer": manual_media.fingerprint(renderer)}
 
 
 def ingest_image(spec: manual_media.ImageSpec, source: pathlib.Path,
-                 out_dir: pathlib.Path) -> pathlib.Path:
+                 out_dir: pathlib.Path, *, repo_root: pathlib.Path | None = None,
+                 warnings: list[str] | None = None,
+                 history_dir: pathlib.Path | None = None) -> pathlib.Path:
     """Crop, resample, brand, and write one dropped image. Returns the output path."""
     out_path = spec.output_path(out_dir)
-    with Image.open(source) as raw:
-        im = ImageOps.exif_transpose(raw)
-        im = im.convert("RGB")
-        original = im.size
-        im = fit_to_aspect(im, spec.aspect)
-        im = normalize_resolution(im)
-        out_dir.mkdir(parents=True, exist_ok=True)
-        im.save(out_path)
-        print(f"  + {spec.image_id}: {source.name} {original[0]}x{original[1]} "
-              f"-> {out_path} {im.size[0]}x{im.size[1]} ({spec.aspect})")
-        warn_if_too_dark(spec.image_id, im)
-    apply_branding(out_path, spec)
+    stage = manual_media.staging_path(out_path)
+    try:
+        with Image.open(source) as raw:
+            im = ImageOps.exif_transpose(raw).convert("RGB")
+            im = normalize_resolution(fit_to_aspect(im, spec.aspect))
+            out_dir.mkdir(parents=True, exist_ok=True)
+            im.save(stage, format="PNG")
+            if warn_if_too_dark(spec.image_id, im) and warnings is not None:
+                warnings.append(f"{spec.image_id}: very dark source; review the scene")
+        with font_paths(repo_root):
+            apply_branding(stage, spec)
+        with Image.open(stage) as finished:
+            finished.load()
+        if out_path.exists():
+            root = repo_root or out_dir.parent
+            manual_media.snapshot_file(
+                out_path, (history_dir or root / ".local" / "media" / "outputs") / spec.image_id)
+        stage.replace(out_path)
+        print(f"  + {spec.image_id}: {source.name} -> {out_path} ({spec.aspect})")
+    finally:
+        stage.unlink(missing_ok=True)
     return out_path
 
 
-def retire_source(source: pathlib.Path, inbox: pathlib.Path) -> None:
+def retire_source(source: pathlib.Path, inbox: pathlib.Path) -> pathlib.Path:
     """Move a consumed drop into <inbox>/_ingested/.
 
     Ingest always derives from the source file, so keeping it in the inbox would
@@ -191,11 +231,20 @@ def retire_source(source: pathlib.Path, inbox: pathlib.Path) -> None:
     """
     done_dir = pathlib.Path(inbox) / manual_media.INGESTED_DIRNAME
     done_dir.mkdir(parents=True, exist_ok=True)
-    source.replace(done_dir / source.name)
+    previous = done_dir / source.name
+    versions = done_dir / "_versions" / source.stem
+    if previous.is_file():
+        manual_media.snapshot_file(previous, versions)
+    version = manual_media.snapshot_file(source, versions)
+    if source.resolve() != previous.resolve():
+        source.replace(previous)
+    return version
 
 
 def update_queue(posts: list[dict], specs: list[manual_media.ImageSpec],
-                 out_dir: pathlib.Path) -> int:
+                 out_dir: pathlib.Path, *, valid_ids: set[str] | None = None,
+                 changed_ids: set[str] | None = None,
+                 repo_root: pathlib.Path | None = None) -> int:
     """Point each post's visual.file / visual.files at finished images.
 
     A carousel is only wired up once *every* slide exists, so a half-finished
@@ -211,88 +260,147 @@ def update_queue(posts: list[dict], specs: list[manual_media.ImageSpec],
             continue
         visual = post.setdefault("visual", {})
         paths = [spec.output_path(out_dir) for spec in post_specs]
+        if post.get("format") == "reel":
+            continue  # Delivery is the MP4; a still is never a replacement for it.
+        if valid_ids is not None and any(s.image_id not in valid_ids for s in post_specs):
+            visual.pop("file", None)
+            visual.pop("files", None)
+            continue
+        refs = [manual_media.relative_path(p, repo_root) if repo_root else p.as_posix()
+                for p in paths]
         if post.get("format") == "carousel":
             missing = [p for p in paths if not p.exists()]
             if missing:
                 print(f"  ~ {post['id']}: carousel {len(paths) - len(missing)}/"
                       f"{len(paths)} slides ready — queue not updated yet")
                 continue
-            visual["files"] = [p.as_posix() for p in paths]
-            visual["file"] = paths[0].as_posix()
+            previous = visual.get("files") or []
+            for index, spec in enumerate(post_specs):
+                if (spec.visual.get("media_type") == "video"
+                        and changed_ids is not None and spec.image_id not in changed_ids
+                        and len(previous) > index and str(previous[index]).endswith(".mp4")):
+                    refs[index] = previous[index]
+            visual["files"] = refs
+            visual["file"] = refs[0]
             updated += 1
             continue
         if paths[0].exists():
-            visual["file"] = paths[0].as_posix()
+            visual["file"] = refs[0]
             updated += 1
     return updated
+
+
+def ingest(queue_file: pathlib.Path, inbox: pathlib.Path = manual_media.DEFAULT_INBOX,
+           out_dir: pathlib.Path = manual_media.DEFAULT_OUT_DIR,
+           keep: bool = False, dry_run: bool = False,
+           repo_root: pathlib.Path | None = None) -> dict:
+    """Finish stale images and persist each artifact's outcome for safe retries."""
+    qpath = pathlib.Path(queue_file)
+    posts = json.loads(qpath.read_text(encoding="utf-8"))
+    root = (repo_root or (qpath.resolve().parent.parent if qpath.parent.name == "queue"
+                        else qpath.resolve().parent)).resolve()
+    inbox = pathlib.Path(inbox)
+    out_dir = pathlib.Path(out_dir)
+    report = {"failed": [], "missing": [], "warnings": [], "prepared": 0, "unchanged": 0}
+    specs = manual_media.plan_images(
+        posts, openai_gen.IMAGE_QUALITY, openai_gen.DEFAULT_OVERLAY_POSITION)
+    if not specs:
+        return report
+    print(f"Manual image ingest: {len(specs)} expected, looking in {inbox}/")
+    valid_ids, changed_ids, invalid_posts = set(), set(), set()
+    for spec in specs:
+        key = f"image:{spec.image_id}"
+        record = manual_media.read_record(root, key)
+        source = spec.find_source(inbox)
+        fresh_drop = source is not None
+        if source is None and record.get("source_path"):
+            candidate = manual_media.filesystem_path(root / record["source_path"])
+            source = candidate if candidate.is_file() else None
+        if source is None:
+            source = spec.find_source(inbox / manual_media.INGESTED_DIRNAME)
+        if source is None:
+            report["missing"].append(spec.image_id)
+            continue
+        inputs = image_inputs(spec, source, root)
+        if (record.get("status") == "ready" and record.get("inputs") == inputs
+                and manual_media.outputs_match(record, root)):
+            valid_ids.add(spec.image_id)
+            report["unchanged"] += 1
+            report["warnings"].extend(record.get("warnings", []))
+            print(f"  = {spec.image_id}: unchanged")
+            continue
+        if dry_run:
+            report["prepared"] += 1
+            print(f"  . {spec.image_id}: would ingest {source.name}")
+            continue
+        warnings = []
+        invalid_posts.add(spec.post_id)
+        attempt = dict(record)
+        try:
+            version = manual_media.snapshot_file(
+                source, inbox / manual_media.INGESTED_DIRNAME / "_versions" / spec.image_id)
+            attempt.update(post_id=spec.post_id, status="preparing", inputs=inputs,
+                           source_path=manual_media.relative_path(version, root))
+            attempt.pop("error", None)
+            manual_media.write_record(root, key, attempt)
+            output = ingest_image(
+                spec, source, out_dir, repo_root=repo_root, warnings=warnings,
+                history_dir=root / ".local" / "media" / "outputs")
+            if fresh_drop and not keep:
+                retire_source(source, inbox)
+        except (OSError, ValueError, RuntimeError, Image.DecompressionBombError) as exc:
+            message = f"{spec.image_id}: could not ingest {source.name} ({exc})"
+            report["failed"].append(message)
+            print(f"  x {message}")
+            manual_media.write_record(root, key, {
+                **attempt, "post_id": spec.post_id, "status": "failed",
+                "error": message, "warnings": warnings,
+            })
+            continue
+        manual_media.write_record(root, key, {
+            "post_id": spec.post_id, "status": "ready", "inputs": inputs,
+            "source_path": manual_media.relative_path(version, root),
+            "outputs": {manual_media.relative_path(output, root):
+                        manual_media.file_fingerprint(output)}, "warnings": warnings,
+        })
+        valid_ids.add(spec.image_id)
+        changed_ids.add(spec.image_id)
+        report["warnings"].extend(warnings)
+        report["prepared"] += 1
+    if not dry_run:
+        invalidate_delivery(posts, invalid_posts)
+        manual_media.invalidate_records(invalid_posts, root, images=False)
+        update_queue(posts, specs, out_dir, valid_ids=valid_ids,
+                     changed_ids=changed_ids, repo_root=repo_root)
+        manual_media.atomic_json(qpath, posts)
+    for image_id in report["missing"]:
+        print(f"  ! {image_id}: original source missing; import the image to prepare it")
+    report["changed"] = sorted(changed_ids)
+    return report
+
+
+def invalidate_delivery(posts: list[dict], changed_post_ids: set[str]) -> None:
+    affected = set(changed_post_ids)
+    while True:
+        dependents = {str(p.get("id")) for p in posts
+                      if (p.get("visual") or {}).get("of") in affected}
+        if dependents.issubset(affected):
+            break
+        affected.update(dependents)
+    for post in posts:
+        if str(post.get("id")) in affected and post.get("format") == "reel":
+            visual = post.get("visual") or {}
+            visual.pop("file", None)
+            visual.pop("cover", None)
 
 
 def main(queue_file: str, inbox: pathlib.Path = manual_media.DEFAULT_INBOX,
          out_dir: pathlib.Path = manual_media.DEFAULT_OUT_DIR,
          keep: bool = False, strict: bool = False, dry_run: bool = False) -> int:
-    """Ingest every dropped image for ``queue_file``. Returns a process exit code."""
-    qpath = pathlib.Path(queue_file)
-    posts = json.loads(qpath.read_text(encoding="utf-8"))
-    inbox = pathlib.Path(inbox)
-    out_dir = pathlib.Path(out_dir)
-
-    specs = manual_media.plan_images(
-        posts, openai_gen.IMAGE_QUALITY, openai_gen.DEFAULT_OVERLAY_POSITION)
-    if not specs:
-        print(f"No manual images expected for {qpath} "
-              f"(no post has visual.source \"openai\" with an openai_prompt).")
-        return 0
-
-    print(f"Manual image ingest: {len(specs)} expected, looking in {inbox}/")
-    ingested: list[manual_media.ImageSpec] = []
-    missing: list[manual_media.ImageSpec] = []
-    for spec in specs:
-        source = spec.find_source(inbox)
-        if source is None:
-            if spec.output_path(out_dir).exists():
-                print(f"  = {spec.image_id}: already finished, no new drop")
-            else:
-                missing.append(spec)
-            continue
-        if dry_run:
-            print(f"  . {spec.image_id}: would ingest {source.name} "
-                  f"-> {spec.output_path(out_dir)}")
-            ingested.append(spec)
-            continue
-        try:
-            ingest_image(spec, source, out_dir)
-        except Exception as e:  # noqa: BLE001 - one bad drop must not abort the batch
-            print(f"  x {spec.image_id}: could not ingest {source.name} ({e})")
-            continue
-        ingested.append(spec)
-        if not keep:
-            try:
-                retire_source(source, inbox)
-            except OSError as e:
-                print(f"  ! {spec.image_id}: could not move {source.name} "
-                      f"into {manual_media.INGESTED_DIRNAME}/ ({e})")
-
-    if dry_run:
-        print(f"Dry run: {len(ingested)} would be ingested, {len(missing)} missing. "
-              f"Queue not modified.")
-    else:
-        updated = update_queue(posts, specs, out_dir)
-        qpath.write_text(json.dumps(posts, indent=2), encoding="utf-8")
-        print(f"Ingested {len(ingested)} image(s); {updated} post(s) updated in {qpath}.")
-
-    if missing:
-        print(f"Still needed ({len(missing)}) — generate these and drop them in {inbox}/:")
-        for spec in missing:
-            print(f"  - {spec.inbox_path(inbox)} "
-                  f"({spec.fmt}, {spec.aspect}, request {spec.size})")
-        print(f"Prompts for them are in {manual_media.prompt_pack_path(qpath)}.")
-        if strict:
-            return 1
-    elif not dry_run:
-        print("All expected images are in place. Next: "
-              f"python scripts/reel_gen.py {qpath.as_posix()} (reels only), "
-              "then open the approval PR.")
-    return 0
+    report = ingest(pathlib.Path(queue_file), inbox, out_dir, keep, dry_run)
+    print(f"Prepared {report['prepared']} image(s); {report['unchanged']} unchanged; "
+          f"{len(report['failed'])} failed; {len(report['missing'])} missing.")
+    return int(bool(report["failed"] or (strict and report["missing"])))
 
 
 if __name__ == "__main__":

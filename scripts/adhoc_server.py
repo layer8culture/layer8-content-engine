@@ -28,25 +28,28 @@ that can write into the working tree, so do not expose it to a network.
 """
 import argparse
 import datetime as dt
+import functools
+import hashlib
 import json
 import mimetypes
 import os
 import pathlib
 import re
+import secrets
 import shutil
 import subprocess
 import sys
 import threading
-import time
-import uuid
 import webbrowser
 import zipfile
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from urllib.parse import urlparse, parse_qs, unquote
+from urllib.parse import urlparse, parse_qs, unquote, quote
 from zoneinfo import ZoneInfo
 
 import manual_media
 import openai_gen
+import app_state
+import guided_workflow
 
 from PIL import Image
 
@@ -54,11 +57,12 @@ from PIL import Image
 # Layout
 # --------------------------------------------------------------------------
 SCRIPTS_DIR = pathlib.Path(__file__).resolve().parent
-REPO_ROOT = SCRIPTS_DIR.parent
+CODE_ROOT = SCRIPTS_DIR.parent
+REPO_ROOT = pathlib.Path(os.environ.get("LAYER8_DATA_ROOT", str(CODE_ROOT))).resolve()
 QUEUE_DIR = REPO_ROOT / "queue"
 INBOX_DIR = REPO_ROOT / manual_media.DEFAULT_INBOX
 OUT_DIR = REPO_ROOT / manual_media.DEFAULT_OUT_DIR
-WEBAPP_DIR = REPO_ROOT / "webapp"
+WEBAPP_DIR = CODE_ROOT / "webapp"
 TRASH_DIR = REPO_ROOT / ".trash"
 FONTS_DIR = REPO_ROOT / "assets" / "fonts"
 
@@ -80,6 +84,25 @@ UNASSIGNED_DIRNAME = "_unassigned"
 QUEUE_NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*\.json$")
 # Media/staged filenames: no separators, no traversal.
 SAFE_NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
+CSRF_TOKEN = secrets.token_urlsafe(32)
+MUTATION_LOCK = threading.RLock()
+
+
+@functools.lru_cache(maxsize=8)
+def _store(root: str) -> app_state.StateStore:
+    return app_state.StateStore(pathlib.Path(root))
+
+
+def state_store() -> app_state.StateStore:
+    return _store(str(REPO_ROOT.resolve()))
+
+
+def readiness(qpath: pathlib.Path, *, require_future: bool = True) -> dict:
+    import batch_readiness
+    report = batch_readiness.report(qpath, REPO_ROOT, require_future=require_future)
+    if not report.get("revision"):
+        report["revision"] = hashlib.sha256(qpath.read_bytes()).hexdigest()
+    return report
 
 # Which brand lane a queue file belongs to, by filename prefix.
 LANE_PREFIXES = (
@@ -198,8 +221,10 @@ def safe_queue_path(name: str) -> pathlib.Path:
 
 MEDIA_ROOTS = {
     "generated": lambda: OUT_DIR,
+    "library": lambda: REPO_ROOT / "assets" / "library",
     "inbox": lambda: INBOX_DIR,
     "unassigned": lambda: INBOX_DIR / UNASSIGNED_DIRNAME,
+    "original": lambda: INBOX_DIR / manual_media.INGESTED_DIRNAME,
 }
 
 
@@ -208,7 +233,14 @@ def safe_media_path(root: str, name: str) -> pathlib.Path:
     name = unquote(name or "")
     if root not in MEDIA_ROOTS:
         raise ValueError(f"unknown media root: {root!r}")
-    if not SAFE_NAME_RE.match(name):
+    if root == "library":
+        relative = pathlib.PurePosixPath(name.replace("\\", "/"))
+        if (relative.is_absolute() or not relative.parts
+                or any(part in (".", "..") or not SAFE_NAME_RE.fullmatch(part)
+                       for part in relative.parts)):
+            raise ValueError(f"invalid media path: {name!r}")
+        name = relative.as_posix()
+    elif not SAFE_NAME_RE.match(name):
         raise ValueError(f"invalid media name: {name!r}")
     base = MEDIA_ROOTS[root]()
     path = base / name
@@ -279,15 +311,19 @@ def plan_for(posts: list[dict]) -> list[manual_media.ImageSpec]:
         posts, openai_gen.IMAGE_QUALITY, openai_gen.DEFAULT_OVERLAY_POSITION)
 
 
-def unassigned_dir(create: bool = False) -> pathlib.Path:
+def unassigned_dir(create: bool = False, queue_name: str | None = None) -> pathlib.Path:
     path = INBOX_DIR / UNASSIGNED_DIRNAME
+    if queue_name is not None:
+        if not QUEUE_NAME_RE.fullmatch(queue_name):
+            raise ValueError("Invalid batch name.")
+        path = path / queue_name
     if create:
         path.mkdir(parents=True, exist_ok=True)
     return path
 
 
-def list_unassigned() -> list[pathlib.Path]:
-    path = unassigned_dir()
+def list_unassigned(directory: pathlib.Path | None = None) -> list[pathlib.Path]:
+    path = directory if directory is not None else unassigned_dir()
     if not path.is_dir():
         return []
     return sorted(
@@ -298,12 +334,12 @@ def list_unassigned() -> list[pathlib.Path]:
 
 def spec_status(spec: manual_media.ImageSpec) -> tuple[str, pathlib.Path | None]:
     """('done'|'ready'|'pending', the file backing that status)."""
-    finished = spec.output_path(OUT_DIR)
-    if finished.exists():
-        return "done", finished
     dropped = spec.find_source(INBOX_DIR)
     if dropped is not None:
         return "ready", dropped
+    finished = spec.output_path(OUT_DIR)
+    if finished.is_file() and image_size(finished):
+        return "done", finished
     return "pending", None
 
 
@@ -320,6 +356,7 @@ def spec_payload(spec: manual_media.ImageSpec) -> dict:
         "slide_role": spec.slide_role,
         "headline": spec.headline,
         "subtext": spec.subtext,
+        "scene": spec.prompt,
         "prompt": manual_media.copy_prompt(spec),
         "status": status,
         "shape_ok": None,
@@ -331,28 +368,41 @@ def spec_payload(spec: manual_media.ImageSpec) -> dict:
         payload["shape_ok"] = shape_matches(size, spec.aspect)
         root = "generated" if status == "done" else "inbox"
         payload["preview"] = f"/api/media/{root}/{backing.name}"
+    source = guided_workflow.original(spec, REPO_ROOT)
+    if source is not None:
+        payload["original"] = f"/api/media/original/{quote(source.name)}"
+    finished = spec.output_path(OUT_DIR)
+    if finished.is_file():
+        payload["final"] = f"/api/media/generated/{quote(finished.name)}"
+    payload["has_history"] = bool(guided_workflow.versions(REPO_ROOT, spec.image_id))
     return payload
 
 
 def post_payload(post: dict) -> dict:
     """Just enough of a post for the review step."""
+    import publish_helpers
     visual = post.get("visual") or {}
     media: list[str] = []
-    for key in ("file", "cover"):
-        value = visual.get(key)
-        if value:
-            media.append(str(value))
-    for value in visual.get("files") or []:
-        media.append(str(value))
+    if post.get("format") == "carousel":
+        media.extend(str(value) for value in visual.get("files") or [])
+    elif visual.get("file"):
+        media.append(str(visual["file"]))
+    if visual.get("cover") and post.get("format") != "carousel":
+        media.append(str(visual["cover"]))
 
     previews = []
-    for rel in media:
-        name = pathlib.Path(rel).name
-        if (OUT_DIR / name).exists():
+    for rel in (media if post.get("format") == "carousel" else dict.fromkeys(media)):
+        parts = pathlib.PurePosixPath(rel.replace("\\", "/")).parts
+        if len(parts) < 3 or parts[:2] not in (("assets", "generated"), ("assets", "library")):
+            continue
+        root = parts[1]
+        name = "/".join(parts[2:])
+        path = safe_media_path(root, name)
+        if path.is_file():
             previews.append({
                 "name": name,
-                "url": f"/api/media/generated/{name}",
-                "is_video": name.lower().endswith(".mp4"),
+                "url": f"/api/media/{root}/{quote(name, safe='')}",
+                "is_video": name.lower().endswith(publish_helpers.VIDEO_EXTS),
             })
     return {
         "id": post.get("id"),
@@ -396,7 +446,86 @@ def queue_summary(qpath: pathlib.Path) -> dict:
     entry["images"] = len(specs)
     for spec in specs:
         entry[spec_status(spec)[0]] += 1
+    entry["status"] = "needs_review"
+    entry["next_action"] = "review"
+    if entry["pending"]:
+        entry.update(status="needs_images", next_action="images")
+    elif entry["ready"]:
+        entry.update(status="needs_preparation", next_action="prepare")
+    try:
+        if any(dt.datetime.fromisoformat(p["schedule_time"]) <= dt.datetime.now(TZ)
+               for p in posts):
+            entry.update(status="schedule_expired", next_action="reschedule")
+    except (ValueError, KeyError, TypeError):
+        entry.update(status="invalid_schedule", next_action="reschedule")
+    approval = state_store().approval(qpath.name)
+    if approval and approval.get("state") == "merged":
+        entry.update(status="has_merged_approval", next_action="delivery")
     return entry
+
+
+def queue_payload(qpath: pathlib.Path) -> dict:
+    import publish_helpers
+    import queue_json_guard
+    report = readiness(qpath)
+    try:
+        posts = load_posts(qpath)
+        queue_json_guard.validate_queue_shape(posts, qpath)
+    except ValueError as exc:
+        return {
+            "name": qpath.name, "lane": lane_for(qpath.name), "error": str(exc),
+            "images": [], "staged": [], "posts": [], "prompt_groups": [],
+            "readiness": report, "revision": report["revision"], "approval": None,
+            "delivery": [], "active_job": active_job_id(),
+        }
+    specs = plan_for(posts)
+    outstanding = [s.image_id for s in specs if spec_status(s)[0] == "pending"]
+    groups = []
+    for index, start in enumerate(range(0, len(outstanding), 4)):
+        ids = outstanding[start:start + 4]
+        groups.append({"index": index, "image_ids": ids, "prompt": batch_prompt(specs, ids)})
+    approval = state_store().approval(qpath.name)
+    observed = state_store().observation(qpath.name)
+    if observed.get("revision") != report["revision"]:
+        observed = {}
+    if approval and approval.get("revision") != report["revision"]:
+        approval = dict(approval, state="stale", detail="Content changed. Prepare a new approval revision.")
+    images = [spec_payload(s) for s in specs]
+    for image in images:
+        if image.get("original"):
+            image["original"] = f"/api/media/source/{quote(qpath.name)}/{quote(image['image_id'])}"
+    return {
+        "name": qpath.name, "lane": lane_for(qpath.name),
+        "images": images,
+        "staged": staged_payload(specs, unassigned_dir(queue_name=qpath.name), qpath.name),
+        "posts": [post_payload(p) for p in posts], "active_job": active_job_id(),
+        "readiness": report, "revision": report["revision"],
+        "prompt_groups": groups, "approval": approval,
+        "delivery": publish_helpers.delivery_status(posts, REPO_ROOT),
+        "workflow": observed.get("workflow"),
+        "delivery_observed_at": observed.get("observed_at"),
+        "observed_at": observed.get("observed_at"),
+    }
+
+
+def diagnostics() -> list[dict]:
+    entries = [
+        {"name": "Python", "ok": True, "detail": sys.version.split()[0]},
+        {"name": "ffmpeg", "ok": shutil.which("ffmpeg") is not None,
+         "detail": "Required only for video preparation."},
+        {"name": "GitHub CLI", "ok": shutil.which("gh") is not None,
+         "detail": "Required for approval. Sign in with gh auth login if requested."},
+        {"name": "Brand fonts", "ok": all((FONTS_DIR / v).is_file() for v in BRAND_FONTS.values()),
+         "detail": "Self-hosted fonts; no external font service."},
+    ]
+    try:
+        copilot_command()
+    except ValueError as exc:
+        entries.append({"name": "Copilot CLI", "ok": False, "detail": str(exc)})
+    else:
+        entries.append({"name": "Copilot CLI", "ok": True,
+                        "detail": "Installed. An authenticated session is required for new batch generation."})
+    return entries
 
 
 # --------------------------------------------------------------------------
@@ -571,7 +700,8 @@ class _BytesReader:
         return True
 
 
-def auto_reconcile(specs: list[manual_media.ImageSpec]) -> list[dict]:
+def auto_reconcile(specs: list[manual_media.ImageSpec],
+                   directory: pathlib.Path | None = None) -> list[dict]:
     """Move confidently-matching staged files into the inbox.
 
     A staged file is auto-accepted only when its stem matches an outstanding image
@@ -586,12 +716,17 @@ def auto_reconcile(specs: list[manual_media.ImageSpec]) -> list[dict]:
             outstanding[spec.image_id.lower()] = spec
 
     moved: list[dict] = []
-    for staged in list_unassigned():
+    for staged in list_unassigned(directory):
         spec = outstanding.get(staged.stem.lower())
         if spec is None:
             continue
         size = image_size(staged)
-        if shape_matches(size, spec.aspect) is False:
+        if shape_matches(size, spec.aspect) is not True:
+            continue
+        try:
+            with Image.open(staged) as image:
+                image.verify()
+        except (OSError, ValueError, Image.DecompressionBombError):
             continue
         target = INBOX_DIR / f"{spec.image_id}{staged.suffix.lower()}"
         if target.exists():
@@ -602,11 +737,13 @@ def auto_reconcile(specs: list[manual_media.ImageSpec]) -> list[dict]:
     return moved
 
 
-def staged_payload(specs: list[manual_media.ImageSpec]) -> list[dict]:
+def staged_payload(specs: list[manual_media.ImageSpec],
+                   directory: pathlib.Path | None = None,
+                   queue_name: str | None = None) -> list[dict]:
     """Staged files with the reason they're still staged and their shape."""
     by_id = {spec.image_id.lower(): spec for spec in specs}
     entries = []
-    for staged in list_unassigned():
+    for staged in list_unassigned(directory):
         size = image_size(staged)
         spec = by_id.get(staged.stem.lower())
         reason = "unmatched"
@@ -616,9 +753,11 @@ def staged_payload(specs: list[manual_media.ImageSpec]) -> list[dict]:
                 reason = "slot already filled"
             elif shape_matches(size, spec.aspect) is False:
                 reason = "suspect"
+        url = (f"/api/media/staged/{quote(queue_name)}/{quote(staged.name)}"
+               if queue_name else f"/api/media/unassigned/{quote(staged.name)}")
         entries.append({
             "file": staged.name,
-            "url": f"/api/media/unassigned/{staged.name}",
+            "url": url,
             "size": describe_shape(size),
             "ratio": round(size[0] / size[1], 4) if size else None,
             "name_matches": spec.image_id if spec is not None else None,
@@ -628,13 +767,16 @@ def staged_payload(specs: list[manual_media.ImageSpec]) -> list[dict]:
 
 
 def assign_staged(specs: list[manual_media.ImageSpec], filename: str,
-                  image_id: str) -> dict:
+                  image_id: str, directory: pathlib.Path | None = None) -> dict:
     """Bind one staged file to one expected image by renaming it into the inbox."""
     if not SAFE_NAME_RE.match(filename or ""):
         raise ValueError(f"invalid staged filename: {filename!r}")
-    source = unassigned_dir() / filename
-    if not _is_inside(source, unassigned_dir()) or not source.is_file():
+    directory = directory if directory is not None else unassigned_dir()
+    source = directory / filename
+    if not _is_inside(source, directory) or not source.is_file():
         raise ValueError(f"no staged file named {filename!r}")
+    with Image.open(source) as image:
+        image.verify()
 
     spec = next((s for s in specs if s.image_id == image_id), None)
     if spec is None:
@@ -656,18 +798,11 @@ JOB_SCRIPTS = {
     "ingest": "manual_media_ingest.py",
     "reels": "reel_gen.py",
     "publish": "ship_queue.py",
+    "prepare": "prepare_media.py",
 }
 
-_jobs: dict[str, dict] = {}
-_jobs_lock = threading.Lock()
-
-
 def active_job_id() -> str | None:
-    with _jobs_lock:
-        for job_id, job in _jobs.items():
-            if job["status"] == "running":
-                return job_id
-    return None
+    return state_store().active()
 
 
 def start_command_job(kind: str, command: list[str], *, label: str,
@@ -681,64 +816,10 @@ def start_command_job(kind: str, command: list[str], *, label: str,
     never shown verbatim. ``after`` runs once the process exits and may append a
     final line and override the status (see the generate job's file check).
     """
-    if active_job_id():
-        raise RuntimeError("another job is already running")
-
-    job_id = uuid.uuid4().hex[:12]
-    with _jobs_lock:
-        _jobs[job_id] = {
-            "id": job_id,
-            "kind": kind,
-            "label": label,
-            "queue": queue_name,
-            "command": display or " ".join(command),
-            "status": "running",
-            "lines": [],
-            "returncode": None,
-            "started": time.time(),
-            "finished": None,
-            "result": None,
-        }
-
-    def append(line: str) -> None:
-        with _jobs_lock:
-            _jobs[job_id]["lines"].append(line)
-
-    def run() -> None:
-        try:
-            proc = subprocess.Popen(
-                command, cwd=str(REPO_ROOT), stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT, text=True, encoding="utf-8",
-                errors="replace", bufsize=1,
-            )
-        except OSError as e:
-            append(f"failed to start: {e}")
-            with _jobs_lock:
-                _jobs[job_id]["status"] = "failed"
-                _jobs[job_id]["finished"] = time.time()
-            return
-        assert proc.stdout is not None
-        with proc.stdout:
-            for line in proc.stdout:
-                append(line.rstrip("\n"))
-        proc.wait()
-
-        status = "done" if proc.returncode == 0 else "failed"
-        result = None
-        if after is not None:
-            try:
-                status, result = after(proc.returncode, append, status)
-            except Exception as e:  # noqa: BLE001 - never lose the job
-                append(f"post-run check failed: {type(e).__name__}: {e}")
-                status = "failed"
-        with _jobs_lock:
-            _jobs[job_id]["returncode"] = proc.returncode
-            _jobs[job_id]["status"] = status
-            _jobs[job_id]["result"] = result
-            _jobs[job_id]["finished"] = time.time()
-
-    threading.Thread(target=run, daemon=True).start()
-    return job_id
+    if after is not None:
+        raise ValueError("Job follow-up must run in the durable guided_actions worker.")
+    return state_store().start(kind, command, queue=queue_name, label=label,
+                               command=display or label)
 
 
 def start_job(kind: str, qpath: pathlib.Path,
@@ -763,23 +844,15 @@ def start_job(kind: str, qpath: pathlib.Path,
 
 
 def job_payload(job_id: str, since: int = 0) -> dict:
-    with _jobs_lock:
-        job = _jobs.get(job_id)
-        if job is None:
-            raise ValueError(f"no such job: {job_id}")
-        lines = job["lines"][max(0, since):]
-        return {
-            "id": job["id"],
-            "kind": job["kind"],
-            "label": job["label"],
-            "queue": job["queue"],
-            "command": job["command"],
-            "status": job["status"],
-            "returncode": job["returncode"],
-            "result": job["result"],
-            "lines": lines,
-            "next": len(job["lines"]),
-        }
+    return state_store().payload(job_id, since)
+
+
+def start_guided_job(kind: str, queue_name: str = "", payload: dict | None = None) -> str:
+    payload = dict(payload or {}, queue=queue_name)
+    command = [sys.executable, "-u", str(SCRIPTS_DIR / "guided_actions.py"),
+               kind, json.dumps(payload)]
+    return start_command_job(kind, command, queue_name=queue_name,
+                             label=f"{kind} {queue_name}", display=f"{kind} {queue_name}")
 
 
 # --------------------------------------------------------------------------
@@ -946,12 +1019,11 @@ def generation_command(lane: str, date: str, base: list[str],
 def start_generation(lane: str, date: str) -> str:
     config = lane_config(lane)
     validate_date(date)
-    base = copilot_command()
+    copilot_command()
 
     prompt_path = REPO_ROOT / config["prompt"]
     if not prompt_path.is_file():
         raise ValueError(f"missing prompt file: {config['prompt']}")
-    prompt_text = prompt_path.read_text(encoding="utf-8")
 
     name = queue_name_for(lane, date)
     expected = QUEUE_DIR / name
@@ -960,40 +1032,7 @@ def start_generation(lane: str, date: str) -> str:
             f"queue/{name} already exists. Delete it first if you want to "
             "regenerate that day.")
 
-    command = generation_command(lane, date, base, prompt_text)
-
-    def after(returncode, append, status):
-        # The agent sometimes prints the JSON to its log instead of writing the
-        # file (a known intermittent miss). Fail loudly and actionably, exactly
-        # as generate-content.yml does, rather than letting the next step crash.
-        if not expected.is_file():
-            append("")
-            append(f"ERROR: the Copilot CLI did not write queue/{name}.")
-            append("It most likely printed the JSON to the log above instead of "
-                   "writing the file. Re-run generation.")
-            return "failed", None
-        size = expected.stat().st_size
-        append("")
-        append(f"Wrote queue/{name} ({size} bytes).")
-        try:
-            count = len(load_posts(expected))
-        except Exception as e:  # noqa: BLE001 - report, don't crash the job
-            append(f"WARNING: {name} is not readable as a post list: {e}")
-            return "failed", {"queue": name}
-        append(f"{count} post(s) generated. Continue with step 2.")
-        return status, {"queue": name, "posts": count}
-
-    return start_command_job(
-        "generate",
-        command,
-        label=f"generate {config['label']} for {date}",
-        queue_name=name,
-        display=(f"copilot -p \"$(cat {config['prompt']})\" -s "
-                 f"--allow-tool='{config['allow_tool']}'"
-                 + (" --allow-all-urls" if config["allow_all_urls"] else "")
-                 + " --no-ask-user"),
-        after=after,
-    )
+    return start_guided_job("generate", name, {"lane": lane, "date": date})
 
 
 def lanes_payload() -> list[dict]:
@@ -1108,8 +1147,13 @@ def delete_post(qpath: pathlib.Path, post_id: str) -> dict:
     if not removed:
         raise ValueError(f"{post_id!r} is not a post in {qpath.name}")
     remaining = [p for p in posts if str(p.get("id")) != post_id]
+    dependents = [p.get("id") for p in remaining + other_queue_posts(qpath)
+                  if (p.get("visual") or {}).get("of") == post_id]
+    if dependents:
+        raise ValueError("This post supplies media to " + ", ".join(map(str, dependents)) +
+                         ". Remove or change those cross-posts first.")
 
-    files = media_to_trash(removed, remaining)
+    files = media_to_trash(removed, remaining + other_queue_posts(qpath))
     dest = new_trash_dir(f"{qpath.stem}-{post_id}")
     moved = [_move_into(dest, path) for path in files]
 
@@ -1145,7 +1189,7 @@ def delete_queue(qpath: pathlib.Path) -> dict:
     except Exception:  # noqa: BLE001 - a broken queue must still be removable
         posts = []
 
-    files = media_to_trash(posts, [])
+    files = media_to_trash(posts, other_queue_posts(qpath)) if posts else []
     dest = new_trash_dir(qpath.stem)
     moved = [_move_into(dest, path) for path in files]
 
@@ -1179,12 +1223,95 @@ def delete_queue(qpath: pathlib.Path) -> dict:
     }
 
 
+def other_queue_posts(qpath: pathlib.Path) -> list[dict]:
+    posts = []
+    for candidate in QUEUE_DIR.glob("*.json"):
+        if candidate != qpath:
+            # A corrupt neighboring batch must not make deletion guess at ownership.
+            posts.extend(load_posts(candidate))
+    return posts
+
+
+def trash_entries() -> list[dict]:
+    if not TRASH_DIR.is_dir():
+        return []
+    entries = []
+    for path in sorted(TRASH_DIR.glob("*/manifest.json"), reverse=True):
+        if not path.with_name("restored").exists():
+            data = json.loads(path.read_text(encoding="utf-8"))
+            entries.append({"entry": path.parent.name, **data})
+    return entries
+
+
+def restore_trash(entry: str) -> dict:
+    if not SAFE_NAME_RE.fullmatch(entry or ""):
+        raise ValueError("Invalid restore entry.")
+    folder = TRASH_DIR / entry
+    if not _is_inside(folder, TRASH_DIR):
+        raise ValueError("Invalid restore path.")
+    manifest = folder / "manifest.json"
+    if not manifest.is_file() or (folder / "restored").exists():
+        raise ValueError("That entry is not available to restore.")
+    data = json.loads(manifest.read_text(encoding="utf-8"))
+    queue_name = data["queue"]
+    if not QUEUE_NAME_RE.fullmatch(queue_name):
+        raise ValueError("Invalid queue in restore manifest.")
+    qpath = QUEUE_DIR / queue_name
+    copies = []
+    for name in data.get("media", []):
+        if not SAFE_NAME_RE.fullmatch(name):
+            raise ValueError("Invalid media in restore manifest.")
+        copies.append((folder / name, OUT_DIR / name))
+    if data["kind"] == "queue":
+        copies.append((folder / data["stored_as"], qpath))
+        for name in data.get("siblings", []):
+            if not SAFE_NAME_RE.fullmatch(name):
+                raise ValueError("Invalid sibling in restore manifest.")
+            copies.append((folder / name, QUEUE_DIR / name))
+    else:
+        posts = load_posts(safe_queue_path(queue_name))
+        removed = json.loads((folder / "post.json").read_text(encoding="utf-8"))
+        if any(p.get("id") in {x.get("id") for x in posts} for p in removed):
+            raise ValueError("The post already exists; restore would overwrite it.")
+    for source, destination in copies:
+        if not _is_inside(source, folder) or not source.is_file():
+            raise ValueError("Restore source is missing or invalid.")
+        if destination.exists():
+            raise ValueError(f"Restore would overwrite {destination.name}; nothing restored.")
+    restored = []
+    try:
+        for source, destination in copies:
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source, destination)
+            restored.append(destination)
+    except OSError:
+        for destination in restored:
+            destination.unlink(missing_ok=True)
+        raise
+    if data["kind"] == "post":
+        guided_workflow.atomic_json(qpath, posts + removed)
+    (folder / "restored").touch()
+    return {"queue": queue_name, "restored": entry}
+
+
 # --------------------------------------------------------------------------
 # HTTP
 # --------------------------------------------------------------------------
 class Handler(BaseHTTPRequestHandler):
     server_version = "Layer8AdhocUI/1.0"
     quiet = True
+
+    def _trusted_request(self, *, mutation: bool = False) -> None:
+        port = self.server.server_address[1]
+        hosts = {f"127.0.0.1:{port}", f"localhost:{port}"}
+        if self.headers.get("Host") not in hosts:
+            raise PermissionError("This app accepts localhost requests only.")
+        origin = self.headers.get("Origin")
+        if origin is not None and origin not in {f"http://{host}" for host in hosts}:
+            raise PermissionError("Cross-origin requests are not allowed.")
+        if mutation and not secrets.compare_digest(
+                self.headers.get("X-Layer8-CSRF", ""), CSRF_TOKEN):
+            raise PermissionError("Refresh the app before making changes (session token missing or expired).")
 
     # -- helpers ----------------------------------------------------------
     def log_message(self, fmt, *args):  # noqa: A003 - stdlib hook
@@ -1197,6 +1324,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", content_type)
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", "no-store")
+        self.send_header("X-Content-Type-Options", "nosniff")
         for key, value in (extra or {}).items():
             self.send_header(key, value)
         self.end_headers()
@@ -1214,6 +1342,8 @@ class Handler(BaseHTTPRequestHandler):
         self._send(status, text.encode("utf-8"), "text/plain; charset=utf-8")
 
     def _read_body(self) -> bytes:
+        if getattr(self, "_request_body", None) is not None:
+            return self._request_body
         try:
             length = int(self.headers.get("Content-Length") or 0)
         except ValueError:
@@ -1237,7 +1367,10 @@ class Handler(BaseHTTPRequestHandler):
         parts = [p for p in parsed.path.split("/") if p]
         query = parse_qs(parsed.query)
         try:
+            self._trusted_request()
             self._route_get(parts, query)
+        except PermissionError as e:
+            self._error(403, str(e))
         except ValueError as e:
             self._error(400, str(e))
         except Exception as e:  # noqa: BLE001 - never kill the dev server
@@ -1249,8 +1382,47 @@ class Handler(BaseHTTPRequestHandler):
     def do_POST(self) -> None:  # noqa: N802 - stdlib hook
         parsed = urlparse(self.path)
         parts = [p for p in parsed.path.split("/") if p]
+        self._request_body = None
+        self.connection.settimeout(30)
         try:
-            self._route_post(parts)
+            self._trusted_request(mutation=True)
+            # Consume authenticated uploads before rejecting a stale revision.
+            # Closing a socket with unread input can reset it before the client sees 409.
+            self._request_body = self._read_body()
+            with MUTATION_LOCK:
+                queue = None
+                if len(parts) == 4 and parts[:2] == ["api", "queue"]:
+                    queue = safe_queue_path(parts[2])
+                    expected = self.headers.get("If-Match", "").strip('"')
+                    if expected != readiness(queue)["revision"]:
+                        raise RuntimeError("This batch changed. Refresh it before making another change.")
+                action = parts[-1] if parts else ""
+                starts_job = action in {"generate", "prepare", "ingest", "reels",
+                                        "stage-approval", "approve", "reschedule", "refresh-delivery"}
+                if starts_job or (len(parts) == 4 and parts[1] == "jobs"):
+                    result = self._route_post(parts)
+                else:
+                    with state_store().mutation() as db:
+                        result = self._route_post(parts)
+                        if queue and action not in {"publish-check"}:
+                            state_store().invalidate_approval(queue.name, db)
+                        elif action == "restore" and result.get("queue"):
+                            state_store().invalidate_approval(result["queue"], db)
+            name = result.pop("_refresh_queue", None)
+            if name:
+                result.update(queue_payload(safe_queue_path(name)))
+            self._json(result)
+        except PermissionError as e:
+            length = self.headers.get("Content-Length", "")
+            if self._request_body is None and length.isdecimal() and int(length) <= 65536:
+                self.connection.settimeout(1)
+                try:
+                    self.rfile.read(int(length))
+                except (TimeoutError, ConnectionError) as disconnected:
+                    self.log_message("Rejected request body was incomplete: %s", disconnected)
+            self._error(403, str(e))
+        except LookupError as e:
+            self._error(404, str(e))
         except ValueError as e:
             self._error(400, str(e))
         except RuntimeError as e:
@@ -1286,6 +1458,34 @@ class Handler(BaseHTTPRequestHandler):
             self._error(404, "not found")
             return
 
+        if parts == ["api", "session"]:
+            self._json({"csrf": CSRF_TOKEN, "diagnostics": diagnostics(),
+                        "active_job": active_job_id(), "data_root": str(REPO_ROOT)})
+            return
+        if parts == ["api", "trash"]:
+            self._json({"entries": trash_entries()})
+            return
+        if len(parts) == 5 and parts[:3] == ["api", "media", "staged"]:
+            safe_queue_path(parts[3])
+            name = unquote(parts[4])
+            directory = unassigned_dir(queue_name=parts[3])
+            path = directory / name
+            if not SAFE_NAME_RE.fullmatch(name) or not _is_inside(path, directory):
+                raise ValueError("Invalid staged image path.")
+            self._serve_file(path)
+            return
+        if len(parts) == 5 and parts[:3] == ["api", "media", "source"]:
+            qpath = safe_queue_path(parts[3])
+            image_id = unquote(parts[4])
+            spec = next((s for s in plan_for(load_posts(qpath)) if s.image_id == image_id), None)
+            if spec is None:
+                raise ValueError("Unknown image in this batch.")
+            source = guided_workflow.original(spec, REPO_ROOT)
+            if source is None:
+                raise ValueError("No original source is available.")
+            self._serve_file(source)
+            return
+
         # /api/media/<root>/<name>
         if len(parts) == 4 and parts[1] == "media":
             self._serve_file(safe_media_path(parts[2], parts[3]))
@@ -1305,7 +1505,10 @@ class Handler(BaseHTTPRequestHandler):
         if len(parts) == 2 and parts[1] == "queues":
             entries = []
             if QUEUE_DIR.is_dir():
-                for qpath in sorted(QUEUE_DIR.glob("*.json"), reverse=True):
+                def batch_order(path):
+                    date = re.search(r"\d{4}-\d{2}-\d{2}", path.stem)
+                    return (date.group(0) if date else "", path.name)
+                for qpath in sorted(QUEUE_DIR.glob("*.json"), key=batch_order, reverse=True):
                     entries.append(queue_summary(qpath))
             self._json({"queues": entries})
             return
@@ -1317,17 +1520,18 @@ class Handler(BaseHTTPRequestHandler):
         # /api/queue/<name>[/batch-prompt]
         if len(parts) >= 3 and parts[1] == "queue":
             qpath = safe_queue_path(parts[2])
+            if len(parts) == 3:
+                self._json(queue_payload(qpath))
+                return
             posts = load_posts(qpath)
             specs = plan_for(posts)
-            if len(parts) == 3:
-                self._json({
-                    "name": qpath.name,
-                    "lane": lane_for(qpath.name),
-                    "images": [spec_payload(s) for s in specs],
-                    "staged": staged_payload(specs),
-                    "posts": [post_payload(p) for p in posts],
-                    "active_job": active_job_id(),
-                })
+            if len(parts) == 4 and parts[3] == "download":
+                report = readiness(qpath, require_future=False)
+                if not report["media_ready"]:
+                    raise ValueError("Finish preparing the media before downloading the bundle.")
+                bundle = guided_workflow.download_bundle(posts, report["manifest"], REPO_ROOT)
+                self._send(200, bundle, "application/zip", {
+                    "Content-Disposition": f'attachment; filename="{qpath.stem}-ready.zip"'})
                 return
             if len(parts) == 4 and parts[3] == "batch-prompt":
                 only = None
@@ -1338,7 +1542,7 @@ class Handler(BaseHTTPRequestHandler):
                 return
         self._error(404, "not found")
 
-    def _route_post(self, parts: list[str]) -> None:
+    def _route_post(self, parts: list[str]) -> dict:
         # /api/generate  {lane, date}
         if parts == ["api", "generate"]:
             payload = json.loads(self._read_body() or b"{}")
@@ -1346,76 +1550,95 @@ class Handler(BaseHTTPRequestHandler):
             lane_config(lane)  # reject an unknown lane before touching the date
             date = str(payload.get("date") or "") or default_date(lane)
             job_id = start_generation(lane, date)
-            self._json({"job": job_payload(job_id)})
-            return
+            return {"job": job_payload(job_id)}
 
-        if len(parts) < 4 or parts[0] != "api" or parts[1] != "queue":
-            self._error(404, "not found")
-            return
+        if parts == ["api", "restore"]:
+            payload = json.loads(self._read_body() or b"{}")
+            return restore_trash(payload.get("entry", ""))
+        if len(parts) == 4 and parts[:2] == ["api", "jobs"] and parts[3] == "cancel":
+            state_store().cancel(parts[2])
+            return {"job": job_payload(parts[2])}
+
+        if len(parts) != 4 or parts[0] != "api" or parts[1] != "queue":
+            raise LookupError("Unknown action.")
         qpath = safe_queue_path(parts[2])
         action = parts[3]
 
         # Removal must not require the queue to be parseable or planned.
         if action == "delete":
-            if active_job_id():
-                raise RuntimeError("a job is running; wait for it to finish")
-            self._json({"deleted": delete_queue(qpath)})
-            return
+            return {"deleted": delete_queue(qpath)}
 
         if action == "delete-post":
-            if active_job_id():
-                raise RuntimeError("a job is running; wait for it to finish")
             payload = json.loads(self._read_body() or b"{}")
             result = delete_post(qpath, payload.get("post_id", ""))
-            posts = load_posts(qpath)
-            specs = plan_for(posts)
-            self._json({
-                "deleted": result,
-                "images": [spec_payload(s) for s in specs],
-                "staged": staged_payload(specs),
-                "posts": [post_payload(p) for p in posts],
-            })
-            return
+            return {"deleted": result, "_refresh_queue": qpath.name}
 
         posts = load_posts(qpath)
         specs = plan_for(posts)
+        directory = unassigned_dir(queue_name=qpath.name)
 
         if action == "upload":
             data = self._read_body()
             if not data:
                 raise ValueError("empty upload")
-            stored, skipped = extract_zip(data, unassigned_dir(create=True))
-            moved = auto_reconcile(specs)
-            self._json({
+            filename = unquote(self.headers.get("X-Filename", "images.zip"))
+            directory.mkdir(parents=True, exist_ok=True)
+            if filename.lower().endswith(".zip"):
+                stored, skipped = extract_zip(data, directory)
+            else:
+                safe = sanitize_entry_name(filename)
+                if not safe:
+                    raise ValueError("Choose PNG, JPEG, WebP images or a ZIP.")
+                with guided_workflow.decode_image(data) as image:
+                    target = unique_destination(directory, pathlib.Path(safe).stem + ".png")
+                    image.save(target, "PNG")
+                stored, skipped = [target.name], []
+            moved = auto_reconcile(specs, directory)
+            return {
                 "stored": stored,
                 "skipped": skipped,
                 "matched": moved,
-                "images": [spec_payload(s) for s in specs],
-                "staged": staged_payload(specs),
-            })
-            return
+                "_refresh_queue": qpath.name,
+            }
 
         if action == "assign":
             payload = json.loads(self._read_body() or b"{}")
             result = assign_staged(specs, payload.get("file", ""),
-                                   payload.get("image_id", ""))
-            self._json({
-                "assigned": result,
-                "images": [spec_payload(s) for s in specs],
-                "staged": staged_payload(specs),
-            })
-            return
+                                   payload.get("image_id", ""), directory)
+            return {"assigned": result, "_refresh_queue": qpath.name}
 
-        if action in JOB_SCRIPTS or action == "publish-check":
-            # publish-check is the same script, told not to push: it reports
-            # whether the batch would survive publish.yml.
-            kind = "publish" if action == "publish-check" else action
-            extra = ["--dry-run"] if action == "publish-check" else None
-            job_id = start_job(kind, qpath, extra=extra)
-            self._json({"job": job_payload(job_id)})
-            return
+        if action in {"replace", "undo-image", "edit-image"}:
+            if action == "replace":
+                payload = {"image_id": self.headers.get("X-Image-Id", "")}
+            else:
+                payload = json.loads(self._read_body() or b"{}")
+            spec = next((s for s in specs if s.image_id == payload.get("image_id")), None)
+            if spec is None:
+                raise ValueError("Choose an image from this batch.")
+            if action == "replace":
+                guided_workflow.replace_image(REPO_ROOT, qpath, spec, self._read_body())
+            elif action == "undo-image":
+                guided_workflow.undo_image(REPO_ROOT, qpath, posts, spec)
+            else:
+                guided_workflow.edit_image(REPO_ROOT, qpath, posts, spec,
+                                           payload.get("headline"), payload.get("subtext", ""))
+            return {"_refresh_queue": qpath.name}
 
-        self._error(404, "not found")
+        if action == "edit-post":
+            payload = json.loads(self._read_body() or b"{}")
+            guided_workflow.edit_post(qpath, posts, payload.get("post_id"), payload.get("changes"))
+            return {"_refresh_queue": qpath.name}
+        if action in {"prepare", "ingest", "reels", "stage-approval", "approve", "reschedule", "refresh-delivery"}:
+            payload = json.loads(self._read_body() or b"{}")
+            payload["revision"] = self.headers.get("If-Match", "").strip('"')
+            kind = "prepare" if action in {"ingest", "reels"} else action
+            job_id = start_guided_job(kind, qpath.name, payload)
+            return {"job": job_payload(job_id)}
+        if action == "publish-check":
+            return {"readiness": readiness(qpath)}
+        if action == "publish":
+            raise ValueError("Direct publishing is disabled. Prepare an approval PR, then approve its reviewed revision.")
+        raise LookupError("Unknown action.")
 
 
 # --------------------------------------------------------------------------
@@ -1454,7 +1677,21 @@ def verify_layout() -> None:
         )
 
 
-def main(port: int = 8765, open_browser: bool = True, verbose: bool = False) -> None:
+def configure_root(root: pathlib.Path) -> None:
+    global REPO_ROOT, QUEUE_DIR, INBOX_DIR, OUT_DIR, TRASH_DIR, FONTS_DIR
+    REPO_ROOT = root.resolve()
+    QUEUE_DIR = REPO_ROOT / "queue"
+    INBOX_DIR = REPO_ROOT / manual_media.DEFAULT_INBOX
+    OUT_DIR = REPO_ROOT / manual_media.DEFAULT_OUT_DIR
+    TRASH_DIR = REPO_ROOT / ".trash"
+    FONTS_DIR = REPO_ROOT / "assets" / "fonts"
+    os.environ["LAYER8_DATA_ROOT"] = str(REPO_ROOT)
+
+
+def main(port: int = 8765, open_browser: bool = True, verbose: bool = False,
+         data_root: pathlib.Path | None = None) -> None:
+    if data_root is not None:
+        configure_root(data_root)
     verify_layout()
     Handler.quiet = not verbose
     mimetypes.add_type("image/webp", ".webp")
@@ -1486,5 +1723,7 @@ if __name__ == "__main__":
                         help="don't open a browser window on start")
     parser.add_argument("--verbose", action="store_true",
                         help="log every HTTP request")
+    parser.add_argument("--data-root", type=pathlib.Path,
+                        help="Use queue/assets from this checkout while serving this version of the app.")
     args = parser.parse_args()
-    main(args.port, not args.no_browser, args.verbose)
+    main(args.port, not args.no_browser, args.verbose, args.data_root)

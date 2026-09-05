@@ -2,15 +2,18 @@
 """Publish approved posts to Postiz.
 
 Runs on merge to main. Reads queue/<date>.json, uploads media, schedules each
-post via the Postiz public API, then moves the file to posted/ and appends to
-posted/log.json.
+post via the Postiz public API, then moves completed queues to posted/. Each
+attempt writes immutable events to posted/receipts/; posted/log.json is read-only
+legacy history. Unknown submissions are reconciled, never blindly retried.
+Direct invocation requires --commit <approved full SHA>; GitHub Actions may
+instead supply GITHUB_SHA. Both paths verify merged-PR provenance themselves.
 
 Format-aware (post["format"], default "single"):
   * single   -> one image, IG post_type "post"
   * carousel -> N images (visual.files), IG CAROUSEL (post_type "post")
   * reel     -> one mp4 (visual.file), IG REELS (a single video with post_type
-                "post" is auto-published as a Reel; degrades to an image post if
-                the mp4 is missing). Optional post["trial_reel"] -> is_trial_reel.
+                "post" is auto-published as a Reel; missing video blocks delivery).
+                Optional post["trial_reel"] -> is_trial_reel.
   * story    -> one image/video, IG post_type "story"
 
 Growth extras: post["first_comment"] is posted as the first comment (Postiz sends
@@ -32,10 +35,12 @@ Note: integration IDs map your accounts/platforms to Postiz channels.
 Fill INTEGRATIONS after connecting your accounts in the Postiz UI
 (Settings -> API shows channel IDs).
 """
+import argparse
 import json
 import os
 import sys
 import pathlib
+import uuid
 import requests
 from datetime import datetime, timedelta, timezone
 from typing import Any
@@ -43,27 +48,35 @@ from typing import Any
 from publish_helpers import (
     VIDEO_EXTS,
     append_new_log_records,
+    append_receipt,
     archive_queue_file,
     build_caption,
+    ACCEPTED_STATUSES,
+    UNCERTAIN_STATUSES,
+    latest_records,
+    load_delivery_records,
     load_log,
     missing_local_paths,
+    post_fingerprint,
+    record_status,
+    require_approved_payload,
+    require_publish_ready,
+    response_post_id,
     resolve_local_paths,
     scheduled_post_ids,
 )
 
 
-def _require_env(name: str) -> str:
-    val = os.environ.get(name)
-    if not val:
-        sys.exit(
-            f"Missing required env var {name}. Set the POSTIZ_URL and "
-            f"POSTIZ_API_KEY GitHub secrets before merging an approval PR."
-        )
-    return val
+POSTIZ_URL = os.environ.get("POSTIZ_URL", "").rstrip("/")
+HEADERS = {"Authorization": os.environ.get("POSTIZ_API_KEY", "")}
 
 
-POSTIZ_URL = _require_env("POSTIZ_URL").rstrip("/")
-HEADERS = {"Authorization": _require_env("POSTIZ_API_KEY")}
+def request_headers() -> dict:
+    if not POSTIZ_URL:
+        raise ValueError("Missing POSTIZ_URL")
+    if not HEADERS.get("Authorization"):
+        raise ValueError("Missing POSTIZ_API_KEY")
+    return HEADERS
 
 # account+platform -> Postiz integration (channel) ID. FILL THESE IN.
 # Note: ("layer8culture", "tiktok") is active. The layer8culture pipeline now
@@ -155,8 +168,8 @@ PLATFORM_SETTINGS = {
 # TikTok caps its Drafts inbox at 5 PENDING uploads per 24h; a 6th UPLOAD is rejected
 # (spam_risk_too_many_pending_share) and silently never reaches Drafts. The generator is
 # meant to keep TikTok masters at <=5/day, but as a safety net we also enforce the cap
-# here: only the first 5 inbox-bound TikTok posts in a run are scheduled, the rest are
-# skipped (not errored). DIRECT_POST TikTok posts (post-audit) publish directly and do
+# here across persisted batches in every rolling 24h scheduling window; excess
+# posts are explicitly skipped. DIRECT_POST TikTok posts publish directly and do
 # NOT accumulate as pending drafts, so they are exempt.
 TIKTOK_INBOX_CAP = 5
 
@@ -166,7 +179,10 @@ TIKTOK_INBOX_CAP = 5
 # verified). YouTube caps the combined length of all tags at 500 chars.
 YOUTUBE_TITLE_MAX = 100
 YOUTUBE_TAGS_MAX = 500
-FATAL_SKIP_REASONS = {"missing_media", "non_video_media", "postiz_error"}
+FATAL_SKIP_REASONS = {
+    "missing_media", "non_video_media", "postiz_error", "network_error",
+    "unknown_submission", "revision_conflict", "provider_error",
+}
 
 
 def parse_postiz_datetime(value: str) -> datetime:
@@ -194,14 +210,16 @@ def normalize_postiz_content(value: str | None) -> str:
 def list_postiz_posts(start_dt: datetime, end_dt: datetime) -> list[dict]:
     r = requests.get(
         f"{POSTIZ_URL}/api/public/v1/posts",
-        headers=HEADERS,
+        headers=request_headers(),
         params={"startDate": utc_iso(start_dt), "endDate": utc_iso(end_dt)},
         timeout=60,
     )
     r.raise_for_status()
     payload = r.json()
-    posts = payload.get("posts") if isinstance(payload, dict) else []
-    return [p for p in posts if isinstance(p, dict)]
+    posts = payload.get("posts") if isinstance(payload, dict) else None
+    if not isinstance(posts, list) or any(not isinstance(post, dict) for post in posts):
+        raise ValueError("Postiz returned an invalid post list; reconciliation stopped")
+    return posts
 
 
 def is_matching_existing_postiz_post(
@@ -210,10 +228,11 @@ def is_matching_existing_postiz_post(
     caption: str,
     schedule_time: str,
 ) -> bool:
-    if str(candidate.get("state") or "").upper() in {"ERROR", "FAILED"}:
+    if str(candidate.get("state") or "").upper() not in {"QUEUE", "SCHEDULED", "PUBLISHED"}:
         return False
     integration = candidate.get("integration") or {}
-    if not isinstance(integration, dict) or integration.get("id") != integration_id:
+    candidate_integration = integration.get("id") if isinstance(integration, dict) else None
+    if (candidate_integration or candidate.get("integrationId")) != integration_id:
         return False
     if normalize_postiz_content(candidate.get("content")) != normalize_postiz_content(caption):
         return False
@@ -233,10 +252,13 @@ def find_existing_postiz_duplicate(
         scheduled_at - timedelta(hours=12),
         scheduled_at + timedelta(hours=12),
     )
-    for candidate in existing_posts:
-        if is_matching_existing_postiz_post(candidate, integration_id, caption, schedule_time):
-            return candidate
-    return None
+    matches = [
+        candidate for candidate in existing_posts
+        if is_matching_existing_postiz_post(candidate, integration_id, caption, schedule_time)
+    ]
+    if len(matches) > 1:
+        raise ValueError("Multiple matching Postiz posts; reconcile explicitly before retrying")
+    return matches[0] if matches else None
 
 
 def _youtube_title(post: dict) -> str:
@@ -337,7 +359,7 @@ def upload_media(filepath: str) -> dict:
     with open(filepath, "rb") as f:
         r = requests.post(
             f"{POSTIZ_URL}/api/public/v1/upload",
-            headers=HEADERS,
+            headers=request_headers(),
             files={"file": f},
             timeout=120,
         )
@@ -345,32 +367,18 @@ def upload_media(filepath: str) -> dict:
     return r.json()  # contains id + path
 
 
-def first_nested_value(payload: Any, keys: tuple[str, ...]) -> Any:
-    if isinstance(payload, dict):
-        for key in keys:
-            if payload.get(key):
-                return payload[key]
-        for value in payload.values():
-            nested = first_nested_value(value, keys)
-            if nested:
-                return nested
-    if isinstance(payload, list):
-        for item in payload:
-            nested = first_nested_value(item, keys)
-            if nested:
-                return nested
-    return None
-
-
 def postiz_response_metadata(payload: Any) -> dict:
     metadata = {}
-    postiz_id = first_nested_value(payload, ("id", "_id", "postId", "post_id"))
-    if postiz_id:
-        metadata["postiz_post_id"] = str(postiz_id)
+    post_id = response_post_id(payload)
+    if post_id:
+        metadata["postiz_post_id"] = post_id
     if isinstance(payload, dict):
         status = payload.get("status") or payload.get("state")
         if status:
             metadata["postiz_status"] = str(status)
+            metadata["provider_status"] = str(status)
+        if payload.get("visibility") in {"public", "private", "unlisted"}:
+            metadata["visibility"] = payload["visibility"]
     return metadata
 
 
@@ -379,7 +387,14 @@ def skip_result(
     integration_id: str | None = None,
     detail: str | None = None,
 ) -> dict:
-    result = {"scheduled": False, "skip_reason": reason}
+    result = {
+        "scheduled": False,
+        "delivery_status": "failed" if reason in FATAL_SKIP_REASONS else "skipped",
+        "publisher": "postiz",
+        "skip_reason": reason,
+    }
+    if reason == "unknown_submission":
+        result["delivery_status"] = "unknown"
     if integration_id:
         result["integration_id"] = integration_id
     if detail:
@@ -416,16 +431,55 @@ def instagram_media_failure(post: dict, fmt: str, paths: list[str], missing: lis
     return None
 
 
-def schedule(post: dict) -> dict:
+def delivery_mode(post: dict) -> dict:
+    settings = platform_settings(post, post.get("format", "single"))
+    if post["platform"] == "tiktok":
+        inbox = settings.get("content_posting_method") == "UPLOAD"
+        return {
+            "delivery_mode": "inbox" if inbox else "direct",
+            "visibility": "private" if inbox or settings.get("privacy_level") == "SELF_ONLY" else "public",
+        }
+    if post["platform"] == "youtube":
+        requested = settings.get("type", "public")
+        return {
+            "delivery_mode": "youtube_upload",
+            "visibility": requested if requested in {"private", "unlisted"} else "unknown",
+            "requested_visibility": requested,
+        }
+    return {"delivery_mode": "direct", "visibility": "unknown"}
+
+
+def accepted_result(post: dict, metadata: dict, existing: bool = False) -> dict:
+    state = str(metadata.get("provider_status") or metadata.get("postiz_status") or "").upper()
+    if state in {"ERROR", "FAILED"}:
+        return {**skip_result("postiz_error"), **metadata}
+    if state == "DRAFT":
+        return {**skip_result("unknown_submission", detail="Provider returned a draft rather than a scheduled post"), **metadata}
+    status = "published" if state == "PUBLISHED" else "queued" if state in {"QUEUE", "SCHEDULED"} else "accepted"
+    mode = {**delivery_mode(post), **{key: metadata[key] for key in ("visibility",) if key in metadata}}
+    if status == "published" and mode["delivery_mode"] == "inbox":
+        status = "inbox"
+    elif status == "published" and mode["visibility"] == "private":
+        status = "private"
+    return {
+        "scheduled": True, "delivery_status": status, "publisher": "postiz",
+        **mode, **metadata, **({"reconciled": True} if existing else {}),
+    }
+
+
+def schedule(post: dict, before_submit=None, reconcile_only: bool = False,
+             repo_root: pathlib.Path | None = None) -> dict:
     key = (post["account"], post["platform"])
     integration_id = INTEGRATIONS.get(key)
     if not integration_id or integration_id == "REPLACE_ME":
         print(f"  ! no integration mapped for {key}, skipping {post['id']}")
+        if reconcile_only:
+            return skip_result("unknown_submission", detail="Integration unavailable; earlier submission remains unresolved")
         return skip_result("missing_integration")
 
     fmt = post.get("format", "single")
-    paths = resolve_local_paths(post)
-    missing = missing_local_paths(post)
+    paths = resolve_local_paths(post, repo_root)
+    missing = missing_local_paths(post, repo_root)
     is_video = bool(paths) and paths[0].lower().endswith(VIDEO_EXTS)
 
     if post["platform"] == "instagram":
@@ -444,11 +498,8 @@ def schedule(post: dict) -> dict:
                   f"({', '.join(VIDEO_EXTS)}), skipping")
             return skip_result("non_video_media", integration_id, ", ".join(paths[:5]))
 
-    # A reel needs a video; if the mp4 didn't render, fall back to publishing the
-    # base still as a normal image post so the post still goes out.
     if fmt == "reel" and not is_video:
-        print(f"  ! reel {post['id']} has no video, publishing image as a feed post")
-        fmt = "single"
+        return skip_result("non_video_media", integration_id, "A reel requires a finalized video")
 
     caption, first_comment = build_caption(post)
     existing = find_existing_postiz_duplicate(
@@ -457,15 +508,15 @@ def schedule(post: dict) -> dict:
         post["schedule_time"],
     )
     if existing:
-        postiz_id = str(existing.get("id") or "")
-        state = str(existing.get("state") or "existing").lower()
-        print(f"  ! {post['id']}: matching {state} Postiz post exists, skipping duplicate")
-        return {
-            "scheduled": False,
-            "integration_id": integration_id,
-            "skip_reason": "postiz_duplicate",
-            **({"postiz_post_id": postiz_id} if postiz_id else {}),
-        }
+        metadata = postiz_response_metadata(existing)
+        if not metadata.get("postiz_post_id"):
+            return skip_result("unknown_submission", integration_id, "Matching post has no identifier")
+        return accepted_result(post, {"integration_id": integration_id, **metadata}, existing=True)
+    if reconcile_only:
+        return skip_result(
+            "unknown_submission", integration_id,
+            "No unique provider match for an earlier uncertain attempt. No new post was submitted.",
+        )
 
     media = []
     for p in paths:
@@ -487,63 +538,117 @@ def schedule(post: dict) -> dict:
             "settings": platform_settings(post, fmt),
         }],
     }
+    if before_submit:
+        before_submit({"integration_id": integration_id, "media_ids": [item["id"] for item in media]})
     r = requests.post(f"{POSTIZ_URL}/api/public/v1/posts",
-                      headers={**HEADERS, "Content-Type": "application/json"},
+                      headers={**request_headers(), "Content-Type": "application/json"},
                       json=payload, timeout=60)
     if r.ok:
         try:
             response_payload = r.json()
         except ValueError:
             response_payload = {}
-        extra = f" +comment" if first_comment else ""
-        print(f"  + scheduled {post['id']} ({fmt}, {len(media)} media{extra}) "
-              f"for {post['schedule_time']}")
-        return {
-            "scheduled": True,
-            "integration_id": integration_id,
-            **postiz_response_metadata(response_payload),
-        }
-    print(f"  x {post['id']}: {r.status_code} {r.text[:200]}")
-    result = skip_result("postiz_error", integration_id)
+        metadata = postiz_response_metadata(response_payload)
+        if not metadata.get("postiz_post_id"):
+            existing = find_existing_postiz_duplicate(integration_id, caption, post["schedule_time"])
+            if not existing or not postiz_response_metadata(existing).get("postiz_post_id"):
+                return skip_result("unknown_submission", integration_id, "Provider accepted request without a verifiable post ID")
+            metadata = postiz_response_metadata(existing)
+        return accepted_result(post, {"integration_id": integration_id, **metadata})
+    result = skip_result("unknown_submission" if r.status_code >= 500 else "postiz_error", integration_id)
     result["postiz_status_code"] = r.status_code
     return result
 
-def main(queue_file: str) -> None:
-    qpath = pathlib.Path(queue_file)
-    posts = json.loads(qpath.read_text(encoding="utf-8"))
-    posted_dir = pathlib.Path("posted")
-    posted_dir.mkdir(exist_ok=True)
-    log_path = posted_dir / "log.json"
-    log = load_log(log_path)
-    already_scheduled = scheduled_post_ids(log)
-
-    # Enforce TikTok's 5-pending-drafts/24h inbox cap: schedule only the first
-    # TIKTOK_INBOX_CAP inbox-bound TikTok posts; skip the rest so they aren't
-    # rejected by TikTok as spam. Order follows the queue file (time-spread by the
-    # generator). Non-TikTok and DIRECT_POST posts are unaffected.
-    results = []
-    tiktok_inbox_seen = 0
-    seen_post_ids = set(already_scheduled)
-    for p in posts:
-        post_id = str(p.get("id") or "")
-        if post_id and post_id in seen_post_ids:
-            print(f"  ! {post_id}: already seen as scheduled, skipping Postiz")
-            results.append({**p, "scheduled": False, "skip_reason": "duplicate_post_id"})
+def inbox_limit_reached(post: dict, records: list[dict]) -> bool:
+    if not is_tiktok_inbox_post(post):
+        return False
+    integration_id = INTEGRATIONS.get((post["account"], post["platform"]))
+    candidate = parse_postiz_datetime(post["schedule_time"])
+    times = [candidate]
+    for previous in latest_records(records).values():
+        if str(previous.get("id")) == str(post["id"]):
             continue
-        if post_id:
-            seen_post_ids.add(post_id)
-        if is_tiktok_inbox_post(p):
-            tiktok_inbox_seen += 1
-            if tiktok_inbox_seen > TIKTOK_INBOX_CAP:
-                print(f"  ! TikTok inbox cap ({TIKTOK_INBOX_CAP} pending/24h) reached, "
-                      f"skipping {p['id']} (a 6th+ upload is rejected as "
-                      f"spam_risk_too_many_pending_share)")
-                results.append({**p, "scheduled": False, "skip_reason": "tiktok_inbox_cap"})
-                continue
-        results.append({**p, **schedule(p)})
+        previous_integration = previous.get("integration_id") or INTEGRATIONS.get(
+            (previous.get("account"), previous.get("platform"))
+        )
+        if previous_integration != integration_id:
+            continue
+        if previous.get("delivery_mode") != "inbox" and not (
+            previous.get("platform") == "tiktok" and "delivery_mode" not in previous
+        ):
+            continue
+        if record_status(previous) not in ACCEPTED_STATUSES | UNCERTAIN_STATUSES:
+            continue
+        moment = parse_postiz_datetime(previous["schedule_time"])
+        if abs(moment - candidate) < timedelta(days=1):
+            times.append(moment)
+    times.sort()
+    for index, start in enumerate(times):
+        window = [moment for moment in times[index:] if moment - start < timedelta(days=1)]
+        if candidate in window and len(window) > TIKTOK_INBOX_CAP:
+            return True
+    return False
 
-    log = append_new_log_records(log, results)
-    log_path.write_text(json.dumps(log, indent=2), encoding="utf-8")
+
+def main(queue_file: str, repo_root: pathlib.Path | None = None, *, commit: str | None = None) -> list[dict]:
+    root = pathlib.Path(repo_root or os.environ.get("LAYER8_DATA_ROOT") or pathlib.Path.cwd()).resolve()
+    qpath = pathlib.Path(queue_file)
+    qpath = (qpath if qpath.is_absolute() else root / qpath).resolve()
+    approval = require_approved_payload(qpath, root, commit)
+    posts = json.loads(qpath.read_text(encoding="utf-8"))
+    require_publish_ready(qpath, root, approved_revision=approval["revision"])
+    posted_dir = root / "posted"
+    posted_dir.mkdir(exist_ok=True)
+    records = load_delivery_records(root)
+    results = []
+    for p in posts:
+        fingerprint = post_fingerprint(p, root)
+        previous = latest_records(records).get(str(p["id"]), {})
+        previous_status = record_status(previous)
+        submitted = False
+        context = {
+            "attempt_id": uuid.uuid4().hex,
+            "integration_id": INTEGRATIONS.get((p["account"], p["platform"])),
+            "commit": approval["commit"],
+            **delivery_mode(p),
+        }
+
+        def before_submit(metadata):
+            nonlocal submitted
+            require_publish_ready(qpath, root, approved_revision=approval["revision"])
+            context.update(metadata)
+            record = append_receipt(root, p, {
+                "publisher": "postiz", "scheduled": False, "delivery_status": "submitting",
+                **context,
+            }, fingerprint)
+            records.append(record)
+            submitted = True
+
+        if previous_status in ACCEPTED_STATUSES | UNCERTAIN_STATUSES and previous.get("fingerprint") != fingerprint:
+            result = skip_result("revision_conflict", detail="Existing delivery belongs to another or legacy revision; reconcile before replacing it.")
+        elif previous_status in ACCEPTED_STATUSES:
+            results.append(previous)
+            continue
+        elif previous_status not in UNCERTAIN_STATUSES and inbox_limit_reached(p, records):
+            result = {**skip_result("tiktok_inbox_cap"), **delivery_mode(p)}
+        else:
+            try:
+                result = schedule(
+                    p, before_submit=before_submit,
+                    reconcile_only=previous_status in UNCERTAIN_STATUSES, repo_root=root,
+                )
+            except (requests.RequestException, ValueError, OSError) as exc:
+                uncertain = submitted or previous_status in UNCERTAIN_STATUSES
+                result = skip_result(
+                    "unknown_submission" if uncertain else "provider_error",
+                    detail=f"{type(exc).__name__}: provider operation did not complete; inspect the receipt before retrying",
+                )
+        result = {**context, **result}
+        record = append_receipt(root, p, result, fingerprint)
+        records.append(record)
+        results.append(record)
+        print(json.dumps({"id": p["id"], **result}, sort_keys=True))
+
     failures = fatal_publish_failures(results)
     if failures:
         print(f"Fatal publish failures in {queue_file}; leaving queue file unarchived.")
@@ -555,7 +660,13 @@ def main(queue_file: str) -> None:
         sys.exit(1)
 
     archive_queue_file(qpath, posted_dir)
-    print(f"Done: {sum(p['scheduled'] for p in results)}/{len(results)} scheduled.")
+    print(json.dumps({"posts": results}, sort_keys=True))
+    return results
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("queue_file")
+    parser.add_argument("--repo-root", type=pathlib.Path)
+    parser.add_argument("--commit", help="Full immutable commit SHA of the reviewed, merged payload")
+    args = parser.parse_args()
+    main(args.queue_file, repo_root=args.repo_root, commit=args.commit)

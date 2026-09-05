@@ -363,10 +363,55 @@ class IngestTests(unittest.TestCase):
         queue_path = self._queue([single_post("p1"), single_post("p2")])
         (self.inbox / "p1.png").write_text("not an image", encoding="utf-8")
         self._drop("p2.png")
-        self.assertEqual(0, self._run(queue_path))
+        self.assertEqual(1, self._run(queue_path))
         posts = json.loads(queue_path.read_text(encoding="utf-8"))
         self.assertNotIn("file", posts[0]["visual"])
         self.assertIn("file", posts[1]["visual"])
+
+    def test_corrupt_source_fails_strict_and_is_preserved(self):
+        queue_path = self._queue([single_post()])
+        source = self.inbox / "p1.png"
+        source.write_bytes(b"not a png")
+        self.assertEqual(1, self._run(queue_path, strict=True))
+        self.assertEqual(b"not a png", source.read_bytes())
+        self.assertFalse((self.out_dir / "p1.png").exists())
+
+    def test_required_typography_failure_preserves_source_and_previous_output(self):
+        queue_path = self._queue([single_post(headline="REQUIRED")])
+        source = self._drop("p1.png")
+        self.out_dir.mkdir()
+        output = self.out_dir / "p1.png"
+        Image.new("RGB", (12, 12), "red").save(output)
+        before = output.read_bytes()
+        with patch.object(openai_gen, "render_infographic", return_value=False):
+            self.assertEqual(1, self._run(queue_path, strict=True))
+        self.assertEqual(before, output.read_bytes())
+        self.assertTrue(source.exists())
+        self.assertNotIn("file", json.loads(queue_path.read_text())[0]["visual"])
+        self.assertEqual([], list(self.out_dir.glob(".*.png")))
+
+    def test_ingest_without_new_still_does_not_replace_reel_delivery_path(self):
+        post = single_post(file="assets/generated/p1.mp4", cover="assets/generated/p1-cover.png")
+        post["format"] = "reel"
+        queue_path = self._queue([post])
+        self._run(queue_path)
+        visual = json.loads(queue_path.read_text())[0]["visual"]
+        self.assertEqual("assets/generated/p1.mp4", visual["file"])
+        self.assertEqual("assets/generated/p1-cover.png", visual["cover"])
+
+    def test_changed_still_invalidates_reel_and_all_reuse_descendants(self):
+        post = single_post(file="assets/generated/p1.mp4", cover="assets/generated/p1-cover.png")
+        post["format"] = "reel"
+        copy = {"id": "copy", "format": "reel",
+                "visual": {"source": "reuse", "of": "p1", "file": "copy.mp4"}}
+        next_copy = {"id": "next", "format": "reel",
+                     "visual": {"source": "reuse", "of": "copy", "file": "next.mp4"}}
+        queue_path = self._queue([post, copy, next_copy])
+        self._drop("p1.png")
+        self.assertEqual(0, self._run(queue_path))
+        for item in json.loads(queue_path.read_text()):
+            self.assertNotIn("file", item["visual"])
+            self.assertNotIn("cover", item["visual"])
 
 
 class ManualModeTests(unittest.TestCase):

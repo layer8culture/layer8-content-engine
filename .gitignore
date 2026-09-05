@@ -22,6 +22,9 @@ pr-body.md
 # the browser land here with a manifest so a mistake stays recoverable.
 .trash/
 
+# Local workflow records, source history, logs and approval references.
+.local/
+
 # Never commit large binaries / installers (GitHub rejects >100MB)
 *.exe
 
