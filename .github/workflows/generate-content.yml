@@ -2,21 +2,23 @@ name: Generate Content (nightly)
 
 on:
   schedule:
-    - cron: "0 2 * * *"   # 02:00 UTC = 22:00 America/New_York the prior evening; the job resolves "tomorrow" in TZ (America/New_York) so it targets the approval-morning date
-  workflow_dispatch: {}     # manual trigger button
+    - cron: "0 2 * * *"   # The nominal run targets the following Eastern morning.
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "Eastern target date (YYYY-MM-DD); blank uses Eastern tomorrow"
+        required: false
+        type: string
 
 permissions:
+  actions: read
   contents: write
   pull-requests: write
 
 jobs:
   generate:
     runs-on: ubuntu-latest
-    # Resolve all dates in the brand's local timezone so "tomorrow" (in the Copilot
-    # generation step and the `date -d tomorrow` shell steps below) matches the
-    # America/New_York day a human approves the batch. Without TZ the runner is UTC,
-    # where 02:00 UTC is already the next calendar day — so dates landed a day too
-    # far ahead and posts scheduled for tomorrow instead of today.
+    # Resolve once from the original run metadata, not the delayed runner clock.
     env:
       TZ: America/New_York
     steps:
@@ -26,6 +28,18 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
+      - name: Resolve intended batch date once
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_EVENT: ${{ github.event_name }}
+          RUN_SCHEDULE: ${{ github.event.schedule }}
+          INPUT_DATE: ${{ inputs.date }}
+        run: |
+          RUN_CREATED_AT="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" --jq .created_at)"
+          python scripts/generation_date.py --lane layer8culture \
+            --event "$RUN_EVENT" --run-created-at "$RUN_CREATED_AT" \
+            --cron "$RUN_SCHEDULE" --date "$INPUT_DATE" --github-env "$GITHUB_ENV"
 
       - name: Install Copilot CLI
         run: npm install -g @github/copilot
@@ -40,7 +54,7 @@ jobs:
         # stricter setup, replace --allow-all-urls with one or more
         # --allow-url=<domain> flags for a curated source allow-list.
         run: |
-          copilot -p "$(cat scripts/generation-prompt.md)" \
+          copilot -p "$(cat scripts/generation-prompt.md)"$'\n\n'"$GENERATION_TARGET_INSTRUCTION" \
             -s \
             --allow-tool='read,write(queue/*),web-fetch' \
             --allow-all-urls \
@@ -50,7 +64,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.COPILOT_CLI_TOKEN }}
           FIRST_COPILOT_OUTCOME: ${{ steps.copilot-generate.outcome }}
-        # The Copilot step above MUST write queue/<tomorrow>.json. If the agent
+        # The Copilot step above MUST write the resolved QUEUE_FILE. If the agent
         # instead saves the complete JSON under ~/.copilot/session-state/.../files,
         # recover the matching artifact before paying for a second generation. Retry
         # Copilot once only when recovery cannot find a valid queue artifact, then
@@ -59,12 +73,10 @@ jobs:
         run: |
           set -u
 
-          QUEUE_DATE="$(date -d tomorrow +%F)"
-          QUEUE_FILE="queue/${QUEUE_DATE}.json"
-          SUMMARY_FILE="queue/${QUEUE_DATE}.summary.md"
+          QUEUE_DATE="$BATCH_DATE"
 
           run_copilot() {
-            copilot -p "$(cat scripts/generation-prompt.md)" \
+            copilot -p "$(cat scripts/generation-prompt.md)"$'\n\n'"$GENERATION_TARGET_INSTRUCTION" \
               -s \
               --allow-tool='read,write(queue/*),web-fetch' \
               --allow-all-urls \
@@ -110,9 +122,13 @@ jobs:
           echo "Confirmed $QUEUE_FILE exists ($(wc -c < "$QUEUE_FILE") bytes)."
           python scripts/queue_json_guard.py "$QUEUE_FILE" --repair
 
+      - name: Assign and validate posting schedule
+        run: |
+          python scripts/schedule_planner.py "$QUEUE_FILE" --date "$BATCH_DATE"
+          python scripts/schedule_planner.py "$QUEUE_FILE" --for-publish --date "$BATCH_DATE"
+
       - name: Verify summary has no internal process warnings
         run: |
-          SUMMARY_FILE="queue/$(date -d tomorrow +%F).summary.md"
           if [ -f "$SUMMARY_FILE" ]; then
             if grep -Eiq 'permission issue|write access|session artifact|\\.copilot/session-state|copy that file|manual.*queue|tool name|allow-tool' "$SUMMARY_FILE"; then
               echo "::error::$SUMMARY_FILE contains internal process or permission-warning text. Re-run generation after fixing the summary."
@@ -144,13 +160,18 @@ jobs:
           AZURE_OPENAI_VIDEO_SIZE: ${{ vars.AZURE_OPENAI_VIDEO_SIZE }}
         run: |
           pip install openai requests pillow
-          # Process tomorrow's queue (the file the Copilot step just generated or recovered).
-          QUEUE_FILE="queue/$(date -d tomorrow +%F).json"
+          # Only process this run's exact generated or recovered queue.
           echo "Generating images for $QUEUE_FILE"
           python scripts/openai_gen.py "$QUEUE_FILE"
           # Animate any format:"reel" posts into mp4s (uses the stills above).
           echo "Rendering reels for $QUEUE_FILE"
           python scripts/reel_gen.py "$QUEUE_FILE"
+
+      - name: Gate approval PR on schema, schedule, and final media
+        run: |
+          python scripts/queue_json_guard.py "$QUEUE_FILE"
+          python scripts/schedule_planner.py "$QUEUE_FILE" --for-publish --date "$BATCH_DATE"
+          python scripts/batch_readiness.py "$QUEUE_FILE"
 
       - name: Open approval PR
         # The org disables "Allow GitHub Actions to create pull requests", so the
@@ -161,7 +182,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.ENGINE_PR_TOKEN }}
         run: |
-          DATE=$(date -d tomorrow +%F)
+          DATE="$BATCH_DATE"
           BRANCH="posts/$DATE"
           git config user.name "layer8-engine"
           git config user.email "engine@layer8culture.io"
@@ -178,7 +199,6 @@ jobs:
           # Images embed by the just-pushed commit SHA via raw.githubusercontent.com
           # (immutable, survives branch deletion on merge; relies on a public repo).
           SHA=$(git rev-parse HEAD)
-          QUEUE_FILE="queue/$DATE.json"
           python scripts/build_pr_preview.py "$QUEUE_FILE" \
                  --repo "${{ github.repository }}" \
                  --sha "$SHA" \

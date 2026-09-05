@@ -1,185 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Layer8Culture Content Engine</title>
-<meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#000000">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000000'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-family='Space Grotesk, Arial, sans-serif' font-weight='700' font-size='20' fill='%230047FF'%3E8%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="/static/styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Layer8Culture Content Engine</title>
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000000'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-family='Arial' font-weight='700' font-size='20' fill='%230047FF'%3E8%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/app.js" defer></script>
 </head>
 <body>
-<header class="topbar">
-  <div class="brand">
-    <span class="lockup">
-      <span class="dot" aria-hidden="true"></span>
-      <span class="wordmark">Layer<span class="eight">8</span><span class="suffix">.Culture</span></span>
-    </span>
-    <span class="divider" aria-hidden="true"></span>
-    <div>
-      <h1>Content Engine</h1>
-      <p class="sub">No-API image mode — generate by hand, finish in the engine.</p>
+  <a class="skip-link" href="#workspace">Skip to workspace</a>
+  <header class="topbar">
+    <div class="brand">
+      <span class="lockup"><span class="dot" aria-hidden="true"></span><span class="wordmark">Layer<span class="eight">8</span><span class="suffix">.Culture</span></span></span>
+      <div><h1>Content Engine</h1><p class="sub">Technology has seven layers. We're the eighth.</p></div>
     </div>
-  </div>
-  <div id="queue-badge" class="badge hidden"></div>
-</header>
+    <span class="local-badge">Local workspace</span>
+  </header>
 
-<main>
-  <!-- 0 ------------------------------------------------------------------ -->
-  <section class="step" id="step-generate" data-step="0">
-    <div class="step-head">
-      <h2><span class="num">0</span> Generate a batch</h2>
-      <button class="ghost" id="refresh-lanes">Refresh</button>
+  <main id="workspace" tabindex="-1">
+    <nav aria-label="Batch workflow">
+      <ol class="steps">
+        <li><button type="button" data-screen="batches" aria-current="step"><span>1</span> Batches</button></li>
+        <li><button type="button" data-screen="images" disabled><span>2</span> Get images</button></li>
+        <li><button type="button" data-screen="prepare" disabled><span>3</span> Prepare previews</button></li>
+        <li><button type="button" data-screen="review" disabled><span>4</span> Review &amp; approve</button></li>
+        <li><button type="button" data-screen="delivery" disabled><span>5</span> Delivery</button></li>
+      </ol>
+    </nav>
+    <div id="notice" class="notice" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+    <div id="error" class="notice error" role="alert" hidden>
+      <span id="error-text"></span><button type="button" id="dismiss-error">Dismiss</button>
     </div>
-    <p class="hint">
-      Runs the same Copilot CLI command the nightly workflow runs, writing a new
-      file into <code>queue/</code>. It takes a few minutes — it researches as it
-      writes. Already have a queue file? Skip to step 1.
-    </p>
-    <div id="copilot-warning" class="report bad hidden"></div>
-    <div id="lane-list" class="lane-list">
-      <p class="muted">Loading…</p>
-    </div>
-    <div class="genbar">
-      <label class="field">
-        <span>Date</span>
-        <input type="date" id="gen-date">
-      </label>
-      <span id="gen-target" class="meta muted"></span>
-      <button class="primary" id="run-generate" disabled>Generate</button>
-    </div>
-    <div id="generate-status" class="jobstatus"></div>
-    <pre id="generate-log" class="log hidden"></pre>
-  </section>
+    <section id="job-panel" class="panel job-panel" aria-labelledby="job-heading" hidden>
+      <div class="section-head"><h2 id="job-heading">Work in progress</h2><button type="button" id="cancel-job" hidden>Cancel local work</button></div>
+      <p id="job-status" role="status" aria-live="polite" aria-atomic="true"></p>
+      <p class="hint">You can leave this page and return. Cancelling local work does not undo a PR merge or provider submission.</p>
+      <button type="button" id="retry-job" hidden>Reconnect to progress</button>
+      <details><summary>Job details and logs</summary><pre id="job-log" class="log" tabindex="0"></pre></details>
+    </section>
 
-  <!-- 1 ------------------------------------------------------------------ -->
-  <section class="step" id="step-queue" data-step="1">
-    <div class="step-head">
-      <h2><span class="num">1</span> Pick a queue</h2>
-      <button class="ghost" id="refresh-queues">Refresh</button>
+    <div class="batch-heading" id="batch-heading" hidden>
+      <div><p class="eyebrow" id="batch-lane"></p><p id="batch-name"></p></div>
+      <button type="button" id="refresh-batch">Refresh batch</button>
     </div>
-    <div id="queue-list" class="queue-list">
-      <p class="muted">Loading…</p>
-    </div>
-  </section>
+    <section id="readiness" aria-label="Batch readiness" hidden></section>
 
-  <!-- 2 ------------------------------------------------------------------ -->
-  <section class="step locked" id="step-prompts" data-step="2">
-    <div class="step-head">
-      <h2><span class="num">2</span> Copy the prompts</h2>
-      <div class="actions">
-        <label class="check">
-          <input type="checkbox" id="pending-only" checked>
-          Only images still needed
-        </label>
-        <button class="primary" id="copy-all">Copy everything</button>
+    <section class="screen panel" id="screen-batches" aria-labelledby="heading-batches">
+      <div class="section-head"><h2 id="heading-batches" tabindex="-1">Your batches</h2><button type="button" id="refresh-queues">Refresh</button></div>
+      <p class="hint">Resume a batch, or start with a brand and an explicit Eastern date. Nothing is approved automatically.</p>
+      <div id="queue-list" class="queue-list"><p>Loading batches...</p></div>
+      <details id="new-batch" class="fold">
+        <summary>Create a new batch</summary>
+        <div class="form-grid">
+          <label>Brand<select id="gen-lane" disabled></select></label>
+          <label>Batch date (America/New_York)<input type="date" id="gen-date" required></label>
+        </div>
+        <p id="gen-description" class="hint"></p>
+        <p id="generation-warning" class="warning" hidden></p>
+      </details>
+      <details class="fold"><summary>Environment diagnostics</summary><p class="hint">Missing tools are reported here, never installed automatically.</p><div id="diagnostics">Connecting...</div></details>
+      <details id="trash-details" class="fold"><summary>Recently removed</summary><p class="hint">Restore only into an available name. Removing local content does not unpublish anything.</p><button type="button" id="refresh-trash">Refresh removed items</button><div id="trash-list"></div></details>
+    </section>
+
+    <section class="screen panel" id="screen-images" aria-labelledby="heading-images" hidden>
+      <h2 id="heading-images" tabindex="-1">Get images</h2>
+      <p class="hint">Copy one group of up to four prompts. Generate the images yourself in ChatGPT, then bring them back here. No account automation or image API is required.</p>
+      <div class="section-head">
+        <label>Prompt group<select id="prompt-group"></select></label>
+        <a class="button" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">Open ChatGPT <span class="sr-only">(new tab)</span></a>
       </div>
-    </div>
-    <p class="locknote">Pick a queue in step 1 to unlock this.</p>
-    <p class="hint">
-      Paste this into ChatGPT in one go. It asks for a single <code>.zip</code> with
-      every file named exactly as the engine expects.
-    </p>
-    <pre id="batch-prompt" class="promptbox">…</pre>
-    <details class="fold">
-      <summary>Per-image prompts</summary>
-      <div id="image-list" class="image-list"></div>
-    </details>
-  </section>
-
-  <!-- 3 ------------------------------------------------------------------ -->
-  <section class="step locked" id="step-upload" data-step="3">
-    <div class="step-head">
-      <h2><span class="num">3</span> Drop the zip</h2>
-    </div>
-    <p class="locknote">Pick a queue in step 1 to unlock this.</p>
-    <div id="dropzone" class="dropzone">
-      <p><strong>Drop ChatGPT's .zip here</strong></p>
-      <p class="muted">or</p>
-      <label class="filebtn">
-        Choose file<input type="file" id="zip-input" accept=".zip,application/zip" hidden>
-      </label>
-    </div>
-    <div id="upload-report" class="report hidden"></div>
-
-    <div id="reconcile" class="hidden">
-      <h3>Needs your eyes</h3>
-      <p class="hint">
-        These didn't match a slot, or matched by name but have the wrong shape.
-        Filenames alone aren't trusted — check the picture before assigning.
-      </p>
-      <div id="staged-list" class="staged-list"></div>
-    </div>
-  </section>
-
-  <!-- 4 ------------------------------------------------------------------ -->
-  <section class="step locked" id="step-ingest" data-step="4">
-    <div class="step-head">
-      <h2><span class="num">4</span> Finish the images</h2>
-      <button class="primary" id="run-ingest">Run ingest</button>
-    </div>
-    <p class="locknote">Pick a queue in step 1 to unlock this.</p>
-    <p class="hint">
-      Crops to the brand aspect, upscales to a 2K master, composites the brand
-      typography, and writes the paths back into the queue file.
-    </p>
-    <div id="ingest-status" class="jobstatus"></div>
-    <pre id="ingest-log" class="log hidden"></pre>
-    <div id="still-grid" class="grid"></div>
-  </section>
-
-  <!-- 5 ------------------------------------------------------------------ -->
-  <section class="step locked" id="step-reels" data-step="5">
-    <div class="step-head">
-      <h2><span class="num">5</span> Render the reels</h2>
-      <button class="primary" id="run-reels">Render reels</button>
-    </div>
-    <p class="locknote">Pick a queue in step 1 to unlock this.</p>
-    <p class="hint">
-      Runs ffmpeg for every <code>format: "reel"</code> post and copies the
-      cross-posts. This always re-renders, so it takes a minute.
-    </p>
-    <div id="reels-status" class="jobstatus"></div>
-    <pre id="reels-log" class="log hidden"></pre>
-    <div id="reel-grid" class="grid"></div>
-  </section>
-
-  <!-- 6 ------------------------------------------------------------------ -->
-  <section class="step locked" id="step-review" data-step="6">
-    <div class="step-head">
-      <h2><span class="num">6</span> Review</h2>
-      <button class="ghost" id="refresh-review">Refresh</button>
-    </div>
-    <p class="locknote">Pick a queue in step 1 to unlock this.</p>
-    <div id="review-list" class="review-list"></div>
-    <div class="handoff" id="publish-panel">
-      <h3>Publish</h3>
-      <p class="hint">
-        You just reviewed every post above, so there's no approval PR. This
-        commits the queue and its media to <code>main</code> and
-        <code>publish.yml</code> schedules them in Postiz.
-      </p>
-      <p class="hint">
-        The commit is built in a throwaway worktree off a freshly fetched
-        <code>origin/main</code> — nothing in this clone is pushed, so being
-        behind or shallow can't revert anything.
-      </p>
-      <div class="actions">
-        <button class="primary" id="run-publish" disabled>Publish to main</button>
-        <button class="ghost" id="check-publish">Check without publishing</button>
+      <p id="group-progress" role="status"></p>
+      <details><summary>Prompt text (select manually if copying is unavailable)</summary><pre id="group-prompt" class="promptbox" tabindex="0"></pre></details>
+      <div id="group-images" class="image-grid"></div>
+      <div id="dropzone" class="dropzone">
+        <label for="image-files"><strong>Return your images</strong><br>Drop a ZIP or individual PNG, JPEG or WebP files, or choose files below.</label>
+        <input type="file" id="image-files" accept=".zip,.png,.jpg,.jpeg,.webp,application/zip,image/png,image/jpeg,image/webp" multiple>
       </div>
-      <p class="meta" id="publish-ready"></p>
-      <div id="publish-status" class="jobstatus"></div>
-      <pre id="publish-log" class="log hidden"></pre>
-    </div>
-  </section>
-</main>
+      <div id="upload-report" class="notice" role="status" aria-live="polite" hidden></div>
+      <div id="reconcile" hidden><h3>Match these images</h3><p class="hint">Check the scene and headline, not just the filename. Only this batch's unassigned images appear here.</p><div id="staged-list" class="staged-list"></div></div>
+    </section>
 
-<div id="toast" class="toast hidden" role="status" aria-live="polite">
-  <span class="msg" id="toast-msg"></span>
-  <button type="button" class="dismiss" id="toast-dismiss" aria-label="Dismiss message">&times;</button>
-</div>
-<script src="/static/app.js"></script>
+    <section class="screen panel" id="screen-prepare" aria-labelledby="heading-prepare" hidden>
+      <h2 id="heading-prepare" tabindex="-1">Prepare previews</h2>
+      <p class="hint">One action finishes changed images, adds the intended typography, and prepares any required videos and cross-posts. Unchanged outputs are reused.</p>
+      <p id="prepare-summary"></p>
+      <div id="prepare-images" class="image-grid"></div>
+    </section>
+
+    <section class="screen panel" id="screen-review" aria-labelledby="heading-review" hidden>
+      <div class="section-head"><h2 id="heading-review" tabindex="-1">Review &amp; approve</h2><button type="button" data-action="reschedule">Reschedule batch</button></div>
+      <p class="hint">Review every slide and video, the complete text, and the named Eastern schedule. Any edit requires the changed revision to be reviewed again.</p>
+      <div id="review-list" class="review-list"></div>
+      <div id="approval-panel" class="approval-panel"></div>
+    </section>
+
+    <section class="screen panel" id="screen-delivery" aria-labelledby="heading-delivery" hidden>
+      <h2 id="heading-delivery" tabindex="-1">Delivery</h2>
+      <p class="hint">Preparation, approval, merge and publication are different events. These are observed receipt and workflow snapshots, not live provider status. Refresh delivery to fetch the latest GitHub evidence; opening this screen only reads the local cache.</p>
+      <div id="delivery-approval"></div>
+      <div id="delivery-workflow" aria-live="polite" aria-atomic="true"></div>
+      <div id="delivery-list" class="delivery-list"></div>
+    </section>
+
+    <div id="next-card" class="next-card">
+      <p id="next-hint">Connecting to the local workspace...</p>
+      <button type="button" id="next-action" class="primary" disabled>Connecting...</button>
+    </div>
+    <div class="batch-tools" id="batch-tools" hidden>
+      <a id="download-batch" class="button" hidden>Download final assets &amp; captions</a>
+      <details><summary>Batch details</summary><dl id="batch-details"></dl><button type="button" id="delete-batch" class="danger">Remove batch</button></details>
+    </div>
+  </main>
+
+  <dialog id="media-dialog" aria-labelledby="media-title">
+    <div class="section-head"><h2 id="media-title">Compare image</h2><button type="button" data-close-dialog>Close</button></div>
+    <p id="media-description"></p>
+    <div id="media-comparison" class="comparison"></div>
+    <div id="media-tools"></div>
+  </dialog>
+  <dialog id="edit-dialog" aria-labelledby="edit-title">
+    <div class="section-head"><h2 id="edit-title">Edit post</h2><button type="button" data-close-dialog>Close</button></div>
+    <form id="edit-form"><div id="edit-fields"></div><p class="hint">Saving invalidates the previous review and may require preparing previews again.</p><button type="submit">Save changes</button></form>
+  </dialog>
+  <dialog id="reschedule-dialog" aria-labelledby="reschedule-title">
+    <div class="section-head"><h2 id="reschedule-title">Choose a new batch date</h2><button type="button" data-close-dialog>Close</button></div>
+    <form id="reschedule-form"><label>New date (America/New_York)<input type="date" id="reschedule-date" required></label><p>The engine will build an explicit schedule for this date. It will not quietly roll expired posts forward. Review the new times before staging approval again.</p><button type="submit">Apply new schedule</button></form>
+  </dialog>
+  <dialog id="approve-dialog" aria-labelledby="approve-title">
+    <div class="section-head"><h2 id="approve-title">Approve this exact revision</h2><button type="button" data-close-dialog>Close</button></div>
+    <div id="approve-identity"></div>
+    <p>This merges only the displayed PR head if its checks and repository permissions allow it. It does not mean the posts are scheduled or public.</p>
+    <label class="check"><input type="checkbox" id="approve-confirm">I reviewed every slide, video, caption and schedule in this revision.</label>
+    <button type="button" id="approve-submit" class="primary" disabled>Approve and merge displayed PR</button>
+  </dialog>
 </body>
 </html>
