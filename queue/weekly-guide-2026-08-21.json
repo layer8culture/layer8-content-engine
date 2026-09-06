@@ -1,0 +1,88 @@
+[
+  {
+    "id": "20260821-layer8culture-instagram-guide",
+    "account": "layer8culture",
+    "category": "Creator Systems",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-08-21T11:00:00-04:00",
+    "text": "Stop asking AI for answers. Start giving it a job.\n\nThis week's AI field guide is about Do This, Not That: AI Workflow Edition.\n\nThe carousel gives you the short version.\nThe guide gives you the practical map.\n\nComment FIXES and I will send you the full AI field guide.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#BuildWithAI",
+      "#AIBuilders",
+      "#AItools",
+      "#PromptEngineering",
+      "#AIagents",
+      "#BuildInPublic"
+    ],
+    "hashtags_in_first_comment": true,
+    "comment_to_dm": {
+      "campaign": "weekly_guide_do_this_not_that_ai_workflow",
+      "keyword": "FIXES",
+      "offer": "AI Workflow Fixes Guide",
+      "guide_url": "https://www.layer8culture.io/guides/do-this-not-that-ai-workflow/",
+      "dm_prompt": "Here is the AI field guide: https://www.layer8culture.io/guides/do-this-not-that-ai-workflow/ What are you trying to get better at with AI right now?",
+      "public_reply": "Sent. Check your DMs.",
+      "route": "ai_field_guide_nurture"
+    },
+    "visual": {
+      "source": "library",
+      "aspect": "1:1",
+      "quality": "high",
+      "slides": [
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: Do This, Not That: AI Workflow Edition. Slide idea: DO THIS, NOT THAT. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "DO THIS, NOT THAT",
+          "subtext": "AI gets better when the workflow gets clearer.",
+          "accent": "DO",
+          "role": "cover"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: Do This, Not That: AI Workflow Edition. Slide idea: NOT: VAGUE ASK. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a macro detail of a workflow coming together.",
+          "headline": "NOT: VAGUE ASK",
+          "subtext": "Do: give the job and outcome.",
+          "accent": "NOT:",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: Do This, Not That: AI Workflow Edition. Slide idea: NOT: ONE GIANT PROMPT. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "NOT: ONE GIANT PROMPT",
+          "subtext": "Do: break it into steps.",
+          "accent": "NOT:",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: Do This, Not That: AI Workflow Edition. Slide idea: NOT: NO SOURCES. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a macro detail of a workflow coming together.",
+          "headline": "NOT: NO SOURCES",
+          "subtext": "Do: bring the context.",
+          "accent": "NOT:",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: Do This, Not That: AI Workflow Edition. Slide idea: NOT: BLIND TRUST. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "NOT: BLIND TRUST",
+          "subtext": "Do: review the output.",
+          "accent": "NOT:",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: Do This, Not That: AI Workflow Edition. Slide idea: NOT: RESTART DAILY. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a macro detail of a workflow coming together.",
+          "headline": "NOT: RESTART DAILY",
+          "subtext": "Do: save the workflow.",
+          "accent": "NOT:",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: Do This, Not That: AI Workflow Edition. Slide idea: COMMENT FIXES. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "COMMENT FIXES",
+          "subtext": "Get the full field guide.",
+          "accent": "COMMENT",
+          "role": "cta"
+        }
+      ],
+      "library_hint": "default branded graphic"
+    }
+  }
+]
