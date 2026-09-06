@@ -82,8 +82,8 @@
 # (the engine renders its own on-brand imagery; no YouTube footage is reposted).
 # Edit MOOD_RULES in the script or override entries by hand if needed.
 #
-  - title: Cosmic Focus | Afrofuturist Deep Space Coding Radio #Shorts
-    url: https://www.youtube.com/watch?v=D5JDTPZeDRQ
+  - title: Afrofuturist Culture Sessions: Uk Lofi to Vibe, Create & Connect ✨🎧 Vol. 1 #lofi #afrolofi 2026
+    url: https://www.youtube.com/watch?v=QvZHatg-hIo
     mood: night
     note: drive viewers to the full session; link in bio.
 
