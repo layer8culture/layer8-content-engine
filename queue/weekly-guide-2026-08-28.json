@@ -1,0 +1,88 @@
+[
+  {
+    "id": "20260828-layer8culture-instagram-guide",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-08-28T11:00:00-04:00",
+    "text": "Better prompts start before you type.\n\nThis week's AI field guide is about 7 Prompting Habits That Make AI Useful.\n\nThe carousel gives you the short version.\nThe guide gives you the practical map.\n\nComment PROMPTS and I will send you the full AI field guide.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#BuildWithAI",
+      "#AIBuilders",
+      "#AItools",
+      "#PromptEngineering",
+      "#AIagents",
+      "#BuildInPublic"
+    ],
+    "hashtags_in_first_comment": true,
+    "comment_to_dm": {
+      "campaign": "weekly_guide_seven_prompting_habits_that_make_ai_useful",
+      "keyword": "PROMPTS",
+      "offer": "Prompting Habits Guide",
+      "guide_url": "https://www.layer8culture.io/guides/seven-prompting-habits-that-make-ai-useful/",
+      "dm_prompt": "Here is the AI field guide: https://www.layer8culture.io/guides/seven-prompting-habits-that-make-ai-useful/ What are you trying to get better at with AI right now?",
+      "public_reply": "Sent. Check your DMs.",
+      "route": "ai_field_guide_nurture"
+    },
+    "visual": {
+      "source": "library",
+      "aspect": "1:1",
+      "quality": "high",
+      "slides": [
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: 7 Prompting Habits That Make AI Useful. Slide idea: BETTER PROMPTS. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "BETTER PROMPTS",
+          "subtext": "Start before you type.",
+          "accent": "BETTER",
+          "role": "cover"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: 7 Prompting Habits That Make AI Useful. Slide idea: NAME THE JOB. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a macro detail of a workflow coming together.",
+          "headline": "NAME THE JOB",
+          "subtext": "Tell AI what role it plays.",
+          "accent": "NAME",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: 7 Prompting Habits That Make AI Useful. Slide idea: GIVE CONTEXT. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "GIVE CONTEXT",
+          "subtext": "Do not make it guess.",
+          "accent": "GIVE",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: 7 Prompting Habits That Make AI Useful. Slide idea: SET CONSTRAINTS. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a macro detail of a workflow coming together.",
+          "headline": "SET CONSTRAINTS",
+          "subtext": "Shape the output.",
+          "accent": "SET",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: 7 Prompting Habits That Make AI Useful. Slide idea: SHOW EXAMPLES. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "SHOW EXAMPLES",
+          "subtext": "Give it a pattern.",
+          "accent": "SHOW",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: 7 Prompting Habits That Make AI Useful. Slide idea: REVIEW THE WORK. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a macro detail of a workflow coming together.",
+          "headline": "REVIEW THE WORK",
+          "subtext": "AI is a draft partner.",
+          "accent": "REVIEW",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture carousel slide in a deep black and deep navy environment with electric blue accents, premium creator-tech atmosphere, human-centered AI themes, strong negative space, and a distinct scene. Topic: 7 Prompting Habits That Make AI Useful. Slide idea: COMMENT PROMPTS. Use abstract tool-connected AI workflows, terminal windows as soft shapes, node graphs, premium studio details, and builder energy. No rendered text. Make this slide feel like a wide cinematic system map in motion.",
+          "headline": "COMMENT PROMPTS",
+          "subtext": "Get the full field guide.",
+          "accent": "COMMENT",
+          "role": "cta"
+        }
+      ],
+      "library_hint": "default branded graphic"
+    }
+  }
+]
