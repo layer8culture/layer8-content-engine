@@ -43,10 +43,12 @@ Env vars:
 import argparse
 import base64
 import json
+import math
 import os
 import string
 import pathlib
-from PIL import Image, ImageDraw, ImageFont, ImageOps
+from PIL import (Image, ImageChops, ImageDraw, ImageFilter, ImageFont, ImageOps,
+                 ImageStat)
 
 import manual_media
 
@@ -289,17 +291,221 @@ def _fit_headline(draw, text, max_w, start_size, min_size, max_lines):
     return font, min_size, tracking, _wrap(draw, text, font, max_w, tracking)
 
 
-def _bottom_scrim(base: Image.Image, frac: float = 0.6, max_alpha: int = 205) -> Image.Image:
-    """Composite a transparent-to-dark vertical gradient over the bottom of the
-    image so overlaid text stays legible on any background."""
+def _balance_lines(draw, text: str, font, max_w: float, tracking: float,
+                   lines: list[str]) -> list[str]:
+    """Re-wrap ``text`` to the same line count with the lines evened out.
+
+    Greedy wrapping packs each line to the margin and leaves the remainder on the
+    last one, so "ONE DRIVER, ANY DEVICE" breaks as "ONE DRIVER, ANY / DEVICE" and
+    strands a single word. Narrowing the measure until the line count is about to
+    grow finds the most even break for the same number of lines, which is what a
+    premium editorial card needs.
+    """
+    if len(lines) < 2:
+        return lines
+    widths = [_line_width(draw, word, font, tracking) for word in text.split()]
+    lo, hi = (max(widths) if widths else 0.0), float(max_w)
+    best = lines
+    while hi - lo > 1.0:
+        mid = (lo + hi) / 2
+        candidate = _wrap(draw, text, font, mid, tracking)
+        if len(candidate) <= len(lines):
+            best, hi = candidate, mid
+        else:
+            lo = mid
+    return best
+
+
+def _type_scale(w: int, h: int) -> float:
+    """Reference dimension for sizing type on a frame of ``w x h``.
+
+    Sizing purely off width under-sets portrait frames: a 9:16 master is 1152
+    wide against 2048 of height, so a headline scaled from width lands at ~4.8%
+    of frame height where the same rule gives 8.5% on a 1:1 master. The geometric
+    mean tracks the frame's actual visual area instead, and is exactly ``w`` when
+    ``w == h``, so square posts render identically to before.
+    """
+    return math.sqrt(float(w) * float(h))
+
+
+def _block_bottom(y: int, font, tracking: float, lines: list[str]) -> int:
+    """Bottom of the ink for the last of ``lines`` drawn from ``y``.
+
+    ``draw.text`` places the ascender at ``y`` and the glyph box extends below it,
+    so a line's real footprint is taller than the leading used to advance between
+    lines. Measuring it is what keeps a measured block height honest.
+    """
+    if not lines:
+        return y
+    try:
+        return y + int(font.getbbox(lines[-1])[3])
+    except Exception:  # noqa: BLE001 - fall back to the nominal font size
+        return y + int(getattr(font, "size", 0))
+
+
+# --------------------------------------------------------------------------
+# The headline scrim
+# --------------------------------------------------------------------------
+# The scrim exists for one reason: keep the headline legible on any plate. It is
+# sized to that job and nothing more. The previous version darkened the bottom
+# 54-60% of the frame to 80-90% black regardless of what was underneath, which
+# crushed already-dark art into a featureless void, and built its ramp with
+# integer alpha per row, which banded into 5-6px stripes at the 2K master size.
+SCRIM_TARGET_LUM = 64.0   # luminance we want the plate behind the headline to sit at
+SCRIM_MIN_ALPHA = 38      # a whisper even on black art, so the type still feels seated
+SCRIM_MAX_ALPHA = 200     # never crush the plate completely
+SCRIM_RAMP_FRAC = 0.18    # ease-in height, as a fraction of image height
+SCRIM_PERCENTILE = 0.85   # judge the plate by its highlights, not its average
+# Legibility depends on how *busy* the plate is, not only how bright it is. A
+# dark but detailed plate (rooftops, foliage, particles) gives white type nothing
+# to separate from even though its luminance asks for almost no scrim. This adds
+# a modest floor driven by local detail, capped so it can never crush the art.
+SCRIM_DETAIL_GAIN = 16.0
+SCRIM_DETAIL_DEADBAND = 1.8  # below this a plate is flat enough to need nothing
+SCRIM_DETAIL_MAX = 46
+
+# Editorial Drop layout constants.
+# 4.5% left type 2.9% clear of the frame edge once the drift below was fixed,
+# which is inside the UI overlay Instagram draws over the foot of a feed post.
+EDITORIAL_BOTTOM_MARGIN = 0.075
+SUB_MAX_LINES = 3
+# Safety rail. A layout that puts its type near the top (top_text_media_card)
+# would otherwise ask the scrim to cover the whole frame at full strength, which
+# is a dimmer, not a scrim. Those layouts were never scrim-backed anyway.
+SCRIM_MIN_TOP_FRAC = 0.35
+
+# Ordered 8x8 Bayer thresholds. Deterministic (so the same input always renders
+# the same bytes) and enough to break the 1/255 alpha steps into a fine
+# crosshatch instead of straight horizontal edges.
+_BAYER8 = (
+    0, 32, 8, 40, 2, 34, 10, 42,
+    48, 16, 56, 24, 50, 18, 58, 26,
+    12, 44, 4, 36, 14, 46, 6, 38,
+    60, 28, 52, 20, 62, 30, 54, 22,
+    3, 35, 11, 43, 1, 33, 9, 41,
+    51, 19, 59, 27, 49, 17, 57, 25,
+    15, 47, 7, 39, 13, 45, 5, 37,
+    63, 31, 55, 23, 61, 29, 53, 21,
+)
+
+
+def _bayer_field(w: int, h: int) -> Image.Image:
+    """An ``w x h`` L-mode field of tiled Bayer thresholds."""
+    tile = Image.new("L", (8, 8))
+    tile.putdata([int((v + 0.5) * 255 / 64) for v in _BAYER8])
+    strip = Image.new("L", (w, 8))
+    for x in range(0, w, 8):
+        strip.paste(tile, (x, 0))
+    field = Image.new("L", (w, h))
+    for y in range(0, h, 8):
+        field.paste(strip, (0, y))
+    return field
+
+
+def _plate_luminance(base: Image.Image, y0: int,
+                     percentile: float = SCRIM_PERCENTILE) -> float:
+    """Luminance of the region the headline will sit on.
+
+    A percentile rather than a mean: art that is mostly black but has one bright
+    practical light still needs enough scrim for the type to survive crossing it.
+    """
     w, h = base.size
-    start = int(h * (1 - frac))
-    column = Image.new("L", (1, h), 0)
+    y0 = max(0, min(int(y0), h - 1))
+    region = base.crop((0, y0, w, h)).convert("L")
+    hist = region.histogram()
+    total = sum(hist)
+    if not total:
+        return 0.0
+    cutoff = total * percentile
+    seen = 0
+    for value, count in enumerate(hist):
+        seen += count
+        if seen >= cutoff:
+            return float(value)
+    return 255.0
+
+
+def _plate_detail(base: Image.Image, y0: int) -> float:
+    """How busy the region under the type is, as a high-pass standard deviation.
+
+    Flat art scores near zero; art full of small edges scores high. This is the
+    part of legibility that luminance alone misses.
+    """
+    w, h = base.size
+    y0 = max(0, min(int(y0), h - 1))
+    region = base.crop((0, y0, w, h)).convert("L")
+    if region.width < 4 or region.height < 4:
+        return 0.0
+    blurred = region.filter(ImageFilter.GaussianBlur(2))
+    return ImageStat.Stat(ImageChops.difference(region, blurred)).stddev[0]
+
+
+def _scrim_peak_alpha(plate_lum: float, plate_detail: float = 0.0) -> int:
+    """How much black the plate needs to reach SCRIM_TARGET_LUM.
+
+    Compositing black at alpha ``a`` scales luminance by ``1 - a``, so the alpha
+    that lands a plate of ``L`` on the target is ``1 - target/L``. Dark art asks
+    for almost nothing and keeps its detail; bright art still gets a real scrim.
+    ``plate_detail`` raises the floor for busy plates, which need separation even
+    when they are already dark.
+    """
+    busy = max(0.0, plate_detail - SCRIM_DETAIL_DEADBAND)
+    detail_floor = min(SCRIM_DETAIL_MAX, int(round(busy * SCRIM_DETAIL_GAIN)))
+    floor = SCRIM_MIN_ALPHA + detail_floor
+    if plate_lum <= 0:
+        return min(SCRIM_MAX_ALPHA, floor)
+    needed = 1.0 - (SCRIM_TARGET_LUM / plate_lum)
+    alpha = int(round(max(0.0, needed) * 255))
+    return max(floor, min(SCRIM_MAX_ALPHA, max(alpha, floor)))
+
+
+def _scrim_alpha_map(w: int, h: int, text_top: int, peak: int) -> Image.Image:
+    """Alpha channel for the scrim: eased in above the type, flat behind it.
+
+    Holding a constant alpha behind the text (instead of ramping to maximum at
+    the very bottom) is what keeps the plate even and stops the gradient from
+    darkening far more of the frame than the type actually needs.
+    """
+    ramp = max(1, int(h * SCRIM_RAMP_FRAC))
+    start = max(0, min(int(text_top), h) - ramp)
+    floor_col = Image.new("L", (1, h), 0)
+    frac_col = Image.new("L", (1, h), 0)
+    floor_px = floor_col.load()
+    frac_px = frac_col.load()
     for y in range(start, h):
-        column.putpixel((0, y), int(max_alpha * (y - start) / max(1, h - start)))
-    alpha = column.resize((w, h))
+        if y >= text_top:
+            value = float(peak)
+        else:
+            t = (y - start) / float(ramp)
+            value = peak * (t * t * (3.0 - 2.0 * t))  # smoothstep: no visible onset
+        whole = int(value)
+        floor_px[0, y] = min(255, whole)
+        frac_px[0, y] = int(round((value - whole) * 255))
+    floor_full = floor_col.resize((w, h), Image.NEAREST)
+    frac_full = frac_col.resize((w, h), Image.NEAREST)
+    # Promote a pixel to the next alpha step when its fractional part beats the
+    # local Bayer threshold. That converts a hard band boundary into a dither.
+    carry = ImageChops.subtract(frac_full, _bayer_field(w, h)).point(
+        lambda v: 1 if v > 0 else 0)
+    return ImageChops.add(floor_full, carry)
+
+
+def _bottom_scrim(base: Image.Image, text_top: int | None = None) -> Image.Image:
+    """Darken just enough behind the headline to keep it legible.
+
+    ``text_top`` is the y the type block starts at; the scrim eases in above it
+    and holds steady from there down.
+    """
+    if base.mode != "RGBA":
+        base = base.convert("RGBA")
+    w, h = base.size
+    if text_top is None:
+        text_top = int(h * 0.58)
+    text_top = max(int(h * SCRIM_MIN_TOP_FRAC), min(int(text_top), h))
+    peak = _scrim_peak_alpha(_plate_luminance(base, text_top),
+                             _plate_detail(base, text_top))
     scrim = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-    scrim.putalpha(alpha)
+    scrim.putalpha(_scrim_alpha_map(w, h, text_top, peak))
     return Image.alpha_composite(base, scrim)
 
 
@@ -331,11 +537,11 @@ def render_infographic(image_path: pathlib.Path, headline: str,
         return False
     base = Image.open(image_path).convert("RGBA")
     w, h = base.size
-    base = _bottom_scrim(base)
     draw = ImageDraw.Draw(base)
 
     margin = int(w * 0.07)
     max_w = w - 2 * margin
+    scale = _type_scale(w, h)
     centered = position == "lower-center"
 
     accent_tokens = {t.strip(string.punctuation).lower()
@@ -344,10 +550,10 @@ def render_infographic(image_path: pathlib.Path, headline: str,
     headline_text = headline.strip().upper()
     font_h, size_h, track_h, lines_h = _fit_headline(
         draw, headline_text, max_w,
-        start_size=int(w * 0.085), min_size=int(w * 0.042), max_lines=3)
+        start_size=int(scale * 0.085), min_size=int(scale * 0.042), max_lines=3)
     if BEBAS_NEUE_PATH.exists():
         size = size_h
-        while size >= int(w * 0.040):
+        while size >= int(scale * 0.040):
             candidate = ImageFont.truetype(str(BEBAS_NEUE_PATH), size)
             tracking = size * 0.005
             lines = _wrap(draw, headline_text, candidate, max_w, tracking)
@@ -355,6 +561,7 @@ def render_infographic(image_path: pathlib.Path, headline: str,
                 font_h, size_h, track_h, lines_h = candidate, size, tracking, lines
                 break
             size -= 2
+    lines_h = _balance_lines(draw, headline_text, font_h, max_w, track_h, lines_h)
     hlh = int(size_h * 1.16)
 
     sub_lines: list[str] = []
@@ -362,20 +569,25 @@ def render_infographic(image_path: pathlib.Path, headline: str,
     size_s = 0
     track_s = 0.0
     if subtext:
-        size_s = max(int(w * 0.030), 18)
+        size_s = max(int(scale * 0.030), 18)
         font_s = _load_font(INTER_PATH, size_s, "Medium")
         track_s = size_s * 0.01
         sub_lines = _wrap(draw, subtext.strip(), font_s, max_w, track_s)
     slh = int(size_s * 1.35)
 
-    accent_h = max(3, int(w * 0.012))
-    accent_w = int(w * 0.10)
+    accent_h = max(3, int(scale * 0.012))
+    accent_w = int(scale * 0.10)
     accent_gap = int(size_h * 0.35)
     sub_gap = int(size_h * 0.28) if sub_lines else 0
 
     block_h = accent_h + accent_gap + len(lines_h) * hlh + sub_gap + len(sub_lines) * slh
     bottom_margin = int(h * 0.09)
     top = h - bottom_margin - block_h
+
+    # Now that the type block is measured, darken only what sits under it. The
+    # draw handle has to be rebuilt because alpha_composite returns a new image.
+    base = _bottom_scrim(base, text_top=top)
+    draw = ImageDraw.Draw(base)
 
     def line_x(line, font, tracking):
         if not centered:
@@ -424,19 +636,11 @@ def render_editorial_drop(image_path: pathlib.Path, visual: dict) -> bool:
         return False
     base = Image.open(image_path).convert("RGBA")
     w, h = base.size
-    overlay = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-    draw_overlay = ImageDraw.Draw(overlay)
-
-    # Strong bottom fade gives the headline a poster-like anchor.
-    start = int(h * 0.46)
-    for y in range(start, h):
-        alpha = int(230 * (y - start) / max(1, h - start))
-        draw_overlay.line([(0, y), (w, y)], fill=(0, 0, 0, alpha))
-    base = Image.alpha_composite(base, overlay)
     draw = ImageDraw.Draw(base)
 
     margin = int(w * 0.055)
     max_w = w - 2 * margin
+    scale = _type_scale(w, h)
     accent_tokens = _accent_token_set(
         visual.get("accent_words") or visual.get("accent")
     )
@@ -446,18 +650,18 @@ def render_editorial_drop(image_path: pathlib.Path, visual: dict) -> bool:
     subtext = str(visual.get("subtext") or "").strip()
     layout = str(visual.get("layout") or "bottom_blast").strip()
 
-    font_k = _load_font(INTER_PATH, max(18, int(w * 0.025)), "Bold")
+    font_k = _load_font(INTER_PATH, max(18, int(scale * 0.025)), "Bold")
     font_h, size_h, track_h, lines_h = _fit_headline(
         draw,
         headline.upper(),
         max_w,
-        start_size=int(w * 0.145),
-        min_size=int(w * 0.060),
+        start_size=int(scale * 0.145),
+        min_size=int(scale * 0.060),
         max_lines=4,
     )
     if BEBAS_NEUE_PATH.exists():
         size = size_h
-        while size >= int(w * 0.058):
+        while size >= int(scale * 0.058):
             candidate = ImageFont.truetype(str(BEBAS_NEUE_PATH), size)
             tracking = size * 0.005
             lines = _wrap(draw, headline.upper(), candidate, max_w, tracking)
@@ -465,37 +669,77 @@ def render_editorial_drop(image_path: pathlib.Path, visual: dict) -> bool:
                 font_h, size_h, track_h, lines_h = candidate, size, tracking, lines
                 break
             size -= 2
+    lines_h = _balance_lines(draw, headline.upper(), font_h, max_w, track_h, lines_h)
 
-    size_s = max(20, int(w * 0.032))
-    font_s = _load_font(INTER_PATH, size_s, "Semi Bold")
-    sub_lines = _wrap(draw, subtext.upper(), font_s, max_w, size_s * 0.005) if subtext else []
+    # Supporting line, per brand/visual-style.md: Inter, sentence case, Soft White.
+    # Shrink it to fit SUB_MAX_LINES rather than slicing the list, which used to
+    # drop the tail of a long sentence mid-phrase.
+    sub_lines: list[str] = []
+    font_s = None
+    size_s = max(20, int(scale * 0.030))
+    if subtext:
+        size = size_s
+        floor = max(16, int(scale * 0.021))
+        while True:
+            font_s = _load_font(INTER_PATH, size, "Medium")
+            sub_lines = _wrap(draw, subtext, font_s, max_w, size * 0.005)
+            if len(sub_lines) <= SUB_MAX_LINES or size <= floor:
+                break
+            size -= 2
+        size_s = size
 
     line_h = int(size_h * 0.86)
-    sub_h = int(size_s * 1.25)
-    footer_h = max(14, int(w * 0.018))
-    block_h = len(lines_h) * line_h + len(sub_lines) * sub_h
-    if kicker:
-        block_h += int(w * 0.050)
-    if footer:
-        block_h += int(w * 0.035)
-    bottom_margin = int(h * 0.045 if layout != "top_text_media_card" else h * 0.065)
-    top = max(int(h * 0.08), h - bottom_margin - block_h)
+    sub_h = int(size_s * 1.30)
+    sub_gap = int(scale * 0.020)
+    kicker_h = int(scale * 0.050) if kicker else 0
+    footer_h = max(14, int(scale * 0.018))
 
-    if layout == "top_text_media_card":
+    # The footer is the lowest element, so it owns the safe margin and the type
+    # block above reserves its lane. Both are derived from one measurement of the
+    # real glyph box, so the reserved lane and the drawn position cannot drift.
+    font_f = ImageFont.truetype(str(BEBAS_NEUE_PATH), footer_h) if footer else None
+    footer_ink_bottom, footer_lane = 0, 0
+    if font_f is not None:
+        fbox = font_f.getbbox(footer)
+        footer_ink_bottom = fbox[3]
+        footer_lane = (fbox[3] - fbox[1]) + int(scale * 0.030)
+
+    # Measure the block from exactly the values the drawing loop advances by, and
+    # add the last line's real glyph depth. The previous version left the
+    # pre-subtext gap and that depth out of block_h, so the type ran past the
+    # bottom margin -- 2.9% clear of the edge on a 4.5% margin.
+    block_h = kicker_h + len(lines_h) * line_h
+    if sub_lines:
+        block_h += sub_gap + (len(sub_lines) - 1) * sub_h
+        block_h += _block_bottom(0, font_s, size_s * 0.005, sub_lines)
+    else:
+        block_h -= line_h
+        block_h += _block_bottom(0, font_h, track_h, lines_h)
+
+    safe_bottom = h - int(h * EDITORIAL_BOTTOM_MARGIN)
+    top = max(int(h * 0.08), safe_bottom - footer_lane - block_h)
+
+    card = layout == "top_text_media_card"
+    if card:
+        top = int(h * 0.085)
+
+    # Type block is measured, so darken only what sits under it. alpha_composite
+    # returns a new image, so the draw handle has to be rebuilt afterwards.
+    base = _bottom_scrim(base, text_top=top)
+    draw = ImageDraw.Draw(base)
+
+    if card:
         card_margin = margin
-        card_top = int(h * 0.34)
-        card_bottom = int(h * 0.90)
         draw.rounded_rectangle(
-            [card_margin, card_top, w - card_margin, card_bottom],
+            [card_margin, int(h * 0.34), w - card_margin, int(h * 0.90)],
             radius=int(w * 0.035),
             outline=(245, 245, 245, 80),
             width=max(2, int(w * 0.004)),
         )
-        top = int(h * 0.085)
 
     if kicker:
         draw.text((margin, top), kicker, font=font_k, fill=EDITORIAL_DIM)
-        top += int(w * 0.050)
+        top += kicker_h
 
     y = top
     for line in lines_h:
@@ -513,8 +757,8 @@ def render_editorial_drop(image_path: pathlib.Path, visual: dict) -> bool:
         y += line_h
 
     if sub_lines:
-        y += int(w * 0.020)
-        for line in sub_lines[:2]:
+        y += sub_gap
+        for line in sub_lines:
             _draw_tracked_line(
                 draw,
                 margin,
@@ -528,10 +772,14 @@ def render_editorial_drop(image_path: pathlib.Path, visual: dict) -> bool:
             )
             y += sub_h
 
-    if footer:
-        font_f = ImageFont.truetype(str(BEBAS_NEUE_PATH), footer_h)
+    if font_f is not None:
         fw = draw.textlength(footer, font=font_f)
-        draw.text(((w - fw) / 2, h - int(h * 0.035)), footer, font=font_f, fill=SOFT_WHITE)
+        draw.text(
+            ((w - fw) / 2, safe_bottom - footer_ink_bottom),
+            footer,
+            font=font_f,
+            fill=SOFT_WHITE,
+        )
 
     base.convert("RGB").save(image_path)
     return True
