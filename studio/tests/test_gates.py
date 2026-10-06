@@ -181,3 +181,89 @@ def test_pause_switch(cfg, tmp_path, monkeypatch):
     cfg["paused"] = True
     (tmp_path / "PAUSE").unlink()
     assert config.is_paused(cfg)
+
+class _FakePostiz:
+    def __init__(self, fail_delete=False):
+        self.calls, self.fail_delete = [], fail_delete
+
+    def __call__(self, url, key):
+        return self
+
+    def upload(self, path):
+        self.calls.append(("upload", path.name))
+        return {"id": "u", "path": "p"}
+
+    def delete(self, pid):
+        self.calls.append(("delete", pid))
+        if self.fail_delete:
+            raise publish.PostizError("nope")
+
+    def schedule(self, integration, when, content, media, settings):
+        self.calls.append(("schedule", when))
+        return [{"postId": "new1", "integration": integration}]
+
+
+def _replace_setup(plan, cfg, monkeypatch, tmp_path, fake, prev_hero=False):
+    from datetime import datetime, timedelta
+
+    from studio_lib.schedule import assign_schedule
+
+    assign_schedule(plan, cfg["schedule_windows"], cfg["timezone"])
+    post = next(p for p in plan["posts"] if p["brand"] == "layer8culture" and p["format"] in ("single", "carousel"))
+    when = post["schedule"]["instagram"]
+    rows = [{"at": "x", "id": p["id"], "platform": pl, "status": "scheduled", "hero": prev_hero if p is post else False,
+             "postiz": [{"postId": f"old-{p['id']}-{pl}"}]} for p in plan["posts"] for pl in p["schedule"]]
+    monkeypatch.setattr(context, "read_jsonl", lambda p: rows)
+    logged = []
+    monkeypatch.setattr(publish, "_log", logged.append)
+    monkeypatch.setattr(publish, "Postiz", fake)
+    monkeypatch.setattr(publish, "media_dir", lambda d: tmp_path)
+    manifest = {}
+    for p in plan["posts"]:
+        (tmp_path / f"{p['id']}.png").write_bytes(b"x")
+        manifest[p["id"]] = {"files": [f"{p['id']}.png"], "hero": p is post}
+    results = {p["id"]: {"pass": True, "errors": []} for p in plan["posts"]}
+    now = datetime.fromisoformat(when) - timedelta(hours=3)
+    return post, manifest, results, now, logged
+
+
+def test_replace_swaps_only_hero_upgraded_posts(plan, cfg, monkeypatch, tmp_path):
+    fake = _FakePostiz()
+    post, manifest, results, now, logged = _replace_setup(plan, cfg, monkeypatch, tmp_path, fake)
+    acts = publish.publish_due(plan, D, cfg, manifest, results, now=now, log=lambda *_: None, ahead=True)
+    assert [a["id"] for a in acts] == [post["id"]]
+    assert [c[0] for c in fake.calls] == ["upload", "delete", "schedule"]
+    assert fake.calls[1][1] == f"old-{post['id']}-instagram"
+    assert logged[0]["status"] == "scheduled" and logged[0]["replaces"] == [f"old-{post['id']}-instagram"]
+    assert logged[0]["hero"] is True
+
+
+def test_replace_noop_when_already_hero_or_too_close(plan, cfg, monkeypatch, tmp_path):
+    from datetime import datetime, timedelta
+
+    fake = _FakePostiz()
+    post, manifest, results, now, logged = _replace_setup(plan, cfg, monkeypatch, tmp_path, fake, prev_hero=True)
+    assert publish.publish_due(plan, D, cfg, manifest, results, now=now, log=lambda *_: None, ahead=True) == []
+    fake2 = _FakePostiz()
+    post, manifest, results, now, logged = _replace_setup(plan, cfg, monkeypatch, tmp_path, fake2)
+    close = datetime.fromisoformat(post["schedule"]["instagram"]) - timedelta(minutes=5)
+    assert publish.publish_due(plan, D, cfg, manifest, results, now=close, log=lambda *_: None, ahead=True,
+                               only={post["id"]}) == []
+    assert fake.calls == [] and fake2.calls == [] and logged == []
+
+
+def test_replace_keeps_old_post_if_delete_fails(plan, cfg, monkeypatch, tmp_path):
+    fake = _FakePostiz(fail_delete=True)
+    post, manifest, results, now, logged = _replace_setup(plan, cfg, monkeypatch, tmp_path, fake)
+    acts = publish.publish_due(plan, D, cfg, manifest, results, now=now, log=lambda *_: None, ahead=True)
+    assert acts == [] and logged == []
+    assert [c[0] for c in fake.calls] == ["upload", "delete"]
+
+
+def test_force_replace_resends_selected(plan, cfg, monkeypatch, tmp_path):
+    fake = _FakePostiz()
+    post, manifest, results, now, logged = _replace_setup(plan, cfg, monkeypatch, tmp_path, fake, prev_hero=True)
+    other = next(p for p in plan["posts"] if p is not post and p["format"] != "reel")
+    acts = publish.publish_due(plan, D, cfg, manifest, results, now=now,
+                               log=lambda *_: None, force_replace=True, only={other["id"]})
+    assert {a["id"] for a in acts} == {other["id"]} and all(a["status"] == "scheduled" for a in acts)

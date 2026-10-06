@@ -78,6 +78,10 @@ publish:
   catch_up_grace_minutes: 180
   # If today has no plan (laptop was off at 19:00), publish plans same-day only before this hour.
   same_day_plan_cutoff_hour: 14
+  # A post already scheduled in Postiz with the template version is swapped (delete + re-schedule, same time)
+  # when its ChatGPT hero lands later — unless it goes out within replace_min_lead_minutes.
+  replace_on_media_change: true
+  replace_min_lead_minutes: 10
   youtube_privacy: public   # YouTube may still force private until the Google app is verified
   # Integration (channel) IDs. Env vars override these. Empty => that route is skipped, not errored.
   channels:

@@ -137,7 +137,8 @@ def cmd_publish(a, cfg):
             if changed:
                 preview.build(plan, d, manifest, results, heroes.status(plan, d), cfg)
         actions = publish.publish_due(plan, d, cfg, manifest, results, now=now, dry=a.dry, log=log,
-                                      only=set(a.only) if a.only else None, ahead=a.ahead)
+                                      only=set(a.only) if a.only else None, ahead=a.ahead,
+                                      force_replace=a.replace)
         if actions and cfg["notify"].get("on_publish") and not a.dry:
             notify.send("Layer8 Studio publish:\n" + "\n".join(
                 f"{r['status']} {r['id']} → {r['platform']}" + (f" ({r.get('reason', '')[:120]})" if r.get("reason") else "")
@@ -229,6 +230,8 @@ def main(argv=None):
     sp.add_argument("--date", help="plan date to publish from (default: today)")
     sp.add_argument("--only", nargs="*", help="post ids")
     sp.add_argument("--ahead", action="store_true", help="schedule the whole day in Postiz now, at planned times")
+    sp.add_argument("--replace", action="store_true",
+                    help="delete + re-schedule already-scheduled posts (same time, current media); pair with --only")
     a = ap.parse_args(argv)
     config.load_env()
     config.ensure_dirs()
