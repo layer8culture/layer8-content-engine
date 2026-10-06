@@ -1,0 +1,2429 @@
+WEBVTT
+
+00:00:37.103 --> 00:00:39.945
+You are now live with Layer Eight Culture,
+
+00:00:40.305 --> 00:00:43.508
+Tech Thursday.
+
+00:00:43.527 --> 00:00:49.271
+Welcome to another Tech Thursday.
+
+00:00:49.292 --> 00:00:49.753
+It's right here.
+
+00:00:49.792 --> 00:00:50.012
+Go on.
+
+00:00:51.761 --> 00:00:55.363
+into it actually let's start off on last
+
+00:00:55.404 --> 00:01:01.749
+week he's left off with um green foods
+
+00:01:01.789 --> 00:01:05.831
+market from the website and i want to
+
+00:01:05.852 --> 00:01:08.974
+show y'all what we've been working on
+
+00:01:09.013 --> 00:01:12.277
+since then so you know
+
+00:01:28.367 --> 00:01:29.209
+So.
+
+00:01:29.228 --> 00:01:29.269
+So.
+
+00:02:06.186 --> 00:02:06.370
+Thank you.
+
+00:02:35.967 --> 00:02:38.929
+So what we left off last week is
+
+00:02:38.968 --> 00:02:42.110
+we did four different mock-ups.
+
+00:02:43.611 --> 00:02:48.495
+I should lower my chat a little bit.
+
+00:02:48.534 --> 00:02:49.036
+Check something.
+
+00:03:16.640 --> 00:03:16.881
+All right,
+
+00:03:16.920 --> 00:03:18.722
+so what we left off with Greenpeace Market
+
+00:03:18.822 --> 00:03:26.845
+is we had all of their .
+
+00:03:23.825 --> 00:03:27.848
+We had their existing website .
+
+00:03:48.580 --> 00:03:52.905
+And your Facebook was pretty, I hear,
+
+00:03:53.284 --> 00:03:55.187
+pretty up-to-date.
+
+00:03:55.227 --> 00:03:56.247
+We referenced that.
+
+00:03:56.448 --> 00:04:00.191
+We actually reported from mock-up images
+
+00:04:00.390 --> 00:04:01.051
+of websites.
+
+00:04:01.812 --> 00:04:04.033
+So what we did was,
+
+00:04:05.254 --> 00:04:09.218
+it's one long organic tutorial.
+
+00:04:09.239 --> 00:04:15.123
+We got premium botanical.
+
+00:04:16.596 --> 00:04:19.997
+probably my least favorite.
+
+00:04:20.038 --> 00:04:22.901
+But we had a right on my marketplace,
+
+00:04:22.920 --> 00:04:25.502
+which is more store,
+
+00:04:26.083 --> 00:04:27.244
+online store oriented.
+
+00:04:28.384 --> 00:04:30.326
+I do like, after going into a build,
+
+00:04:31.326 --> 00:04:32.387
+I actually build it out.
+
+00:04:33.088 --> 00:04:33.949
+Because I built out,
+
+00:04:34.869 --> 00:04:35.610
+actually not built out,
+
+00:04:36.430 --> 00:04:38.031
+but going through the process of thinking
+
+00:04:38.072 --> 00:04:38.711
+about it.
+
+00:04:38.732 --> 00:04:41.334
+So I actually do like this layout.
+
+00:04:42.295 --> 00:04:43.915
+And I go like this about it.
+
+00:04:52.973 --> 00:04:57.197
+community editorial this is this report is
+
+00:04:57.216 --> 00:04:58.117
+about the jazz um
+
+00:05:11.774 --> 00:05:16.956
+to all that which is a rule.
+
+00:05:17.976 --> 00:05:19.737
+Incorporate those issues into the model.
+
+00:05:20.458 --> 00:05:21.959
+Same concept, same style.
+
+00:05:22.478 --> 00:05:26.461
+Just incorporate both of the pictures.
+
+00:05:27.961 --> 00:05:35.384
+Chop plants and herbs slowly and quickly.
+
+00:05:39.125 --> 00:05:39.966
+And then we'll see.
+
+00:05:41.533 --> 00:05:42.553
+Okay, so then after doing all that,
+
+00:05:42.574 --> 00:05:44.877
+that's where we left off right here.
+
+00:05:44.896 --> 00:05:45.076
+So,
+
+00:05:47.779 --> 00:05:49.401
+what I think for me this market was,
+
+00:05:49.461 --> 00:05:51.244
+I took those four pages,
+
+00:05:52.004 --> 00:05:55.829
+went back into Copilot CLI, and had it,
+
+00:05:56.209 --> 00:05:57.130
+or the AI,
+
+00:05:57.211 --> 00:05:59.533
+actually analyze a board of three
+
+00:05:59.593 --> 00:06:00.095
+mock-ups,
+
+00:06:01.480 --> 00:06:02.841
+on what they want what we want to
+
+00:06:02.880 --> 00:06:07.103
+do with business to find a recognition so
+
+00:06:07.543 --> 00:06:10.125
+what i really like to do with the
+
+00:06:11.507 --> 00:06:15.209
+um it's important to i'm a virtual person
+
+00:06:15.230 --> 00:06:19.192
+so i wanted to do a presentation and
+
+00:06:19.271 --> 00:06:21.314
+you can actually do that without having to
+
+00:06:21.334 --> 00:06:23.915
+do a powerpoint but we decide to sell
+
+00:06:23.935 --> 00:06:26.697
+to build you a html presentation it's a
+
+00:06:26.737 --> 00:06:28.418
+lot it's very lightweight i think this is
+
+00:06:28.499 --> 00:06:29.779
+like four kilobytes just super
+
+00:06:32.668 --> 00:06:33.608
+send it as a file,
+
+00:06:33.869 --> 00:06:35.089
+you can convert it to a PDF,
+
+00:06:35.129 --> 00:06:37.911
+and you get no profile CLI as well.
+
+00:06:38.391 --> 00:06:40.173
+It's actually preferable to PDF.
+
+00:06:40.254 --> 00:06:42.175
+There's something about issues opening
+
+00:06:43.636 --> 00:06:49.659
+HTML files, but .
+
+00:06:49.019 --> 00:06:51.601
+So you can always convert it to a
+
+00:06:51.622 --> 00:06:51.942
+PDF,
+
+00:06:52.362 --> 00:06:54.845
+and you can also find databases to help
+
+00:06:54.865 --> 00:06:54.985
+you.
+
+00:06:55.024 --> 00:06:58.166
+But here's the cool thing.
+
+00:06:58.226 --> 00:07:00.468
+So I'm fully dynamic,
+
+00:07:01.067 --> 00:07:01.846
+presentation.
+
+00:07:02.007 --> 00:07:04.067
+So I'm going to speak professionally.
+
+00:07:05.129 --> 00:07:07.029
+So you have Greenfields Market, four page,
+
+00:07:07.290 --> 00:07:09.331
+four homepage concepts, value,
+
+00:07:09.531 --> 00:07:10.951
+one player recommendation.
+
+00:07:13.033 --> 00:07:14.613
+And you can present this to a client
+
+00:07:15.514 --> 00:07:17.535
+as it's like, this is your first step.
+
+00:07:19.036 --> 00:07:19.896
+So going through,
+
+00:07:19.915 --> 00:07:22.418
+talks about what we designed for,
+
+00:07:22.598 --> 00:07:26.420
+talks about like the main book or concept
+
+00:07:26.579 --> 00:07:27.600
+of Greenfields Market.
+
+00:07:28.380 --> 00:07:29.180
+It's all we know.
+
+00:07:32.790 --> 00:07:35.290
+which goes into kind of foundation.
+
+00:07:35.370 --> 00:07:38.213
+I don't know why this, let me just,
+
+00:07:38.252 --> 00:07:38.872
+oh, that's weird.
+
+00:07:38.932 --> 00:07:40.254
+Oh, you know what?
+
+00:07:40.334 --> 00:07:41.694
+I removed the image files.
+
+00:07:42.714 --> 00:07:43.435
+That's all I'm gonna do.
+
+00:07:43.454 --> 00:07:46.797
+I didn't remove the image files from the
+
+00:07:46.857 --> 00:07:47.156
+concept.
+
+00:07:47.216 --> 00:07:52.920
+Okay, so here's concept A.
+
+00:07:53.040 --> 00:07:54.721
+This is the concept that you remember.
+
+00:07:55.581 --> 00:07:56.961
+I really like this concept because it's
+
+00:07:57.362 --> 00:08:00.624
+super easy, but at the same time,
+
+00:08:02.358 --> 00:08:03.178
+the extra stuff,
+
+00:08:03.939 --> 00:08:05.680
+as far as the plant-based care treatment,
+
+00:08:05.720 --> 00:08:08.442
+the fruit trees, plants, and the herbs,
+
+00:08:08.521 --> 00:08:10.262
+and the use of natural care.
+
+00:08:11.163 --> 00:08:13.024
+Like, it was like fun,
+
+00:08:13.103 --> 00:08:14.365
+and it wasn't anything that had to be
+
+00:08:14.404 --> 00:08:14.625
+hidden.
+
+00:08:14.644 --> 00:08:16.927
+It was right there for you.
+
+00:08:18.507 --> 00:08:19.208
+And this is what,
+
+00:08:20.629 --> 00:08:22.069
+so you can get any sort of bonds
+
+00:08:22.110 --> 00:08:22.610
+and stuff.
+
+00:08:26.672 --> 00:08:27.173
+So anyways,
+
+00:08:28.093 --> 00:08:29.494
+close to all the four concepts,
+
+00:08:29.954 --> 00:08:31.115
+that provides a recommendation.
+
+00:08:31.831 --> 00:08:34.572
+even does the scoring based on the
+
+00:08:34.613 --> 00:08:36.033
+different knock-ups.
+
+00:08:36.874 --> 00:08:40.875
+So it shows you where, even for me,
+
+00:08:41.135 --> 00:08:43.976
+the score tied in the story and emotion.
+
+00:08:44.817 --> 00:08:45.576
+And of course, to me,
+
+00:08:46.638 --> 00:08:49.119
+that's the one that I most score tied
+
+00:08:49.259 --> 00:08:52.379
+in the strong story and emotion.
+
+00:08:53.279 --> 00:08:55.000
+It's always been very distinctive.
+
+00:08:56.081 --> 00:08:56.802
+And then having a warm,
+
+00:09:01.669 --> 00:09:03.750
+And then, like, even with the one,
+
+00:09:04.812 --> 00:09:05.653
+the first one,
+
+00:09:05.873 --> 00:09:08.615
+it still scored low in e-commerce.
+
+00:09:09.196 --> 00:09:09.995
+But then again, like,
+
+00:09:10.015 --> 00:09:12.577
+the e-commerce wasn't the main focus of
+
+00:09:12.677 --> 00:09:13.178
+the site.
+
+00:09:13.739 --> 00:09:15.880
+They have a Squarespace that they'll
+
+00:09:15.921 --> 00:09:17.041
+pretty much fix up.
+
+00:09:17.381 --> 00:09:17.662
+So, like,
+
+00:09:17.682 --> 00:09:19.283
+you just hit a shop and it will
+
+00:09:19.302 --> 00:09:21.404
+show you some Squarespace.
+
+00:09:22.105 --> 00:09:23.086
+So, Squarespace.
+
+00:09:23.285 --> 00:09:28.190
+So, that wasn't a major selling point.
+
+00:09:28.971 --> 00:09:30.991
+for the initial sign, so that's okay.
+
+00:09:31.533 --> 00:09:35.335
+Everything else scored before the high.
+
+00:09:36.296 --> 00:09:38.417
+So, strong recommendation,
+
+00:09:38.498 --> 00:09:40.499
+and then the close second up is the
+
+00:09:40.599 --> 00:09:43.461
+C, the power, the best sign.
+
+00:09:51.535 --> 00:09:51.775
+Here.
+
+00:09:52.576 --> 00:09:53.577
+So surprisingly, like,
+
+00:09:53.697 --> 00:09:56.460
+C was a strong recommendation.
+
+00:09:57.400 --> 00:09:58.341
+It was probably, like,
+
+00:09:58.381 --> 00:09:59.302
+one of those things.
+
+00:09:59.361 --> 00:10:01.923
+It was probably, like, for me, one,
+
+00:10:03.505 --> 00:10:07.448
+and this one, and this one,
+
+00:10:10.711 --> 00:10:14.554
+and this one, and two.
+
+00:10:14.654 --> 00:10:16.755
+Yeah, two minus three.
+
+00:10:16.796 --> 00:10:17.017
+Yeah.
+
+00:10:17.136 --> 00:10:17.177
+So.
+
+00:10:22.469 --> 00:10:26.030
+from there we went back to chat and
+
+00:10:26.051 --> 00:10:29.013
+within chat we said hey so this is
+
+00:10:29.113 --> 00:10:31.433
+inside moving to the screen that's a shot
+
+00:10:31.474 --> 00:10:32.774
+of the mock-up that was in that
+
+00:10:32.815 --> 00:10:35.115
+presentation and actually that was the
+
+00:10:35.135 --> 00:10:38.177
+entire page let's change out of that and
+
+00:10:38.197 --> 00:10:41.200
+then say hey which stack of skills and
+
+00:10:41.220 --> 00:10:42.841
+repos would be best suited to create this
+
+00:10:42.900 --> 00:10:46.062
+website let's go to NCI and I'm sure
+
+00:10:46.082 --> 00:10:49.124
+you can find it gave me the stack
+
+00:10:49.764 --> 00:10:51.806
+and recommended a lot of tools and
+
+00:10:55.418 --> 00:10:56.217
+And then from there,
+
+00:10:56.817 --> 00:10:58.778
+my prompt was pretty simple, like,
+
+00:10:59.558 --> 00:11:03.980
+create this website, create some mockup,
+
+00:11:04.019 --> 00:11:09.880
+reference the image, and say, you know,
+
+00:11:10.000 --> 00:11:14.360
+use this for styling, use this UI,
+
+00:11:14.902 --> 00:11:15.442
+use this.
+
+00:11:18.062 --> 00:11:19.142
+I think that was all of it.
+
+00:11:19.201 --> 00:11:21.682
+Yeah, I didn't use it in this episode.
+
+00:11:21.763 --> 00:11:22.243
+I didn't.
+
+00:11:22.503 --> 00:11:22.682
+So...
+
+00:11:23.792 --> 00:11:25.653
+First section of the site,
+
+00:11:26.332 --> 00:11:27.592
+this is focused on primary.
+
+00:11:27.692 --> 00:11:27.972
+It's .
+
+00:11:28.874 --> 00:11:29.514
+Here's the site.
+
+00:11:29.553 --> 00:11:30.094
+It is not.
+
+00:11:31.274 --> 00:11:32.294
+It is pretty much this.
+
+00:11:52.485 --> 00:11:54.866
+I'm installing a website.
+
+00:11:55.407 --> 00:11:56.768
+One thing that we want to see,
+
+00:11:58.028 --> 00:12:00.429
+that I added,
+
+00:12:00.470 --> 00:12:02.671
+was some context about content.
+
+00:12:02.750 --> 00:12:05.131
+And it kind of gets into our topic
+
+00:12:05.152 --> 00:12:05.611
+for tonight.
+
+00:12:05.631 --> 00:12:07.352
+I have no idea.
+
+00:12:09.594 --> 00:12:13.595
+I just wanted AI.
+
+00:12:15.155 --> 00:12:15.375
+So,
+
+00:12:16.297 --> 00:12:18.557
+I used one agent to build up the
+
+00:12:18.597 --> 00:12:19.158
+website.
+
+00:12:20.759 --> 00:12:21.239
+I then
+
+00:12:30.342 --> 00:12:33.885
+It's kind of lacking as far as
+
+00:12:53.359 --> 00:12:54.240
+copy of content.
+
+00:12:54.340 --> 00:12:55.461
+It's just kind of repetitive,
+
+00:12:55.480 --> 00:12:56.240
+kind of basic.
+
+00:12:56.721 --> 00:12:57.562
+And of course,
+
+00:12:57.662 --> 00:13:02.065
+it's understandable because we don't have
+
+00:13:02.105 --> 00:13:03.326
+the definition of goal.
+
+00:13:03.927 --> 00:13:05.888
+So if you have an existing website,
+
+00:13:07.528 --> 00:13:10.892
+a ton of existing content, reference,
+
+00:13:10.971 --> 00:13:15.475
+it would be easier to develop that text
+
+00:13:15.534 --> 00:13:19.057
+font theme, but it just wasn't there.
+
+00:13:26.744 --> 00:13:28.585
+It's actually a website content that we
+
+00:13:28.605 --> 00:13:31.226
+can do an analysis for the target audience
+
+00:13:31.267 --> 00:13:32.206
+for Greenpeace Market.
+
+00:13:32.267 --> 00:13:36.809
+It's an exciting topic.
+
+00:13:37.690 --> 00:13:43.173
+I literally did this with myself for a
+
+00:13:43.192 --> 00:13:43.373
+while.
+
+00:13:43.393 --> 00:13:48.556
+I was like, let's do this.
+
+00:13:50.197 --> 00:13:54.879
+It's involved questions about the content.
+
+00:13:56.101 --> 00:13:57.462
+should focus on comes like, all right,
+
+00:13:57.482 --> 00:13:59.283
+well, we really want to build out,
+
+00:13:59.604 --> 00:14:02.345
+we really want to be leveraged like a
+
+00:14:02.365 --> 00:14:03.285
+in-store business.
+
+00:14:03.365 --> 00:14:05.125
+We will get people to the actual store,
+
+00:14:05.886 --> 00:14:07.067
+open it out of our quota,
+
+00:14:07.727 --> 00:14:09.028
+and then we'll walk through a call number.
+
+00:14:11.129 --> 00:14:13.730
+But then we also want some content to
+
+00:14:14.270 --> 00:14:16.511
+establish people's market as an authority,
+
+00:14:17.371 --> 00:14:20.394
+so gardening, when it comes to health,
+
+00:14:20.894 --> 00:14:22.575
+when it comes to plant, herbs,
+
+00:14:22.674 --> 00:14:23.095
+all that stuff.
+
+00:14:23.955 --> 00:14:24.975
+We want to make sure that
+
+00:14:26.408 --> 00:14:29.410
+provided some information and guidance.
+
+00:14:31.511 --> 00:14:37.096
+So, the agent made his recommendations,
+
+00:14:38.418 --> 00:14:40.580
+and then drafted it all out.
+
+00:14:41.441 --> 00:14:42.181
+That basically gave,
+
+00:14:42.321 --> 00:14:44.383
+that gave me a lot of flexibility to
+
+00:14:44.482 --> 00:14:50.927
+go in there and create content based on
+
+00:14:51.109 --> 00:14:52.509
+what we were able to do.
+
+00:14:53.570 --> 00:14:56.250
+So now all this content was, you know,
+
+00:14:56.610 --> 00:14:59.832
+Lori Pauline didn't have to go through the
+
+00:14:59.852 --> 00:15:01.073
+pulpits and pull this out.
+
+00:15:01.594 --> 00:15:04.434
+A lot of this was based on kind
+
+00:15:04.554 --> 00:15:07.096
+of where they are in Florida,
+
+00:15:08.177 --> 00:15:10.138
+what the food market represents,
+
+00:15:11.018 --> 00:15:12.038
+and all the content.
+
+00:15:12.058 --> 00:15:14.960
+So I think post-grad are new to that.
+
+00:15:17.303 --> 00:15:19.245
+Everyone here in Platte Bay is based in
+
+00:15:19.285 --> 00:15:19.625
+Florida,
+
+00:15:19.666 --> 00:15:22.148
+so you'll see that in their story,
+
+00:15:22.648 --> 00:15:24.528
+what they grow, what they follow,
+
+00:15:24.909 --> 00:15:27.291
+how they grow in Florida, animals,
+
+00:15:28.792 --> 00:15:29.793
+plant-based kitchen,
+
+00:15:30.474 --> 00:15:32.154
+and answer plant questions from their
+
+00:15:32.195 --> 00:15:33.796
+neighbors for over four years,
+
+00:15:34.376 --> 00:15:36.538
+how they look around, or call ahead.
+
+00:15:36.658 --> 00:15:41.881
+They know exactly what goes into their
+
+00:15:42.623 --> 00:15:42.982
+story.
+
+00:15:55.980 --> 00:16:09.611
+This market is interesting.
+
+00:16:09.851 --> 00:16:12.673
+Questions about shelves, discovery,
+
+00:16:12.693 --> 00:16:13.453
+and success.
+
+00:16:13.494 --> 00:16:17.596
+Have a conversation about what they are
+
+00:16:17.657 --> 00:16:18.018
+bringing.
+
+00:16:18.038 --> 00:16:21.019
+The economy has changed a little quickly.
+
+00:16:21.059 --> 00:16:22.301
+This market is interesting.
+
+00:16:23.865 --> 00:16:25.424
+And then down here,
+
+00:16:25.965 --> 00:16:27.846
+we have some down here.
+
+00:16:27.985 --> 00:16:30.145
+It's, oh, sorry.
+
+00:16:30.285 --> 00:16:32.105
+Yeah, what guides us?
+
+00:16:36.667 --> 00:16:38.408
+The best way to know marketing is to
+
+00:16:38.447 --> 00:16:41.087
+walk through the boards.
+
+00:16:41.187 --> 00:16:46.509
+So like, literally, we have a full copy
+
+00:16:52.832 --> 00:16:54.634
+wants the user to come,
+
+00:16:55.775 --> 00:16:58.118
+inviting them to come into the store
+
+00:16:58.278 --> 00:16:59.418
+called Saltus.
+
+00:16:59.999 --> 00:17:01.961
+It's very pretentious.
+
+00:17:23.330 --> 00:17:28.214
+so our story so give me a visit
+
+00:17:29.515 --> 00:17:35.199
+gives the address hours i didn't need to
+
+00:17:35.219 --> 00:17:36.240
+get there actually
+
+00:17:52.566 --> 00:17:56.628
+So I'll take that.
+
+00:17:56.828 --> 00:17:57.769
+It's out of the shop.
+
+00:17:58.930 --> 00:18:00.790
+I'm going to talk to them.
+
+00:18:00.931 --> 00:18:04.473
+You could do a form on the site.
+
+00:18:05.673 --> 00:18:09.176
+It actually goes out to Google.
+
+00:18:09.416 --> 00:18:12.118
+I'll just put that in the form.
+
+00:18:20.035 --> 00:18:26.141
+very clean, very intentional, the box,
+
+00:18:26.161 --> 00:18:26.901
+the colors.
+
+00:18:29.182 --> 00:18:34.768
+So really fun part.
+
+00:18:35.328 --> 00:18:38.090
+So beyond that section,
+
+00:18:46.936 --> 00:18:49.058
+So now we want to make sure that
+
+00:18:49.078 --> 00:18:50.359
+we're providing information
+
+00:19:15.224 --> 00:19:19.669
+So our content manager agent actually
+
+00:19:19.729 --> 00:19:21.310
+created three different guides.
+
+00:19:23.673 --> 00:19:26.055
+This was intentionally done as a three.
+
+00:19:27.016 --> 00:19:30.378
+Just go across these specific categories.
+
+00:19:31.420 --> 00:19:34.321
+The plants, the herbs,
+
+00:19:35.703 --> 00:19:36.964
+and then the pantry aspect.
+
+00:19:37.525 --> 00:19:38.846
+If you go back to the home page,
+
+00:19:40.248 --> 00:19:41.608
+those are the three main colors.
+
+00:19:45.193 --> 00:19:48.156
+So those guides are lined up here.
+
+00:19:48.176 --> 00:19:49.218
+So I'm going to go to
+
+00:20:09.376 --> 00:20:10.217
+The cool thing is,
+
+00:20:10.616 --> 00:20:12.538
+when Google goes ahead and searches,
+
+00:20:13.178 --> 00:20:14.798
+it's seeing this information and saying,
+
+00:20:14.877 --> 00:20:15.357
+oh, hey,
+
+00:20:15.417 --> 00:20:19.159
+I've got something that's in authority in
+
+00:20:19.179 --> 00:20:21.640
+some of our county on food treats.
+
+00:20:22.740 --> 00:20:24.381
+They're developing information,
+
+00:20:25.040 --> 00:20:31.041
+providing information out to some source.
+
+00:20:31.541 --> 00:20:35.002
+And then it even has the cited sources
+
+00:20:35.042 --> 00:20:37.884
+and references for this article.
+
+00:20:42.325 --> 00:20:42.705
+Again,
+
+00:20:43.046 --> 00:20:46.587
+it's still in the style of Greenpeace
+
+00:20:46.627 --> 00:20:49.470
+Market.
+
+00:20:49.510 --> 00:20:54.213
+Talks about mats for your yard, loquat,
+
+00:20:54.534 --> 00:20:55.094
+mango.
+
+00:21:02.700 --> 00:21:05.102
+Sandy soil.
+
+00:21:06.281 --> 00:21:07.763
+Talks about being prepared for cold
+
+00:21:07.784 --> 00:21:08.203
+nights.
+
+00:21:10.672 --> 00:21:14.452
+And then you talk about herbs for a
+
+00:21:14.512 --> 00:21:15.012
+week.
+
+00:21:16.814 --> 00:21:19.174
+So basically, like, it's time, right?
+
+00:21:20.194 --> 00:21:23.596
+Advice to sources, like, yeah,
+
+00:21:23.615 --> 00:21:24.296
+this is so good.
+
+00:21:24.375 --> 00:21:28.436
+And then you ask, like, I don't know,
+
+00:21:28.457 --> 00:21:28.717
+quickly,
+
+00:21:28.817 --> 00:21:30.077
+because we don't want to get into
+
+00:21:30.097 --> 00:21:30.317
+services.
+
+00:21:33.221 --> 00:21:35.961
+at this country so folks things you can
+
+00:21:36.001 --> 00:21:38.584
+plant and run into your pantry so that's
+
+00:21:40.265 --> 00:21:45.826
+the same so very clean side and i
+
+00:21:45.846 --> 00:21:47.188
+also got to have a show this is
+
+00:21:47.208 --> 00:21:52.750
+the volume quality guy this is like this
+
+00:21:52.871 --> 00:21:55.192
+and maybe if you see it actually moves
+
+00:21:55.211 --> 00:21:59.433
+actually appropriate and features here
+
+00:22:03.193 --> 00:22:04.275
+a lot of people say like why do
+
+00:22:04.295 --> 00:22:08.357
+you always website i think for me at
+
+00:22:08.397 --> 00:22:14.442
+least um every business needs a website
+
+00:22:14.663 --> 00:22:16.604
+maybe you're gonna be on a business like
+
+00:22:16.644 --> 00:22:19.846
+anything you have like that's how you tell
+
+00:22:19.866 --> 00:22:23.809
+your story like through but it's now i
+
+00:22:23.829 --> 00:22:26.132
+just wanted to tell you something like
+
+00:22:26.172 --> 00:22:28.854
+your website of course you can have a
+
+00:22:29.054 --> 00:22:30.454
+youtube video or social media
+
+00:22:31.403 --> 00:22:33.663
+all these things but like your website
+
+00:22:35.045 --> 00:22:37.125
+it's important in foundation when you're
+
+00:22:37.165 --> 00:22:39.907
+establishing a brand business it's
+
+00:22:39.968 --> 00:22:42.489
+important to have it i mean not only
+
+00:22:42.509 --> 00:22:46.030
+just website but then you know having the
+
+00:22:46.050 --> 00:22:49.073
+domain name that you own it's super
+
+00:22:49.093 --> 00:22:56.435
+important and um it's a great it's a
+
+00:22:56.476 --> 00:22:57.436
+first impression you know
+
+00:22:59.605 --> 00:23:02.125
+You see it's fully done.
+
+00:23:02.945 --> 00:23:04.967
+There's thought behind it.
+
+00:23:04.987 --> 00:23:11.468
+There's a little craftsmanship behind it.
+
+00:23:11.567 --> 00:23:16.329
+It's very important.
+
+00:23:16.529 --> 00:23:20.211
+It's your best for the head.
+
+00:23:20.871 --> 00:23:23.811
+So we'll present this to all involved this
+
+00:23:23.932 --> 00:23:24.112
+week.
+
+00:23:32.054 --> 00:23:38.557
+So let's get into the main point of
+
+00:23:38.576 --> 00:23:49.241
+discussion.
+
+00:23:49.342 --> 00:23:55.825
+So we talked about this whole idea of
+
+00:23:56.846 --> 00:23:57.526
+what age is like.
+
+00:24:00.086 --> 00:24:01.405
+Actually, we're talking about props,
+
+00:24:01.486 --> 00:24:02.267
+right?
+
+00:24:04.487 --> 00:24:08.607
+And then getting into level two,
+
+00:24:09.028 --> 00:24:09.827
+level three.
+
+00:24:15.970 --> 00:24:19.570
+And that's where, like, workflows come in,
+
+00:24:19.631 --> 00:24:21.090
+right?
+
+00:24:21.111 --> 00:24:21.832
+Like, let's see.
+
+00:24:22.271 --> 00:24:24.352
+Like, some things we did in the past.
+
+00:24:24.991 --> 00:24:25.672
+A couple of them.
+
+00:24:26.192 --> 00:24:27.712
+We talked about scheduling.
+
+00:24:29.718 --> 00:24:32.078
+the workflows, or sorry, the prompts,
+
+00:24:32.519 --> 00:24:33.440
+scheduling prompts.
+
+00:24:34.759 --> 00:24:39.001
+Here's one that I would be in at
+
+00:24:39.041 --> 00:24:41.942
+my tech groups.
+
+00:24:46.244 --> 00:24:46.785
+Schedule,
+
+00:24:47.746 --> 00:24:50.067
+and you try to continue this on certain
+
+00:24:50.086 --> 00:24:52.928
+time based on the instructions I give it,
+
+00:24:54.469 --> 00:24:55.409
+but you would
+
+00:24:56.839 --> 00:24:59.781
+content on a daily basis.
+
+00:24:59.821 --> 00:25:01.864
+So this is my daily template,
+
+00:25:01.923 --> 00:25:03.265
+reading forward to it.
+
+00:25:06.106 --> 00:25:07.867
+So I'm focused on AI,
+
+00:25:08.307 --> 00:25:09.648
+I'm focused on apps.
+
+00:25:12.510 --> 00:25:14.472
+I have a couple articles.
+
+00:25:15.093 --> 00:25:17.394
+So that's like, that's it.
+
+00:25:18.075 --> 00:25:20.936
+A prompt that's automated.
+
+00:25:21.498 --> 00:25:24.779
+So that's automation.
+
+00:25:28.932 --> 00:25:30.773
+You can call it an evidence-technificator.
+
+00:25:33.296 --> 00:25:33.635
+Now,
+
+00:25:35.096 --> 00:25:37.179
+when you have this idea of an
+
+00:25:37.259 --> 00:25:41.622
+agent-to-worker or a group of agents or
+
+00:25:41.662 --> 00:25:45.364
+sub-agents working for you, right?
+
+00:25:45.483 --> 00:25:51.288
+It's important to understand the
+
+00:25:51.387 --> 00:25:53.088
+organization structure.
+
+00:25:54.210 --> 00:25:55.451
+I have a business background,
+
+00:25:55.471 --> 00:25:57.932
+so I understand the organization
+
+00:25:57.952 --> 00:25:58.333
+structure.
+
+00:26:02.096 --> 00:26:03.416
+how organizations work online,
+
+00:26:03.457 --> 00:26:07.598
+and kind of how the different types of
+
+00:26:07.618 --> 00:26:11.701
+structure work.
+
+00:26:11.761 --> 00:26:15.223
+So here's just like a little bit blog,
+
+00:26:16.424 --> 00:26:17.945
+ten types of organization structure.
+
+00:26:19.069 --> 00:26:20.390
+You don't have to do all ten.
+
+00:26:21.010 --> 00:26:22.631
+You have your traditional hierarchical.
+
+00:26:23.892 --> 00:26:25.071
+I'll go through this real quick.
+
+00:26:25.152 --> 00:26:26.893
+Because I didn't know this article before.
+
+00:26:27.272 --> 00:26:30.534
+I already know this like three of them.
+
+00:26:31.374 --> 00:26:35.836
+So, hierarchical.
+
+00:26:36.496 --> 00:26:37.116
+I can't.
+
+00:26:37.557 --> 00:26:37.836
+So,
+
+00:26:38.136 --> 00:26:39.356
+this is like your traditional
+
+00:26:40.417 --> 00:26:41.097
+organization, right?
+
+00:26:41.117 --> 00:26:43.558
+You got all the directors.
+
+00:26:44.997 --> 00:26:46.357
+You have your executive board,
+
+00:26:47.117 --> 00:26:49.960
+which is normally the CEO.
+
+00:26:49.980 --> 00:26:51.760
+Actually no, you have board director, CEO,
+
+00:26:52.362 --> 00:26:54.782
+then you normally have directors,
+
+00:26:55.084 --> 00:26:57.684
+or you'll have like a CFO,
+
+00:26:58.665 --> 00:27:01.528
+chief financial officer, CMO,
+
+00:27:01.548 --> 00:27:03.169
+chief marketing officer, CTO,
+
+00:27:03.588 --> 00:27:04.809
+chief technical officer,
+
+00:27:05.609 --> 00:27:07.592
+a series of boards,
+
+00:27:08.031 --> 00:27:11.013
+and then normally you have directors.
+
+00:27:11.114 --> 00:27:12.755
+And these groups of people have
+
+00:27:18.861 --> 00:27:20.102
+It's a functional structure.
+
+00:27:20.162 --> 00:27:21.603
+So this slide function.
+
+00:27:22.242 --> 00:27:23.324
+I like this one.
+
+00:27:23.443 --> 00:27:27.666
+It's like.
+
+00:27:38.193 --> 00:27:38.815
+So this one,
+
+00:27:39.634 --> 00:27:40.556
+you'll have a head of IT,
+
+00:27:40.715 --> 00:27:43.818
+and you have like a security manager,
+
+00:27:43.919 --> 00:27:48.982
+network manager, office switch architect,
+
+00:27:49.042 --> 00:27:53.026
+help desk, infrastructure support manager,
+
+00:27:53.086 --> 00:27:56.169
+and you have the executive force, right?
+
+00:27:56.189 --> 00:28:01.153
+So they're organized by function.
+
+00:28:01.192 --> 00:28:02.773
+Then you have a horizontal with flat
+
+00:28:02.834 --> 00:28:03.513
+organization.
+
+00:28:07.096 --> 00:28:07.798
+This is where like,
+
+00:28:11.607 --> 00:28:14.912
+The main person will just have a bunch
+
+00:28:14.932 --> 00:28:15.751
+of director boards.
+
+00:28:16.032 --> 00:28:22.240
+They will have layers of director boards.
+
+00:28:23.381 --> 00:28:25.222
+Find divisions and some more divisions
+
+00:28:25.242 --> 00:28:27.184
+that will help with education.
+
+00:28:27.204 --> 00:28:28.567
+Real estate division,
+
+00:28:28.586 --> 00:28:30.848
+a great example of this would be like
+
+00:28:37.576 --> 00:28:41.721
+And they might be sectioned off by
+
+00:28:41.760 --> 00:28:42.141
+regions.
+
+00:28:42.201 --> 00:28:45.483
+So I feel like their strategy for South
+
+00:28:45.503 --> 00:28:47.125
+America is different from the strategy for
+
+00:28:47.144 --> 00:28:47.404
+Europe.
+
+00:28:47.865 --> 00:28:49.346
+So they might have a South American
+
+00:28:49.366 --> 00:28:51.067
+region, a European region.
+
+00:28:53.269 --> 00:28:57.813
+Then you'll have basically copies of that
+
+00:28:57.833 --> 00:28:59.494
+structure across the different regions.
+
+00:29:03.865 --> 00:29:04.065
+I mean,
+
+00:29:04.125 --> 00:29:06.905
+that might have multiple products that are
+
+00:29:06.925 --> 00:29:08.707
+like key products.
+
+00:29:08.807 --> 00:29:12.949
+I think we'll call it,
+
+00:29:12.969 --> 00:29:14.128
+we're gonna create an example.
+
+00:29:14.148 --> 00:29:14.490
+Who calls?
+
+00:29:14.509 --> 00:29:15.369
+I'm gonna create an example.
+
+00:29:16.570 --> 00:29:17.270
+It's a school.
+
+00:29:20.392 --> 00:29:21.011
+In a lot of cases,
+
+00:29:21.113 --> 00:29:23.153
+that means our product isn't just such a
+
+00:29:23.292 --> 00:29:24.094
+massive company.
+
+00:29:24.413 --> 00:29:26.694
+We have other companies that didn't work,
+
+00:29:26.734 --> 00:29:27.075
+so.
+
+00:29:30.457 --> 00:29:31.096
+Here we go.
+
+00:29:32.434 --> 00:29:34.980
+Let's say you have some main products.
+
+00:29:36.000 --> 00:29:38.746
+You have the main organization page.
+
+00:29:39.346 --> 00:29:40.308
+You have general manager.
+
+00:29:56.942 --> 00:29:57.382
+Anyways,
+
+00:29:57.481 --> 00:30:10.145
+so the point of all that is I
+
+00:30:11.606 --> 00:30:14.807
+want to say that it's important to
+
+00:30:14.827 --> 00:30:16.448
+understand the structure.
+
+00:30:16.567 --> 00:30:18.068
+I'm sitting up in here right now.
+
+00:30:19.509 --> 00:30:21.910
+Because when you think of what you want
+
+00:30:21.930 --> 00:30:22.430
+to do with AI,
+
+00:30:22.470 --> 00:30:24.611
+you want to be able to
+
+00:30:27.602 --> 00:30:28.742
+Let's see.
+
+00:30:28.843 --> 00:30:29.923
+It's out of the drum.
+
+00:30:29.942 --> 00:30:30.044
+So.
+
+00:30:57.434 --> 00:30:57.714
+Watch.
+
+00:30:57.734 --> 00:30:58.335
+Change.
+
+00:30:58.375 --> 00:30:58.434
+So.
+
+00:31:27.056 --> 00:31:31.738
+so i'm trying to place this video so
+
+00:31:31.798 --> 00:31:40.021
+let's see if it's hot right okay let's
+
+00:31:40.063 --> 00:31:42.384
+say i have all the different things i'm
+
+00:31:42.403 --> 00:31:43.884
+doing like i'm doing
+
+00:31:56.988 --> 00:32:01.368
+development and building stuff.
+
+00:32:02.328 --> 00:32:15.113
+Searching for new ideas.
+
+00:32:17.973 --> 00:32:19.394
+That's a lot of things that you're doing.
+
+00:32:21.300 --> 00:32:21.981
+But guess what?
+
+00:32:22.102 --> 00:32:22.382
+Like,
+
+00:32:23.222 --> 00:32:25.243
+what do you need an agent to do
+
+00:32:25.503 --> 00:32:26.345
+next year for your thing?
+
+00:32:26.365 --> 00:32:31.428
+Like, starting one, two, three, four, six,
+
+00:32:31.448 --> 00:32:32.608
+seven agents at once.
+
+00:32:32.648 --> 00:32:34.611
+That's just you thinking about properties.
+
+00:32:35.230 --> 00:32:37.133
+Probably tons of other things that
+
+00:32:37.212 --> 00:32:39.534
+business owner, I'm told,
+
+00:32:39.574 --> 00:32:40.315
+is still a startup.
+
+00:32:46.971 --> 00:32:49.472
+What you guys did is that instead of
+
+00:32:49.512 --> 00:32:51.835
+creating like all these different agents,
+
+00:32:53.375 --> 00:32:55.657
+you gotta understand structure.
+
+00:32:57.159 --> 00:32:59.000
+So let's say you go back to here.
+
+00:33:08.048 --> 00:33:10.730
+This is probably the best one that I
+
+00:33:10.770 --> 00:33:11.871
+chose what I'm thinking,
+
+00:33:13.071 --> 00:33:15.535
+but it wouldn't be these specific roles.
+
+00:33:20.434 --> 00:33:20.557
+Thanks.
+
+00:34:24.795 --> 00:34:26.896
+So, let's say this is me.
+
+00:34:27.016 --> 00:34:30.936
+Instead of having, like,
+
+00:34:31.697 --> 00:34:35.199
+an individual agent that does one thing,
+
+00:34:36.219 --> 00:34:36.940
+oh, there's one tool.
+
+00:34:37.579 --> 00:34:40.960
+The function is actually making sense.
+
+00:34:41.380 --> 00:34:45.143
+I also don't really have to call it
+
+00:34:45.222 --> 00:34:45.422
+out.
+
+00:34:45.543 --> 00:34:48.063
+So, it's what you need.
+
+00:34:48.123 --> 00:34:50.764
+And then let's say, like,
+
+00:34:55.505 --> 00:34:56.246
+This says security,
+
+00:34:56.286 --> 00:34:59.708
+but think of it this way.
+
+00:34:59.728 --> 00:35:03.088
+Let's say I want someone that does my
+
+00:35:03.128 --> 00:35:06.110
+communications,
+
+00:35:06.170 --> 00:35:10.713
+prioritizing tests for the day.
+
+00:35:10.853 --> 00:35:15.934
+Oops.
+
+00:35:15.994 --> 00:35:18.096
+Actually, any of this won't do, right?
+
+00:35:19.056 --> 00:35:20.496
+Instead of you sending them and building
+
+00:35:20.516 --> 00:35:21.137
+an agent that
+
+00:35:23.402 --> 00:35:24.302
+sends emails,
+
+00:35:24.481 --> 00:35:25.762
+but that student wants to know,
+
+00:35:26.682 --> 00:35:28.983
+I want the chief of staff agent, okay?
+
+00:35:30.125 --> 00:35:32.606
+My chief of staff agent is going to,
+
+00:35:32.626 --> 00:35:35.507
+what do you call it, executive assistant,
+
+00:35:36.027 --> 00:35:36.907
+whatever you want to call it.
+
+00:35:38.307 --> 00:35:39.427
+But they have to understand.
+
+00:35:41.248 --> 00:35:43.550
+And instead of just having that one
+
+00:35:43.590 --> 00:35:44.030
+function,
+
+00:35:44.050 --> 00:35:47.110
+it has a group of functions based on
+
+00:35:47.490 --> 00:35:49.211
+what department this is, okay?
+
+00:35:50.655 --> 00:35:52.277
+So that's one agent.
+
+00:35:53.197 --> 00:35:55.320
+The next agent could be a project manager.
+
+00:35:56.960 --> 00:36:01.125
+So your project manager agent is going to
+
+00:36:01.244 --> 00:36:03.648
+take all your tasks and take the bigger
+
+00:36:03.668 --> 00:36:06.650
+tasks, break it up, manage those tasks,
+
+00:36:06.831 --> 00:36:07.672
+create a timeline,
+
+00:36:07.692 --> 00:36:09.974
+keep you on track towards your goal.
+
+00:36:10.054 --> 00:36:13.317
+Then you could have, let's say,
+
+00:36:13.336 --> 00:36:13.918
+the technical
+
+00:36:16.137 --> 00:36:18.298
+like have a board of directors or a
+
+00:36:18.318 --> 00:36:18.900
+board of agents
+
+00:36:43.626 --> 00:36:45.166
+function is.
+
+00:36:46.547 --> 00:36:49.628
+And then what you do is,
+
+00:36:51.827 --> 00:36:58.409
+so for them to actually run what's called
+
+00:36:58.530 --> 00:36:59.909
+an autonomy sleep, right?
+
+00:37:03.451 --> 00:37:05.751
+They're not really running autonomy sleep.
+
+00:37:07.331 --> 00:37:08.771
+What you're doing is you're telling them,
+
+00:37:10.052 --> 00:37:11.831
+hey, get the chief staff agent ready.
+
+00:37:17.693 --> 00:37:21.516
+to get this agent instructions on,
+
+00:37:21.536 --> 00:37:28.402
+this is called Chief of Staff.
+
+00:37:29.422 --> 00:37:30.623
+And for Chief of Staff,
+
+00:37:31.485 --> 00:37:33.567
+you gotta give this person time.
+
+00:37:33.646 --> 00:37:36.748
+All right, so just say daily,
+
+00:37:37.510 --> 00:37:39.070
+what would you say, an hour?
+
+00:37:41.273 --> 00:37:42.934
+An hour is only probably,
+
+00:37:42.954 --> 00:37:45.536
+if you want something to mean an hour,
+
+00:37:47.512 --> 00:37:50.913
+So let's say twice a day.
+
+00:37:51.293 --> 00:37:51.612
+That's a lot of .
+
+00:38:19.275 --> 00:38:19.355
+So,
+
+00:38:49.889 --> 00:38:55.353
+So you want the chief staff to do
+
+00:38:55.373 --> 00:38:56.414
+something two times a day,
+
+00:38:56.775 --> 00:38:57.835
+price the report,
+
+00:38:58.356 --> 00:38:59.436
+then also you want to be able to
+
+00:38:59.516 --> 00:39:02.398
+chat with the chief staff member.
+
+00:39:02.418 --> 00:39:03.039
+So chat.
+
+00:39:06.240 --> 00:39:12.425
+And you chat using WhatsApp, Teams,
+
+00:39:16.226 --> 00:39:18.907
+You can text it, you know, use Telegram,
+
+00:39:20.208 --> 00:39:21.489
+and you want to be able to chat
+
+00:39:21.608 --> 00:39:24.371
+and reach out to your staff agent.
+
+00:39:24.391 --> 00:39:26.032
+You can set up like a web UI.
+
+00:39:27.052 --> 00:39:29.233
+You can chat with that person.
+
+00:39:29.673 --> 00:39:31.315
+You can give that person a name.
+
+00:39:32.175 --> 00:39:34.715
+You can give their personality if you
+
+00:39:34.735 --> 00:39:35.036
+want.
+
+00:39:36.938 --> 00:39:41.119
+But think of it as a person that
+
+00:39:41.159 --> 00:39:42.561
+doesn't do just one thing,
+
+00:39:42.581 --> 00:39:42.721
+but
+
+00:39:45.275 --> 00:39:48.298
+has a certain skill set of things that
+
+00:39:48.318 --> 00:39:48.798
+it does.
+
+00:39:48.878 --> 00:39:52.882
+And then you also have your technical.
+
+00:39:52.902 --> 00:39:58.847
+So your technical architect, developer,
+
+00:39:59.989 --> 00:40:01.150
+tech advisor, CTO,
+
+00:40:01.170 --> 00:40:02.451
+whatever you want to call that person,
+
+00:40:02.490 --> 00:40:02.650
+right?
+
+00:40:04.467 --> 00:40:12.851
+that person can analyze on a that person
+
+00:40:12.871 --> 00:40:15.873
+can analyze on a weekly basis or monthly
+
+00:40:15.893 --> 00:40:19.956
+basis once again you don't need a tech
+
+00:40:19.976 --> 00:40:27.059
+advisor to send you stuff every single day
+
+00:40:28.320 --> 00:40:32.161
+so a weekly can provide some type of
+
+00:40:32.181 --> 00:40:32.641
+report
+
+00:40:35.963 --> 00:40:42.048
+to you, make the recommendations,
+
+00:40:42.068 --> 00:40:44.650
+provide those recommendations to you in
+
+00:40:44.670 --> 00:40:47.012
+the form of changes that you have to
+
+00:40:47.032 --> 00:40:48.052
+go through,
+
+00:40:48.893 --> 00:40:50.355
+and then they actually are the ones that
+
+00:40:50.375 --> 00:40:52.036
+go out in the form of exchanges.
+
+00:40:52.916 --> 00:40:54.657
+Great example, right?
+
+00:40:54.677 --> 00:40:57.300
+You have this person do an analysis on
+
+00:40:57.440 --> 00:40:59.001
+security.
+
+00:40:59.061 --> 00:40:59.302
+Again,
+
+00:40:59.844 --> 00:41:01.864
+you don't have a just a security person
+
+00:41:01.905 --> 00:41:03.905
+you have a technical person that's doing
+
+00:41:03.925 --> 00:41:06.226
+security on your kind of assistant
+
+00:41:06.246 --> 00:41:10.407
+self-providing you know report on how
+
+00:41:10.427 --> 00:41:17.309
+secure your business system is right and
+
+00:41:17.349 --> 00:41:20.271
+then you also do something where that that
+
+00:41:20.331 --> 00:41:21.652
+tech agent
+
+00:41:22.943 --> 00:41:25.806
+goes out and looks at the latest tools,
+
+00:41:26.347 --> 00:41:27.748
+the latest technology.
+
+00:41:28.809 --> 00:41:30.610
+That's a beautiful thing to be learning
+
+00:41:30.630 --> 00:41:31.351
+from your business,
+
+00:41:31.391 --> 00:41:32.751
+because that person understands your
+
+00:41:32.771 --> 00:41:33.253
+business.
+
+00:41:33.873 --> 00:41:34.454
+At the same time,
+
+00:41:34.474 --> 00:41:35.755
+you sit and chat with this person, right?
+
+00:41:37.235 --> 00:41:39.297
+You chat, give that person a name,
+
+00:41:40.998 --> 00:41:44.181
+interact with them, make updates,
+
+00:41:45.583 --> 00:41:46.422
+ask questions,
+
+00:41:51.710 --> 00:41:53.550
+So I hope you get the concept of
+
+00:41:54.992 --> 00:41:56.653
+like why this is so important.
+
+00:41:57.934 --> 00:42:02.277
+This is something I'm building out in my
+
+00:42:02.297 --> 00:42:04.099
+work life, corporate life,
+
+00:42:04.958 --> 00:42:05.840
+in my personal life,
+
+00:42:06.380 --> 00:42:08.902
+having all these different agents.
+
+00:42:08.922 --> 00:42:11.804
+I have an attitude about ten,
+
+00:42:12.445 --> 00:42:13.344
+ten different things.
+
+00:42:13.945 --> 00:42:15.487
+Actually, that's in the future.
+
+00:42:20.822 --> 00:42:23.503
+chief of staff, program manager,
+
+00:42:24.403 --> 00:42:26.864
+project manager, technical architect.
+
+00:42:26.905 --> 00:42:33.489
+So what's happening in a lot of
+
+00:42:43.083 --> 00:42:45.266
+corporations is flattening out the
+
+00:42:45.326 --> 00:42:46.047
+organization.
+
+00:42:46.106 --> 00:42:48.608
+So instead of having all these different
+
+00:42:48.708 --> 00:42:51.672
+layers of this person, that person,
+
+00:42:51.711 --> 00:42:54.134
+this person, that person, this person,
+
+00:42:55.355 --> 00:42:58.637
+it's like, okay, this general manager,
+
+00:42:58.777 --> 00:43:01.460
+this CEO director has a company that
+
+00:43:01.481 --> 00:43:02.001
+supports them.
+
+00:43:02.722 --> 00:43:04.262
+Those people need to be able to do
+
+00:43:05.623 --> 00:43:07.326
+a lot with the
+
+00:43:08.523 --> 00:43:10.646
+And instead of going out and having to,
+
+00:43:11.447 --> 00:43:12.007
+let's say,
+
+00:43:12.887 --> 00:43:17.271
+have to go out and hire people to
+
+00:43:17.311 --> 00:43:19.393
+manage, or hiring, like,
+
+00:43:19.414 --> 00:43:20.815
+contracting a vendor,
+
+00:43:22.115 --> 00:43:24.438
+I can build out a team of ten
+
+00:43:25.940 --> 00:43:27.400
+virtual agents,
+
+00:43:27.521 --> 00:43:32.686
+virtual people that I have to manage.
+
+00:43:32.826 --> 00:43:33.847
+I have meetings with them.
+
+00:43:35.246 --> 00:43:36.688
+They ask me questions like, hey,
+
+00:43:37.367 --> 00:43:38.108
+I'm doing this.
+
+00:43:39.568 --> 00:43:40.389
+What should I do?
+
+00:43:40.509 --> 00:43:43.931
+And I'm like, hey, do this, do that.
+
+00:43:44.170 --> 00:43:45.010
+Reference this.
+
+00:43:45.030 --> 00:43:47.592
+So you have to keep asking questions like,
+
+00:43:48.512 --> 00:43:50.152
+is this a social truth?
+
+00:43:50.753 --> 00:43:53.434
+I'm interacting with these virtual agents
+
+00:43:54.695 --> 00:43:55.195
+pretty heavily.
+
+00:43:56.896 --> 00:44:04.378
+And it's definitely not only cost savings,
+
+00:44:05.851 --> 00:44:07.331
+but it allows you to do so much
+
+00:44:07.431 --> 00:44:09.514
+more.
+
+00:44:09.534 --> 00:44:12.496
+It allows us to not have to be
+
+00:44:12.615 --> 00:44:13.697
+experts in everything,
+
+00:44:15.177 --> 00:44:20.300
+but we can still have depth.
+
+00:44:22.862 --> 00:44:25.105
+I don't necessarily have to be a finance
+
+00:44:25.184 --> 00:44:25.485
+guru.
+
+00:44:27.125 --> 00:44:27.905
+to do my job,
+
+00:44:28.606 --> 00:44:31.268
+but I can have an agent that's the
+
+00:44:31.407 --> 00:44:34.451
+one that goes deep to understand the
+
+00:44:34.471 --> 00:44:38.134
+financial impact of finances.
+
+00:44:38.153 --> 00:44:45.960
+So it does bring more back on the
+
+00:44:46.119 --> 00:44:47.320
+person that's running a business,
+
+00:44:47.380 --> 00:44:52.005
+the person that's in corporate America,
+
+00:44:53.186 --> 00:44:56.668
+to not just be good at one thing,
+
+00:44:58.469 --> 00:44:59.949
+So you have to be able to speak
+
+00:44:59.989 --> 00:45:01.751
+to and understand multiple things,
+
+00:45:01.811 --> 00:45:04.391
+multiple principles and concepts in what
+
+00:45:04.431 --> 00:45:06.331
+you do to be effective.
+
+00:45:06.891 --> 00:45:09.793
+So a guide is definitely there to help
+
+00:45:09.813 --> 00:45:10.233
+with that.
+
+00:45:11.554 --> 00:45:11.974
+Again,
+
+00:45:12.393 --> 00:45:15.735
+you have to be able to have a
+
+00:45:15.755 --> 00:45:19.715
+structure, understand the language.
+
+00:45:19.735 --> 00:45:20.936
+Language is so important.
+
+00:45:21.056 --> 00:45:26.518
+I got a little words to say that
+
+00:45:26.777 --> 00:45:27.878
+if I've been a guide
+
+00:45:53.422 --> 00:45:55.784
+that English and Hebrew language,
+
+00:45:55.983 --> 00:45:57.985
+it's the ultimate foreign language of the
+
+00:45:58.005 --> 00:45:58.344
+future.
+
+00:45:59.445 --> 00:46:04.286
+It's so important to understand language,
+
+00:46:05.907 --> 00:46:07.947
+not only for ourselves,
+
+00:46:08.407 --> 00:46:14.670
+but interacting with you guys.
+
+00:46:15.750 --> 00:46:17.050
+Look at my bookshelf.
+
+00:46:17.070 --> 00:46:20.831
+I wouldn't say it's a huge collection,
+
+00:46:20.851 --> 00:46:22.291
+it's just a small collection.
+
+00:46:31.782 --> 00:46:32.483
+So I put this here,
+
+00:46:32.563 --> 00:46:33.565
+the black logic tree.
+
+00:46:34.929 --> 00:46:36.692
+And that's the logic tree.
+
+00:46:39.137 --> 00:46:40.438
+I think it was like, .
+
+00:47:03.914 --> 00:47:06.396
+I think it's fine.
+
+00:47:06.436 --> 00:47:10.818
+But, um, it goes into this dictionary,
+
+00:47:10.838 --> 00:47:11.239
+of course,
+
+00:47:12.760 --> 00:47:16.242
+but provides the words in terms of, like,
+
+00:47:16.262 --> 00:47:16.702
+the law.
+
+00:47:17.724 --> 00:47:19.224
+If I go into the dictionary and have,
+
+00:47:19.244 --> 00:47:19.465
+like,
+
+00:47:20.025 --> 00:47:22.748
+one word that might have three different
+
+00:47:22.788 --> 00:47:23.427
+meanings, right?
+
+00:47:25.429 --> 00:47:26.951
+And this, like, one word has, like,
+
+00:47:28.311 --> 00:47:30.873
+it's down in the letter of the law
+
+00:47:31.074 --> 00:47:32.235
+what it actually means.
+
+00:47:34.585 --> 00:47:36.264
+Because sometimes I'll think of words like
+
+00:47:36.284 --> 00:47:36.545
+that.
+
+00:47:39.065 --> 00:47:40.206
+Why is that word used?
+
+00:47:41.846 --> 00:47:44.027
+Like the word offer.
+
+00:47:44.306 --> 00:47:45.106
+I have a friend.
+
+00:47:45.646 --> 00:47:46.547
+I don't know what an offer is.
+
+00:47:46.666 --> 00:47:48.387
+I don't know what an offer is.
+
+00:47:48.427 --> 00:47:49.967
+But then I offer you something.
+
+00:47:50.387 --> 00:47:52.847
+But when you talk about offers in terms
+
+00:47:52.887 --> 00:47:54.407
+of like sales and go to the market,
+
+00:47:54.648 --> 00:47:56.028
+it's like the world behind me.
+
+00:47:56.108 --> 00:47:58.648
+It's like something that you package up.
+
+00:47:59.449 --> 00:48:03.909
+It's like products and services together.
+
+00:48:04.922 --> 00:48:06.925
+to provide that to a customer to say,
+
+00:48:06.945 --> 00:48:11.891
+hey, this is the offer for .
+
+00:48:11.150 --> 00:48:15.255
+But then like when talking about,
+
+00:48:15.275 --> 00:48:17.780
+talking to someone you might be like,
+
+00:48:17.860 --> 00:48:18.701
+okay, so what's your,
+
+00:48:19.242 --> 00:48:20.884
+so like people might say things like,
+
+00:48:20.903 --> 00:48:23.266
+what's so, so make me an offer.
+
+00:48:27.967 --> 00:48:29.489
+And then, like, it's not the same thing,
+
+00:48:30.248 --> 00:48:32.530
+but what is the true definition of an
+
+00:48:32.650 --> 00:48:33.371
+author?
+
+00:48:33.451 --> 00:48:34.592
+And why do we use that term?
+
+00:48:34.612 --> 00:48:36.532
+So I say all this to say that
+
+00:48:37.853 --> 00:48:40.594
+AI doesn't always fully understand what
+
+00:48:41.556 --> 00:48:42.255
+you're saying.
+
+00:48:42.617 --> 00:48:43.876
+So it's important that you understand what
+
+00:48:43.896 --> 00:48:45.478
+you're saying as far as the words that
+
+00:48:45.518 --> 00:48:45.838
+you're using.
+
+00:48:45.858 --> 00:48:46.898
+When we say leverage, like,
+
+00:48:46.918 --> 00:48:49.260
+I use the word leverage a lot.
+
+00:48:49.300 --> 00:48:51.722
+But that means, like,
+
+00:48:52.782 --> 00:48:56.385
+don't use it directly, but, like,
+
+00:49:01.472 --> 00:49:05.094
+use whatever you want to leverage to get
+
+00:49:05.134 --> 00:49:07.295
+to this goal.
+
+00:49:07.436 --> 00:49:11.958
+Use it however you can to get to
+
+00:49:11.978 --> 00:49:14.539
+the main goal.
+
+00:49:14.599 --> 00:49:20.543
+Leverage my access to this Gmail account.
+
+00:49:21.423 --> 00:49:22.264
+I don't know.
+
+00:49:27.014 --> 00:49:28.635
+Some of the things about as you direct
+
+00:49:28.715 --> 00:49:34.115
+your AI, that's my challenge to you all.
+
+00:49:35.356 --> 00:49:36.956
+When you're interacting with your AI,
+
+00:49:36.976 --> 00:49:40.157
+you need to be mindful of what you're
+
+00:49:40.918 --> 00:49:41.418
+doing.
+
+00:49:42.938 --> 00:49:44.438
+Switch it up, use different thoughts.
+
+00:49:44.559 --> 00:49:46.719
+Even if it comes to thoughts,
+
+00:49:46.760 --> 00:49:53.902
+go to your different AI partners.
+
+00:49:53.981 --> 00:49:56.682
+If you have great subscriptions,
+
+00:50:00.302 --> 00:50:05.344
+I think that a lot when it comes
+
+00:50:06.326 --> 00:50:08.407
+to like my low bicep,
+
+00:50:09.748 --> 00:50:14.309
+when I'm going through with the text to
+
+00:50:14.349 --> 00:50:15.951
+like, you know,
+
+00:50:15.990 --> 00:50:18.932
+like instead of me going through something
+
+00:50:18.952 --> 00:50:20.793
+like not to make music,
+
+00:50:20.833 --> 00:50:23.014
+I'll just go gently and say, okay,
+
+00:50:23.054 --> 00:50:24.376
+this is what I'm thinking,
+
+00:50:25.436 --> 00:50:26.356
+you create the prompt.
+
+00:50:27.918 --> 00:50:28.538
+And
+
+00:50:31.081 --> 00:50:39.748
+So be intentional about your prompts.
+
+00:50:40.688 --> 00:50:41.849
+Understand structure.
+
+00:50:41.929 --> 00:50:43.409
+Understand organizational structure.
+
+00:50:43.911 --> 00:50:46.391
+Especially when it comes to not
+
+00:50:46.411 --> 00:50:47.472
+considering agents.
+
+00:50:48.873 --> 00:50:51.876
+You can't really hire a team of agents.
+
+00:50:51.896 --> 00:50:54.878
+Do this exercise with your bank.
+
+00:50:56.599 --> 00:50:58.121
+Not this exercise.
+
+00:50:58.141 --> 00:50:59.942
+You get the point.
+
+00:51:00.023 --> 00:51:00.563
+Actually, you know what?
+
+00:51:02.507 --> 00:51:05.168
+that's the right guide we put out next
+
+00:51:05.208 --> 00:51:11.253
+week on how to build out your agent
+
+00:51:11.333 --> 00:51:18.016
+organization leveraging organizational
+
+00:51:18.036 --> 00:51:21.099
+structure in businesses that is the next
+
+00:51:21.239 --> 00:51:26.302
+step I'll put it up on the agriculture.i
+
+00:51:26.322 --> 00:51:28.903
+website of course
+
+00:51:31.730 --> 00:51:37.472
+continue to reach out to us in the
+
+00:51:37.492 --> 00:51:38.172
+community culture.
+
+00:51:39.393 --> 00:51:42.695
+I can't say how it's working as far
+
+00:51:42.715 --> 00:51:45.237
+as the concept of the pictures alone.
+
+00:51:47.157 --> 00:51:48.697
+That's a lot of cool stuff we're working
+
+00:51:48.777 --> 00:51:54.061
+on in the community culture within the
+
+00:51:54.101 --> 00:51:56.882
+community, here at the Space Coast,
+
+00:51:57.001 --> 00:51:58.043
+here in the Space Coast.
+
+00:51:59.855 --> 00:52:01.096
+keep you guys posted on that.
+
+00:52:01.677 --> 00:52:04.619
+But as always, it's been great.
+
+00:52:04.639 --> 00:52:07.461
+I'll see you next Thursday.
+
+00:52:10.023 --> 00:52:10.704
+Keep building.
+
+00:52:11.565 --> 00:52:12.266
+Keep coding.
+
+00:52:16.969 --> 00:52:17.371
+Thank you.
+
+00:52:18.992 --> 00:52:19.271
+Out.
+
+00:52:19.833 --> 00:52:21.554
+Peace out.
+
