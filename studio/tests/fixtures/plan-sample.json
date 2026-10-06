@@ -1,0 +1,54 @@
+{
+  "date": "2026-12-30",
+  "summary": "Fixture plan used by tests and the render smoke check.",
+  "news_used": [],
+  "posts": [
+    {
+      "id": "20261230-l8-01", "brand": "layer8culture", "format": "carousel", "platforms": ["instagram"],
+      "category": "AI Fluency Education", "topic": "redact customer data before you prompt", "slot": "morning",
+      "hook": "Your AI is only as safe as what you paste into it.",
+      "caption": "Your AI is only as safe as what you paste into it.\n\nThree checks before any customer detail goes into a chat window. Save this for your next client email.",
+      "hashtags": ["#Layer8Culture", "#AIFluency", "#SmallBusiness"],
+      "kicker": "AI FIELD GUIDE",
+      "slides": [
+        {"layout": "cover", "headline": "Redact first.", "accent": "Prompt second.", "body": "Three checks before customer data touches a chat window."},
+        {"layout": "point", "headline": "Swap names for roles", "body": "\"The client\" works as well as their real name.", "code": "Rewrite this email to the client confirming the refund date."},
+        {"layout": "list", "headline": "Never paste", "items": ["Card numbers", "Passwords", "Health details", "Home addresses"]},
+        {"layout": "cta", "headline": "Save this.", "accent": "Share it with your team.", "body": "More practical AI every week at layer8culture.io"}
+      ],
+      "hero": {"filename": "20261230-hero-redact.png", "aspect": "4:5", "shot": "Close 3/4 profile of a woman reviewing a floating blue hologram where sensitive blocks dissolve into blur."}
+    },
+    {
+      "id": "20261230-l8-02", "brand": "layer8culture", "format": "reel", "platforms": ["instagram", "youtube"],
+      "category": "AI Tool Experiments", "topic": "brief your AI like a new hire", "slot": "afternoon",
+      "hook": "Your AI isn't dumb. Your brief is.",
+      "caption": "Your AI isn't dumb. Your brief is.\n\nOutcome, context, limits, check. Try it on your next prompt and tell me what changed.",
+      "hashtags": ["#Layer8Culture", "#AITips", "#PromptWriting"],
+      "youtube_title": "Your AI isn't dumb. Your brief is. #Shorts",
+      "kicker": "AI FIELD GUIDE",
+      "reel": {
+        "beats": [{"text": "Your AI isn't dumb", "accent": "dumb", "seconds": 2.5}, {"text": "Your brief is", "accent": "brief", "seconds": 4}, {"text": "Outcome context limits", "accent": "limits", "seconds": 3}],
+        "prompt_box": "Reply to this customer in 5 lines. Confirm the refund date. Keep it warm.",
+        "cta": "Save this. Full guide at layer8culture.io"
+      }
+    },
+    {
+      "id": "20261230-l8-03", "brand": "layer8culture", "format": "story", "platforms": ["instagram"],
+      "category": "Tech Thursday Promos", "topic": "tech thursday is live today", "slot": "midday",
+      "hook": "Tech Thursday is live today.",
+      "caption": "Tech Thursday is live today. Bring a question about the AI tools you actually use and join us.",
+      "hashtags": ["#TechThursday", "#Layer8Culture"],
+      "kicker": "TECH THURSDAY",
+      "slides": [{"layout": "story", "headline": "Live today.", "accent": "Tech Thursday.", "body": "Bring one real question about the AI tools you use at work."}]
+    },
+    {
+      "id": "20261230-radio-01", "brand": "radio", "format": "single", "platforms": ["instagram"],
+      "category": "quote", "topic": "quiet hours make deep work", "slot": "evening",
+      "hook": "Quiet hours build loud results.",
+      "caption": "Quiet hours build loud results.\n\nPut the stream on, close the tabs, and stay with one thing. Save this for tonight's session.",
+      "hashtags": ["#Layer8CultureRadio", "#LofiMusic", "#FocusMusic"],
+      "kicker": "NIGHT SESSION",
+      "slides": [{"layout": "quote", "headline": "Quiet hours build", "accent": "loud results.", "body": "Press play. Stay with one thing."}]
+    }
+  ]
+}
