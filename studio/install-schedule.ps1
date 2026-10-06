@@ -26,9 +26,11 @@ if ($Uninstall) {
 
 New-Item -ItemType Directory -Force (Join-Path $Studio "data\logs") | Out-Null
 
-function New-StudioAction([string]$cmd) {
+function New-StudioAction([string]$cmd, [switch]$SelfUpdate) {
     $log = Join-Path $Studio "data\logs\task-$cmd.log"
-    $arg = "-NoProfile -WindowStyle Hidden -Command `"& '$Python' '$Studio\studio.py' $cmd *>> '$log'`""
+    # Self-update: fast-forward the runtime clone before planning (failures are logged, never fatal).
+    $pre = if ($SelfUpdate) { "git -C '$Studio' pull --ff-only -q *>> '$log'; " } else { "" }
+    $arg = "-NoProfile -WindowStyle Hidden -Command `"$pre& '$Python' '$Studio\studio.py' $cmd *>> '$log'`""
     New-ScheduledTaskAction -Execute "powershell.exe" -Argument $arg -WorkingDirectory $Studio
 }
 
@@ -37,7 +39,7 @@ $settings = New-ScheduledTaskSettingsSet -StartWhenAvailable -AllowStartIfOnBatt
 $principal = New-ScheduledTaskPrincipal -UserId "$env:USERDOMAIN\$env:USERNAME" -LogonType Interactive -RunLevel Limited
 
 $daily = New-ScheduledTaskTrigger -Daily -At $DailyTime
-Register-ScheduledTask -TaskName "LayerStudio-Daily" -Action (New-StudioAction "run-daily") -Trigger $daily `
+Register-ScheduledTask -TaskName "LayerStudio-Daily" -Action (New-StudioAction "run-daily" -SelfUpdate) -Trigger $daily `
     -Settings $settings -Principal $principal -Description "Layer8 Studio: plan + render tomorrow" -Force | Out-Null
 
 $pub = New-ScheduledTaskTrigger -Daily -At "06:00"

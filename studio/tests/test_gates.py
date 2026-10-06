@@ -155,6 +155,21 @@ def test_dry_publish_never_writes_log(plan, cfg, monkeypatch):
     assert acts and not logged
 
 
+def test_only_and_ahead(plan, cfg, monkeypatch):
+    from datetime import datetime, timedelta
+
+    from studio_lib.schedule import assign_schedule
+
+    monkeypatch.setattr(context, "read_jsonl", lambda p: [])
+    monkeypatch.setattr(publish, "_log", lambda r: None)
+    assign_schedule(plan, cfg["schedule_windows"], cfg["timezone"])
+    early = min(datetime.fromisoformat(t) for p in plan["posts"] for t in p["schedule"].values()) - timedelta(hours=5)
+    q = lambda **kw: publish.publish_due(plan, D, cfg, {}, {}, now=early, dry=True, log=lambda *_: None, **kw)
+    assert q() == []
+    assert {a["id"] for a in q(ahead=True)} == {p["id"] for p in plan["posts"]}
+    assert {a["id"] for a in q(ahead=True, only={"20261230-l8-03"})} == {"20261230-l8-03"}
+
+
 def test_pause_switch(cfg, tmp_path, monkeypatch):
     from studio_lib import config
 

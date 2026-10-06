@@ -60,10 +60,10 @@ cadence:
 # Facts the planner may state. Leave a value empty and the model will not mention it.
 facts:
   website: https://layer8culture.io
-  tech_thursday_time: ""          # e.g. "Thursdays 8 PM ET" - empty = never state a time
-  tech_thursday_url: ""           # e.g. the YouTube channel/live URL
-  radio_stream_url: "https://www.youtube.com/watch?v=j0VlqqJp5FE"   # verify it's still the live stream
-  radio_stream_is_live_24_7: false   # set true only when the 24/7 stream is confirmed running
+  tech_thursday_time: "Thursdays 9 PM ET"     # layer8culture.io: "Every Thursday · 9 PM EST" (verified 2026-10-06)
+  tech_thursday_url: "https://www.youtube.com/@layer8culture"
+  radio_stream_url: "https://www.youtube.com/@Layer8CultureRadio/live"   # stable; always points at the current live stream
+  radio_stream_is_live_24_7: true    # verified live 2026-10-06 ("24/7 Lo-Fi Coding Radio"); set false if the stream goes down
   sponsor: ""                     # e.g. FOBFLO (only when a sponsor post is wanted)
 
 # Posting windows / gaps (copied from the legacy engine).

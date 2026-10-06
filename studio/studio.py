@@ -117,7 +117,7 @@ def cmd_publish(a, cfg):
         now = datetime.fromisoformat(a.now) if a.now else datetime.now(config.tz(cfg))
         if now.tzinfo is None:
             now = now.replace(tzinfo=config.tz(cfg))
-        d = now.astimezone(config.tz(cfg)).date()
+        d = config.parse_date(a.date, cfg) if a.date else now.astimezone(config.tz(cfg)).date()
         plan = load_plan(d)
         if plan is None:
             log(f"no plan for today ({d}); generating one now")
@@ -132,7 +132,8 @@ def cmd_publish(a, cfg):
             gates.save(results, d)
             if changed:
                 preview.build(plan, d, manifest, results, heroes.status(plan, d), cfg)
-        actions = publish.publish_due(plan, d, cfg, manifest, results, now=now, dry=a.dry, log=log)
+        actions = publish.publish_due(plan, d, cfg, manifest, results, now=now, dry=a.dry, log=log,
+                                      only=set(a.only) if a.only else None, ahead=a.ahead)
         if actions and cfg["notify"].get("on_publish") and not a.dry:
             notify.send("Layer8 Studio publish:\n" + "\n".join(
                 f"{r['status']} {r['id']} → {r['platform']}" + (f" ({r.get('reason', '')[:120]})" if r.get("reason") else "")
@@ -221,6 +222,9 @@ def main(argv=None):
     sp = sub.add_parser("publish")
     sp.add_argument("--now", help="override current time (ISO) for testing")
     sp.add_argument("--dry", action="store_true", help="evaluate due posts but do not call Postiz")
+    sp.add_argument("--date", help="plan date to publish from (default: today)")
+    sp.add_argument("--only", nargs="*", help="post ids")
+    sp.add_argument("--ahead", action="store_true", help="schedule the whole day in Postiz now, at planned times")
     a = ap.parse_args(argv)
     config.load_env()
     config.ensure_dirs()

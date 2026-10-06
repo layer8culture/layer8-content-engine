@@ -88,13 +88,18 @@ def _log(row: dict) -> None:
 
 
 def publish_due(plan: dict, d: date, cfg: dict, manifest: dict, gate_results: dict, *, now: datetime,
-                dry: bool = False, log=print) -> list[dict]:
+                dry: bool = False, log=print, only: set | None = None, ahead: bool = False) -> list[dict]:
+    """ahead=True hands every not-yet-missed post of the day to Postiz now, at its planned time."""
     pub = cfg["publish"]
     look, grace = int(pub.get("lookahead_minutes", 50)), int(pub.get("catch_up_grace_minutes", 180))
+    if ahead:
+        look = 7 * 24 * 60
     done = posted_keys()
     client = None
     actions = []
     for post in plan["posts"]:
+        if only and post["id"] not in only:
+            continue
         for platform, when in (post.get("schedule") or {}).items():
             key = (post["id"], platform)
             if done.get(key) in ("scheduled", "missed", "blocked", "skipped", "failed-final"):
