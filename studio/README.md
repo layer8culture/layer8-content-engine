@@ -73,6 +73,8 @@ A failing post is blocked and logged; the others still go out. Every attempt is 
 
 If a hero image has not arrived by post time, the template version is posted instead. Studio never drives chatgpt.com.
 
+If the template version was already sent to Postiz (for example with `publish --ahead`), the publish run on the post's day swaps it: it deletes the queued Postiz post and re-schedules it at the same time with the hero version. Posts within 10 minutes of going out are left alone. To swap tomorrow's posts tonight, run `python studio.py ingest --date D`, then `python studio.py publish --date D --ahead`. To force a re-send, add `--replace --only <ids>`.
+
 ## Video extras
 
 - **Radio loop clips:** drop `inbox\video\radio-<anything>.mp4`. The next plan adds a loop-reel (IG Reel + YouTube Short) built on it.
