@@ -1,0 +1,247 @@
+# Layer8Culture — Visual Style for AI Image Generation
+# Encodes Sections 13 (color), 14 (type), 16 (imagery), 26 (AI prompting) of brand-guidelines-v2.md
+# The engine MUST build every image prompt from these blocks.
+
+Shared deterministic composer: `manual_media.compose_visual_prompt(scene, *,
+account="layer8culture", add_on=None, time_of_day=None, root=ROOT)`. It reads the
+current named blocks below rather than copying palettes into planners or weekly
+guides. Main may select `add_on="tech-thursday"`; Radio uses only its own base and
+add-on, requires an explicit time-of-day, and appends its negative add-on.
+The scene supplies the applicable post-type/theme details. Client lanes remain
+isolated and are not supported by this main/Radio composer.
+
+## VIRAL FORMAT (layer8culture short-form video) — see brand/viral-formats.md
+All layer8culture videos (TikTok / YouTube Shorts / IG Reels) use the viral format:
+an 8s or 12s Sora cinematic + HUGE on-screen text burned in by ffmpeg. The
+0-2 / 2-7 / 7-10 arc requires a **12-second request**; an 8-second version must
+end every beat by 8s. Sora output and input references stay clean — never ask it
+to render words. Overlay text styling: **Bebas Neue UPPERCASE**, the approved
+main-brand social exception, high-contrast Soft White with a dark box + soft
+shadow, centered in the **upper** band. Keep the top 12%, bottom 20%, left 8%,
+and right 12% clear of essential words (shared platform-safe area).
+**<= 4 words / <= 15 chars per beat** is the copy target. Actual font glyphs,
+mobile size, and safe bounds are checked on the final canvas; unfit copy is held,
+never truncated or shrunk below the readable floor. Each video is
+a DISTINCT pillar visual world — never repeat the "person at a desk in a studio" scene.
+Hooks are STEPPS-scored. Full spec + template library:
+brand/viral-formats.md. (The lofi account does NOT use this — see its LOFI blocks below.)
+
+## Color system (reference in prompts)
+- Deep Black #000000 (backgrounds, negative space)
+- Electric Blue #0047FF (accents, glow — intentional, never overused)
+- Soft White #F5F5F5 (text, logo)
+- Deep Navy Glow #050A1A (atmospheric gradients)
+- Warm Walnut #3B2416 (desk surfaces, human warmth)
+- Signal Red #FF4B3E (live indicators only, sparing)
+- Ratio: 75% black/navy, 15% white/gray, 8% electric blue, 2% warm/red accent
+
+## BASE PROMPT — MAIN ACCOUNT (prepend to every layer8culture generation)
+"Create a cinematic Layer8Culture visual in a deep black environment with
+electric blue accent lighting, premium creator-tech atmosphere, late-night
+builder energy, documentary realism, human-centered AI themes, Black tech
+futurism, minimal composition, strong negative space, warm practical lighting,
+and high contrast. Vary the composition from post to post so the feed does not
+repeat — the SCENE SPECIFICS for THIS post decide the subject. Draw from a range
+of premium looks (do NOT default to the same person-at-a-desk shot every time),
+for example: a confident Black creator/host presenting direct-to-camera; a close
+detail of premium creator gear (mic, stream deck, dark walnut desk, the
+standalone 8 motif on a hoodie or mug); an over-the-shoulder build session; an
+abstract Afrofuturistic tech or data-visualization environment with glowing
+electric-blue nodes and grids; or an atmospheric branded studio space. Recurring
+brand cues when a scene fits: a blank neon sign panel on the wall (an unlit,
+lettering-free glowing panel - do NOT render any text or letters), the standalone
+8 motif, a bookshelf washed in blue accent lighting. When a person appears they are a confident Black creator,
+engaged and intentional, never anonymous side profiles. The image should feel
+like a premium technology documentary and creative studio brand.
+
+COMPOSITION FOR TYPOGRAPHY: leave the LOWER-LEFT / lower third of the frame as
+clean, uncluttered negative space (a dark, simple area with no faces, fine
+detail, or busy elements there) so a branded headline can be composited over it."
+
+## TYPOGRAPHY OVERLAY (composited after generation - do NOT ask the model to render it)
+# The image models render garbled text, so openai_gen.py composites clean brand
+# type onto each image. The generation step supplies the words via the post's
+# visual.headline / visual.subtext fields.
+# - Main Layer8Culture social standard: Bebas Neue condensed all-caps headlines
+#   across both brand title-card and Editorial Drop layouts.
+# - Accent color for main account typography is Electric Blue only.
+# - Use a mix of `visual.typography_preset: "brand_title_card"` and
+#   `visual.typography_preset: "editorial_drop"` across a batch.
+# - Subtext: Inter, one short supporting line (optional), Soft White.
+# - Radio is separate: Syne Bold display headlines with supporting Inter and
+#   Radio's Soft White #F8F9FA / Neon Cyan #00BFFF type accents. Never use the main
+#   Bebas/Editorial Drop/viral treatment for Radio.
+# - A deep-black bottom scrim is added automatically for legibility. No wordmark is
+#   composited on posts. Because the message lives in the typography, the generated
+#   background should be atmospheric and varied, not literal.
+
+## EDITORIAL DROP TYPOGRAPHY STANDARD
+# Editorial Drop is one of the standard Layer8Culture social layouts, paired with
+# the brand title-card layout for variety. It uses Bebas Neue condensed display
+# headlines, oversized all-caps type, strong bottom gradient, white plus Electric
+# Blue emphasis words, an optional small kicker label, and an optional footer cue
+# such as "SWIPE FOR MORE". It should feel like a premium creator-tech editorial
+# card, not a generic AI art title slide.
+# Sora may create motion or effect previews, but it must not render the words.
+# All readable text is composited afterward by the renderer.
+
+## FINISHED-MEDIA CONTRACT
+- `config/media-profiles.json` versions the social fonts, safe areas, final video
+  canvases, minimum ink sizes at a 360px mobile preview, and contrast thresholds.
+  Main/Radio headlines need at least 18px visible ink, supporting copy 10px, and
+  small labels 9px at that preview width. Main viral beats need 24px; Radio's
+  calm labels need 16px. Existing Deal Lab typography stays on its legacy profile.
+- API and manual sources are EXIF-corrected and center-cropped to the **requested
+  aspect before any type**. A 1024x1536 provider response is not a finished 9:16
+  frame. The default 9:16 still master is 1152x2048; final 9:16 video and cover
+  canvases are 1080x1920. An upscaled 2K file does not imply native 2K scene detail.
+- Native source bytes and normalized clean plates live separately under
+  `assets/generated/sources/`, addressed by their SHA-256. The still, video, and
+  cover are separate derivatives. A composed still is never a Sora reference or
+  motion background, and a cover headline is never drawn over an existing beat.
+- Every declared carousel slide is required, even if its prompt is missing.
+  Missing fonts, unreadable/overflowing words, failed overlays/covers, stale
+  hashes, and incomplete slides are blocking errors, not library fallbacks.
+- `<asset filename>.media.json` receipts bind source/output/cover hashes, complete
+  required copy, actual glyph boxes, font/profile versions, timing, backend, and
+  audio provenance. File existence alone is not freshness. Source lettering,
+  image composition, loop seams, and the truth of rights declarations remain
+  perceptual/human-review questions, not guarantees made by the validator.
+
+## PER-FORMAT VISUAL NOTES (single / carousel / reel / story)
+# Same color system, BASE PROMPT, and NEGATIVE PROMPT apply to every format.
+# - single: one image. Reserve lower-left negative space for the headline.
+# - carousel: every slide is its own generation with its own headline. Keep the
+#   look cohesive (same palette/energy) but give each slide a DISTINCT scene so the
+#   set doesn't look like one image repeated. Slide 1 (cover) = the boldest, most
+#   scroll-stopping frame; the final slide = a clean CTA frame.
+#   For Editorial Drop carousels, slides may set `media_type: "video"` to export
+#   that slide as an MP4 in the ordered carousel.
+# - reel: the openai_prompt makes a CLEAN PLATE that gets animated (Ken Burns +
+#   on-screen beats). The separately composed still is only a still/preview.
+#   Keep the lower third calm for a separately composed cover and the upper third
+#   calm for timed beats; never bake a permanent cover hook into the video source.
+# - story: 9:16, single frame, simple and legible at a glance; leave room for the
+#   interactive sticker/question. Treat it as a quick daily touchpoint, not a hero.
+
+## LOFI BASE PROMPT (prepend to every lofi generation — use INSTEAD of the main BASE PROMPT)
+# For the lofi account = Layer8Culture Radio (@Layer8CultureRadio). Per
+# brand/layer8culture_radio_brand_guidelines.md §7 + §15. Illustrated anime-inspired,
+# NOT photorealistic. Vary the time-of-day mood per post (night / sunrise / sunset /
+# rainy night) using the LOFI COLOR SYSTEM below so the feed doesn't repeat.
+"Create a cinematic lo-fi anime-inspired Afrofuturist coding studio scene for
+Layer8Culture Radio (not photorealistic). A Black creator is seated FROM BEHIND at
+a premium coding workstation, calm and focused, wearing a black hoodie with a large
+number 8 on the back (no face reveal). Multiple monitors show code and a subtle line
+graph; a laptop with code; a warm desk lamp; a coffee/tea mug with steam; plants and
+hanging vines; books on system design, clean code, and algorithms; West
+African-inspired pottery and design objects; a warm wood desk; and a blank blue neon
+sign panel on the wall (an unlit, lettering-free glowing panel — do NOT render any
+text or letters; branding is composited in afterward). Through a large window is a
+futuristic African city skyline with a few slow flying vehicles and [TIME-OF-DAY]
+lighting. The mood is calm, premium, focused, and loop-friendly, with a balanced
+electric-blue and warm lighting palette. High-quality anime illustration, cinematic
+lighting, clean composition, no extra people, no copyrighted characters."
+
+## LOFI COLOR SYSTEM (reference in lofi prompts; pick a theme per post for variety)
+# From brand/layer8culture_radio_brand_guidelines.md §5.
+# - Deep Black #030508, Midnight Navy #07111F (backgrounds)
+# - Electric Blue #0047FF, Neon Cyan #00BFFF (glow, waveforms, motion accents)
+# - Warm Gold #F5A524, Sunrise Amber #FFB347, Sunset Orange #FF6A1A (warm/cultural)
+# - Soft White #F8F9FA (primary text), Cool Gray #B7C0D1 (secondary text)
+# - Warm Brown #5A371C (wood, studio warmth)
+# Theme pairings (set the [TIME-OF-DAY] mood): Night / Deep Focus (black+navy+blue+cyan);
+# Sunrise / Morning Build (gold+amber+white+blue); Sunset / Evening Focus (orange+gold+
+# navy+cyan); Rainy Night (navy+steel blue+blue, neon reflections, warm lamp glow).
+
+## NEGATIVE PROMPT (append to every generation)
+"Avoid generic startup office, bright corporate lighting, cheap gamer RGB,
+cluttered composition, cartoon props, excessive sci-fi armor, robots, fake
+hologram overload, random neon colors, copyrighted franchise references, garbled
+screen text, random figurines, tripod-mounted monitors, makeshift setups,
+rendered text, signage lettering, and garbled typography."
+
+## LOFI NEGATIVE PROMPT ADD-ON (append to the NEGATIVE PROMPT for lofi generations)
+"avoid photorealism, empty minimal rooms, sparse composition"
+
+## TECH THURSDAY ADD-ON
+"livestream studio, microphone, laptop, coding dashboard, creator speaking live,
+professional broadcast setup, blue-black cinematic lighting, real build session"
+
+## LOFI ADD-ON (optional scene flavor, layered onto the LOFI BASE PROMPT)
+"Afrofuturist city view, Black coder or student seated from behind, warm desk lamp,
+calm study atmosphere, loopable visual, gentle motion potential, culturally
+intentional objects, futuristic but grounded, balanced electric-blue and warm gold
+lighting"
+
+## LOFI ART-STYLE MATRIX (rotate rooms while preserving the listening brand)
+# Every lofi visual keeps the Layer8Culture Radio anchor:
+# Black creator from behind, black hoodie with a large 8, deep focus at a premium
+# workstation, warm desk lamp, culturally intentional objects, and an Afrofuturist
+# city view through the window. Vary the style around that anchor.
+#
+# 1. Cozy Afrofuturist Focus Room
+#    Warm lamp, books, plants, mug steam, wood desk, soft blankets/textures,
+#    calm study room energy. Avoid making it generic or overly cute.
+#
+# 2. Rainy Night Coding
+#    Rain on glass, midnight navy, electric-blue reflections, blurred city lights,
+#    warm gold lamp inside. Strong for late-night loops and shareable reels.
+#
+# 3. Anime-Inspired Study Room
+#    High-quality illustrated look, soft linework, expressive atmosphere, subtle
+#    environmental detail. Do not reference or imitate copyrighted anime characters.
+#
+# 4. Cyberpunk Afrofuturist Skyline
+#    Futuristic African city, neon cyan/electric-blue glow, window reflections,
+#    grounded cultural objects inside. Premium and calm, not dystopian chaos.
+#
+# 5. Deep Sleep / Midnight Focus
+#    Darker palette, lower contrast, idle monitors or closed laptop, soft city lights,
+#    peaceful overnight energy. Designed for low-stimulation long-watch-time visuals.
+#
+# 6. Cosmic Focus
+#    Moonlight, stars, orbit-like UI shapes, deep-space navy, Afrofuturist skyline.
+#    Use cosmic atmosphere without fantasy clutter.
+#
+# 7. Jazz Coding Lounge
+#    Warm brown wood, vinyl/Rhodes/jazz cues, coffee, African pottery, amber lamp,
+#    premium late-night lounge feel.
+#
+# 8. Sunrise Build Beats
+#    Clean desk, golden sunrise, warm amber skyline, fresh morning focus, soft mist,
+#    optimistic but calm.
+
+## LOFI POST-TYPE VISUAL NOTES (Layer8Culture Radio - §13 Instagram Design System)
+# Posts have no composited wordmark. Brand identity comes from the scene + the
+# composited Syne headline typography, plus the in-scene "8" motif. Build the headline
+# from the post's visual.headline/subtext as usual; keep the lower third clean for it.
+# - brand intro: hero studio scene; headline "LAYER8CULTURE RADIO" + subtext
+#   ("Study • Build • Focus."). Strong, premium, scroll-stopping cover frame.
+# - video promo: thumbnail-like; bold session title headline + "NOW LIVE ON YOUTUBE"
+#   subtext; mood-specific colors matching the session's time-of-day/genre.
+# - quote: minimal dark background (Deep Black / Midnight Navy), the studio softened
+#   or abstracted, a HUGE short quote headline (e.g. "FOCUS IS A SKILL"), subtle
+#   waveform/circuit details. Keep it clean — let the words carry the frame.
+# - loop preview reel: 9:16 clean studio plate for an 8s or 12s calm loop; at most
+#   two minimal Syne labels ("NIGHT CODING" / "SUNRISE BUILD"). No main viral arc.
+#   "NOW LIVE" needs a verified live destination. `audio: "lofi"` also requires a
+#   local `reel.audio_source` with source, license, and confirmed rights. Missing
+#   licensed Radio music is an explicit hold, never silent AAC or Sora ambience.
+# - playlist: album/playlist-style framing; session name headline ("MORNING BUILD
+#   BEATS") + a tracklist-style or waveform motif; premium music-product feel.
+# - community: poll/card layout; a question headline ("WHAT SHOULD WE BUILD NEXT?")
+#   with option words (Jazz / Reggae / Latin / Sunset / Night) — answers go in the
+#   caption/first_comment.
+
+## Typography note (for graphics with text)
+Bebas Neue for main social headlines, Inter for supporting copy; this exception
+does not change website typography. Radio uses Syne Bold + supporting Inter.
+Space Grotesk may remain on legacy surfaces, never as a silent missing-font
+fallback. Headlines are large and cinematic against deep negative space.
+
+## File naming standards (Section 27)
+- Tech Thursday: tech-thursday-thumbnail-YYYY-MM-DD.png
+- LoFi: layer8-lofi-<scene>-NN.png
+- Sponsor: sponsor-fobflo-<use>-<size>.png
+- General social: layer8-<category>-<slug>-NN.png

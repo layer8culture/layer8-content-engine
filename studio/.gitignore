@@ -1,0 +1,15 @@
+.env
+PAUSE
+__pycache__/
+.pytest_cache/
+templates/remotion/node_modules/
+templates/remotion/out/
+templates/remotion/public/_job/
+templates/remotion/public/*.ttf
+data/*
+!data/history-legacy.jsonl
+inbox/*
+!inbox/video/
+inbox/video/*
+!inbox/.gitkeep
+!inbox/video/.gitkeep

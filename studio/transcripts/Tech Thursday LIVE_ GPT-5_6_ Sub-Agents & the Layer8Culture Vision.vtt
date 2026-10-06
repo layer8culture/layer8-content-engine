@@ -1,0 +1,4169 @@
+WEBVTT
+
+00:00:46.171 --> 00:00:48.993
+you are now live with layer eight culture
+
+00:00:49.374 --> 00:00:50.295
+tech thursday
+
+00:01:01.902 --> 00:01:03.262
+What's up, y'all?
+
+00:01:03.343 --> 00:01:03.904
+It's Thursday.
+
+00:01:04.884 --> 00:01:05.584
+Tech Thursday.
+
+00:01:07.444 --> 00:01:07.804
+Man.
+
+00:01:09.405 --> 00:01:15.085
+It's a... It's an interesting day.
+
+00:01:15.105 --> 00:01:18.087
+So... We talked about it last week.
+
+00:01:19.346 --> 00:01:20.287
+Five point six.
+
+00:01:22.007 --> 00:01:23.808
+That, uh... Five point...
+
+00:01:23.849 --> 00:01:25.828
+GPT five point six is out.
+
+00:01:27.969 --> 00:01:28.870
+So let's get into it.
+
+00:01:29.030 --> 00:01:29.549
+Let me, uh...
+
+00:01:31.203 --> 00:01:32.703
+Get my screen all situated.
+
+00:01:35.786 --> 00:01:36.146
+Man.
+
+00:01:39.287 --> 00:01:43.631
+Let's see.
+
+00:01:43.691 --> 00:01:44.370
+Yeah, it's at it.
+
+00:01:45.272 --> 00:01:54.216
+All right.
+
+00:01:54.816 --> 00:01:58.438
+Straight to the OpenAI website.
+
+00:01:58.599 --> 00:01:58.659
+Man.
+
+00:02:04.045 --> 00:02:10.471
+some serious stuff here let me get some
+
+00:02:10.610 --> 00:02:15.955
+uh give some that layer a culture radio
+
+00:02:16.156 --> 00:02:16.877
+lo-fi playing
+
+00:02:40.742 --> 00:02:43.985
+So GPT.
+
+00:02:44.246 --> 00:02:54.074
+So if you haven't seen, there's a,
+
+00:02:54.114 --> 00:02:57.015
+it's like a thirtysomething minute
+
+00:02:59.679 --> 00:03:00.939
+presentation they did on it.
+
+00:03:01.300 --> 00:03:02.800
+They have a bunch of updates as well.
+
+00:03:03.762 --> 00:03:08.325
+The opening I made to GPT.
+
+00:03:11.290 --> 00:03:15.573
+but if you look at this, let's see.
+
+00:03:16.293 --> 00:03:22.355
+So, this chart is hard to read.
+
+00:03:25.497 --> 00:03:30.340
+So that's half my six, so extra high.
+
+00:03:30.460 --> 00:03:31.980
+API cost score,
+
+00:03:32.061 --> 00:03:35.081
+fifty three point six percent.
+
+00:03:35.102 --> 00:03:36.483
+This is the cost.
+
+00:03:44.526 --> 00:03:44.866
+Okay.
+
+00:03:44.907 --> 00:03:49.829
+Five point five, where is table?
+
+00:03:55.010 --> 00:03:55.812
+Five point six.
+
+00:03:56.572 --> 00:03:57.633
+Five point six Terra.
+
+00:03:58.032 --> 00:04:00.593
+Five point six Luna.
+
+00:04:06.697 --> 00:04:07.676
+It's a little confusing here.
+
+00:04:08.597 --> 00:04:09.318
+I'm processing.
+
+00:04:11.179 --> 00:04:11.838
+Where it is?
+
+00:04:31.634 --> 00:04:33.235
+Why is this chart so hard to read?
+
+00:04:35.795 --> 00:04:37.336
+Oh, okay.
+
+00:04:37.437 --> 00:04:38.036
+I get now.
+
+00:04:39.317 --> 00:04:49.862
+So we're see Claude is not on this
+
+00:04:49.942 --> 00:04:50.543
+list here.
+
+00:05:01.398 --> 00:05:03.619
+i'm not seeing cloud on this list but
+
+00:05:03.838 --> 00:05:11.180
+down here browse comp multi-agent here we
+
+00:05:11.221 --> 00:05:21.524
+go sec bench pro all right excuse me
+
+00:05:21.584 --> 00:05:23.586
+awesome first time like i'm digesting all
+
+00:05:23.625 --> 00:05:25.786
+this live and right here i didn't even
+
+00:05:25.807 --> 00:05:26.526
+look at this before
+
+00:05:33.750 --> 00:05:41.677
+Over the last few weeks,
+
+00:05:41.697 --> 00:05:43.177
+users around the world have been testing
+
+00:05:43.218 --> 00:05:46.922
+GPT-Five point six in the new ChatGPT.
+
+00:05:57.144 --> 00:05:58.105
+You already met Hiroki.
+
+00:05:58.386 --> 00:05:59.086
+Welcome back to him.
+
+00:05:59.867 --> 00:06:00.767
+And then there was a couple in New
+
+00:06:00.807 --> 00:06:03.350
+York who used GPT-Five point six to help
+
+00:06:03.410 --> 00:06:05.331
+run a cereal business from their dining
+
+00:06:05.372 --> 00:06:05.612
+room.
+
+00:06:06.572 --> 00:06:07.653
+And their son, Ellis.
+
+00:06:07.673 --> 00:06:09.014
+It's called cotton candy.
+
+00:06:09.314 --> 00:06:10.415
+Not trying to glaze myself.
+
+00:06:10.576 --> 00:06:11.776
+Personally, my favorite.
+
+00:06:12.216 --> 00:06:14.379
+And then the mathematician in Poland who
+
+00:06:14.418 --> 00:06:16.439
+used five point six to solve an unsolvable
+
+00:06:16.500 --> 00:06:16.920
+problem.
+
+00:06:18.649 --> 00:06:19.449
+But we'll get to all of that.
+
+00:06:19.829 --> 00:06:24.810
+Let's start with Hiroki.
+
+00:06:26.329 --> 00:06:28.091
+He used Five Point Six to automate the
+
+00:06:28.211 --> 00:06:29.771
+opening and closing of his greenhouse
+
+00:06:29.870 --> 00:06:32.391
+doors.
+
+00:06:38.952 --> 00:06:40.673
+Five Point Six taught him which gadgets he
+
+00:06:40.692 --> 00:06:41.432
+needed to purchase,
+
+00:06:41.752 --> 00:06:43.173
+how to wire a Raspberry Pi,
+
+00:06:43.574 --> 00:06:44.814
+and then how to install a motor.
+
+00:06:47.483 --> 00:06:47.742
+Nice.
+
+00:06:47.822 --> 00:06:54.024
+So this is a perfect example of the
+
+00:06:54.184 --> 00:06:56.745
+user becoming the builder, right?
+
+00:06:56.764 --> 00:06:59.285
+So he's using it as solving a problem
+
+00:06:59.425 --> 00:06:59.824
+for him.
+
+00:07:00.504 --> 00:07:03.505
+He learns how to use, um,
+
+00:07:04.625 --> 00:07:08.947
+how to build using five point six.
+
+00:07:08.987 --> 00:07:13.547
+So I noticed how at this point,
+
+00:07:13.567 --> 00:07:14.708
+he's not just building, well,
+
+00:07:14.747 --> 00:07:15.767
+of course he's building software,
+
+00:07:15.807 --> 00:07:17.007
+but the software that he's building,
+
+00:07:17.509 --> 00:07:23.221
+is interfacing with hardware to solve a
+
+00:07:23.240 --> 00:07:24.122
+real-world problem.
+
+00:07:24.163 --> 00:07:25.726
+So this is kind of cool.
+
+00:07:26.949 --> 00:07:27.651
+Let's keep playing it.
+
+00:07:29.079 --> 00:07:29.819
+And it worked.
+
+00:07:30.620 --> 00:07:30.800
+Now,
+
+00:07:30.980 --> 00:07:32.940
+Five Point Six is also helping people run
+
+00:07:33.000 --> 00:07:34.000
+small businesses.
+
+00:07:34.600 --> 00:07:35.281
+This is Jake.
+
+00:07:35.862 --> 00:07:37.062
+He's on the Three Wishes team,
+
+00:07:37.322 --> 00:07:38.543
+and he's showing us how he prompts the
+
+00:07:38.562 --> 00:07:38.882
+model.
+
+00:07:39.343 --> 00:07:40.723
+So I always start by saying,
+
+00:07:40.764 --> 00:07:41.925
+please set a goal for yourself to do
+
+00:07:41.944 --> 00:07:42.625
+this end to end.
+
+00:07:42.845 --> 00:07:44.425
+Please use historical launches as like a
+
+00:07:44.485 --> 00:07:46.687
+means to inform the dashboard itself.
+
+00:07:47.107 --> 00:07:48.447
+Use the Three Wishes branding,
+
+00:07:48.507 --> 00:07:49.687
+especially the new branding.
+
+00:07:49.788 --> 00:07:52.129
+We have new boxes that we're using.
+
+00:07:52.428 --> 00:07:54.089
+It is the most disorganized thought stream
+
+00:07:54.110 --> 00:07:55.071
+that I've ever seen.
+
+00:07:55.591 --> 00:07:58.552
+It's like incredibly amazing output.
+
+00:07:58.653 --> 00:08:00.173
+Five point six is able to take that
+
+00:08:00.254 --> 00:08:02.194
+five minute brain dump and turn it into
+
+00:08:02.214 --> 00:08:02.716
+a plan.
+
+00:08:03.096 --> 00:08:04.716
+It can pull the relevant data and brand
+
+00:08:04.817 --> 00:08:06.298
+assets and it can turn it into something
+
+00:08:06.358 --> 00:08:09.060
+polished and usable like this dashboard or
+
+00:08:09.139 --> 00:08:10.761
+presentation or spreadsheet.
+
+00:08:11.300 --> 00:08:12.262
+This feels like something you would
+
+00:08:12.341 --> 00:08:14.783
+normally think a million dollar company
+
+00:08:14.822 --> 00:08:15.223
+could build.
+
+00:08:15.242 --> 00:08:16.543
+And you're like, we get this.
+
+00:08:16.744 --> 00:08:17.425
+I have my business.
+
+00:08:18.423 --> 00:08:19.845
+And if you look at that UI,
+
+00:08:20.404 --> 00:08:21.425
+it's really clean.
+
+00:08:21.706 --> 00:08:22.966
+Let me backtrack to that.
+
+00:08:22.987 --> 00:08:27.011
+Yeah, that UI is really clean.
+
+00:08:33.616 --> 00:08:34.738
+Looks like it's running.
+
+00:08:39.542 --> 00:08:40.682
+It's not running local there,
+
+00:08:40.702 --> 00:08:41.224
+so that's good.
+
+00:08:42.176 --> 00:08:43.336
+and you're like, we get this.
+
+00:08:43.515 --> 00:08:45.277
+I have my bespoke software system.
+
+00:08:45.657 --> 00:08:47.836
+Five Point Six is also helping researchers
+
+00:08:47.897 --> 00:08:48.738
+make discoveries.
+
+00:08:50.018 --> 00:08:50.898
+Here is Bartosz again.
+
+00:08:51.378 --> 00:08:53.318
+He'd been working on the same math problem
+
+00:08:53.339 --> 00:08:55.658
+for three years and he couldn't solve it.
+
+00:08:56.078 --> 00:08:56.919
+I decided, OK,
+
+00:08:56.980 --> 00:08:59.120
+I'm going to try the new Codex Five
+
+00:08:59.139 --> 00:08:59.620
+Point Six.
+
+00:09:00.259 --> 00:09:02.221
+Codex was able to come up with a
+
+00:09:02.260 --> 00:09:05.042
+completely new idea and just helped us
+
+00:09:05.261 --> 00:09:06.881
+disprove the conjecture that we were
+
+00:09:06.942 --> 00:09:08.581
+trying to prove for these three years.
+
+00:09:08.981 --> 00:09:10.743
+Oh, I'm so excited of the discovery.
+
+00:09:12.482 --> 00:09:14.504
+Five point six is able to take Bartosz's
+
+00:09:14.544 --> 00:09:16.427
+prompt and divide the computation into
+
+00:09:16.486 --> 00:09:20.669
+parallel workstreams with multiple agents
+
+00:09:20.809 --> 00:09:22.152
+solving different parts of the problem.
+
+00:09:23.173 --> 00:09:24.754
+And five point six is better at taking
+
+00:09:24.774 --> 00:09:26.274
+your prompt and following it through all
+
+00:09:26.294 --> 00:09:27.375
+the way to the end result.
+
+00:09:28.898 --> 00:09:29.879
+I'll let Hiroki explain.
+
+00:09:33.659 --> 00:09:51.211
+You see, with VFXV,
+
+00:09:51.491 --> 00:09:53.052
+the work is no longer just staying on
+
+00:09:53.072 --> 00:09:53.633
+the screen.
+
+00:09:53.974 --> 00:09:55.355
+It's making a difference in the physical
+
+00:09:55.394 --> 00:09:55.634
+world.
+
+00:09:56.731 --> 00:09:58.852
+for everything from small businesses and
+
+00:09:58.873 --> 00:10:00.974
+farmers to the world's best
+
+00:10:01.014 --> 00:10:02.495
+mathematicians.
+
+00:10:03.235 --> 00:10:13.301
+This is Hokkaido, Japan.
+
+00:10:14.322 --> 00:10:14.581
+Wow.
+
+00:10:15.601 --> 00:10:18.303
+Man, that's cool.
+
+00:10:18.484 --> 00:10:20.465
+All right, so let's go back.
+
+00:10:20.644 --> 00:10:22.346
+So they were actually part of the limited
+
+00:10:22.385 --> 00:10:22.826
+preview.
+
+00:10:23.626 --> 00:10:25.187
+So they got access to five point six
+
+00:10:25.206 --> 00:10:26.207
+before it even came out.
+
+00:10:28.038 --> 00:10:28.837
+Nice case study.
+
+00:10:28.879 --> 00:10:29.538
+Let's look at the...
+
+00:10:35.461 --> 00:10:36.423
+It's all dropped today.
+
+00:10:36.883 --> 00:10:41.004
+Here we go.
+
+00:10:44.967 --> 00:10:46.609
+So we talked about this last week here.
+
+00:10:49.769 --> 00:10:50.571
+It's live.
+
+00:10:58.446 --> 00:10:59.866
+It was a different site that,
+
+00:11:00.366 --> 00:11:07.788
+not a site, but a different page.
+
+00:11:07.808 --> 00:11:19.111
+I was looking for here.
+
+00:11:19.152 --> 00:11:19.692
+This is all it.
+
+00:11:31.865 --> 00:11:41.649
+see I want to see the comparison between
+
+00:11:42.149 --> 00:11:56.273
+Sol Terra Luna actually no I might have
+
+00:11:56.332 --> 00:11:58.254
+spoken I might have talked about it last
+
+00:11:58.274 --> 00:12:01.475
+week anyway so there's Sol
+
+00:12:02.573 --> 00:12:04.855
+terra and luna so soul is supposed to
+
+00:12:04.875 --> 00:12:08.359
+be the big the big model very comparable
+
+00:12:08.418 --> 00:12:12.543
+to fable terra is like medium luna's like
+
+00:12:12.582 --> 00:12:22.010
+the uh the mini model of course you
+
+00:12:22.030 --> 00:12:23.732
+know that's in co-pilot already
+
+00:12:33.105 --> 00:12:33.846
+Yeah.
+
+00:12:33.865 --> 00:12:34.807
+I haven't got a chance to use it
+
+00:12:34.826 --> 00:12:34.927
+yet.
+
+00:12:35.006 --> 00:12:37.948
+I used, what was it?
+
+00:12:39.308 --> 00:12:42.410
+I got into a GPT, five point six.
+
+00:12:44.812 --> 00:12:47.693
+I used that with GitHub copilot just a
+
+00:12:47.734 --> 00:12:48.193
+little bit,
+
+00:12:48.974 --> 00:12:50.455
+doing some work stuff and
+
+00:12:51.940 --> 00:12:53.440
+The results were quite impressive,
+
+00:12:53.480 --> 00:12:57.020
+kind of one shot, a real detailed summary,
+
+00:12:57.900 --> 00:12:59.542
+some content I was putting together,
+
+00:13:00.621 --> 00:13:01.902
+pulled it from different sources,
+
+00:13:02.761 --> 00:13:04.182
+just told it what the subject was,
+
+00:13:04.363 --> 00:13:08.982
+gave me a nice overview, gave me links,
+
+00:13:09.844 --> 00:13:13.464
+gave me everything I needed.
+
+00:13:13.524 --> 00:13:15.024
+Of course, I could have used the smaller,
+
+00:13:15.485 --> 00:13:16.125
+lesser model.
+
+00:13:17.576 --> 00:13:20.398
+but why not, right?
+
+00:13:20.418 --> 00:13:21.197
+So I just jumped in.
+
+00:13:21.298 --> 00:13:23.138
+I used Solterra.
+
+00:13:25.859 --> 00:13:26.438
+Seemed pretty cool.
+
+00:13:27.918 --> 00:13:32.500
+But what was I gonna talk about now?
+
+00:13:32.519 --> 00:13:33.159
+All right, now I remember.
+
+00:13:33.720 --> 00:13:35.740
+So first,
+
+00:13:35.780 --> 00:13:41.042
+before we get right into Solterra, sorry,
+
+00:13:41.062 --> 00:13:42.381
+GPT, five point six Sol.
+
+00:13:42.841 --> 00:13:43.822
+Before we get into that,
+
+00:13:43.841 --> 00:13:46.503
+I do wanna mention that I've been
+
+00:13:47.788 --> 00:13:49.067
+using sub-agents.
+
+00:13:51.629 --> 00:13:57.711
+So what happens is,
+
+00:13:57.731 --> 00:13:59.971
+what happens is you have an agent,
+
+00:14:00.812 --> 00:14:03.214
+you have to do a task, right?
+
+00:14:03.254 --> 00:14:06.054
+But then that agent might not specialize
+
+00:14:06.095 --> 00:14:06.815
+in certain things.
+
+00:14:06.855 --> 00:14:08.635
+That agent's very generic.
+
+00:14:08.875 --> 00:14:11.537
+It's specialized in doing the tasks that
+
+00:14:11.557 --> 00:14:12.116
+you gave it.
+
+00:14:12.976 --> 00:14:15.258
+What you can do is actually have
+
+00:14:15.652 --> 00:14:16.513
+multiple agents.
+
+00:14:16.533 --> 00:14:17.894
+So you can have a tester agent.
+
+00:14:18.474 --> 00:14:18.995
+You can say, hey,
+
+00:14:19.014 --> 00:14:21.456
+I want a tester agent to review everything
+
+00:14:21.496 --> 00:14:24.078
+that doesn't know full context of what you
+
+00:14:24.099 --> 00:14:24.558
+just built.
+
+00:14:25.659 --> 00:14:27.160
+I want that agent to come in and
+
+00:14:27.181 --> 00:14:33.166
+review your code, test your program.
+
+00:14:34.326 --> 00:14:35.508
+Then you can have an agent come in
+
+00:14:36.188 --> 00:14:38.831
+that's like, you know, marketing director.
+
+00:14:40.143 --> 00:14:42.784
+come in and do some analysis you can
+
+00:14:42.825 --> 00:14:45.866
+have a social media director I'm do some
+
+00:14:45.907 --> 00:14:50.630
+analysis you can have um what else was
+
+00:14:50.671 --> 00:14:56.235
+it yeah UX UI or graphic designer come
+
+00:14:56.254 --> 00:14:58.456
+in do some analysis so the point is
+
+00:14:58.496 --> 00:15:00.739
+that and then the cool thing is that
+
+00:15:01.139 --> 00:15:04.441
+these agents sub agents that come in don't
+
+00:15:04.461 --> 00:15:05.842
+actually have to have run the same model
+
+00:15:05.863 --> 00:15:07.023
+that you're on so they could run a
+
+00:15:07.062 --> 00:15:07.624
+different model
+
+00:15:08.475 --> 00:15:10.657
+for a model that works best for that
+
+00:15:10.716 --> 00:15:11.297
+scenario.
+
+00:15:17.038 --> 00:15:18.559
+I've noticed that it helps a lot with
+
+00:15:18.600 --> 00:15:20.380
+testing because when you do a lot of
+
+00:15:20.461 --> 00:15:23.062
+one shots and you just put a prompt
+
+00:15:23.162 --> 00:15:23.322
+in,
+
+00:15:23.981 --> 00:15:25.763
+you run it and then you're actually going
+
+00:15:25.783 --> 00:15:26.363
+through the program,
+
+00:15:26.383 --> 00:15:27.462
+you're testing yourself and you're like,
+
+00:15:27.482 --> 00:15:29.844
+man, this thing's kind of wonky.
+
+00:15:30.845 --> 00:15:31.965
+It's not really what I want.
+
+00:15:32.559 --> 00:15:33.059
+Well, guess what?
+
+00:15:33.080 --> 00:15:34.200
+You can solve a lot of that by
+
+00:15:34.220 --> 00:15:35.640
+just deploying your sub-agent,
+
+00:15:36.100 --> 00:15:37.740
+having your sub-agent test before it even
+
+00:15:37.780 --> 00:15:38.402
+comes back to you.
+
+00:15:38.442 --> 00:15:40.902
+So it actually goes through iterations.
+
+00:15:42.523 --> 00:15:43.783
+You could tell it to test a certain
+
+00:15:43.802 --> 00:15:44.322
+amount of times.
+
+00:15:44.342 --> 00:15:48.663
+You could tell your sub-agent to set up
+
+00:15:48.683 --> 00:15:52.725
+a plan.
+
+00:15:52.745 --> 00:15:54.466
+You could tell your sub-agent to actually
+
+00:15:54.485 --> 00:15:54.905
+set up a plan,
+
+00:15:54.946 --> 00:15:57.006
+but the way I use it is I'll
+
+00:15:57.206 --> 00:16:00.327
+have it go into plan mode,
+
+00:16:01.768 --> 00:16:02.048
+then I'll
+
+00:16:02.403 --> 00:16:04.423
+have the sub agent analyze the plan,
+
+00:16:05.104 --> 00:16:06.403
+make improvements on the plan,
+
+00:16:06.903 --> 00:16:07.764
+then bills it out.
+
+00:16:08.705 --> 00:16:09.804
+I've noticed that was a little,
+
+00:16:10.164 --> 00:16:11.005
+it goes a little bit better.
+
+00:16:11.046 --> 00:16:16.427
+So one thing I've been working on that
+
+00:16:16.466 --> 00:16:18.408
+I've kind of used this concept of sub
+
+00:16:18.528 --> 00:16:21.629
+agents is this a little tool for my
+
+00:16:21.708 --> 00:16:22.089
+son.
+
+00:16:22.109 --> 00:16:25.129
+Let me bring it up here.
+
+00:16:27.153 --> 00:16:29.495
+So my son is in elementary school and
+
+00:16:29.514 --> 00:16:30.375
+it's summertime.
+
+00:16:30.416 --> 00:16:31.115
+So he's, uh,
+
+00:16:31.976 --> 00:16:34.678
+we're trying to keep him on track with
+
+00:16:34.719 --> 00:16:35.879
+his mathematics.
+
+00:16:36.259 --> 00:16:37.520
+He's going into like fifth grade.
+
+00:16:38.361 --> 00:16:42.184
+So in doing so we purchased like this
+
+00:16:42.245 --> 00:16:44.866
+workbook for him to go through these
+
+00:16:44.886 --> 00:16:45.267
+questions,
+
+00:16:45.307 --> 00:16:47.328
+like answer questions and that's cool and
+
+00:16:47.349 --> 00:16:47.428
+all,
+
+00:16:47.489 --> 00:16:49.870
+but the workbook doesn't really like help
+
+00:16:49.910 --> 00:16:51.692
+you with questions that you got wrong.
+
+00:16:52.712 --> 00:16:53.634
+So I was like, you know what,
+
+00:16:54.153 --> 00:16:56.576
+let's build kind of a study guide.
+
+00:16:58.225 --> 00:16:59.226
+like that i would say study guide i
+
+00:16:59.246 --> 00:17:03.511
+would say like a companion app right so
+
+00:17:03.913 --> 00:17:05.074
+i'm over here talking i'm not even
+
+00:17:05.114 --> 00:17:07.896
+clicking anything to get to get this
+
+00:17:07.977 --> 00:17:15.445
+project up all right what did i call
+
+00:17:15.506 --> 00:17:15.566
+it
+
+00:17:18.652 --> 00:17:20.692
+I need an agent to write names for
+
+00:17:20.712 --> 00:17:24.494
+my projects, because I'll write a project,
+
+00:17:24.555 --> 00:17:26.076
+and I'm like, man, that's a horrible name.
+
+00:17:27.017 --> 00:17:28.557
+So I called it Fast Prep App.
+
+00:17:29.597 --> 00:17:30.098
+Horrible name.
+
+00:17:31.318 --> 00:17:33.160
+But that's why I called it a folder.
+
+00:17:34.280 --> 00:17:35.501
+Let's go in.
+
+00:17:36.221 --> 00:17:39.443
+I'll just actually share.
+
+00:17:39.644 --> 00:17:40.263
+Actually, you know what?
+
+00:17:40.304 --> 00:17:41.704
+What am I doing?
+
+00:17:41.724 --> 00:17:44.527
+I'll open up CLI first.
+
+00:17:46.527 --> 00:17:49.809
+Then I'm going to start the app.
+
+00:17:50.269 --> 00:17:53.313
+So I have it running localhost right now.
+
+00:17:53.373 --> 00:17:54.193
+Here we go.
+
+00:17:54.213 --> 00:17:54.453
+Let's see.
+
+00:18:29.088 --> 00:18:29.690
+Let's see here.
+
+00:18:29.730 --> 00:18:47.403
+All right, we're back.
+
+00:18:47.463 --> 00:18:49.385
+So this went through a couple of
+
+00:18:49.425 --> 00:18:49.865
+iterations.
+
+00:18:49.885 --> 00:18:51.627
+This was like, yeah,
+
+00:18:51.667 --> 00:18:52.929
+this was actually a lot of different
+
+00:18:53.009 --> 00:18:56.672
+iterations, probably three or four maybe.
+
+00:18:59.109 --> 00:19:05.015
+But what I did was I loaded up
+
+00:19:05.234 --> 00:19:06.736
+the best workbook.
+
+00:19:06.756 --> 00:19:08.096
+It was like a mathematics workbook.
+
+00:19:08.336 --> 00:19:09.178
+I didn't load it up actually.
+
+00:19:09.218 --> 00:19:11.298
+I just took the link from Amazon.
+
+00:19:11.319 --> 00:19:12.460
+I was like, Hey, I use this workbook.
+
+00:19:13.101 --> 00:19:15.563
+It understood, it understood the mission.
+
+00:19:16.743 --> 00:19:23.949
+And the idea is that we gamify experience
+
+00:19:23.989 --> 00:19:25.711
+to where he's using the workbook,
+
+00:19:26.290 --> 00:19:27.231
+but he's also using this.
+
+00:19:28.863 --> 00:19:32.663
+So it's kind of influenced by Khan
+
+00:19:32.683 --> 00:19:35.586
+Academy, some gamification.
+
+00:19:36.365 --> 00:19:40.686
+We had some ideas of doing a space
+
+00:19:40.727 --> 00:19:42.708
+type of launch type theme.
+
+00:19:43.248 --> 00:19:44.548
+I feel like that got a little confusing.
+
+00:19:45.489 --> 00:19:49.611
+We brought in the UX UI graphic designer
+
+00:19:50.070 --> 00:19:52.872
+agent to come up with this prompt,
+
+00:19:52.892 --> 00:19:55.353
+this image, color scheme,
+
+00:19:55.452 --> 00:19:57.574
+everything kind of flows.
+
+00:19:58.648 --> 00:19:59.829
+Uh, there is a grownup dashboard,
+
+00:19:59.849 --> 00:20:01.030
+so I can actually go in,
+
+00:20:01.771 --> 00:20:02.632
+do some tracking.
+
+00:20:05.734 --> 00:20:09.498
+Let's talk about his, um, abilities.
+
+00:20:11.799 --> 00:20:12.779
+I get some feedback.
+
+00:20:12.921 --> 00:20:13.540
+It is smart.
+
+00:20:13.560 --> 00:20:16.343
+It has actually, uh, the test bank is,
+
+00:20:16.383 --> 00:20:17.864
+or it's not the test bank.
+
+00:20:18.204 --> 00:20:20.767
+The question bank is actually, uh,
+
+00:20:21.507 --> 00:20:25.671
+generated through, uh, chat GPT, uh,
+
+00:20:25.770 --> 00:20:27.751
+open AI actually gets smarter.
+
+00:20:27.811 --> 00:20:28.353
+So as.
+
+00:20:28.904 --> 00:20:30.705
+He answers questions incorrect or needs
+
+00:20:30.726 --> 00:20:31.586
+help on certain things.
+
+00:20:31.665 --> 00:20:33.747
+It'll actually adjust the, uh,
+
+00:20:34.748 --> 00:20:36.189
+questions on a weekly basis.
+
+00:20:36.209 --> 00:20:37.628
+All right.
+
+00:20:37.648 --> 00:20:38.349
+So let's go in.
+
+00:20:39.950 --> 00:20:41.030
+Let me not embarrass myself.
+
+00:20:41.050 --> 00:20:42.392
+Some of this stuff on my knife.
+
+00:20:43.152 --> 00:20:43.571
+All right.
+
+00:20:43.612 --> 00:20:47.614
+So multi-digit operations.
+
+00:20:47.634 --> 00:20:49.454
+That's kind of this thing for today.
+
+00:20:51.316 --> 00:20:52.277
+Oh, that's how I practice.
+
+00:20:52.297 --> 00:20:53.856
+There you go.
+
+00:20:53.916 --> 00:20:56.679
+Multi-digit operations.
+
+00:20:56.719 --> 00:20:56.919
+So.
+
+00:20:57.704 --> 00:20:59.826
+Community garden has twenty four rows with
+
+00:20:59.846 --> 00:21:02.387
+one hundred and fifteen seeds in each row.
+
+00:21:02.907 --> 00:21:06.890
+How many seeds are planted?
+
+00:21:07.309 --> 00:21:08.351
+OK, so it's multiplication.
+
+00:21:08.931 --> 00:21:10.791
+I don't know.
+
+00:21:10.811 --> 00:21:11.373
+Give me a clue.
+
+00:21:12.012 --> 00:21:13.034
+OK,
+
+00:21:13.054 --> 00:21:15.974
+the first twenty four times one hundred is
+
+00:21:15.994 --> 00:21:16.596
+twenty four hundred.
+
+00:21:17.375 --> 00:21:18.596
+So the answer should be a little bit
+
+00:21:18.616 --> 00:21:18.876
+bigger.
+
+00:21:18.916 --> 00:21:19.656
+See, this is nice.
+
+00:21:19.676 --> 00:21:21.097
+Like it doesn't give you the actual
+
+00:21:21.198 --> 00:21:21.498
+answer,
+
+00:21:22.219 --> 00:21:24.440
+but it forces him to think through it.
+
+00:21:26.003 --> 00:21:26.644
+which is really good.
+
+00:21:26.663 --> 00:21:27.125
+That's kind of,
+
+00:21:27.184 --> 00:21:28.164
+that's really what we wanted.
+
+00:21:28.664 --> 00:21:29.726
+We didn't want to just like, Oh,
+
+00:21:29.746 --> 00:21:30.346
+here's the answer.
+
+00:21:30.365 --> 00:21:31.605
+Like if he didn't know the answer,
+
+00:21:31.645 --> 00:21:32.906
+we want him to understand, um,
+
+00:21:32.926 --> 00:21:34.508
+what it was.
+
+00:21:37.489 --> 00:21:38.930
+So here it's like, Hey,
+
+00:21:38.970 --> 00:21:43.392
+I need more help.
+
+00:21:44.592 --> 00:21:46.492
+So at one hundred plus fifteen,
+
+00:21:48.054 --> 00:21:50.315
+find twenty four times one hundred and
+
+00:21:50.355 --> 00:21:52.796
+twenty four times fifteen.
+
+00:21:53.036 --> 00:21:53.296
+Okay.
+
+00:21:56.057 --> 00:21:57.038
+You click walk me through it.
+
+00:21:58.638 --> 00:21:58.778
+So,
+
+00:21:58.818 --> 00:22:00.419
+twenty-four times a hundred is twenty-four
+
+00:22:00.459 --> 00:22:00.819
+hundred.
+
+00:22:01.359 --> 00:22:02.799
+Twenty-four times fifteen is three sixty.
+
+00:22:02.920 --> 00:22:03.460
+Add those parts up.
+
+00:22:03.480 --> 00:22:05.060
+See, it still doesn't give you the answer.
+
+00:22:05.121 --> 00:22:05.300
+Like,
+
+00:22:05.520 --> 00:22:07.801
+even if you go all the way through.
+
+00:22:09.021 --> 00:22:10.343
+So, I mean,
+
+00:22:10.363 --> 00:22:11.982
+at the end of the day, it's very,
+
+00:22:13.084 --> 00:22:13.963
+very simple.
+
+00:22:14.624 --> 00:22:17.625
+We can say, hey, it's twenty-seven sixty.
+
+00:22:18.885 --> 00:22:19.326
+Answer.
+
+00:22:19.445 --> 00:22:19.905
+Nice work.
+
+00:22:25.196 --> 00:22:26.337
+Tell Nova what strategy.
+
+00:22:34.086 --> 00:22:34.666
+Playing your work.
+
+00:22:34.707 --> 00:22:36.788
+So it really gets you thinking.
+
+00:22:38.329 --> 00:22:44.036
+Let's see.
+
+00:22:44.076 --> 00:22:44.817
+I'm so happy this.
+
+00:22:46.479 --> 00:22:47.460
+Okay, I'll mess up this stuff.
+
+00:22:55.461 --> 00:22:56.561
+So I saved that.
+
+00:22:59.263 --> 00:22:59.663
+Actually, I never,
+
+00:22:59.683 --> 00:23:00.944
+this is my first time using it, y'all.
+
+00:23:01.185 --> 00:23:06.809
+Actually, no, I used it before.
+
+00:23:06.829 --> 00:23:08.771
+So he's got a library of other things.
+
+00:23:08.811 --> 00:23:09.612
+So he did that.
+
+00:23:10.073 --> 00:23:11.153
+We actually, we just did that.
+
+00:23:14.355 --> 00:23:16.857
+So here's different subjects within the
+
+00:23:16.897 --> 00:23:19.359
+math realm that he can test out.
+
+00:23:24.925 --> 00:23:27.446
+So it's fractions, same concept.
+
+00:23:28.467 --> 00:23:30.047
+Give me clues, show an example,
+
+00:23:30.086 --> 00:23:30.946
+walk me through.
+
+00:23:33.887 --> 00:23:36.108
+Like which is greater than three-fourths.
+
+00:23:38.308 --> 00:23:38.548
+Okay, cool.
+
+00:23:38.568 --> 00:23:39.749
+All right,
+
+00:23:39.909 --> 00:23:42.970
+and then you can collect stickers,
+
+00:23:43.470 --> 00:23:46.171
+a little gamification, first try.
+
+00:23:48.271 --> 00:23:50.814
+uh please use clues fraction friend
+
+00:23:50.854 --> 00:23:53.996
+diffractions you go to your journal like
+
+00:23:54.036 --> 00:23:57.598
+this is it's a companion app like it's
+
+00:23:57.659 --> 00:24:01.760
+not meant to be the full experience it's
+
+00:24:01.780 --> 00:24:03.422
+something that you use alongside the
+
+00:24:03.461 --> 00:24:08.486
+workbook um so something fun fast prep app
+
+00:24:08.986 --> 00:24:11.508
+we're gonna change that name for sure and
+
+00:24:11.528 --> 00:24:13.729
+then what i'll do is i'll uh i'll
+
+00:24:13.769 --> 00:24:14.529
+put this on my
+
+00:24:16.141 --> 00:24:17.182
+In my Azure environment,
+
+00:24:17.221 --> 00:24:18.803
+you can access it via web,
+
+00:24:19.864 --> 00:24:20.765
+on the computer,
+
+00:24:22.105 --> 00:24:23.086
+and I want him to test it out
+
+00:24:23.106 --> 00:24:23.807
+and kind of be,
+
+00:24:24.548 --> 00:24:25.387
+kind of go through it,
+
+00:24:25.407 --> 00:24:26.709
+see what changes need to be made,
+
+00:24:27.769 --> 00:24:28.691
+how it should be updated,
+
+00:24:29.852 --> 00:24:32.493
+and kind of go through that experience.
+
+00:24:33.114 --> 00:24:33.654
+So actually,
+
+00:24:33.694 --> 00:24:34.655
+you know what we're going to do?
+
+00:24:35.476 --> 00:24:38.999
+We will go to, uh, point six.
+
+00:24:40.200 --> 00:24:42.461
+So let's check it out.
+
+00:24:43.762 --> 00:24:45.324
+And we'll actually launch up a, uh,
+
+00:24:46.484 --> 00:24:59.175
+Subagent.
+
+00:24:59.195 --> 00:25:03.838
+This is going to be subagent.
+
+00:25:03.858 --> 00:25:04.240
+That.
+
+00:25:20.623 --> 00:25:22.324
+All right, we're here.
+
+00:25:22.344 --> 00:25:23.984
+Okay, so we're in the Fast Prep app.
+
+00:25:27.288 --> 00:25:27.907
+Let's do that.
+
+00:25:31.371 --> 00:25:32.391
+So if you go to model,
+
+00:25:33.511 --> 00:25:38.576
+you can choose Luna, Sol, Terra.
+
+00:25:39.916 --> 00:25:42.317
+You can put extra high, max.
+
+00:25:42.818 --> 00:25:43.739
+There's ultra about,
+
+00:25:43.999 --> 00:25:45.039
+so I'll have access to ultra.
+
+00:25:46.441 --> 00:25:47.521
+You know what, I'm not going to.
+
+00:25:49.633 --> 00:25:50.453
+Let's just check.
+
+00:25:50.814 --> 00:25:51.355
+Let's pick high.
+
+00:25:51.394 --> 00:25:54.037
+What's the... So where did I leave off?
+
+00:25:56.880 --> 00:25:59.902
+What's the latest on this app here?
+
+00:26:26.766 --> 00:26:27.967
+I was looking at what was deployed,
+
+00:26:29.008 --> 00:26:29.867
+what was built.
+
+00:26:44.940 --> 00:26:46.240
+There's my, actually, yeah,
+
+00:26:46.260 --> 00:26:48.461
+it's already in my Azure environment.
+
+00:26:48.482 --> 00:26:49.103
+What am I saying?
+
+00:26:49.522 --> 00:26:50.364
+I forgot about that.
+
+00:26:52.265 --> 00:26:53.566
+I was running local hosts.
+
+00:26:54.267 --> 00:26:55.667
+I did deploy it to my Azure environment.
+
+00:27:03.046 --> 00:27:04.007
+Actually bring it up.
+
+00:27:06.248 --> 00:27:09.028
+It's the same changes.
+
+00:27:10.569 --> 00:27:10.650
+Yeah.
+
+00:27:13.412 --> 00:27:13.971
+Yeah, I gave it.
+
+00:27:14.011 --> 00:27:16.933
+So I deployed it into Azure,
+
+00:27:17.013 --> 00:27:18.694
+but I didn't give it a specific domain.
+
+00:27:18.714 --> 00:27:21.016
+So it gave me just a random Azure
+
+00:27:21.036 --> 00:27:21.976
+domain that's here.
+
+00:27:27.519 --> 00:27:27.720
+All right,
+
+00:27:27.740 --> 00:27:31.383
+this hints the smart text test bank spoke
+
+00:27:31.403 --> 00:27:35.306
+about the addition of the hero graphic.
+
+00:27:37.047 --> 00:27:46.573
+Okay, so.
+
+00:27:46.653 --> 00:27:47.334
+Sub agent.
+
+00:27:48.295 --> 00:27:55.700
+All right.
+
+00:27:55.799 --> 00:27:56.721
+And.
+
+00:28:17.749 --> 00:28:19.269
+So when you're in GitHub code pilot,
+
+00:28:19.289 --> 00:28:23.173
+you could do shift tab.
+
+00:28:24.607 --> 00:28:26.888
+And then you see the color change here,
+
+00:28:26.949 --> 00:28:29.930
+like gray, blue is plan mode,
+
+00:28:30.150 --> 00:28:31.250
+purple is auto mode.
+
+00:28:31.711 --> 00:28:38.913
+We're just looking for recommendations,
+
+00:28:39.752 --> 00:28:40.993
+no need to plan.
+
+00:29:12.618 --> 00:29:14.380
+There we go.
+
+00:29:14.400 --> 00:29:14.901
+It's working.
+
+00:29:15.662 --> 00:29:18.064
+So you see how it, it had the,
+
+00:29:20.005 --> 00:29:23.387
+the sub agent is using Claude sign five
+
+00:29:24.509 --> 00:29:29.353
+and it does that does that automatically.
+
+00:29:31.355 --> 00:29:33.757
+So I could tell it which sub agent
+
+00:29:33.797 --> 00:29:34.396
+to spin up.
+
+00:29:39.020 --> 00:29:40.021
+So keep that in mind.
+
+00:29:42.082 --> 00:29:45.064
+And I've been using GPT a lot lately.
+
+00:29:45.223 --> 00:29:46.224
+I do want to kind of mix it
+
+00:29:46.265 --> 00:29:47.645
+up this next week.
+
+00:29:48.346 --> 00:29:49.667
+I want to use GPT.
+
+00:29:49.688 --> 00:29:54.191
+I want to use the GPT as the
+
+00:29:54.230 --> 00:29:54.550
+base,
+
+00:29:54.590 --> 00:29:58.894
+but when planning and like setting up like
+
+00:29:58.933 --> 00:30:02.116
+the initial structure of an app that I'm
+
+00:30:02.156 --> 00:30:02.497
+creating,
+
+00:30:03.446 --> 00:30:06.627
+I'm going to use a cloud Opus four
+
+00:30:06.647 --> 00:30:09.469
+point eight to set up a plan and
+
+00:30:09.489 --> 00:30:10.469
+then execute with.
+
+00:30:10.648 --> 00:30:11.788
+So that's kind of like my plan.
+
+00:30:12.148 --> 00:30:14.450
+What I'm seeing with the, uh, benchmarks,
+
+00:30:14.910 --> 00:30:17.010
+a lot of reviews are saying that soul
+
+00:30:17.050 --> 00:30:19.851
+is really good at taking over your
+
+00:30:19.871 --> 00:30:21.291
+browser, using your computer,
+
+00:30:22.531 --> 00:30:23.612
+like getting things done.
+
+00:30:24.393 --> 00:30:25.853
+And you guys know what I've said in
+
+00:30:25.873 --> 00:30:27.513
+the past, as far as GPT,
+
+00:30:27.614 --> 00:30:30.273
+like GPTs for the streets, like, um,
+
+00:30:31.694 --> 00:30:32.775
+all this like Oxford.
+
+00:30:35.151 --> 00:30:35.891
+Higher education.
+
+00:30:36.332 --> 00:30:37.853
+GPT just keeps it super real.
+
+00:30:37.873 --> 00:30:38.893
+All right.
+
+00:30:38.932 --> 00:30:41.034
+So launching a UX specialist to assess the
+
+00:30:41.114 --> 00:30:44.977
+live learner and parent experience and
+
+00:30:45.096 --> 00:30:50.460
+prioritize concrete improvements.
+
+00:30:50.480 --> 00:30:51.980
+This is good.
+
+00:30:52.080 --> 00:30:52.401
+Let's see.
+
+00:30:52.421 --> 00:30:52.560
+Wow.
+
+00:31:14.905 --> 00:31:16.626
+Again, as this loads,
+
+00:31:17.086 --> 00:31:18.188
+just want to give a big shout out
+
+00:31:18.208 --> 00:31:19.208
+to Fabflow,
+
+00:31:20.749 --> 00:31:23.711
+our premium sponsor of Layer A Culture.
+
+00:31:25.892 --> 00:31:26.132
+You know,
+
+00:31:26.152 --> 00:31:29.253
+if you're interested in learning about AI,
+
+00:31:30.153 --> 00:31:31.214
+learning about automation,
+
+00:31:32.895 --> 00:31:34.436
+want to bring it into your business,
+
+00:31:35.116 --> 00:31:35.917
+do a workshop.
+
+00:31:37.117 --> 00:31:38.439
+I'm located in the Space Coast.
+
+00:31:40.339 --> 00:31:41.500
+Definitely willing to do a virtual
+
+00:31:41.540 --> 00:31:43.142
+workshop, willing to travel.
+
+00:31:44.280 --> 00:31:44.800
+Hit me up.
+
+00:31:47.644 --> 00:31:49.125
+Hello at layeraculture.io.
+
+00:31:49.144 --> 00:31:51.446
+Get in touch with me.
+
+00:31:55.369 --> 00:31:56.530
+Or just send me a message on social
+
+00:31:56.570 --> 00:31:56.770
+media.
+
+00:31:56.790 --> 00:32:01.154
+All right, here we go.
+
+00:32:02.096 --> 00:32:05.558
+So UX sub-agent complete assessment,
+
+00:32:05.578 --> 00:32:06.619
+expand question variety.
+
+00:32:06.700 --> 00:32:08.902
+So each skill has at least three
+
+00:32:08.922 --> 00:32:09.261
+questions.
+
+00:32:09.638 --> 00:32:09.818
+Yeah,
+
+00:32:09.838 --> 00:32:12.980
+there's only and try another never beat
+
+00:32:13.000 --> 00:32:13.539
+the same item.
+
+00:32:13.559 --> 00:32:13.819
+Okay.
+
+00:32:14.520 --> 00:32:16.780
+It's like the ground dashboard parent
+
+00:32:16.800 --> 00:32:17.101
+code.
+
+00:32:17.121 --> 00:32:17.781
+That's cool.
+
+00:32:17.842 --> 00:32:18.721
+All right.
+
+00:32:18.741 --> 00:32:22.242
+Connect is a singing AI tutor API to
+
+00:32:22.343 --> 00:32:22.843
+Nova's.
+
+00:32:23.323 --> 00:32:28.785
+Hmm.
+
+00:32:28.805 --> 00:32:29.125
+That way.
+
+00:32:29.164 --> 00:32:31.846
+First one onboarding Nova.
+
+00:32:32.786 --> 00:32:36.627
+Cool.
+
+00:32:36.748 --> 00:32:37.127
+I like it.
+
+00:32:37.167 --> 00:32:37.607
+I like it.
+
+00:32:39.205 --> 00:32:41.207
+And a clear session completes green after
+
+00:32:41.586 --> 00:32:43.567
+reflection.
+
+00:32:43.587 --> 00:32:46.909
+With a calm option to stop or continue.
+
+00:32:46.949 --> 00:32:52.352
+Very nice.
+
+00:32:52.511 --> 00:32:52.872
+Wow.
+
+00:32:54.291 --> 00:32:55.732
+Wow, this is insane.
+
+00:32:55.893 --> 00:33:02.175
+Like, the detail is so... Yeah,
+
+00:33:02.195 --> 00:33:03.276
+it hasn't done this before.
+
+00:33:03.736 --> 00:33:04.277
+This is new.
+
+00:33:05.237 --> 00:33:06.657
+Okay.
+
+00:33:06.897 --> 00:33:07.137
+Nice.
+
+00:33:17.395 --> 00:33:31.462
+so i've implemented recommendations you
+
+00:33:31.482 --> 00:33:40.827
+can let it go so with the cli
+
+00:33:41.087 --> 00:33:42.308
+i've been what i've been doing a lot
+
+00:33:42.388 --> 00:33:45.170
+lately is not only building but
+
+00:33:46.394 --> 00:33:50.154
+testing also analyzing what I'm doing so
+
+00:33:50.194 --> 00:33:53.955
+like with the um I think of a
+
+00:33:53.996 --> 00:33:57.957
+good example even with like the social
+
+00:33:57.977 --> 00:34:00.237
+media stuff I'm doing without that
+
+00:34:00.336 --> 00:34:03.458
+automation so I did spin that up for
+
+00:34:04.198 --> 00:34:07.019
+the real estate deal lab we got that
+
+00:34:07.058 --> 00:34:07.439
+working
+
+00:34:08.873 --> 00:34:10.054
+Um, but even like the copy,
+
+00:34:10.094 --> 00:34:12.675
+as far as like the wording and like
+
+00:34:12.695 --> 00:34:13.876
+the message that was going out,
+
+00:34:14.635 --> 00:34:16.657
+I just spent up a sub agent to
+
+00:34:16.717 --> 00:34:18.737
+work on specifically the copy,
+
+00:34:19.498 --> 00:34:20.818
+like not even the automation part,
+
+00:34:20.838 --> 00:34:21.619
+but like the words,
+
+00:34:21.818 --> 00:34:22.759
+how the words were set up,
+
+00:34:23.338 --> 00:34:24.579
+what it's actually saying,
+
+00:34:24.840 --> 00:34:25.760
+how it's responding.
+
+00:34:27.501 --> 00:34:30.422
+So that's a good way to, uh,
+
+00:34:30.461 --> 00:34:31.481
+leverage the sub agent.
+
+00:34:34.903 --> 00:34:35.204
+Let's see.
+
+00:34:35.244 --> 00:34:35.963
+So it's implementing.
+
+00:34:38.268 --> 00:34:39.947
+This is good.
+
+00:34:40.007 --> 00:34:41.489
+One thing I did hear is that a
+
+00:34:41.548 --> 00:34:44.269
+lot of people are saying Claude is
+
+00:34:44.329 --> 00:34:46.289
+actually better at the UX UI design.
+
+00:34:46.710 --> 00:34:49.891
+With me using GPT for the past two
+
+00:34:49.911 --> 00:34:50.210
+weeks,
+
+00:34:50.431 --> 00:34:52.871
+I haven't even used Claude for any UX.
+
+00:34:54.132 --> 00:34:56.012
+That's something I might lean on.
+
+00:34:57.012 --> 00:34:57.273
+Actually,
+
+00:34:57.313 --> 00:35:04.675
+that's funny because the sub-agent that
+
+00:35:04.715 --> 00:35:07.096
+spun up was called Sonic Five.
+
+00:35:08.675 --> 00:35:13.456
+So it'll be interesting to see after we
+
+00:35:13.516 --> 00:35:15.757
+implement what those changes look like.
+
+00:35:16.878 --> 00:35:18.418
+But you know what, while that's going on,
+
+00:35:20.119 --> 00:35:21.079
+we're going to let that run,
+
+00:35:21.420 --> 00:35:24.862
+come back to it, check it out.
+
+00:35:24.902 --> 00:35:26.282
+I want to do something fun with us.
+
+00:35:26.402 --> 00:35:37.367
+So, so let's open this up.
+
+00:35:37.387 --> 00:35:38.447
+Stop sharing for a sec.
+
+00:35:43.318 --> 00:35:44.719
+It's going to be a long weekend, y'all.
+
+00:35:45.000 --> 00:35:46.960
+It's going to be a long weekend.
+
+00:35:47.001 --> 00:35:50.581
+Because I'm going to be... Yeah,
+
+00:35:50.601 --> 00:35:55.143
+I'm going to be on Soul all weekend
+
+00:35:55.204 --> 00:35:55.503
+long.
+
+00:35:55.784 --> 00:35:56.465
+So... Okay.
+
+00:35:56.485 --> 00:35:57.565
+Let's... Stop sharing.
+
+00:36:40.594 --> 00:36:40.974
+As you can see,
+
+00:36:41.014 --> 00:36:43.416
+it's already working on the stuff.
+
+00:36:43.436 --> 00:37:00.806
+Let's go to... What's that?
+
+00:37:12.818 --> 00:37:13.980
+So our new favorite spot,
+
+00:37:14.559 --> 00:37:15.880
+our networking group real quick.
+
+00:37:17.400 --> 00:37:21.123
+Let's try to create a website.
+
+00:37:21.762 --> 00:37:24.644
+So first one, let's do it.
+
+00:37:31.987 --> 00:37:34.809
+And soul is available in chat GPT as
+
+00:37:34.869 --> 00:37:35.170
+well.
+
+00:37:37.949 --> 00:37:38.833
+Like, not in ChatGPT,
+
+00:37:38.873 --> 00:37:39.775
+but you know what I mean,
+
+00:37:39.815 --> 00:37:40.938
+like the chat interface.
+
+00:37:42.161 --> 00:37:43.847
+So we can go to high.
+
+00:37:44.690 --> 00:37:45.070
+Why not?
+
+00:38:16.668 --> 00:38:23.614
+look the name uh was it barefoot bay
+
+00:38:23.634 --> 00:38:31.579
+i'm not gonna worry about it so remember
+
+00:38:31.599 --> 00:38:34.262
+i asked you to make three mock-ups it's
+
+00:38:34.322 --> 00:38:35.862
+making an image that's good because
+
+00:38:35.882 --> 00:38:38.045
+sometimes you'll say mock-up and i'll like
+
+00:38:38.184 --> 00:38:39.065
+it'll give you something else
+
+00:38:44.724 --> 00:38:46.644
+So I like make websites cause it's,
+
+00:38:46.804 --> 00:38:48.505
+you know, it's something creative.
+
+00:38:49.045 --> 00:38:50.246
+Everyone needs a website.
+
+00:38:50.367 --> 00:38:53.248
+Everyone like creates a website.
+
+00:38:53.668 --> 00:38:58.291
+So it's a great,
+
+00:39:00.271 --> 00:39:02.713
+it's a great case study or great use
+
+00:39:02.733 --> 00:39:02.972
+case.
+
+00:39:03.032 --> 00:39:04.012
+I should say.
+
+00:39:04.233 --> 00:39:11.757
+So it's running.
+
+00:39:20.835 --> 00:39:22.016
+Like this is ready already.
+
+00:39:22.657 --> 00:39:23.418
+So let's check out.
+
+00:39:25.679 --> 00:39:25.860
+Cool.
+
+00:39:25.880 --> 00:39:26.300
+Let's check out.
+
+00:39:26.340 --> 00:39:28.402
+So I mean, let's check out Nova.
+
+00:39:28.862 --> 00:39:29.643
+Learn with Nova.
+
+00:39:31.903 --> 00:39:33.525
+Oh, so man, see it.
+
+00:39:34.766 --> 00:39:35.927
+Fifth grade launch pad.
+
+00:39:36.086 --> 00:39:37.168
+I did put that name in.
+
+00:39:37.809 --> 00:39:38.708
+It updated it.
+
+00:39:38.728 --> 00:39:39.269
+So that's good.
+
+00:39:40.210 --> 00:39:40.570
+All right.
+
+00:39:40.590 --> 00:39:42.811
+So meet Nova, your summer learning guide.
+
+00:39:44.172 --> 00:39:45.434
+Each visit is a calm,
+
+00:39:45.815 --> 00:39:49.137
+fifteen to twenty five minute launch with
+
+00:39:49.157 --> 00:39:50.177
+three small steps.
+
+00:39:52.081 --> 00:39:53.362
+It was just like a little, you know,
+
+00:39:54.943 --> 00:39:55.623
+low pressure.
+
+00:39:56.643 --> 00:39:57.364
+Let's launch.
+
+00:39:58.885 --> 00:40:00.045
+No, it looks the same.
+
+00:40:02.547 --> 00:40:03.086
+Ready for today.
+
+00:40:03.126 --> 00:40:06.668
+I picked this decimal decimal place value
+
+00:40:07.268 --> 00:40:08.750
+because it's a good next step.
+
+00:40:10.251 --> 00:40:11.090
+We'll do a warmup.
+
+00:40:12.172 --> 00:40:13.371
+One practice question.
+
+00:40:13.512 --> 00:40:14.092
+Quick wrap up.
+
+00:40:14.112 --> 00:40:15.432
+See three steps.
+
+00:40:15.552 --> 00:40:16.193
+Real easy.
+
+00:40:18.454 --> 00:40:18.795
+Nice.
+
+00:40:20.925 --> 00:40:22.045
+So start today.
+
+00:40:27.849 --> 00:40:30.909
+Write seven and three hundred eight
+
+00:40:31.110 --> 00:40:34.211
+thousandths in standard decimal format.
+
+00:40:34.771 --> 00:40:40.914
+Give me a clue.
+
+00:40:41.514 --> 00:40:43.056
+Write the number of digits in the
+
+00:40:43.115 --> 00:40:43.936
+thousandths place.
+
+00:40:45.858 --> 00:40:46.557
+Walk me through.
+
+00:40:55.744 --> 00:40:57.286
+And then you also have the option to
+
+00:40:57.326 --> 00:40:59.927
+pick try another.
+
+00:40:59.947 --> 00:41:00.108
+Boom.
+
+00:41:00.128 --> 00:41:04.632
+Okay.
+
+00:41:04.652 --> 00:41:05.793
+Which decimal is greater?
+
+00:41:09.454 --> 00:41:11.797
+So A, B, C, C, they're both equal.
+
+00:41:11.817 --> 00:41:14.699
+Check my answer.
+
+00:41:14.719 --> 00:41:14.940
+Nice work.
+
+00:41:14.960 --> 00:41:17.400
+Okay.
+
+00:41:17.442 --> 00:41:20.443
+Then I can go through,
+
+00:41:21.023 --> 00:41:21.885
+save my wrap up.
+
+00:41:24.773 --> 00:41:26.434
+This was great.
+
+00:41:26.454 --> 00:41:27.034
+This was easy.
+
+00:41:31.014 --> 00:41:31.795
+Launch completed.
+
+00:41:32.416 --> 00:41:37.097
+Keep practicing.
+
+00:41:37.358 --> 00:41:43.239
+How many times can I hit try another?
+
+00:41:45.481 --> 00:41:46.800
+So this one, which is greater,
+
+00:41:47.842 --> 00:41:49.541
+doesn't give me the ABC option.
+
+00:41:49.902 --> 00:41:51.182
+It forces me to write it out.
+
+00:41:55.028 --> 00:41:56.949
+I'll write the wrong thing here.
+
+00:41:56.989 --> 00:41:57.730
+Not yet.
+
+00:42:03.971 --> 00:42:07.831
+Nice work.
+
+00:42:07.851 --> 00:42:08.192
+Easy.
+
+00:42:09.211 --> 00:42:10.492
+I need to have a practice mode so
+
+00:42:10.552 --> 00:42:12.373
+I don't mess my son's stuff up.
+
+00:42:13.193 --> 00:42:13.393
+Cool.
+
+00:42:14.293 --> 00:42:18.213
+Then, I'll go back to today.
+
+00:42:21.235 --> 00:42:22.954
+So, warm up.
+
+00:42:25.440 --> 00:42:26.041
+Practice.
+
+00:42:28.481 --> 00:42:29.481
+Write about what helped.
+
+00:42:29.501 --> 00:42:34.344
+Okay.
+
+00:42:34.824 --> 00:42:36.003
+Seven actions this week.
+
+00:42:36.844 --> 00:42:37.344
+Stickers earned.
+
+00:42:37.525 --> 00:42:39.644
+Cool.
+
+00:42:39.664 --> 00:42:40.726
+Back to this here.
+
+00:42:40.905 --> 00:42:41.186
+All right.
+
+00:42:41.226 --> 00:42:42.806
+So we got one website.
+
+00:42:44.586 --> 00:42:45.166
+Cool.
+
+00:42:45.226 --> 00:42:47.467
+Two.
+
+00:42:47.547 --> 00:42:47.927
+Cool.
+
+00:42:48.007 --> 00:42:48.507
+Three.
+
+00:42:51.208 --> 00:42:51.548
+Hmm.
+
+00:42:51.768 --> 00:42:52.409
+Which one do I like?
+
+00:42:56.596 --> 00:43:02.021
+let's see i really like this second one
+
+00:43:06.443 --> 00:43:16.753
+yeah like this one save it okay let's
+
+00:43:16.793 --> 00:43:20.456
+go into so actually let's make a project
+
+00:43:20.476 --> 00:43:20.916
+real quick
+
+00:43:58.000 --> 00:43:58.894
+Spin this up.
+
+00:44:28.581 --> 00:44:29.043
+this quickly.
+
+00:45:01.067 --> 00:45:01.807
+actually up.
+
+00:45:01.827 --> 00:45:04.170
+I know what I'll do.
+
+00:45:05.851 --> 00:45:07.413
+Assess the best
+
+00:45:36.655 --> 00:45:39.416
+Gosh, typing's off.
+
+00:45:39.737 --> 00:45:42.659
+Actually,
+
+00:45:42.679 --> 00:45:43.858
+we're gonna talk about something while
+
+00:45:43.898 --> 00:45:49.061
+this loads, but here it is.
+
+00:45:50.902 --> 00:45:52.922
+Go to plan mode.
+
+00:46:15.384 --> 00:46:16.684
+I'm just going to share my whole screen
+
+00:46:16.744 --> 00:46:21.088
+because it'll be easier.
+
+00:46:23.048 --> 00:46:29.054
+So what I'm looking at here, screen,
+
+00:46:29.934 --> 00:46:30.755
+this one, sure.
+
+00:46:31.675 --> 00:46:33.976
+All right, cool.
+
+00:46:34.898 --> 00:46:36.878
+Real quick, there's a lot going on here.
+
+00:46:37.059 --> 00:46:38.701
+So let's open this up.
+
+00:46:40.862 --> 00:46:41.782
+You can't even see that.
+
+00:46:45.342 --> 00:46:47.583
+Alright, so to the first invitation,
+
+00:46:47.782 --> 00:46:49.603
+use the mock mockup.
+
+00:46:51.505 --> 00:46:52.045
+Yes.
+
+00:47:04.512 --> 00:47:06.733
+Is that school?
+
+00:47:08.927 --> 00:47:09.507
+So that's running.
+
+00:47:09.527 --> 00:47:10.748
+I want to show you guys something real
+
+00:47:10.768 --> 00:47:10.987
+quick.
+
+00:47:11.007 --> 00:47:11.548
+So handy.
+
+00:47:11.949 --> 00:47:13.449
+I need to use this a lot more.
+
+00:47:14.829 --> 00:47:16.769
+This thing's been hot fire.
+
+00:47:18.090 --> 00:47:18.409
+Okay.
+
+00:47:18.889 --> 00:47:21.050
+What now?
+
+00:47:33.713 --> 00:47:35.092
+We're not worried about functionality
+
+00:47:35.132 --> 00:47:35.353
+right now.
+
+00:47:35.373 --> 00:47:36.293
+We're just going to see what it spits
+
+00:47:36.313 --> 00:47:36.373
+out.
+
+00:47:36.393 --> 00:47:37.713
+All right.
+
+00:47:37.733 --> 00:47:38.173
+So real quick.
+
+00:47:39.420 --> 00:47:40.800
+Man, this thing's really fast.
+
+00:47:41.260 --> 00:47:41.661
+Hold up.
+
+00:47:42.400 --> 00:47:43.402
+Let's just stay on it then.
+
+00:47:44.161 --> 00:47:44.802
+For the first build,
+
+00:47:44.822 --> 00:47:46.302
+be a single responsive page.
+
+00:47:47.023 --> 00:47:48.003
+Matching the mock-up.
+
+00:47:48.063 --> 00:47:50.905
+Yeah.
+
+00:47:50.945 --> 00:47:52.525
+Mind you, this is running GPT-file.
+
+00:47:52.565 --> 00:47:53.485
+GPT-file.
+
+00:47:56.507 --> 00:47:57.867
+Yeah, it's very fast.
+
+00:47:58.547 --> 00:48:01.349
+So it's telling me react, write,
+
+00:48:01.648 --> 00:48:02.208
+type script.
+
+00:48:03.050 --> 00:48:03.710
+Makes sense.
+
+00:48:05.891 --> 00:48:06.210
+That's cool.
+
+00:48:07.644 --> 00:48:11.045
+Um, the sub-agent that has been up, what,
+
+00:48:11.865 --> 00:48:13.626
+which one did it use?
+
+00:48:15.547 --> 00:48:19.568
+I wanted to test with a Claude probably
+
+00:48:19.588 --> 00:48:21.248
+sub-agent, but it's all good.
+
+00:48:33.753 --> 00:48:36.733
+It's never been this specific.
+
+00:48:38.748 --> 00:48:39.889
+about the questions it's asking.
+
+00:48:39.909 --> 00:48:40.690
+This is really good.
+
+00:48:40.789 --> 00:48:41.389
+I'm just going to go with the
+
+00:48:41.409 --> 00:48:49.052
+recommendation.
+
+00:48:49.092 --> 00:48:49.974
+This is fun.
+
+00:48:50.054 --> 00:48:50.614
+I'm excited.
+
+00:48:54.949 --> 00:48:56.248
+Every time I go back to tell you
+
+00:48:56.268 --> 00:48:57.750
+guys about this awesome app,
+
+00:48:58.389 --> 00:48:59.610
+I get hit with another question.
+
+00:48:59.630 --> 00:49:01.170
+So I'm like being careful anyways,
+
+00:49:01.231 --> 00:49:01.630
+real quick.
+
+00:49:02.130 --> 00:49:04.411
+So a lot of people are using Whisperflow.
+
+00:49:05.132 --> 00:49:06.771
+This is actually a free app.
+
+00:49:06.831 --> 00:49:10.032
+Whisperflow is really good because you
+
+00:49:10.072 --> 00:49:11.293
+could use it on your phone,
+
+00:49:11.833 --> 00:49:13.474
+but if you're on the computer all the
+
+00:49:13.514 --> 00:49:15.414
+time, why not use the free app,
+
+00:49:15.894 --> 00:49:17.715
+which is handy and it does the same
+
+00:49:17.735 --> 00:49:18.615
+thing as Whisperflow.
+
+00:49:19.476 --> 00:49:20.695
+You could pick a different model.
+
+00:49:22.536 --> 00:49:23.516
+You download the model.
+
+00:49:25.030 --> 00:49:26.110
+And then you can, as you can see,
+
+00:49:26.130 --> 00:49:26.211
+like,
+
+00:49:26.231 --> 00:49:27.211
+I don't want to use it that much,
+
+00:49:27.271 --> 00:49:28.532
+but it is actually good.
+
+00:49:28.952 --> 00:49:29.893
+I'm just the type of person,
+
+00:49:29.932 --> 00:49:30.813
+like I have to be,
+
+00:49:30.914 --> 00:49:31.653
+I have to type.
+
+00:49:32.713 --> 00:49:34.335
+I don't use the voice as much as
+
+00:49:34.414 --> 00:49:34.875
+I should.
+
+00:49:36.436 --> 00:49:37.815
+It might be actually be helpful,
+
+00:49:37.856 --> 00:49:40.898
+but I'm stubborn like that.
+
+00:49:40.918 --> 00:49:42.177
+But if you're a type of person that
+
+00:49:42.237 --> 00:49:45.260
+does like to use the voice and you're
+
+00:49:45.280 --> 00:49:47.541
+on the computer a lot, um,
+
+00:49:47.621 --> 00:49:48.701
+I don't know if they make this for
+
+00:49:48.740 --> 00:49:52.782
+Mac, but definitely windows, uh, handy is.
+
+00:49:54.329 --> 00:49:55.190
+Pretty cool.
+
+00:49:55.769 --> 00:50:01.534
+And it's, uh, it uses AI models.
+
+00:50:03.615 --> 00:50:04.797
+So it's pretty accurate as well.
+
+00:50:04.817 --> 00:50:12.621
+I'm gonna find the website.
+
+00:50:12.661 --> 00:50:14.043
+Oh, right here.
+
+00:50:14.063 --> 00:50:14.724
+You want to get up?
+
+00:50:27.019 --> 00:50:28.940
+So here you go.
+
+00:50:29.041 --> 00:50:40.884
+Open source and free.
+
+00:50:41.184 --> 00:50:47.766
+I should update it.
+
+00:50:47.847 --> 00:50:48.786
+And I do need to use a lot
+
+00:50:48.847 --> 00:50:48.987
+more.
+
+00:50:49.027 --> 00:50:49.706
+Okay, cool.
+
+00:50:50.146 --> 00:50:53.088
+So it's going to create this website.
+
+00:50:53.527 --> 00:50:55.528
+I'm out myself.
+
+00:50:59.184 --> 00:50:59.704
+Fire away.
+
+00:51:00.764 --> 00:51:05.507
+Oh, cool.
+
+00:51:05.547 --> 00:51:06.807
+So the in-app update.
+
+00:51:08.909 --> 00:51:09.849
+What model do I have?
+
+00:51:09.889 --> 00:51:11.409
+I have this one, the best one.
+
+00:51:12.469 --> 00:51:13.670
+Accuracy and speed.
+
+00:51:14.490 --> 00:51:17.992
+I actually do have the hotkey set up.
+
+00:51:18.012 --> 00:51:19.534
+So you can set up a hotkey in
+
+00:51:19.594 --> 00:51:20.034
+handy.
+
+00:51:21.014 --> 00:51:22.034
+So mine is control.
+
+00:51:29.268 --> 00:51:34.811
+like just put let's build all right so
+
+00:51:34.871 --> 00:51:36.411
+i had to prompt it let it know
+
+00:51:36.452 --> 00:51:39.193
+like yeah it's time to build um what
+
+00:51:40.034 --> 00:51:42.014
+was i saying so i'd actually do have
+
+00:51:42.034 --> 00:51:45.556
+the hotkey set up so i control space
+
+00:51:45.795 --> 00:51:50.157
+where is it so it actually works in
+
+00:51:50.318 --> 00:51:53.739
+any app that you're using don't see the
+
+00:51:53.760 --> 00:51:56.561
+hotkey right in general here it is yeah
+
+00:51:57.193 --> 00:51:58.514
+So here's the hotkey control space.
+
+00:51:58.534 --> 00:51:59.934
+You could change that to whatever you
+
+00:52:00.014 --> 00:52:02.474
+want.
+
+00:52:03.135 --> 00:52:04.115
+Left control space.
+
+00:52:05.135 --> 00:52:07.056
+Anytime I hit left control space,
+
+00:52:07.416 --> 00:52:08.418
+as you can see right down here,
+
+00:52:09.577 --> 00:52:10.677
+it starts transcribing.
+
+00:52:12.498 --> 00:52:14.360
+So that works within any app on my
+
+00:52:14.420 --> 00:52:14.900
+computer.
+
+00:52:14.960 --> 00:52:19.021
+So I can do, let's see.
+
+00:52:29.599 --> 00:52:32.239
+Oh, got to hold it youtube.com.
+
+00:52:38.001 --> 00:52:41.063
+Easy.
+
+00:52:41.083 --> 00:52:41.742
+So cool.
+
+00:52:41.822 --> 00:52:43.844
+All right.
+
+00:52:44.364 --> 00:52:49.025
+Back to our friend GPT, five point six.
+
+00:53:02.987 --> 00:53:05.248
+So it's actually downloading stock
+
+00:53:05.407 --> 00:53:09.250
+imagery, which it has never done before.
+
+00:53:10.110 --> 00:53:11.170
+So when making these websites,
+
+00:53:11.190 --> 00:53:12.871
+a lot of times it'll just,
+
+00:53:14.932 --> 00:53:17.213
+what we'll do actually take the pieces of
+
+00:53:17.233 --> 00:53:18.494
+the mockup and like,
+
+00:53:18.534 --> 00:53:19.534
+just throw it in there.
+
+00:53:20.414 --> 00:53:21.655
+It's very awkward and you have to kind
+
+00:53:21.675 --> 00:53:23.677
+of just go through and have your own
+
+00:53:23.717 --> 00:53:26.398
+hero images, add it yourself,
+
+00:53:26.617 --> 00:53:28.318
+like in another round.
+
+00:53:30.784 --> 00:53:31.565
+Not this time.
+
+00:53:32.806 --> 00:53:33.425
+It's going out,
+
+00:53:33.826 --> 00:53:35.266
+getting its own stock imagery.
+
+00:53:35.306 --> 00:53:37.208
+So it's going to be interesting to see
+
+00:53:37.288 --> 00:53:39.128
+what kind of images it gets,
+
+00:53:39.568 --> 00:53:44.952
+how well it matches up to this mockup
+
+00:53:44.972 --> 00:53:45.731
+that we have here.
+
+00:53:48.373 --> 00:53:49.733
+That's what we're testing against.
+
+00:53:51.474 --> 00:53:52.795
+Let's bring it out and get it ready.
+
+00:53:53.114 --> 00:53:56.376
+This thing is about to show up and
+
+00:53:56.396 --> 00:53:56.817
+show out.
+
+00:54:04.666 --> 00:54:13.751
+So let's take it a minute here.
+
+00:54:13.791 --> 00:54:25.215
+Thank you.
+
+00:54:25.235 --> 00:54:27.257
+Let me go back to it.
+
+00:54:27.277 --> 00:54:28.257
+That wasn't even there.
+
+00:54:28.677 --> 00:54:29.978
+Did it look, Hey, hold on.
+
+00:54:30.719 --> 00:54:31.478
+This is scary.
+
+00:54:32.219 --> 00:54:32.500
+Okay.
+
+00:55:03.478 --> 00:55:05.519
+okay that probably wasn't a real picture i
+
+00:55:05.539 --> 00:55:10.523
+was like is that i was looking at
+
+00:55:10.583 --> 00:55:13.945
+it here this picture down here like it's
+
+00:55:14.005 --> 00:55:20.047
+crazy that looks like florida looks like a
+
+00:55:20.228 --> 00:55:26.512
+straight up real storefront what are we
+
+00:55:26.532 --> 00:55:27.331
+doing it's still working
+
+00:55:34.445 --> 00:55:37.829
+But yeah, it's got some reviews, services,
+
+00:55:40.932 --> 00:55:41.532
+book now.
+
+00:55:43.635 --> 00:55:43.775
+Hey,
+
+00:55:43.815 --> 00:55:45.617
+notice how it even wanted you to like
+
+00:55:45.637 --> 00:55:48.001
+set up the booking through an app,
+
+00:55:48.041 --> 00:55:49.762
+the integration functionality,
+
+00:55:49.922 --> 00:55:50.844
+wanted all that to work.
+
+00:55:53.827 --> 00:55:54.909
+Pretty interesting.
+
+00:56:55.342 --> 00:56:56.347
+Let's see, where is it going?
+
+00:57:52.346 --> 00:57:53.851
+It's also interesting here.
+
+00:58:41.117 --> 00:59:06.356
+let's see it's like wow now i did
+
+00:59:06.376 --> 00:59:08.498
+have the reasoning on was it high
+
+00:59:11.456 --> 00:59:13.320
+So if the reasoning might be a little
+
+00:59:13.360 --> 00:59:20.909
+lower, it could speed up the process.
+
+00:59:21.590 --> 00:59:23.293
+Of course, you use less tokens.
+
+00:59:27.838 --> 00:59:29.121
+Looks like it's almost there.
+
+00:59:48.465 --> 00:59:48.686
+Cool.
+
+00:59:48.766 --> 00:59:49.626
+Visual pass.
+
+00:59:54.648 --> 00:59:55.768
+Browser automation.
+
+00:59:55.789 --> 00:59:57.409
+I don't think I did I speak about
+
+00:59:57.449 --> 00:59:58.650
+browser automation last week?
+
+00:59:59.791 --> 01:00:00.251
+I think I did.
+
+01:00:01.521 --> 01:00:02.943
+That's where it could actually go in,
+
+01:00:04.583 --> 01:00:06.505
+open up your browser, look around itself.
+
+01:00:06.885 --> 01:00:09.228
+I use that a lot with setting up
+
+01:00:09.288 --> 01:00:13.231
+Facebook and Meta API.
+
+01:00:13.891 --> 01:00:14.632
+This makes it easier.
+
+01:00:14.652 --> 01:00:15.452
+I don't have to think about it.
+
+01:00:16.052 --> 01:00:16.693
+Look at that.
+
+01:00:16.713 --> 01:00:19.135
+It's actually just brought up the browser.
+
+01:00:19.155 --> 01:00:20.096
+It's testing itself.
+
+01:00:22.717 --> 01:00:23.938
+Looks like a desktop and mobile.
+
+01:00:25.440 --> 01:00:26.822
+Looks like it's taking screenshots as
+
+01:00:26.902 --> 01:00:27.181
+well.
+
+01:00:27.583 --> 01:00:29.063
+It's probably taking a screenshot and then
+
+01:00:29.784 --> 01:00:30.664
+analyzing the screenshot,
+
+01:00:30.744 --> 01:00:34.228
+validating what it sees to make sure it's
+
+01:00:34.268 --> 01:00:34.768
+all correct.
+
+01:00:37.030 --> 01:00:38.090
+But again,
+
+01:00:39.211 --> 01:00:42.034
+browser automation is something that
+
+01:00:43.574 --> 01:00:45.396
+GPT-Five point six does very well.
+
+01:00:45.516 --> 01:00:48.699
+So really excited to get in.
+
+01:00:50.177 --> 01:00:51.958
+tackle a couple of things without having
+
+01:00:51.978 --> 01:00:54.298
+to use API ease and all that fun
+
+01:00:54.358 --> 01:00:56.500
+stuff and just let it, you know,
+
+01:00:57.519 --> 01:00:58.141
+do its thing.
+
+01:00:58.661 --> 01:00:59.101
+I did.
+
+01:00:59.940 --> 01:01:01.601
+So another update is I did, um,
+
+01:01:03.322 --> 01:01:07.565
+put in the request to put my social
+
+01:01:07.585 --> 01:01:10.686
+media content generator or content engine
+
+01:01:10.905 --> 01:01:11.545
+is the name of it.
+
+01:01:12.447 --> 01:01:12.686
+Um,
+
+01:01:12.987 --> 01:01:14.467
+that generates all the social media
+
+01:01:14.967 --> 01:01:16.047
+content for Larry culture.
+
+01:01:16.088 --> 01:01:18.048
+I did put the request in to get
+
+01:01:18.088 --> 01:01:19.590
+that approved through Tik TOK.
+
+01:01:20.338 --> 01:01:24.623
+It did push back and say that the
+
+01:01:24.682 --> 01:01:27.184
+name of the app on my terms and
+
+01:01:27.224 --> 01:01:29.967
+privacy policy page did not match the name
+
+01:01:29.987 --> 01:01:31.007
+of the app I'm submitting for,
+
+01:01:31.027 --> 01:01:31.949
+so I had to go back,
+
+01:01:32.650 --> 01:01:37.693
+make sure that match put my terms and
+
+01:01:37.753 --> 01:01:45.360
+privacy policy pages through GitHub CLI,
+
+01:01:45.940 --> 01:01:46.842
+make sure that was all good,
+
+01:01:46.862 --> 01:01:47.643
+and then I resubmitted.
+
+01:01:49.777 --> 01:01:50.038
+I heard,
+
+01:01:50.057 --> 01:01:52.438
+I got a response back from a tick
+
+01:01:52.478 --> 01:01:55.239
+tock in about three days.
+
+01:01:56.539 --> 01:01:56.679
+So cool.
+
+01:01:56.699 --> 01:01:58.119
+Let's see.
+
+01:01:58.679 --> 01:02:01.559
+It looks like this is ready.
+
+01:02:01.579 --> 01:02:05.860
+Let's open this up.
+
+01:02:06.900 --> 01:02:08.882
+I could just say, Hey, start up the,
+
+01:02:08.902 --> 01:02:13.922
+uh, the dev box, but it's all good.
+
+01:02:14.001 --> 01:02:14.822
+Is this the same?
+
+01:02:15.202 --> 01:02:16.523
+Ooh, nice.
+
+01:02:20.239 --> 01:02:22.300
+So another win for Larry culture people.
+
+01:02:23.021 --> 01:02:23.702
+This is clean.
+
+01:02:24.103 --> 01:02:25.023
+It's like, see,
+
+01:02:25.284 --> 01:02:26.585
+it doesn't match the mock-up,
+
+01:02:28.166 --> 01:02:30.929
+but it's thing.
+
+01:02:31.170 --> 01:02:31.931
+I mean, yeah,
+
+01:02:31.971 --> 01:02:33.092
+it doesn't match the mock-up,
+
+01:02:33.893 --> 01:02:36.255
+but I'm not going to complain.
+
+01:02:40.260 --> 01:02:41.460
+Think about what I could have done better.
+
+01:02:46.615 --> 01:02:48.378
+I mean, this is dope.
+
+01:02:48.557 --> 01:02:49.719
+I've never seen this before.
+
+01:02:51.219 --> 01:02:52.240
+Oh, that's sick.
+
+01:02:53.422 --> 01:02:55.844
+The font selection is nice.
+
+01:02:57.385 --> 01:02:58.067
+That's a link.
+
+01:02:58.286 --> 01:02:59.467
+Oh man, this is dope.
+
+01:03:04.032 --> 01:03:07.155
+This still works very, this is like, wow.
+
+01:03:09.757 --> 01:03:10.518
+This is clean.
+
+01:03:17.617 --> 01:03:19.458
+so wow this is dope look at that
+
+01:03:19.478 --> 01:03:24.101
+man this is definitely five point six is
+
+01:03:24.121 --> 01:03:29.025
+the one y'all this is wow this is
+
+01:03:29.067 --> 01:03:35.911
+insane i'm amazed so it didn't it didn't
+
+01:03:35.931 --> 01:03:39.875
+get the uh facebook follow right i messed
+
+01:03:39.894 --> 01:03:42.257
+that up but that's a fix this is
+
+01:03:42.297 --> 01:03:42.898
+insane
+
+01:03:48.735 --> 01:03:49.235
+Alright, y'all.
+
+01:03:50.096 --> 01:03:50.797
+You know what to do.
+
+01:03:51.757 --> 01:03:52.577
+It's time to build.
+
+01:03:52.597 --> 01:03:54.320
+It's time to build, people.
+
+01:03:54.739 --> 01:03:57.041
+This is... Wow.
+
+01:03:59.684 --> 01:04:00.865
+I'm at a loss for words.
+
+01:04:04.289 --> 01:04:04.668
+Wow.
+
+01:04:07.170 --> 01:04:08.012
+Oh my gosh.
+
+01:04:09.773 --> 01:04:14.398
+Facebook, Instagram.
+
+01:04:14.418 --> 01:04:15.679
+This is a really nice site.
+
+01:04:19.545 --> 01:04:20.385
+Oh my gosh.
+
+01:04:23.286 --> 01:04:24.266
+I I'm still,
+
+01:04:24.327 --> 01:04:25.728
+I'm amazed by this part right here.
+
+01:04:26.608 --> 01:04:26.807
+Yeah.
+
+01:04:26.847 --> 01:04:27.307
+We're going to,
+
+01:04:27.907 --> 01:04:31.210
+we're going to update a lot.
+
+01:04:33.931 --> 01:04:35.711
+I mean, I definitely have to run.
+
+01:04:35.751 --> 01:04:40.653
+So I'm going to run this through this
+
+01:04:40.833 --> 01:04:43.355
+app.
+
+01:04:43.375 --> 01:04:44.195
+This is insane.
+
+01:04:57.628 --> 01:04:59.469
+i can't even think right now i can't
+
+01:04:59.489 --> 01:05:06.554
+even think all right this is what i'm
+
+01:05:06.574 --> 01:05:11.639
+gonna do you know what i didn't do
+
+01:05:11.679 --> 01:05:17.884
+this for see i broke my own rules
+
+01:05:18.523 --> 01:05:20.326
+always follow
+
+01:05:52.436 --> 01:05:53.376
+I'm so inspired right now.
+
+01:05:53.396 --> 01:05:53.896
+All right.
+
+01:06:26.666 --> 01:06:29.027
+That's not even a good prompt at all.
+
+01:06:29.307 --> 01:06:30.907
+It's really not.
+
+01:06:31.728 --> 01:06:37.750
+It's a horrible prompt.
+
+01:06:37.971 --> 01:06:45.592
+I'm gonna leave it at that.
+
+01:06:46.172 --> 01:06:47.434
+Okay, let's see.
+
+01:06:48.673 --> 01:06:53.936
+Let's go here.
+
+01:06:54.335 --> 01:06:54.856
+That's perfect.
+
+01:07:04.735 --> 01:07:06.496
+This site is insane.
+
+01:07:15.166 --> 01:07:20.710
+Insane.
+
+01:07:20.751 --> 01:07:21.572
+Just wow.
+
+01:07:21.911 --> 01:07:23.713
+Views.
+
+01:07:36.052 --> 01:07:37.693
+that is down here made with made with
+
+01:07:37.773 --> 01:07:44.358
+sunshine where does it get this from made
+
+01:07:44.378 --> 01:08:00.090
+with sunshine that's insane man we just
+
+01:08:00.210 --> 01:08:04.452
+one prompted this from a flyer we're on
+
+01:08:05.905 --> 01:08:14.148
+GPT, five point six soul, one prompt.
+
+01:08:15.108 --> 01:08:17.109
+And it's so one agent and a sub
+
+01:08:17.170 --> 01:08:17.430
+agent.
+
+01:08:17.770 --> 01:08:19.211
+I'm not sure if the sub agent was
+
+01:08:20.452 --> 01:08:21.671
+five point six soul as well.
+
+01:08:21.891 --> 01:08:22.573
+It didn't specify.
+
+01:08:22.613 --> 01:08:23.893
+So I'm just going to assume it was,
+
+01:08:25.634 --> 01:08:30.655
+but this, this thing,
+
+01:08:30.775 --> 01:08:32.136
+it's thing I did have,
+
+01:08:32.157 --> 01:08:33.277
+what did I have the sub agent do?
+
+01:08:33.317 --> 01:08:34.637
+I'm like looking at this prompt here.
+
+01:08:36.323 --> 01:08:36.943
+that I used.
+
+01:08:41.123 --> 01:08:42.324
+Please create a website based on this
+
+01:08:42.404 --> 01:08:42.885
+mockup.
+
+01:08:43.505 --> 01:08:44.966
+Start a sub-vision to assess the best
+
+01:08:45.006 --> 01:08:47.466
+skills and GitHub repos to leverage in
+
+01:08:47.506 --> 01:08:48.127
+this build.
+
+01:08:48.806 --> 01:08:49.787
+That was it.
+
+01:08:52.068 --> 01:08:55.609
+I'm literally gonna use the same prompt.
+
+01:08:55.649 --> 01:08:57.149
+Man, let's see what it does with this.
+
+01:08:57.168 --> 01:09:04.692
+Come on, this thing's taking forever.
+
+01:09:04.792 --> 01:09:05.872
+What's going on, chat?
+
+01:09:11.988 --> 01:09:25.881
+we go all right it's a bit much
+
+01:09:27.381 --> 01:09:32.345
+that's a bit much we'll go with this
+
+01:09:47.688 --> 01:09:48.569
+Go here.
+
+01:09:48.588 --> 01:09:49.369
+There we go.
+
+01:10:28.984 --> 01:10:29.805
+I'm going to change it around a little
+
+01:10:29.826 --> 01:10:29.966
+bit.
+
+01:10:30.225 --> 01:10:31.367
+Please update the app based on this
+
+01:10:31.407 --> 01:10:31.867
+mockup.
+
+01:10:32.347 --> 01:10:33.809
+Sorry, somebody just says best skills.
+
+01:10:34.029 --> 01:10:35.449
+And we're supposed to leverage in this
+
+01:10:35.510 --> 01:10:41.413
+build.
+
+01:10:41.434 --> 01:10:42.295
+We go into plan mode.
+
+01:10:45.197 --> 01:10:56.845
+Let's see what we got.
+
+01:10:56.865 --> 01:10:58.346
+That website was insane, y'all.
+
+01:10:59.929 --> 01:11:04.710
+That was nice.
+
+01:11:04.750 --> 01:11:04.970
+See,
+
+01:11:05.189 --> 01:11:06.310
+that's why it's important to follow the
+
+01:11:06.350 --> 01:11:06.829
+process.
+
+01:11:07.810 --> 01:11:09.511
+With the website or the app that I
+
+01:11:09.530 --> 01:11:11.850
+made, I did not follow the process.
+
+01:11:12.131 --> 01:11:14.372
+I didn't follow my own process of creating
+
+01:11:14.412 --> 01:11:16.572
+the mockup, creating that visual,
+
+01:11:18.212 --> 01:11:21.172
+picking the one you want, load that in,
+
+01:11:21.233 --> 01:11:25.753
+give that guidance to your CLI,
+
+01:11:27.975 --> 01:11:28.895
+get a much richer
+
+01:11:31.057 --> 01:11:37.039
+product yep i have not been doing that
+
+01:11:37.079 --> 01:11:38.899
+with some some of my builds i did
+
+01:11:38.920 --> 01:11:42.900
+build the ai field guide i'll show that
+
+01:11:42.940 --> 01:11:47.323
+real quick i don't know if i don't
+
+01:11:47.342 --> 01:11:48.523
+remember if i showed there's so many
+
+01:11:48.563 --> 01:11:51.604
+things going on i don't remember i showed
+
+01:11:51.703 --> 01:11:54.064
+i showed it last week but i'm coming
+
+01:11:54.085 --> 01:11:57.225
+out with these weekly ai field guides it's
+
+01:11:57.246 --> 01:11:58.206
+kind of like a quick uh
+
+01:12:01.291 --> 01:12:04.391
+a quick read just eight minutes this one's
+
+01:12:04.551 --> 01:12:06.912
+all about mcps like what is an mcp
+
+01:12:06.952 --> 01:12:11.052
+how to use it how to integrate best
+
+01:12:11.113 --> 01:12:15.054
+practices you know the terms that you want
+
+01:12:15.073 --> 01:12:21.355
+to understand got some links to different
+
+01:12:21.395 --> 01:12:23.936
+repos actually i think i did talk about
+
+01:12:23.957 --> 01:12:26.417
+this last week i don't remember but um
+
+01:12:26.577 --> 01:12:29.078
+yeah i have another one coming out on
+
+01:12:29.177 --> 01:12:29.637
+skills
+
+01:12:31.533 --> 01:12:35.113
+this week tomorrow actually so look out
+
+01:12:35.134 --> 01:12:38.494
+for that one you'll see the post
+
+01:12:38.836 --> 01:12:42.176
+definitely comment skills you'll get the
+
+01:12:42.216 --> 01:12:46.037
+link and i do want to convert these
+
+01:12:46.097 --> 01:12:49.759
+to um like visual books as well like
+
+01:12:49.798 --> 01:12:52.940
+this reading format um the reason i really
+
+01:12:53.381 --> 01:12:55.480
+emphasize having this in this format
+
+01:12:55.560 --> 01:12:58.021
+versus like a visual ebook or anything
+
+01:12:58.042 --> 01:12:59.863
+like that a pdf is that
+
+01:13:01.158 --> 01:13:03.779
+content in here guess what it's searchable
+
+01:13:04.680 --> 01:13:13.925
+by Google by AI their culture becomes even
+
+01:13:13.965 --> 01:13:18.988
+more reputable source of information so it
+
+01:13:19.007 --> 01:13:22.489
+helps your SEO your AEO all that fun
+
+01:13:22.510 --> 01:13:28.533
+stuff let's work on the plan
+
+01:13:45.881 --> 01:13:48.344
+I'm still amazed by this website.
+
+01:13:48.384 --> 01:13:49.083
+This thing is insane.
+
+01:13:49.104 --> 01:14:00.390
+Insane.
+
+01:14:00.430 --> 01:14:00.671
+Wow.
+
+01:14:00.692 --> 01:14:00.771
+Wow.
+
+01:14:00.832 --> 01:14:13.659
+That's all I can say.
+
+01:14:18.595 --> 01:14:19.875
+It's moving, reacting.
+
+01:14:26.417 --> 01:14:28.158
+It's quite remarkable that you could do
+
+01:14:28.177 --> 01:14:28.537
+this.
+
+01:14:29.398 --> 01:14:31.398
+This I used to make websites with
+
+01:14:31.417 --> 01:14:31.998
+WordPress.
+
+01:14:32.359 --> 01:14:36.119
+Like I understand it's not this quick.
+
+01:14:36.380 --> 01:14:37.520
+It's not that easy.
+
+01:14:39.199 --> 01:14:41.320
+You run into all types of issues.
+
+01:14:46.064 --> 01:14:49.185
+Certain plugins and tools just don't seem
+
+01:14:49.225 --> 01:14:49.704
+quite right.
+
+01:14:49.725 --> 01:14:52.685
+You got to sometimes go into a graphic
+
+01:14:52.725 --> 01:14:54.065
+designer like Photoshop,
+
+01:14:55.326 --> 01:14:57.106
+get your images kind of set up the
+
+01:14:57.127 --> 01:14:57.766
+way you want.
+
+01:14:58.766 --> 01:15:01.108
+You got to go through font libraries.
+
+01:15:02.507 --> 01:15:03.469
+I've done it all.
+
+01:15:05.529 --> 01:15:07.510
+It's a long process.
+
+01:15:08.470 --> 01:15:09.149
+These icons,
+
+01:15:09.170 --> 01:15:10.751
+you got to sometimes get these icons from
+
+01:15:10.791 --> 01:15:12.331
+different sources.
+
+01:15:16.146 --> 01:15:17.568
+Now this stuff right here,
+
+01:15:19.507 --> 01:15:20.269
+I wouldn't even touch it.
+
+01:15:22.050 --> 01:15:22.789
+I wouldn't even do that.
+
+01:15:25.051 --> 01:15:28.712
+And man, this is amazing.
+
+01:15:33.354 --> 01:15:35.314
+And I'm sure the mobile experience is on
+
+01:15:35.375 --> 01:15:35.914
+point too.
+
+01:15:35.994 --> 01:15:36.956
+Can I go to mobile?
+
+01:15:40.556 --> 01:15:43.318
+I forgot to go to mobile and, um,
+
+01:15:43.377 --> 01:15:44.519
+this, what is this thing doing?
+
+01:15:46.966 --> 01:15:55.171
+What are you doing, sir?
+
+01:15:55.371 --> 01:15:57.671
+Yes, it's revamping the entire website.
+
+01:15:58.832 --> 01:15:59.613
+Did I?
+
+01:16:00.233 --> 01:16:05.836
+I just told to do the plan.
+
+01:16:05.876 --> 01:16:07.136
+Yeah, it's not doing anything right now.
+
+01:16:07.157 --> 01:16:08.898
+It's just, it's there we go.
+
+01:16:09.637 --> 01:16:11.659
+Reson dashboard map is existing app
+
+01:16:11.699 --> 01:16:12.239
+features.
+
+01:16:19.287 --> 01:16:20.047
+And I'm just going to do,
+
+01:16:21.068 --> 01:16:23.469
+I'm going to do the whole shebang.
+
+01:16:23.988 --> 01:16:34.492
+It's going to be design dashboard.
+
+01:16:34.533 --> 01:16:41.654
+Recommended functionality right now.
+
+01:16:41.675 --> 01:16:42.595
+This thing is cooking.
+
+01:16:42.994 --> 01:16:43.576
+It's cooking.
+
+01:16:43.716 --> 01:16:46.237
+So I knew you would come through.
+
+01:16:46.296 --> 01:16:47.516
+So you did.
+
+01:16:52.502 --> 01:16:54.043
+One more time for five point six.
+
+01:16:55.305 --> 01:17:04.372
+So, what's next?
+
+01:17:04.412 --> 01:17:06.554
+Did your thing.
+
+01:17:06.673 --> 01:17:10.596
+Let's do a reddit scene.
+
+01:17:10.636 --> 01:17:11.618
+Go to the reddits.
+
+01:17:11.997 --> 01:17:16.381
+Gonna let this thing cook.
+
+01:17:16.480 --> 01:17:18.582
+Over here on the other side.
+
+01:17:21.425 --> 01:17:22.265
+I saw this reading.
+
+01:17:25.828 --> 01:17:26.988
+Man, Ultra Max.
+
+01:17:27.770 --> 01:17:29.771
+What's Pro Max?
+
+01:17:29.811 --> 01:17:35.556
+The name of the scheme alone is a
+
+01:17:35.617 --> 01:17:36.096
+disaster.
+
+01:17:36.137 --> 01:17:36.478
+Yeah.
+
+01:17:37.498 --> 01:17:42.743
+It's quite quite a disaster.
+
+01:17:43.184 --> 01:17:43.304
+News.
+
+01:18:05.400 --> 01:18:06.041
+Come on, people.
+
+01:18:06.421 --> 01:18:07.122
+We got AI.
+
+01:18:07.402 --> 01:18:10.283
+Stop making these ugly websites.
+
+01:18:10.385 --> 01:18:13.686
+Let's see that.
+
+01:18:13.726 --> 01:18:17.689
+It's twenty-four hours.
+
+01:18:17.770 --> 01:18:18.750
+It's all the GitHub.
+
+01:18:21.972 --> 01:18:32.180
+It's all LinkedIn.
+
+01:18:32.220 --> 01:18:34.462
+Close second to table five.
+
+01:18:34.902 --> 01:18:35.002
+Hmm.
+
+01:18:38.842 --> 01:18:40.563
+One third of the cost of Fable V,
+
+01:18:40.582 --> 01:18:41.143
+which is good.
+
+01:18:42.043 --> 01:18:43.963
+Fable V is pretty expensive.
+
+01:18:44.623 --> 01:18:46.583
+And you don't... Remember, it was on...
+
+01:18:46.684 --> 01:18:48.784
+Not a trial, but like...
+
+01:18:50.305 --> 01:18:51.784
+They were allowing you to use it until
+
+01:18:52.704 --> 01:18:53.125
+the seventh.
+
+01:18:53.185 --> 01:18:54.586
+I heard they extended it, though.
+
+01:18:54.706 --> 01:18:55.445
+I don't even know.
+
+01:18:56.086 --> 01:18:56.365
+Guys,
+
+01:18:56.405 --> 01:18:57.126
+I know I said I was going to
+
+01:18:57.166 --> 01:19:00.027
+use Fable V last week,
+
+01:19:00.046 --> 01:19:01.127
+but then when I saw they were going
+
+01:19:01.146 --> 01:19:03.087
+to stop it in July seventh,
+
+01:19:03.127 --> 01:19:03.806
+I was like, no,
+
+01:19:03.907 --> 01:19:05.368
+I'm not signing back up for that.
+
+01:19:06.648 --> 01:19:07.387
+A couple days?
+
+01:19:07.568 --> 01:19:07.927
+No way.
+
+01:19:09.931 --> 01:19:13.293
+So it's fun.
+
+01:19:14.614 --> 01:19:15.774
+It's done with plan mode.
+
+01:19:15.795 --> 01:19:19.176
+It's gonna integrate some cool things into
+
+01:19:19.216 --> 01:19:19.797
+that app.
+
+01:19:20.938 --> 01:19:22.118
+We'll check it out and we'll sign out.
+
+01:19:22.458 --> 01:19:22.639
+All right.
+
+01:19:23.079 --> 01:19:28.762
+So I'll put tokens.
+
+01:19:28.842 --> 01:19:36.266
+So this is a, it's talking about cost.
+
+01:19:37.268 --> 01:19:37.328
+Hmm.
+
+01:19:41.212 --> 01:19:51.637
+So there's Fable.
+
+01:19:54.300 --> 01:19:58.061
+Very close.
+
+01:19:58.141 --> 01:20:00.762
+There's Terra.
+
+01:20:00.783 --> 01:20:02.184
+So, four point eight max.
+
+01:20:02.564 --> 01:20:04.324
+Opus.
+
+01:20:04.364 --> 01:20:05.225
+Sonic Five.
+
+01:20:05.706 --> 01:20:08.007
+I didn't realize Sonic Five was actually
+
+01:20:08.347 --> 01:20:10.168
+scoring better than Opus.
+
+01:20:10.328 --> 01:20:10.389
+Hmm.
+
+01:20:13.386 --> 01:20:13.827
+Let me check,
+
+01:20:13.886 --> 01:20:16.408
+what do I have Sonic Five running on?
+
+01:20:21.854 --> 01:20:24.576
+Check model here.
+
+01:20:24.695 --> 01:20:27.257
+I do have, that's Sonic Five.
+
+01:20:29.399 --> 01:20:30.780
+I got Max.
+
+01:20:36.845 --> 01:20:37.046
+Yeah,
+
+01:20:37.086 --> 01:20:38.768
+Sonic Five Max is actually scoring a
+
+01:20:38.787 --> 01:20:41.970
+little bit better than Opus Max,
+
+01:20:42.091 --> 01:20:42.511
+interesting.
+
+01:20:47.791 --> 01:20:57.578
+Guys, this is why I like GitHub Copilot.
+
+01:20:57.597 --> 01:20:59.699
+It allows me to use all these different
+
+01:20:59.739 --> 01:20:59.979
+models.
+
+01:21:00.039 --> 01:21:04.182
+Of course, it's going to cost.
+
+01:21:04.222 --> 01:21:06.885
+It's all open source for open source use.
+
+01:21:09.382 --> 01:21:09.962
+on my end.
+
+01:21:10.604 --> 01:21:12.224
+But I do get the flexibility to play
+
+01:21:12.243 --> 01:21:13.664
+around all these different models.
+
+01:21:14.225 --> 01:21:16.806
+I cannot with these, unfortunately.
+
+01:21:18.528 --> 01:21:20.127
+We'll see someday, someday.
+
+01:21:21.168 --> 01:21:29.332
+Um, but definitely we have here.
+
+01:21:29.393 --> 01:21:31.173
+Report one pro preview is there.
+
+01:21:34.971 --> 01:21:35.131
+See,
+
+01:21:35.152 --> 01:21:39.573
+but then like the hallucination rates are
+
+01:21:39.613 --> 01:21:43.456
+pretty high.
+
+01:21:43.475 --> 01:21:51.279
+We look at the performance though.
+
+01:21:51.359 --> 01:21:56.162
+It is scoring better than Sonic Max in
+
+01:21:56.182 --> 01:21:56.643
+the world.
+
+01:21:56.703 --> 01:21:57.923
+Was this the real world?
+
+01:22:00.585 --> 01:22:00.704
+Yeah.
+
+01:22:05.024 --> 01:22:05.885
+So many,
+
+01:22:06.385 --> 01:22:09.546
+probably gotta do an analysis on which
+
+01:22:09.685 --> 01:22:14.349
+models work better for certain use cases.
+
+01:22:16.850 --> 01:22:20.070
+Then form a model,
+
+01:22:20.291 --> 01:22:24.113
+AI model board of directors around our
+
+01:22:24.153 --> 01:22:25.554
+projects and see how that works.
+
+01:22:25.873 --> 01:22:28.755
+Because I have been working with more like
+
+01:22:28.795 --> 01:22:29.475
+simulation,
+
+01:22:29.716 --> 01:22:33.957
+like looking at propensity models.
+
+01:22:35.744 --> 01:22:37.246
+especially in the business world so real
+
+01:22:39.546 --> 01:22:41.068
+quick see if i got time i got
+
+01:22:41.087 --> 01:22:46.091
+time so we have this thing in the
+
+01:22:46.131 --> 01:22:59.898
+manufacturing world called when okay so
+
+01:22:59.917 --> 01:23:01.338
+when like highly volatile
+
+01:23:02.301 --> 01:23:03.701
+environments you'll have what's called a
+
+01:23:04.220 --> 01:23:08.703
+digital twin which is a virtual duplicate
+
+01:23:08.962 --> 01:23:13.043
+of your dangerous and highly volatile
+
+01:23:13.764 --> 01:23:15.463
+environment so that you're not putting
+
+01:23:15.503 --> 01:23:19.104
+people at risk and people in danger be
+
+01:23:19.145 --> 01:23:22.725
+able to experiment this happens in this
+
+01:23:22.746 --> 01:23:26.127
+happens in um environments that are
+
+01:23:26.367 --> 01:23:29.028
+dangerous like nuclear the nuclear or
+
+01:23:29.148 --> 01:23:30.047
+energy industry right
+
+01:23:33.307 --> 01:23:36.130
+This has been around for some time
+
+01:23:36.189 --> 01:23:36.630
+already.
+
+01:23:38.051 --> 01:23:42.774
+So it's quite common in the industry and
+
+01:23:42.835 --> 01:23:44.015
+supporting article there.
+
+01:23:45.275 --> 01:23:46.457
+So you have digital twins in
+
+01:23:46.497 --> 01:23:47.398
+manufacturing, right?
+
+01:23:47.537 --> 01:23:51.619
+And like industry industrial industries,
+
+01:23:52.881 --> 01:23:56.944
+but there's this concept of a digital twin
+
+01:23:57.123 --> 01:23:58.085
+in business.
+
+01:24:08.935 --> 01:24:10.256
+With digital twin business strategy,
+
+01:24:10.277 --> 01:24:12.938
+you test out business scenarios.
+
+01:24:15.000 --> 01:24:16.581
+Simmons is already looking into this.
+
+01:24:20.643 --> 01:24:22.064
+Simmons is actually really big on digital
+
+01:24:22.083 --> 01:24:22.583
+twins.
+
+01:24:23.784 --> 01:24:26.667
+Went to a manufacturing conference over in
+
+01:24:26.726 --> 01:24:28.707
+Germany a couple years ago.
+
+01:24:29.548 --> 01:24:30.609
+And they were like, literally,
+
+01:24:31.210 --> 01:24:34.351
+they're the masters of robotic
+
+01:24:34.372 --> 01:24:35.932
+manufacturing, digital twins,
+
+01:24:36.012 --> 01:24:37.252
+all that crazy stuff.
+
+01:24:37.854 --> 01:24:38.033
+So,
+
+01:24:45.744 --> 01:24:46.545
+But this is still,
+
+01:24:46.626 --> 01:24:48.126
+so this is still around like
+
+01:24:48.206 --> 01:24:49.207
+manufacturing.
+
+01:24:49.287 --> 01:24:53.069
+I'm talking about a digital twin to run
+
+01:24:53.109 --> 01:24:55.350
+through business cases,
+
+01:24:59.872 --> 01:25:02.954
+like to run through supply chain,
+
+01:25:02.994 --> 01:25:06.976
+logistics, marketing scenarios, um,
+
+01:25:07.096 --> 01:25:10.198
+investments like that type of digital
+
+01:25:10.238 --> 01:25:10.559
+twin.
+
+01:25:11.619 --> 01:25:12.560
+That's something I'm, uh,
+
+01:25:12.979 --> 01:25:14.020
+I got on the list for building.
+
+01:25:15.947 --> 01:25:17.287
+So it's interesting that I don't see
+
+01:25:17.349 --> 01:25:18.829
+anything.
+
+01:25:27.460 --> 01:25:27.619
+Wait.
+
+01:25:27.699 --> 01:25:28.360
+Go to chat.
+
+01:26:11.734 --> 01:26:13.536
+Let's see what the chat says.
+
+01:26:13.836 --> 01:26:27.641
+Because Google was like, not the one.
+
+01:26:27.681 --> 01:26:29.582
+Network design, capacity,
+
+01:26:30.404 --> 01:26:32.264
+capital allocation, scenario planning.
+
+01:26:33.204 --> 01:26:34.125
+Not just affiliates.
+
+01:26:34.185 --> 01:26:35.725
+That's exactly what I'm looking for.
+
+01:26:39.167 --> 01:26:39.467
+Yes.
+
+01:26:42.091 --> 01:26:42.733
+Pepsi Cola.
+
+01:26:46.675 --> 01:26:47.555
+The supply chain.
+
+01:26:50.137 --> 01:26:51.139
+Simmons was involved.
+
+01:26:51.279 --> 01:26:53.300
+So the Simmons seems really, well,
+
+01:26:53.319 --> 01:26:54.100
+like I said, they've already,
+
+01:26:54.841 --> 01:26:57.403
+they've already got the manufacturing side
+
+01:26:57.443 --> 01:26:58.103
+of things down.
+
+01:26:58.684 --> 01:27:00.625
+We'll just make sure that just flows right
+
+01:27:00.645 --> 01:27:03.887
+into the business.
+
+01:27:03.948 --> 01:27:05.469
+Using the same type of technology.
+
+01:27:06.509 --> 01:27:06.689
+Yeah.
+
+01:27:06.729 --> 01:27:07.550
+Simmons again.
+
+01:27:08.029 --> 01:27:08.570
+Simmons.
+
+01:27:12.819 --> 01:27:18.604
+see a lot of it's not manufacturing
+
+01:27:18.765 --> 01:27:22.470
+operations finance market competitor
+
+01:27:22.510 --> 01:27:31.338
+analysis interesting this thing's still
+
+01:27:31.380 --> 01:27:31.720
+building
+
+01:28:32.560 --> 01:28:37.823
+alright y'all I gotta call it I'm gonna
+
+01:28:37.863 --> 01:28:42.345
+I'm gonna get back to this next week
+
+01:28:42.505 --> 01:28:55.949
+let's wrap this up it's a good stream
+
+01:28:56.170 --> 01:28:57.010
+it's a good uh
+
+01:28:58.043 --> 01:28:59.864
+of a tech thursday it's gonna be a
+
+01:28:59.885 --> 01:29:04.507
+long weekend with uh with soul gpt five
+
+01:29:04.547 --> 01:29:08.590
+point six be a lot of fun all
+
+01:29:08.609 --> 01:29:10.251
+right y'all know what to do get out
+
+01:29:10.270 --> 01:29:14.472
+there build whether it's open ai whether
+
+01:29:14.512 --> 01:29:20.917
+it's uh anthropic gemini let's get out
+
+01:29:20.936 --> 01:29:25.139
+there and build y'all all right peace
+

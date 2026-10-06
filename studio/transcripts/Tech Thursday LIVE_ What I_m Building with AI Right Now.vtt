@@ -1,0 +1,5219 @@
+WEBVTT
+
+00:00:00.043 --> 00:00:00.523
+There you go.
+
+00:00:36.320 --> 00:00:39.180
+You are now live with Layer Eight Culture,
+
+00:00:39.581 --> 00:00:40.581
+Tech Thursday.
+
+00:00:42.661 --> 00:00:43.921
+Oh, we just got live?
+
+00:00:44.262 --> 00:00:45.301
+Oh my gosh.
+
+00:00:47.383 --> 00:00:48.883
+Welcome, welcome everybody.
+
+00:00:51.103 --> 00:00:53.924
+Part of the Layer Eight Culture Tech
+
+00:00:53.965 --> 00:00:54.844
+Thursdays.
+
+00:01:11.501 --> 00:01:16.316
+Oh, it's running.
+
+00:01:16.337 --> 00:01:16.899
+Where's the...
+
+00:02:11.413 --> 00:02:14.556
+Oh, well, we're on layer A culture.
+
+00:02:14.597 --> 00:02:16.397
+We are waiting for the man himself.
+
+00:02:17.459 --> 00:02:18.840
+He's going to come right in.
+
+00:02:21.322 --> 00:02:22.362
+Got a lot of notes here.
+
+00:02:24.123 --> 00:02:26.385
+He is developing so much amazing things
+
+00:02:26.485 --> 00:02:27.806
+using AI.
+
+00:02:29.108 --> 00:02:30.368
+You definitely want to stay tuned.
+
+00:02:30.408 --> 00:02:32.070
+And as I
+
+00:02:33.032 --> 00:02:33.812
+Because we adjust.
+
+00:02:36.133 --> 00:02:37.812
+A lot of this stuff is going to
+
+00:02:37.832 --> 00:02:39.253
+be super, super polished.
+
+00:02:40.334 --> 00:02:41.394
+I'm excited about it.
+
+00:02:42.935 --> 00:02:44.115
+I'm totally excited about it.
+
+00:02:44.155 --> 00:02:44.875
+Welcome back.
+
+00:02:45.534 --> 00:02:46.175
+Oh, we're back.
+
+00:02:46.695 --> 00:02:49.135
+Man, what happened?
+
+00:02:49.175 --> 00:02:49.556
+I don't know, man.
+
+00:02:49.575 --> 00:02:50.896
+I was just keeping the people waiting for
+
+00:02:50.937 --> 00:02:51.276
+you right there.
+
+00:02:51.296 --> 00:02:53.157
+That intro must have been so crazy and
+
+00:02:53.217 --> 00:02:53.698
+insane, man.
+
+00:02:53.737 --> 00:02:56.877
+Because I hit the go live button,
+
+00:02:56.897 --> 00:02:57.979
+the intro started playing,
+
+00:02:58.679 --> 00:03:00.318
+and then it crashed out.
+
+00:03:01.379 --> 00:03:02.360
+Yeah, I don't know what happened.
+
+00:03:03.513 --> 00:03:06.955
+Oh man, it's all good, it's all good.
+
+00:03:06.975 --> 00:03:07.135
+Oh man.
+
+00:03:07.156 --> 00:03:09.977
+Tonight, this is kind of an open,
+
+00:03:10.056 --> 00:03:11.758
+I guess it's like an open build,
+
+00:03:12.838 --> 00:03:15.480
+kind of what I'm building type of episode.
+
+00:03:16.341 --> 00:03:17.581
+So we'll talk a little bit about...
+
+00:03:22.326 --> 00:03:23.647
+So that's why I got my glasses on,
+
+00:03:23.668 --> 00:03:24.147
+you know.
+
+00:03:24.848 --> 00:03:25.288
+The sun.
+
+00:03:25.867 --> 00:03:28.649
+We're getting real close to the sun now.
+
+00:03:29.229 --> 00:03:31.730
+We got to wear our UV protection.
+
+00:03:32.151 --> 00:03:32.471
+That's it.
+
+00:03:33.170 --> 00:03:34.171
+It's getting hot out here.
+
+00:03:35.032 --> 00:03:35.912
+It is.
+
+00:03:36.032 --> 00:03:36.853
+It's getting hot out here.
+
+00:03:36.872 --> 00:03:37.733
+And it's summertime, too.
+
+00:03:37.793 --> 00:03:39.753
+Oh, my gosh.
+
+00:03:39.774 --> 00:03:40.913
+Tell me about it.
+
+00:03:40.933 --> 00:03:42.895
+It's definitely, definitely,
+
+00:03:43.754 --> 00:03:44.395
+definitely hot.
+
+00:03:44.414 --> 00:03:45.376
+Well, let's get into it, man.
+
+00:03:45.415 --> 00:03:46.015
+Let's get into it.
+
+00:03:46.056 --> 00:03:48.197
+So let me share my screen.
+
+00:03:49.516 --> 00:03:50.397
+I'm going to jump right into it.
+
+00:03:52.466 --> 00:03:52.566
+CLI.
+
+00:03:52.586 --> 00:03:56.348
+So of course in layer a culture,
+
+00:03:56.368 --> 00:03:58.431
+we talk about different levels or layers
+
+00:03:58.510 --> 00:04:02.675
+of AI and everything at the base
+
+00:04:03.656 --> 00:04:06.258
+foundation or the AI models.
+
+00:04:06.437 --> 00:04:07.939
+Actually, let me, I'll share my,
+
+00:04:08.780 --> 00:04:12.663
+I'll share what I have here.
+
+00:04:12.743 --> 00:04:12.864
+Okay.
+
+00:04:22.728 --> 00:04:25.009
+by the way folks uh we're getting ready
+
+00:04:25.048 --> 00:04:28.749
+to have and solidify a date where we're
+
+00:04:28.769 --> 00:04:31.329
+going to be doing well well the layer
+
+00:04:31.410 --> 00:04:33.290
+eight culture team is going to be uh
+
+00:04:33.930 --> 00:04:37.471
+at the lab over in coco um just
+
+00:04:37.552 --> 00:04:40.112
+doing a little uh a little teaser of
+
+00:04:40.172 --> 00:04:41.833
+all of the knowledge in this gentleman's
+
+00:04:42.452 --> 00:04:43.132
+uh arsenal
+
+00:04:44.918 --> 00:04:47.119
+so um yeah you definitely don't want to
+
+00:04:47.139 --> 00:04:49.399
+miss out that uh this is just just
+
+00:04:49.420 --> 00:04:51.800
+to tease the tease the population to
+
+00:04:51.901 --> 00:04:53.242
+understand there's so much different
+
+00:04:53.262 --> 00:04:55.322
+opportunities so much creativity in this
+
+00:04:55.403 --> 00:04:58.863
+thing so i'm excited i know you will
+
+00:04:58.903 --> 00:05:01.985
+be too so stay tuned indeed so right
+
+00:05:02.004 --> 00:05:03.966
+here we have this is what i call
+
+00:05:04.005 --> 00:05:06.187
+the different the five levels of ai right
+
+00:05:07.148 --> 00:05:11.810
+so so at the foundation we have our
+
+00:05:11.910 --> 00:05:12.689
+ai model so
+
+00:05:13.899 --> 00:05:16.279
+if you look at OpenAI, Anthropic, Google,
+
+00:05:16.339 --> 00:05:18.982
+Meta, Minstrel AI, they all have,
+
+00:05:19.362 --> 00:05:21.442
+they're actually the companies that own
+
+00:05:21.463 --> 00:05:22.343
+the AI models.
+
+00:05:22.362 --> 00:05:24.543
+A lot of people refer to them now
+
+00:05:24.603 --> 00:05:25.264
+as Mango.
+
+00:05:27.586 --> 00:05:28.567
+In the tech space,
+
+00:05:29.107 --> 00:05:32.048
+that just stands for Meta, Anthropic,
+
+00:05:34.149 --> 00:05:39.031
+the N stands for Google, OpenAI,
+
+00:05:39.331 --> 00:05:41.192
+I don't know what E stands for.
+
+00:05:41.252 --> 00:05:41.992
+Anyway, it's Mango.
+
+00:05:42.694 --> 00:05:43.153
+But, um,
+
+00:05:43.848 --> 00:05:46.108
+Then what happens is you build on top
+
+00:05:46.129 --> 00:05:46.910
+of those AI models.
+
+00:05:46.930 --> 00:05:48.670
+So you have like a ChatGPT,
+
+00:05:49.771 --> 00:05:50.690
+you got your Cloud,
+
+00:05:52.711 --> 00:05:54.894
+which is part of Anthropic,
+
+00:05:55.394 --> 00:05:57.634
+Gemini is part of Google, complexity,
+
+00:05:58.574 --> 00:06:00.615
+Microsoft CodePilot is multi-model,
+
+00:06:00.636 --> 00:06:04.637
+so it's OpenAI, Google, Anthropic,
+
+00:06:05.499 --> 00:06:06.699
+and so on and so forth, right?
+
+00:06:07.939 --> 00:06:08.980
+And in those models,
+
+00:06:09.401 --> 00:06:10.841
+you do a lot of the chatting stuff
+
+00:06:10.882 --> 00:06:12.882
+where you go into the website, you know,
+
+00:06:12.903 --> 00:06:13.403
+ChatGPT,
+
+00:06:17.576 --> 00:06:18.418
+You might pay for it,
+
+00:06:18.598 --> 00:06:20.759
+but basically you're chatting with the AI
+
+00:06:20.798 --> 00:06:21.119
+model.
+
+00:06:22.420 --> 00:06:23.500
+That's the consumer level.
+
+00:06:25.060 --> 00:06:26.641
+Then you have workflows.
+
+00:06:26.682 --> 00:06:28.083
+So you do some automation.
+
+00:06:28.122 --> 00:06:30.944
+Let's say you have some scheduling that's
+
+00:06:30.985 --> 00:06:31.245
+done.
+
+00:06:31.704 --> 00:06:34.446
+You have to automate through N-A-N.
+
+00:06:34.466 --> 00:06:35.766
+We've done a lot of that with social
+
+00:06:35.786 --> 00:06:37.608
+media content.
+
+00:06:38.608 --> 00:06:41.009
+Go high level is big automation.
+
+00:06:42.190 --> 00:06:43.870
+Microsoft Popile allows you to schedule.
+
+00:06:43.891 --> 00:06:44.732
+Zapier is huge.
+
+00:06:45.230 --> 00:06:48.151
+It's kind of an enterprise version of
+
+00:06:48.312 --> 00:06:48.973
+N-A-N.
+
+00:06:49.952 --> 00:06:51.653
+So that's like your workflows,
+
+00:06:51.694 --> 00:06:52.675
+things that you're automating.
+
+00:06:53.536 --> 00:06:55.836
+A lot of people will call that agents.
+
+00:06:55.937 --> 00:06:58.358
+That's not necessarily an agent, per se.
+
+00:06:58.879 --> 00:07:00.180
+It's more of just a loop or like
+
+00:07:00.240 --> 00:07:01.841
+a repetitive workflow that you're using.
+
+00:07:03.461 --> 00:07:04.642
+Or more like automation, really.
+
+00:07:04.663 --> 00:07:06.745
+And then right here,
+
+00:07:07.625 --> 00:07:09.065
+that's the level I like to build at.
+
+00:07:09.326 --> 00:07:11.348
+That's the creator builder level.
+
+00:07:11.387 --> 00:07:14.009
+So the tool I use is GitHub Cloud
+
+00:07:14.028 --> 00:07:14.689
+Cloud CLI.
+
+00:07:15.110 --> 00:07:17.331
+you that in a sec it's the same
+
+00:07:17.372 --> 00:07:19.213
+thing as cloud code a lot of people
+
+00:07:19.334 --> 00:07:22.995
+use cursor very similar open claw has been
+
+00:07:23.036 --> 00:07:25.117
+very popular it's been kind of quiet
+
+00:07:25.156 --> 00:07:29.480
+though replit it's another popular one a
+
+00:07:29.540 --> 00:07:32.122
+lovable is another popular one is that the
+
+00:07:32.302 --> 00:07:34.382
+one now i've seen some ads on lovable
+
+00:07:34.423 --> 00:07:36.764
+is that the one where you can basically
+
+00:07:36.824 --> 00:07:38.925
+talk into it and then come up with
+
+00:07:39.105 --> 00:07:40.466
+a website is that the one
+
+00:07:41.615 --> 00:07:43.437
+Lovable is big on making websites.
+
+00:07:43.817 --> 00:07:45.559
+I think they also make apps on it
+
+00:07:45.579 --> 00:07:45.838
+too.
+
+00:07:46.939 --> 00:07:48.380
+But all these basically,
+
+00:07:48.540 --> 00:07:49.261
+you can build apps.
+
+00:07:49.281 --> 00:07:54.264
+So you basically could just tell it what
+
+00:07:54.305 --> 00:07:56.565
+you want to create and it can create
+
+00:07:56.586 --> 00:07:56.706
+it.
+
+00:07:57.526 --> 00:07:57.687
+Wow.
+
+00:07:58.127 --> 00:07:58.968
+With no code.
+
+00:07:59.067 --> 00:08:00.309
+You don't even have to have a coding
+
+00:08:00.369 --> 00:08:00.889
+experience.
+
+00:08:01.069 --> 00:08:02.269
+It creates a code.
+
+00:08:02.329 --> 00:08:02.949
+That's the thing.
+
+00:08:03.411 --> 00:08:04.732
+When you're chatting with it,
+
+00:08:05.052 --> 00:08:08.033
+it's actually developing code that you can
+
+00:08:08.053 --> 00:08:09.735
+then run on your computer.
+
+00:08:11.379 --> 00:08:12.300
+Are we going to be able to play
+
+00:08:12.380 --> 00:08:12.680
+on here?
+
+00:08:12.701 --> 00:08:16.483
+Because I got so many different ideas.
+
+00:08:16.502 --> 00:08:17.764
+That's what we build in public, man.
+
+00:08:17.803 --> 00:08:19.045
+Like your website,
+
+00:08:19.444 --> 00:08:20.406
+the Real Estate Deal Lab,
+
+00:08:20.425 --> 00:08:22.586
+that was built on GitHub, Cobalt, CLI.
+
+00:08:23.408 --> 00:08:25.509
+Everything we build is GitHub, Cobalt,
+
+00:08:25.548 --> 00:08:25.749
+CLI.
+
+00:08:25.788 --> 00:08:28.370
+Okay.
+
+00:08:29.271 --> 00:08:32.974
+And that's different than Plot, then?
+
+00:08:32.994 --> 00:08:34.134
+Yeah, it's very similar,
+
+00:08:34.794 --> 00:08:36.495
+but it's different than our code.
+
+00:08:36.535 --> 00:08:37.256
+But so...
+
+00:08:38.645 --> 00:08:39.245
+We'll get into it.
+
+00:08:39.265 --> 00:08:43.148
+So Cloud Code is super similar to GitHub
+
+00:08:43.187 --> 00:08:44.129
+Copilot CLI.
+
+00:08:44.828 --> 00:08:46.289
+It does the exact same thing,
+
+00:08:46.409 --> 00:08:49.331
+but the cool thing about GitHub Copilot is
+
+00:08:49.392 --> 00:08:50.392
+that it's multi-model.
+
+00:08:50.633 --> 00:08:52.573
+So remember when we talked about the
+
+00:08:52.594 --> 00:08:53.653
+different models down here?
+
+00:08:54.153 --> 00:08:56.054
+Right, right.
+
+00:08:56.096 --> 00:08:57.056
+We use GitHub Copilot,
+
+00:08:57.115 --> 00:08:58.496
+and you pay for the subscription and all
+
+00:08:58.517 --> 00:08:58.756
+that.
+
+00:08:59.277 --> 00:09:00.977
+You actually get access to multiple
+
+00:09:00.998 --> 00:09:03.418
+models, so OpenAI models, Google,
+
+00:09:03.519 --> 00:09:04.059
+Anthropic.
+
+00:09:05.120 --> 00:09:07.541
+So you can, like, mix and, you know,
+
+00:09:07.561 --> 00:09:09.442
+you're not stuck with just one particular
+
+00:09:11.503 --> 00:09:12.062
+AI company.
+
+00:09:18.787 --> 00:09:19.647
+Oh, man, what happened?
+
+00:09:19.667 --> 00:09:21.607
+I don't know.
+
+00:09:21.628 --> 00:09:22.989
+I was just about to take some notes.
+
+00:09:26.630 --> 00:09:29.211
+Y'all are getting the game right now, man.
+
+00:09:29.410 --> 00:09:30.633
+That's what this is about, man.
+
+00:09:30.653 --> 00:09:31.553
+We build them public.
+
+00:09:31.614 --> 00:09:32.414
+I keep telling them, man.
+
+00:09:32.434 --> 00:09:33.177
+We build them public.
+
+00:09:33.197 --> 00:09:33.376
+That's it.
+
+00:09:33.397 --> 00:09:34.999
+Right in front of everybody.
+
+00:09:35.038 --> 00:09:35.941
+Build it right there.
+
+00:09:36.041 --> 00:09:36.380
+Okay.
+
+00:09:36.741 --> 00:09:36.981
+Okay.
+
+00:09:37.001 --> 00:09:37.763
+All right.
+
+00:09:37.783 --> 00:09:39.645
+So now this is what a coder's...
+
+00:09:39.686 --> 00:09:41.788
+This is like a coder's dream because like
+
+00:09:41.889 --> 00:09:42.409
+the ones...
+
+00:09:42.750 --> 00:09:44.613
+These numbers and these slashes...
+
+00:09:45.568 --> 00:09:46.850
+They mean something.
+
+00:09:47.570 --> 00:09:51.192
+But to me, my eyes are exploded.
+
+00:09:51.273 --> 00:09:51.852
+You know what I mean?
+
+00:09:52.013 --> 00:09:54.115
+So thank God for gentlemen like you that
+
+00:09:54.134 --> 00:09:54.914
+know how to do this.
+
+00:09:54.934 --> 00:09:56.976
+So if you need somebody to code for
+
+00:09:57.017 --> 00:09:58.738
+you and create this,
+
+00:09:58.778 --> 00:10:00.759
+because you still have to tweak these in
+
+00:10:00.818 --> 00:10:02.880
+order to make it what you truly want.
+
+00:10:03.020 --> 00:10:03.581
+You know what I mean?
+
+00:10:03.600 --> 00:10:05.341
+Because AI is not going to know everything
+
+00:10:05.381 --> 00:10:05.903
+what you want.
+
+00:10:05.942 --> 00:10:07.504
+And your prompts might not be as good.
+
+00:10:08.264 --> 00:10:09.825
+So for a fact,
+
+00:10:09.884 --> 00:10:11.726
+that's the fact with me.
+
+00:10:11.767 --> 00:10:12.027
+Yeah.
+
+00:10:13.881 --> 00:10:15.342
+So it's updated right now.
+
+00:10:16.825 --> 00:10:17.684
+Just take a sec.
+
+00:10:17.705 --> 00:10:19.086
+Here we go.
+
+00:10:24.311 --> 00:10:25.692
+You know what?
+
+00:10:25.731 --> 00:10:27.033
+You said let's build in public.
+
+00:10:27.533 --> 00:10:28.394
+What are we building tonight?
+
+00:10:29.316 --> 00:10:31.177
+Can we build that Mama Green Food site?
+
+00:10:33.119 --> 00:10:33.899
+We can, actually.
+
+00:10:35.719 --> 00:10:38.799
+She's like, I want to do stuff.
+
+00:10:38.899 --> 00:10:40.179
+I said, all right, I got you.
+
+00:10:40.200 --> 00:10:41.841
+We got to get your website done.
+
+00:10:41.900 --> 00:10:43.280
+We don't do the old school way too
+
+00:10:43.321 --> 00:10:43.620
+much.
+
+00:10:44.302 --> 00:10:46.142
+We do it, but you don't have to.
+
+00:10:46.162 --> 00:10:46.782
+You know what I'm saying?
+
+00:10:47.142 --> 00:10:47.903
+I want a door knock.
+
+00:10:47.982 --> 00:10:49.383
+Nah, I got you.
+
+00:10:49.562 --> 00:10:53.524
+Yeah, we'll touch on that.
+
+00:10:53.903 --> 00:10:55.485
+So here's the CLI.
+
+00:10:56.721 --> 00:10:57.981
+Like if I put in a model and
+
+00:10:59.121 --> 00:10:59.142
+I,
+
+00:10:59.162 --> 00:11:01.063
+you actually can get access to all these
+
+00:11:01.104 --> 00:11:01.844
+models here,
+
+00:11:02.504 --> 00:11:05.166
+but I got some organizational policies
+
+00:11:05.206 --> 00:11:09.749
+that block me from table five.
+
+00:11:09.788 --> 00:11:11.929
+You know, it's just, yeah,
+
+00:11:12.750 --> 00:11:13.931
+it's four different screens.
+
+00:11:13.951 --> 00:11:16.253
+So these are, what are all these?
+
+00:11:16.273 --> 00:11:16.712
+Are these?
+
+00:11:19.573 --> 00:11:19.754
+Yeah.
+
+00:11:19.774 --> 00:11:21.436
+So all these are different AI models.
+
+00:11:21.456 --> 00:11:24.277
+So you have cloud, sonnet, four point six,
+
+00:11:24.317 --> 00:11:25.018
+four point five,
+
+00:11:25.933 --> 00:11:29.037
+they got the gpt models and then even
+
+00:11:29.076 --> 00:11:31.578
+within these models like so you could
+
+00:11:31.599 --> 00:11:35.982
+change the reasoning like extra high so
+
+00:11:36.823 --> 00:11:38.644
+and like lower the reasoning the faster
+
+00:11:38.664 --> 00:11:40.027
+your response is going to be from the
+
+00:11:40.047 --> 00:11:42.428
+ai model oh that's a that's a gem
+
+00:11:42.489 --> 00:11:44.169
+hold on take take it slow with that
+
+00:11:44.269 --> 00:11:47.653
+you know so so the higher so repeat
+
+00:11:47.693 --> 00:11:48.094
+that again
+
+00:11:49.010 --> 00:11:49.211
+Yeah,
+
+00:11:49.270 --> 00:11:51.373
+so you can actually update the reasoning.
+
+00:11:51.432 --> 00:11:53.014
+You can do this within the ChatGPT
+
+00:11:53.073 --> 00:11:55.596
+interface as well.
+
+00:11:55.615 --> 00:11:56.256
+I've done that, yeah, recently.
+
+00:11:56.317 --> 00:11:58.398
+But by default, it's at medium.
+
+00:11:58.418 --> 00:12:00.000
+You can up it to high or extra
+
+00:12:00.059 --> 00:12:02.682
+high or even max on my plan.
+
+00:12:03.182 --> 00:12:04.062
+But with max,
+
+00:12:04.182 --> 00:12:06.945
+it's going to take a little bit longer
+
+00:12:06.965 --> 00:12:08.105
+for it to come with a response.
+
+00:12:08.485 --> 00:12:10.648
+It's just going to reason over extra long.
+
+00:12:11.174 --> 00:12:12.495
+And you just got to know,
+
+00:12:13.135 --> 00:12:14.556
+if you're asking it to do something very
+
+00:12:14.596 --> 00:12:14.975
+simple,
+
+00:12:15.316 --> 00:12:17.356
+there's no reason for you to use max
+
+00:12:17.376 --> 00:12:18.216
+just to be like, oh, man,
+
+00:12:18.236 --> 00:12:20.738
+it's not the same result.
+
+00:12:20.778 --> 00:12:22.078
+You're going to really waste a lot of
+
+00:12:22.099 --> 00:12:22.558
+tokens,
+
+00:12:23.058 --> 00:12:24.099
+have a lot of time waiting for that
+
+00:12:24.119 --> 00:12:24.499
+result.
+
+00:12:25.179 --> 00:12:28.380
+And if you notice within ChatGPT,
+
+00:12:29.260 --> 00:12:31.741
+you could change that from high to medium,
+
+00:12:32.101 --> 00:12:34.503
+but sometimes it automatically adjusts it
+
+00:12:34.682 --> 00:12:36.764
+based on the demand of the server.
+
+00:12:38.472 --> 00:12:40.394
+long like in busy times it'll actually
+
+00:12:40.413 --> 00:12:42.294
+drop you down to medium because you could
+
+00:12:42.315 --> 00:12:43.755
+go and manually adjust it back to high
+
+00:12:43.775 --> 00:12:46.298
+if you want something to be aware of
+
+00:12:47.638 --> 00:12:48.899
+um i have been on max because i've
+
+00:12:48.918 --> 00:12:52.240
+been doing like deep research right right
+
+00:12:52.360 --> 00:12:53.282
+so i just leave it on max and
+
+00:12:53.302 --> 00:12:55.682
+this thing's been running for like hours
+
+00:12:55.743 --> 00:12:57.524
+on hours and hours just going through
+
+00:12:57.543 --> 00:13:00.206
+stuff and uh i'll talk a little bit
+
+00:13:00.225 --> 00:13:03.307
+about what i've been researching so this
+
+00:13:03.347 --> 00:13:05.208
+specific project that i'm working on
+
+00:13:06.717 --> 00:13:08.019
+I'm the family historian,
+
+00:13:09.379 --> 00:13:13.702
+and our roots are back in Jamaica.
+
+00:13:15.105 --> 00:13:16.885
+And what we've been doing is...
+
+00:13:16.905 --> 00:13:21.529
+We got a question.
+
+00:13:21.549 --> 00:13:24.532
+A question.
+
+00:13:24.631 --> 00:13:24.851
+Let's see.
+
+00:13:24.892 --> 00:13:26.854
+Is GBT so better than FODMAP?
+
+00:13:29.095 --> 00:13:30.155
+I would say yes.
+
+00:13:30.876 --> 00:13:32.118
+There's two reasons.
+
+00:13:32.158 --> 00:13:34.659
+So off the bat, when it comes to...
+
+00:13:36.144 --> 00:13:37.524
+See, and you say Claude.
+
+00:13:37.705 --> 00:13:42.128
+I'm thinking he means Claude Fable V.
+
+00:13:42.849 --> 00:13:44.149
+And I would say it is better because,
+
+00:13:44.230 --> 00:13:47.251
+first of all, Fable V is dumb expensive.
+
+00:13:47.972 --> 00:13:50.554
+Because you're actually paying for your
+
+00:13:50.615 --> 00:13:51.294
+token usage,
+
+00:13:51.355 --> 00:13:52.937
+especially when you're at the API level.
+
+00:13:53.076 --> 00:13:55.337
+In the chat interface,
+
+00:13:56.678 --> 00:13:59.861
+you're still kind of paying for it.
+
+00:14:00.001 --> 00:14:00.221
+But
+
+00:14:01.615 --> 00:14:02.436
+Based on your plan,
+
+00:14:02.495 --> 00:14:03.937
+you get a certain amount of usage.
+
+00:14:04.476 --> 00:14:05.996
+Once you hit that limit,
+
+00:14:06.017 --> 00:14:08.618
+they drop you back down to like, oh,
+
+00:14:09.399 --> 00:14:09.979
+four point eight.
+
+00:14:10.698 --> 00:14:12.198
+So for you to be able to use
+
+00:14:12.239 --> 00:14:13.620
+Fable, like on your project,
+
+00:14:13.960 --> 00:14:14.539
+it went through.
+
+00:14:14.980 --> 00:14:17.760
+You do have to pay a premium with.
+
+00:14:19.402 --> 00:14:19.822
+It's so.
+
+00:14:21.379 --> 00:14:22.541
+Same thing kind of happens,
+
+00:14:22.620 --> 00:14:25.182
+but it's harder to happen because the way
+
+00:14:25.201 --> 00:14:26.842
+it uses tokens is more efficient.
+
+00:14:26.863 --> 00:14:29.083
+You're not going to hit that max as
+
+00:14:29.203 --> 00:14:29.504
+easy.
+
+00:14:29.543 --> 00:14:31.725
+So I've looked at different benchmarks.
+
+00:14:31.745 --> 00:14:33.706
+That's a good, that's a good,
+
+00:14:33.846 --> 00:14:35.226
+that's a good point right there though.
+
+00:14:35.647 --> 00:14:36.427
+Yeah.
+
+00:14:36.447 --> 00:14:40.490
+So, so, so, um,
+
+00:14:40.529 --> 00:14:44.971
+so Claude soul better because it,
+
+00:14:45.251 --> 00:14:46.493
+it maximized the usage.
+
+00:14:47.798 --> 00:14:52.100
+Yeah, so GPT maximizes your usage.
+
+00:14:52.159 --> 00:14:54.919
+Claude Babel is a bit expensive.
+
+00:14:54.940 --> 00:14:56.900
+Yeah, yeah.
+
+00:14:56.921 --> 00:14:57.760
+And that's the cool thing about... Sorry,
+
+00:14:57.780 --> 00:14:59.301
+I flip-flopped it, by the way.
+
+00:14:59.341 --> 00:15:00.581
+Yeah, you're good.
+
+00:15:00.822 --> 00:15:01.261
+I caught it.
+
+00:15:01.961 --> 00:15:06.802
+So the good thing about being able to
+
+00:15:06.822 --> 00:15:09.043
+use multiple models, especially like...
+
+00:15:09.182 --> 00:15:09.884
+So if I...
+
+00:15:10.644 --> 00:15:12.004
+Let me try to give an example.
+
+00:15:14.504 --> 00:15:14.825
+Actually,
+
+00:15:15.125 --> 00:15:16.485
+we'll do it live when we build your...
+
+00:15:17.770 --> 00:15:19.850
+green foods website but the cool thing
+
+00:15:19.870 --> 00:15:23.672
+about cli is that i can let's say
+
+00:15:23.751 --> 00:15:25.472
+i could prompt it to build something right
+
+00:15:26.133 --> 00:15:28.173
+and it'll build it just that on that
+
+00:15:28.232 --> 00:15:34.234
+model with that specific um uh i want
+
+00:15:34.274 --> 00:15:37.735
+to say level of reasoning right but i
+
+00:15:37.754 --> 00:15:39.695
+could go into what's called a fleet mode
+
+00:15:40.394 --> 00:15:42.375
+or use utilize sub agents where i could
+
+00:15:42.395 --> 00:15:42.816
+say hey
+
+00:15:44.072 --> 00:15:45.192
+I want you to go into fleet mode
+
+00:15:45.533 --> 00:15:46.413
+to get this task done.
+
+00:15:46.433 --> 00:15:48.693
+And what it does, it literally says, okay,
+
+00:15:48.854 --> 00:15:50.914
+I'm going to have, like,
+
+00:15:51.495 --> 00:15:53.535
+to get to this goal of build a
+
+00:15:53.556 --> 00:15:55.817
+website, I'm going to actually deploy,
+
+00:15:56.116 --> 00:16:00.817
+like, five other AI models on each task.
+
+00:16:01.857 --> 00:16:02.138
+Oh, wow.
+
+00:16:02.158 --> 00:16:03.058
+And based on the task,
+
+00:16:03.078 --> 00:16:03.599
+it's going to be like...
+
+00:16:04.501 --> 00:16:05.722
+yeah it'll automatically be like hey this
+
+00:16:05.743 --> 00:16:07.524
+is a complex task i'm gonna give it
+
+00:16:07.543 --> 00:16:09.705
+to a better model if this is a
+
+00:16:09.725 --> 00:16:10.946
+quick task like oh i just need you
+
+00:16:10.966 --> 00:16:13.268
+to do the copyright for the website like
+
+00:16:13.307 --> 00:16:14.989
+little words and stuff i'm gonna give that
+
+00:16:15.009 --> 00:16:17.269
+to an even lesser model and what happens
+
+00:16:17.370 --> 00:16:19.351
+is you're even more it's even more
+
+00:16:19.392 --> 00:16:21.373
+efficient as far as being able to utilize
+
+00:16:21.493 --> 00:16:23.413
+utilize the tokens but then you actually
+
+00:16:23.433 --> 00:16:27.317
+get a faster response so it's pretty it's
+
+00:16:27.336 --> 00:16:28.998
+pretty insane man when you see an action
+
+00:16:30.125 --> 00:16:32.626
+but i've been using that technique with
+
+00:16:32.647 --> 00:16:34.868
+this uh research so like i was saying
+
+00:16:34.888 --> 00:16:37.629
+my roots go back to jamaica and in
+
+00:16:37.649 --> 00:16:41.150
+jamaica they have like a document they're
+
+00:16:41.171 --> 00:16:42.831
+pretty good on documenting i'm not gonna
+
+00:16:42.851 --> 00:16:44.111
+say they don't document anything but
+
+00:16:44.392 --> 00:16:45.852
+they're pretty good at documenting births
+
+00:16:46.533 --> 00:16:48.474
+and marriages and like baptisms things
+
+00:16:48.494 --> 00:16:51.556
+like that so who's now which one is
+
+00:16:51.635 --> 00:16:54.256
+good at that uh i'll say in jamaica
+
+00:16:54.846 --> 00:16:56.567
+In Jamaica, they document, you know,
+
+00:16:57.028 --> 00:16:58.808
+birth, baptisms, and marriage.
+
+00:16:59.429 --> 00:17:00.791
+So they have, like, these little,
+
+00:17:00.951 --> 00:17:02.331
+you know, they have the certificates.
+
+00:17:02.772 --> 00:17:03.831
+And they've gotten to the point where
+
+00:17:03.851 --> 00:17:05.353
+they're scanning these certificates in.
+
+00:17:05.373 --> 00:17:06.094
+So there's actually,
+
+00:17:06.534 --> 00:17:09.055
+I think it's called J-A-R-D or something
+
+00:17:09.115 --> 00:17:09.536
+like that.
+
+00:17:09.976 --> 00:17:11.257
+There's already a government office that
+
+00:17:11.356 --> 00:17:12.376
+scans everything in.
+
+00:17:12.537 --> 00:17:14.258
+It keeps records.
+
+00:17:14.298 --> 00:17:15.239
+And they have it online.
+
+00:17:16.715 --> 00:17:17.997
+I think the name of the website is
+
+00:17:18.096 --> 00:17:19.257
+familysearch.org.
+
+00:17:19.837 --> 00:17:20.538
+It's a big one.
+
+00:17:20.758 --> 00:17:24.079
+Ancestry.com has a lot of information.
+
+00:17:24.099 --> 00:17:25.200
+There's a bunch of different online
+
+00:17:25.240 --> 00:17:25.680
+sources.
+
+00:17:26.359 --> 00:17:30.261
+I've been doing the genealogy historian
+
+00:17:30.301 --> 00:17:31.643
+thing for a couple years,
+
+00:17:31.663 --> 00:17:32.442
+about four years now.
+
+00:17:33.604 --> 00:17:34.544
+A lot of times you've got to go
+
+00:17:34.584 --> 00:17:36.545
+through, you've got to search the name,
+
+00:17:36.625 --> 00:17:37.365
+search the date.
+
+00:17:38.385 --> 00:17:39.006
+You pull it up,
+
+00:17:39.066 --> 00:17:40.826
+and what happens is they'll scan it,
+
+00:17:41.446 --> 00:17:43.147
+but they'll have someone actually
+
+00:17:43.167 --> 00:17:43.807
+transpose it.
+
+00:17:44.539 --> 00:17:46.340
+So sometimes that person that transposes
+
+00:17:47.121 --> 00:17:49.300
+it might get a letter off or might
+
+00:17:49.320 --> 00:17:50.682
+get a number off, you know,
+
+00:17:50.902 --> 00:17:51.501
+because they were writing,
+
+00:17:51.541 --> 00:17:52.541
+they're writing cursive there.
+
+00:17:52.582 --> 00:17:55.063
+So it's not like it's all cursive,
+
+00:17:55.123 --> 00:17:56.723
+like really bad.
+
+00:17:58.763 --> 00:17:59.604
+Yeah, exactly.
+
+00:18:00.404 --> 00:18:01.724
+So like, if you're going through Maine,
+
+00:18:01.744 --> 00:18:03.125
+like you might catch that stuff.
+
+00:18:03.144 --> 00:18:03.746
+You might not.
+
+00:18:03.766 --> 00:18:04.766
+Yeah.
+
+00:18:04.786 --> 00:18:05.826
+For the most part, this is like,
+
+00:18:06.266 --> 00:18:07.547
+if you're, if you know about genealogy,
+
+00:18:07.567 --> 00:18:07.946
+like it's,
+
+00:18:08.406 --> 00:18:10.428
+you take hours and hours and hours to
+
+00:18:10.468 --> 00:18:11.567
+go through all these things.
+
+00:18:12.538 --> 00:18:14.179
+especially when you're limited on
+
+00:18:14.199 --> 00:18:14.679
+resources.
+
+00:18:14.699 --> 00:18:15.159
+So I was like, man,
+
+00:18:15.179 --> 00:18:17.921
+I want to put this stuff into an
+
+00:18:18.141 --> 00:18:20.362
+AI model and see what it can do.
+
+00:18:21.922 --> 00:18:23.883
+We got two questions real quick.
+
+00:18:23.903 --> 00:18:24.222
+Sorry.
+
+00:18:25.284 --> 00:18:25.584
+Nice.
+
+00:18:25.644 --> 00:18:27.464
+I'll try GPT-SOL then.
+
+00:18:27.565 --> 00:18:29.266
+I keep running out of credits on Claude.
+
+00:18:30.125 --> 00:18:31.467
+That's definitely going to happen.
+
+00:18:32.747 --> 00:18:34.587
+And Jane Weaver is saying,
+
+00:18:34.708 --> 00:18:38.789
+which is easier use for research, ChatGPT,
+
+00:18:39.210 --> 00:18:40.451
+SOL, or Claude?
+
+00:18:41.310 --> 00:18:43.471
+Man, I used to say, Claude,
+
+00:18:44.192 --> 00:18:45.594
+I'm sold on OpenAI.
+
+00:18:45.854 --> 00:18:45.973
+Yeah.
+
+00:18:47.674 --> 00:18:49.155
+So if you know, like,
+
+00:18:49.656 --> 00:18:52.878
+the way I position it is that when
+
+00:18:53.019 --> 00:18:53.878
+using Claude,
+
+00:18:54.400 --> 00:18:57.000
+I feel like I'm in an Oxford University.
+
+00:18:57.842 --> 00:19:01.384
+Like, Claude is very, like, posh, very,
+
+00:19:01.423 --> 00:19:01.723
+like,
+
+00:19:02.125 --> 00:19:03.325
+it's going to give me a whole paper
+
+00:19:03.345 --> 00:19:04.246
+I didn't even ask for.
+
+00:19:04.266 --> 00:19:06.627
+And I got to read through it.
+
+00:19:06.647 --> 00:19:07.827
+I got to understand the lingo.
+
+00:19:07.847 --> 00:19:09.710
+Man, it's like I'm reading, you know,
+
+00:19:10.336 --> 00:19:12.097
+encyclopedia and that's cool for like
+
+00:19:12.137 --> 00:19:14.078
+certain things like that was cool research
+
+00:19:15.019 --> 00:19:18.383
+but now that i'm and then like open
+
+00:19:18.462 --> 00:19:20.644
+ai always refer to that as like streets
+
+00:19:20.664 --> 00:19:22.767
+i'm like man open ai is always for
+
+00:19:22.787 --> 00:19:25.229
+the streets like i ask the question and
+
+00:19:25.269 --> 00:19:26.470
+it just gives it to me in plain
+
+00:19:26.569 --> 00:19:29.511
+english right it cuts out all the extra
+
+00:19:29.571 --> 00:19:31.153
+jargon just gives me my answer it gives
+
+00:19:31.173 --> 00:19:32.114
+me what i want and i can move
+
+00:19:32.214 --> 00:19:34.336
+on so i've always been a fan of
+
+00:19:34.656 --> 00:19:34.836
+um
+
+00:19:35.838 --> 00:19:36.439
+OpenAI.
+
+00:19:36.700 --> 00:19:38.240
+And then even with ChatGPT,
+
+00:19:38.260 --> 00:19:39.280
+a lot of people don't realize, like,
+
+00:19:40.142 --> 00:19:41.122
+it's a really good deal.
+
+00:19:41.542 --> 00:19:43.624
+You pay the twenty dollars a month.
+
+00:19:44.324 --> 00:19:44.605
+It's so good.
+
+00:19:44.625 --> 00:19:45.224
+It is so good.
+
+00:19:45.605 --> 00:19:47.526
+You get premium image generation.
+
+00:19:47.566 --> 00:19:47.767
+Like,
+
+00:19:48.247 --> 00:19:51.749
+the image generation that GPT can do is
+
+00:19:51.828 --> 00:19:52.328
+insane.
+
+00:19:52.429 --> 00:19:53.210
+You can do a lot with that.
+
+00:19:53.569 --> 00:19:55.431
+So you get premium image generation.
+
+00:19:56.071 --> 00:19:58.553
+You still get the great chat capabilities.
+
+00:19:58.593 --> 00:19:59.294
+And even now,
+
+00:19:59.753 --> 00:20:01.575
+they're doing a codex thing where you can
+
+00:20:01.595 --> 00:20:01.934
+pretty much...
+
+00:20:03.390 --> 00:20:05.309
+kind of build lightweight apps within
+
+00:20:05.349 --> 00:20:06.211
+ChatGPT.
+
+00:20:07.131 --> 00:20:09.070
+And then just like Delcris said here,
+
+00:20:09.111 --> 00:20:11.031
+like, your credits go a long way.
+
+00:20:11.051 --> 00:20:12.451
+Can we show them a little bit of
+
+00:20:12.471 --> 00:20:14.031
+the screen, like, while you're talking?
+
+00:20:14.991 --> 00:20:16.452
+Let's go through the little options
+
+00:20:16.492 --> 00:20:19.393
+that... Yeah.
+
+00:20:19.432 --> 00:20:19.673
+You know,
+
+00:20:19.692 --> 00:20:22.973
+I might not even remember that one.
+
+00:20:23.673 --> 00:20:24.094
+Yeah,
+
+00:20:24.114 --> 00:20:26.055
+so that's a new thing that they started.
+
+00:20:26.674 --> 00:20:27.734
+I haven't even touched it yet,
+
+00:20:28.015 --> 00:20:28.755
+to be honest.
+
+00:20:28.894 --> 00:20:30.596
+But let me go through.
+
+00:20:30.816 --> 00:20:32.215
+We'll do a live and see how it
+
+00:20:32.236 --> 00:20:32.516
+looks.
+
+00:20:34.109 --> 00:20:36.310
+Let's see.
+
+00:20:36.371 --> 00:20:37.872
+Well, we have Crystal.
+
+00:20:38.051 --> 00:20:41.273
+I guess she's coming on the chat.
+
+00:20:41.294 --> 00:20:41.714
+Crystal,
+
+00:20:41.734 --> 00:20:43.335
+you got to turn your video on if
+
+00:20:43.355 --> 00:20:44.355
+you want to come to the chat.
+
+00:20:44.375 --> 00:20:45.876
+If you want to come on stage.
+
+00:20:49.459 --> 00:20:50.098
+Let's see.
+
+00:20:50.220 --> 00:20:52.101
+All right,
+
+00:20:52.121 --> 00:20:53.701
+let me go back to my web browser,
+
+00:20:53.761 --> 00:20:57.403
+and we'll go to ChatGPT.
+
+00:20:57.443 --> 00:20:58.203
+So let me zoom out.
+
+00:20:58.364 --> 00:21:02.626
+All right, so...
+
+00:21:04.465 --> 00:21:08.549
+sidebar see i didn't even hit it so
+
+00:21:08.569 --> 00:21:10.030
+there's supposed to be oh here it is
+
+00:21:10.471 --> 00:21:12.792
+work guys this is the first time i'm
+
+00:21:12.833 --> 00:21:14.934
+doing this like this is so this is
+
+00:21:14.954 --> 00:21:19.659
+so live right now so i love it
+
+00:21:19.699 --> 00:21:21.140
+so here's the thing i was talking about
+
+00:21:21.319 --> 00:21:22.421
+so i just want to let you know
+
+00:21:22.461 --> 00:21:24.163
+yours is way different than mine because
+
+00:21:24.182 --> 00:21:26.203
+you gotta you gotta organize in a certain
+
+00:21:26.223 --> 00:21:30.147
+kind of way this thing's a mess like
+
+00:21:30.268 --> 00:21:31.648
+the only thing i have organized is your
+
+00:21:32.204 --> 00:21:35.907
+your folder bro that's everything else is
+
+00:21:36.067 --> 00:21:37.628
+like i've been talking about this for
+
+00:21:37.689 --> 00:21:40.111
+weeks wanting to go through and like
+
+00:21:40.211 --> 00:21:42.012
+organize my stuff because it does actually
+
+00:21:42.032 --> 00:21:45.496
+help if you have the uh the project
+
+00:21:45.516 --> 00:21:49.638
+folders it does um keep good context but
+
+00:21:49.679 --> 00:21:54.583
+man that's me it's like wow so let's
+
+00:21:54.623 --> 00:21:54.742
+see
+
+00:21:56.448 --> 00:21:58.388
+got some stuff right here for actually
+
+00:21:58.689 --> 00:22:01.369
+your deal lab here instagram comments
+
+00:22:01.390 --> 00:22:02.530
+that's kind of crazy i'm not gonna mess
+
+00:22:02.550 --> 00:22:05.771
+with that though um let's do something
+
+00:22:05.791 --> 00:22:07.393
+really lightweight oh here's the thing i
+
+00:22:07.413 --> 00:22:09.594
+was gonna talk about so you guys should
+
+00:22:09.614 --> 00:22:11.694
+adjust the reasoning so it actually break
+
+00:22:11.775 --> 00:22:13.016
+breaks it down real good for you right
+
+00:22:13.036 --> 00:22:17.218
+here so the light reasoning is faster
+
+00:22:17.377 --> 00:22:19.358
+responses the medium
+
+00:22:21.015 --> 00:22:22.895
+that shot if you notice when i opened
+
+00:22:22.935 --> 00:22:25.557
+it up it didn't give me by default
+
+00:22:25.616 --> 00:22:28.598
+light which i've never seen before so that
+
+00:22:28.638 --> 00:22:30.420
+tells me that they're probably under like
+
+00:22:30.460 --> 00:22:33.721
+heavy usage but they especially it being
+
+00:22:33.780 --> 00:22:35.261
+evening time a lot of people are online
+
+00:22:36.021 --> 00:22:37.883
+doing stuff so let me just do like
+
+00:22:37.903 --> 00:22:45.247
+a quick uh build a layer a culture
+
+00:22:48.808 --> 00:22:49.528
+Something real simple.
+
+00:22:49.568 --> 00:22:50.589
+I want to see if it actually builds
+
+00:22:50.650 --> 00:22:50.950
+the app.
+
+00:22:50.970 --> 00:22:58.273
+Okay, yep.
+
+00:22:58.314 --> 00:22:59.575
+So it understands I want a web-based
+
+00:22:59.595 --> 00:23:00.174
+calculator.
+
+00:23:00.234 --> 00:23:04.757
+And this is just straight off of ChatGPT?
+
+00:23:04.817 --> 00:23:05.557
+No one?
+
+00:23:05.577 --> 00:23:05.698
+Okay.
+
+00:23:07.098 --> 00:23:08.318
+Yeah, so if you see,
+
+00:23:08.880 --> 00:23:10.079
+when I got into ChatGPT,
+
+00:23:10.140 --> 00:23:13.102
+there's a tab at the top that said
+
+00:23:13.142 --> 00:23:13.481
+Chat.
+
+00:23:13.942 --> 00:23:15.343
+I flipped that over to work.
+
+00:23:15.363 --> 00:23:15.482
+Okay.
+
+00:23:19.300 --> 00:23:19.421
+Oh,
+
+00:23:19.441 --> 00:23:22.201
+so it's flipped it over to work and
+
+00:23:22.241 --> 00:23:23.481
+that's the way he was able to get
+
+00:23:23.521 --> 00:23:23.801
+that.
+
+00:23:25.143 --> 00:23:25.803
+So, yeah.
+
+00:23:25.843 --> 00:23:30.463
+Wow.
+
+00:23:30.503 --> 00:23:31.984
+And you could download the app from right
+
+00:23:32.005 --> 00:23:33.424
+there and set it up.
+
+00:23:34.445 --> 00:23:35.826
+I don't know, to be honest,
+
+00:23:35.925 --> 00:23:38.047
+this is my first time I'm trying to,
+
+00:23:38.067 --> 00:23:40.727
+I've seen demos.
+
+00:23:40.747 --> 00:23:41.407
+That'd be dope.
+
+00:23:41.488 --> 00:23:42.307
+That's something new.
+
+00:23:44.449 --> 00:23:45.108
+You know, honestly,
+
+00:23:45.169 --> 00:23:47.048
+I'm thinking like there was a guy that
+
+00:23:47.088 --> 00:23:49.009
+made a lot of the gym equipment, right?
+
+00:23:50.092 --> 00:23:53.035
+And in order to sell the gym equipment,
+
+00:23:53.615 --> 00:23:55.576
+he had it was a nineteen year old
+
+00:23:55.636 --> 00:23:56.497
+young bodybuilder.
+
+00:23:56.517 --> 00:23:57.758
+He wanted to be a bodybuilder.
+
+00:23:59.460 --> 00:24:01.381
+They they put him in a warehouse or
+
+00:24:01.422 --> 00:24:01.942
+whatever.
+
+00:24:02.082 --> 00:24:02.903
+And they said, hey,
+
+00:24:02.923 --> 00:24:03.884
+this is what you're going to have to
+
+00:24:03.923 --> 00:24:04.124
+do.
+
+00:24:04.483 --> 00:24:06.045
+I feel like I need that type of
+
+00:24:06.265 --> 00:24:07.727
+like, hey,
+
+00:24:07.747 --> 00:24:11.490
+just stay in the in this lab all
+
+00:24:11.549 --> 00:24:13.932
+day for the next forty days.
+
+00:24:14.571 --> 00:24:15.893
+And let's see what I mean.
+
+00:24:15.932 --> 00:24:17.535
+This this is so much game right here.
+
+00:24:17.555 --> 00:24:18.776
+This is this is amazing.
+
+00:24:19.727 --> 00:24:21.669
+See, that's what we did with FileFlow,
+
+00:24:21.689 --> 00:24:22.990
+man, the twenty-four hour stream.
+
+00:24:23.109 --> 00:24:24.049
+We gotta do that again.
+
+00:24:25.490 --> 00:24:26.731
+We gotta do this twenty-four hour stream
+
+00:24:26.791 --> 00:24:27.012
+again.
+
+00:24:27.053 --> 00:24:29.094
+Like, literally, just lock in.
+
+00:24:30.095 --> 00:24:31.496
+Yeah, that would be dope.
+
+00:24:32.757 --> 00:24:34.818
+Because with FileFlow, man, we literally,
+
+00:24:35.138 --> 00:24:38.340
+I didn't even use cloud code before.
+
+00:24:38.361 --> 00:24:40.442
+I literally started the stream,
+
+00:24:40.883 --> 00:24:41.683
+we installed it,
+
+00:24:42.584 --> 00:24:44.306
+and we just started building stuff.
+
+00:24:46.166 --> 00:24:48.489
+Dang, that's... Yeah, twenty-four hours.
+
+00:24:50.042 --> 00:24:50.804
+That's so good.
+
+00:24:53.746 --> 00:24:55.428
+Yeah, we got to set that up, Nathaniel,
+
+00:24:55.528 --> 00:24:55.887
+for sure.
+
+00:24:56.008 --> 00:24:57.088
+Yeah, let's do it.
+
+00:24:57.950 --> 00:25:01.752
+You know, I got grown kids, so,
+
+00:25:01.813 --> 00:25:03.454
+you know, at the end of the day,
+
+00:25:03.474 --> 00:25:04.615
+I'm available, okay?
+
+00:25:05.056 --> 00:25:06.376
+But I know you're going to be falling
+
+00:25:06.416 --> 00:25:07.298
+asleep, though, man.
+
+00:25:07.317 --> 00:25:09.839
+Hey, listen, I'm holding it together.
+
+00:25:09.859 --> 00:25:11.281
+You said you were about to build
+
+00:25:11.301 --> 00:25:11.721
+something.
+
+00:25:11.842 --> 00:25:12.663
+You know, I'm a builder.
+
+00:25:12.702 --> 00:25:13.304
+I like to build.
+
+00:25:13.324 --> 00:25:15.045
+Indeed, indeed.
+
+00:25:15.164 --> 00:25:15.885
+I'm going to work it out.
+
+00:25:15.925 --> 00:25:16.246
+Don't worry.
+
+00:25:16.346 --> 00:25:17.146
+If I get up,
+
+00:25:17.676 --> 00:25:19.258
+That means I'm going to go get a,
+
+00:25:19.377 --> 00:25:20.959
+get a, get a glass of water.
+
+00:25:21.318 --> 00:25:22.078
+All right.
+
+00:25:22.159 --> 00:25:23.980
+Right here until we, yeah, we, we here.
+
+00:25:24.000 --> 00:25:25.441
+There you go.
+
+00:25:25.921 --> 00:25:26.602
+We are here.
+
+00:25:27.281 --> 00:25:27.382
+Yeah.
+
+00:25:27.402 --> 00:25:28.501
+You know, you know, uh,
+
+00:25:28.542 --> 00:25:30.022
+my bedtime is already, you know,
+
+00:25:30.083 --> 00:25:30.743
+it's already there.
+
+00:25:30.763 --> 00:25:31.784
+It's already passed.
+
+00:25:31.804 --> 00:25:31.983
+Yeah.
+
+00:25:32.505 --> 00:25:33.605
+It's already passed there.
+
+00:25:34.424 --> 00:25:35.665
+I got to run to my house after
+
+00:25:35.705 --> 00:25:37.146
+this.
+
+00:25:38.007 --> 00:25:38.267
+Yes.
+
+00:25:38.428 --> 00:25:38.488
+I,
+
+00:25:38.548 --> 00:25:41.568
+so this is why I guess why I
+
+00:25:41.588 --> 00:25:42.430
+had me on light mode.
+
+00:25:42.450 --> 00:25:44.510
+Cause this is taking forever to respond.
+
+00:25:45.391 --> 00:25:47.172
+And I'm, I'm like borderline.
+
+00:25:48.714 --> 00:25:50.856
+borderline i do want to upgrade to the
+
+00:25:51.857 --> 00:25:53.839
+the next tier i feel like i use
+
+00:25:53.880 --> 00:25:56.202
+chat gpt so much i might as well
+
+00:25:57.003 --> 00:25:58.244
+and you are supposed to get like a
+
+00:25:58.305 --> 00:25:59.846
+faster response when you upgrade to that
+
+00:25:59.865 --> 00:26:02.588
+next tier so i got that on my
+
+00:26:02.628 --> 00:26:03.730
+list of things to do i think i'm
+
+00:26:03.790 --> 00:26:06.393
+gonna pull the trigger and do it but
+
+00:26:07.193 --> 00:26:09.757
+uh real quick while we're we'll have that
+
+00:26:09.777 --> 00:26:11.077
+wording on the side but let's start a
+
+00:26:11.097 --> 00:26:11.759
+new chat so
+
+00:26:12.987 --> 00:26:16.209
+Wait, wait, wait, wait.
+
+00:26:16.288 --> 00:26:16.509
+Whoa, wait.
+
+00:26:16.528 --> 00:26:18.130
+He said, let's work on the side.
+
+00:26:18.411 --> 00:26:18.911
+Yeah, you can.
+
+00:26:19.330 --> 00:26:19.651
+Come on.
+
+00:26:19.691 --> 00:26:20.932
+You got multiple chats going.
+
+00:26:20.951 --> 00:26:22.413
+You know that, right?
+
+00:26:22.732 --> 00:26:24.434
+Bro, I haven't done that.
+
+00:26:24.654 --> 00:26:24.974
+I haven't.
+
+00:26:24.994 --> 00:26:25.875
+Yeah.
+
+00:26:25.915 --> 00:26:27.135
+You don't got to sit here and wait
+
+00:26:27.155 --> 00:26:28.017
+and stare at it.
+
+00:26:28.217 --> 00:26:28.636
+No, no.
+
+00:26:28.656 --> 00:26:29.617
+You started a new chat.
+
+00:26:30.178 --> 00:26:33.740
+And then what happens is when it's done,
+
+00:26:34.701 --> 00:26:36.001
+you'll go down here and actually look like
+
+00:26:36.021 --> 00:26:36.422
+a blue bubble.
+
+00:26:36.442 --> 00:26:37.262
+Like, hey, this is ready for you.
+
+00:26:39.666 --> 00:26:41.268
+I haven't done that.
+
+00:26:41.288 --> 00:26:41.948
+See, that's what I'm saying.
+
+00:26:41.988 --> 00:26:44.409
+I need to be locked in, bro.
+
+00:26:44.608 --> 00:26:45.589
+I need to be just like...
+
+00:26:45.609 --> 00:26:46.971
+That'd be ambidextrous, man.
+
+00:26:48.570 --> 00:26:50.051
+That's right.
+
+00:26:50.092 --> 00:26:52.133
+How many chats can you have before we
+
+00:26:52.173 --> 00:26:52.432
+go on?
+
+00:26:52.492 --> 00:26:54.013
+How many chats can you have going at
+
+00:26:54.054 --> 00:26:58.076
+the same time at any given moment?
+
+00:26:58.296 --> 00:26:58.936
+Say, for instance,
+
+00:26:58.997 --> 00:27:00.136
+I want to make some content,
+
+00:27:00.176 --> 00:27:01.897
+but I also want to do some research
+
+00:27:02.018 --> 00:27:03.959
+and I want to create an app and
+
+00:27:04.038 --> 00:27:07.441
+I want to kind of like how the...
+
+00:27:07.661 --> 00:27:09.021
+What was that show?
+
+00:27:11.653 --> 00:27:13.074
+Jarvis.
+
+00:27:13.554 --> 00:27:15.276
+How can I make this chat GPT my
+
+00:27:15.316 --> 00:27:17.156
+Jarvis?
+
+00:27:17.176 --> 00:27:18.278
+Everybody wants to do that.
+
+00:27:20.220 --> 00:27:21.099
+It's just from the movie.
+
+00:27:22.300 --> 00:27:23.261
+Welcome, Nathaniel.
+
+00:27:24.303 --> 00:27:27.005
+It makes sense, but is it practical?
+
+00:27:27.204 --> 00:27:28.226
+I don't know.
+
+00:27:28.905 --> 00:27:31.488
+Anyway, that's for another discussion.
+
+00:27:31.608 --> 00:27:33.490
+I don't think it actually limits you.
+
+00:27:33.769 --> 00:27:36.932
+Let's see.
+
+00:27:36.972 --> 00:27:39.154
+I'm surprised I didn't get an AI response.
+
+00:27:39.335 --> 00:27:39.694
+That's weird.
+
+00:27:40.111 --> 00:27:41.570
+Tell me when I'm in Google.
+
+00:27:42.030 --> 00:27:43.991
+And thank you all for jumping in and
+
+00:27:44.132 --> 00:27:44.892
+asking your questions.
+
+00:27:44.932 --> 00:27:45.971
+We definitely love that.
+
+00:27:46.672 --> 00:27:47.271
+Like, like,
+
+00:27:47.471 --> 00:27:48.531
+like what we're doing right now,
+
+00:27:48.571 --> 00:27:50.232
+we're really building on site.
+
+00:27:50.732 --> 00:27:53.153
+So definitely chime in what you want to
+
+00:27:53.212 --> 00:27:53.512
+see.
+
+00:27:53.732 --> 00:27:54.292
+You know what I mean?
+
+00:27:54.413 --> 00:27:55.733
+We could also have it on the next
+
+00:27:55.814 --> 00:27:56.354
+episode.
+
+00:27:56.913 --> 00:27:59.374
+So layer eight culture is a movement
+
+00:27:59.513 --> 00:28:00.755
+building on site.
+
+00:28:01.875 --> 00:28:02.654
+We will build it.
+
+00:28:02.894 --> 00:28:04.394
+So, yeah.
+
+00:28:04.434 --> 00:28:06.955
+So it looks like you can have unlimited
+
+00:28:07.036 --> 00:28:08.496
+number of chat sessions.
+
+00:28:08.675 --> 00:28:08.796
+Oh,
+
+00:28:09.986 --> 00:28:10.726
+Story history,
+
+00:28:10.925 --> 00:28:15.048
+open as many simultaneous browser tabs as
+
+00:28:15.067 --> 00:28:16.229
+your device can handle.
+
+00:28:19.430 --> 00:28:19.630
+Now,
+
+00:28:20.330 --> 00:28:23.251
+you might get an error or a message
+
+00:28:23.271 --> 00:28:25.093
+saying there's too many requests, I guess.
+
+00:28:25.932 --> 00:28:27.074
+But there's no limit.
+
+00:28:27.794 --> 00:28:29.154
+But you don't know unless you just try
+
+00:28:29.194 --> 00:28:29.535
+it out.
+
+00:28:30.035 --> 00:28:30.615
+Exactly.
+
+00:28:31.035 --> 00:28:31.635
+And I think for me,
+
+00:28:31.695 --> 00:28:33.215
+I probably had maybe three.
+
+00:28:33.236 --> 00:28:35.597
+See how it popped up right here?
+
+00:28:36.518 --> 00:28:37.218
+Calculator features,
+
+00:28:37.298 --> 00:28:38.778
+and then you got the little bubble.
+
+00:28:39.647 --> 00:28:41.689
+Right, right, right.
+
+00:28:41.749 --> 00:28:43.990
+What's going on?
+
+00:28:44.430 --> 00:28:46.411
+Oh, snap.
+
+00:28:46.490 --> 00:28:46.911
+Let's see.
+
+00:28:46.951 --> 00:28:49.271
+Great choice, blah, blah, blah.
+
+00:28:49.311 --> 00:28:53.153
+Allow for this chat.
+
+00:28:53.232 --> 00:28:55.114
+I guess this is another thing, too,
+
+00:28:55.134 --> 00:28:56.954
+because we have to have,
+
+00:28:57.674 --> 00:29:00.996
+especially as entrepreneurs,
+
+00:29:01.016 --> 00:29:03.277
+that are not really familiar and are still
+
+00:29:03.317 --> 00:29:06.057
+learning this AI space, we have to say,
+
+00:29:06.157 --> 00:29:08.278
+OK, what can be created?
+
+00:29:09.025 --> 00:29:10.184
+Because a lot of times I'd be like,
+
+00:29:10.224 --> 00:29:11.365
+oh, hey, let me call this guy.
+
+00:29:11.385 --> 00:29:12.266
+Let me call this girl.
+
+00:29:12.665 --> 00:29:14.086
+Let me look for somebody to do this.
+
+00:29:14.507 --> 00:29:15.086
+But like,
+
+00:29:15.186 --> 00:29:17.627
+ninety-eight percent of what I need might
+
+00:29:17.667 --> 00:29:18.907
+be done right here,
+
+00:29:19.008 --> 00:29:20.588
+and then all of a sudden,
+
+00:29:21.068 --> 00:29:24.250
+I can go with a full polished product
+
+00:29:25.191 --> 00:29:26.931
+to meet the source, right?
+
+00:29:26.990 --> 00:29:29.551
+So, I mean, this is game changer.
+
+00:29:30.833 --> 00:29:35.013
+This is a Layer A culture AI value
+
+00:29:35.054 --> 00:29:37.734
+calculator that we just built out.
+
+00:29:38.717 --> 00:29:39.998
+Can we throw that in the chat so
+
+00:29:40.018 --> 00:29:41.298
+people could get a link of it?
+
+00:29:42.779 --> 00:29:43.299
+So right now,
+
+00:29:43.460 --> 00:29:45.582
+so what happens is when it builds,
+
+00:29:45.642 --> 00:29:46.942
+it's actually building on the local
+
+00:29:46.982 --> 00:29:47.462
+computer.
+
+00:29:48.023 --> 00:29:49.285
+We call that the local host.
+
+00:29:50.285 --> 00:29:52.207
+I would have to send this out to
+
+00:29:52.247 --> 00:29:53.327
+my Azure environment.
+
+00:29:53.971 --> 00:29:54.771
+that's in the cloud,
+
+00:29:55.311 --> 00:29:57.493
+and then I would actually have a URL
+
+00:29:57.513 --> 00:29:58.734
+that I could share with everyone.
+
+00:29:58.755 --> 00:30:00.297
+Okay, that's dope.
+
+00:30:00.317 --> 00:30:00.676
+This is like,
+
+00:30:00.757 --> 00:30:02.117
+this is where it starts as far as
+
+00:30:02.198 --> 00:30:03.019
+like,
+
+00:30:03.078 --> 00:30:05.000
+I see this is actually an active thing.
+
+00:30:05.020 --> 00:30:06.682
+So you could put, man,
+
+00:30:07.123 --> 00:30:08.124
+the writing is really small on this.
+
+00:30:08.163 --> 00:30:11.026
+So that's what I was saying earlier.
+
+00:30:11.046 --> 00:30:11.967
+You saw me with my face.
+
+00:30:11.987 --> 00:30:15.069
+I'm just like, yeah,
+
+00:30:15.089 --> 00:30:15.849
+let me zoom in here.
+
+00:30:16.451 --> 00:30:17.652
+Dang, the zoom is like weird.
+
+00:30:18.313 --> 00:30:18.692
+All right.
+
+00:30:18.732 --> 00:30:20.894
+So let me do this.
+
+00:30:22.498 --> 00:30:24.078
+and this is that that's a little bit
+
+00:30:24.098 --> 00:30:26.340
+better yeah so you can look at the
+
+00:30:26.381 --> 00:30:29.042
+workflow type let's say we're doing some
+
+00:30:29.083 --> 00:30:32.065
+type of reporting data entry the number of
+
+00:30:32.105 --> 00:30:33.566
+people involved so let's like let's say
+
+00:30:33.586 --> 00:30:35.528
+you have a small team of you know
+
+00:30:35.567 --> 00:30:39.250
+six people the hours per week so normally
+
+00:30:39.290 --> 00:30:41.873
+they'll spend let's be reasonable they
+
+00:30:41.913 --> 00:30:43.953
+spend about four hours a week on this
+
+00:30:44.074 --> 00:30:44.694
+type of stuff
+
+00:30:47.803 --> 00:30:50.003
+Um, there are hourly costs.
+
+00:30:50.203 --> 00:30:54.667
+So let's say they get paid twenty four
+
+00:30:54.688 --> 00:30:58.651
+dollars an hour automation potential.
+
+00:31:00.011 --> 00:31:01.153
+So let's say we're going to automate
+
+00:31:02.534 --> 00:31:03.314
+eighty percent of this.
+
+00:31:03.334 --> 00:31:04.934
+So there might be some human involvement,
+
+00:31:05.496 --> 00:31:06.636
+but we'll say eighty percent.
+
+00:31:06.656 --> 00:31:07.837
+This is something we're going to automate.
+
+00:31:12.661 --> 00:31:13.501
+What is down here?
+
+00:31:13.541 --> 00:31:16.304
+What is this one time implementation?
+
+00:31:18.077 --> 00:31:19.298
+I think this is like your budget.
+
+00:31:21.219 --> 00:31:27.000
+Let's say I want to spend... Yeah,
+
+00:31:27.019 --> 00:31:27.359
+this is all...
+
+00:31:27.380 --> 00:31:29.779
+It's basically saying exactly like, hey,
+
+00:31:29.799 --> 00:31:32.279
+this is how much it's going to cost
+
+00:31:32.299 --> 00:31:33.401
+to do all these processes, right?
+
+00:31:33.461 --> 00:31:35.040
+Is that what...
+
+00:31:35.060 --> 00:31:37.280
+So this is saying what's your ROI?
+
+00:31:37.661 --> 00:31:38.602
+So basically...
+
+00:31:38.961 --> 00:31:40.021
+And the cool thing is that at least
+
+00:31:40.041 --> 00:31:41.102
+I understand business,
+
+00:31:41.142 --> 00:31:43.761
+so I understand the concept behind the
+
+00:31:43.801 --> 00:31:44.843
+calculator that it just built.
+
+00:31:45.643 --> 00:31:46.403
+So you're looking at...
+
+00:31:47.144 --> 00:31:50.768
+The amount of hours that XYZ person spends
+
+00:31:51.308 --> 00:31:55.491
+on this task and then their hourly cost
+
+00:31:55.551 --> 00:31:57.192
+is twenty four dollars an hour.
+
+00:31:58.034 --> 00:32:00.135
+But then you look at the one time
+
+00:32:00.175 --> 00:32:00.936
+implementation,
+
+00:32:00.977 --> 00:32:02.518
+like the actual cost of the project.
+
+00:32:02.917 --> 00:32:05.119
+Let's say I go out and this guy
+
+00:32:05.160 --> 00:32:06.961
+charged me fifty five hundred dollars,
+
+00:32:07.622 --> 00:32:09.564
+but he's also going to charge me three
+
+00:32:09.584 --> 00:32:11.224
+hundred dollars a month to support this
+
+00:32:11.285 --> 00:32:12.086
+implementation.
+
+00:32:12.906 --> 00:32:14.147
+What it's saying here is that.
+
+00:32:15.096 --> 00:32:17.117
+you're still at a net benefit.
+
+00:32:17.137 --> 00:32:18.718
+You're still in a positive ROI.
+
+00:32:19.378 --> 00:32:20.679
+Even if you're spending this amount of
+
+00:32:20.739 --> 00:32:21.058
+money,
+
+00:32:21.819 --> 00:32:23.240
+you're still going to get some money back
+
+00:32:23.579 --> 00:32:27.402
+because you're not paying these folks X,
+
+00:32:27.761 --> 00:32:28.501
+Y, Z dollars.
+
+00:32:30.242 --> 00:32:31.304
+I'm so sorry.
+
+00:32:31.384 --> 00:32:33.845
+I got excited because this could be...
+
+00:32:36.465 --> 00:32:38.546
+I could use this for my advisory stuff.
+
+00:32:38.665 --> 00:32:40.227
+I'm so serious.
+
+00:32:40.967 --> 00:32:42.827
+Oh, man.
+
+00:32:43.848 --> 00:32:44.548
+We just built that.
+
+00:32:47.134 --> 00:32:47.815
+All right, writing it down.
+
+00:32:47.836 --> 00:32:48.215
+That's easy, man.
+
+00:32:48.256 --> 00:32:48.635
+Come on, man.
+
+00:32:48.675 --> 00:32:50.436
+You got the deal analyzer, dude.
+
+00:32:50.637 --> 00:32:53.179
+You have the best thing on the market.
+
+00:32:55.760 --> 00:32:56.821
+Nobody else has that.
+
+00:32:56.902 --> 00:32:58.282
+I mean, seriously, I think about it.
+
+00:33:00.505 --> 00:33:00.865
+Nobody else has it.
+
+00:33:00.884 --> 00:33:01.865
+They got these little mortgage
+
+00:33:01.885 --> 00:33:02.405
+calculators.
+
+00:33:02.546 --> 00:33:03.346
+That's cool, but, man,
+
+00:33:03.366 --> 00:33:05.048
+you got a whole deal analyzer to tell
+
+00:33:05.067 --> 00:33:05.548
+you, like, hey...
+
+00:33:06.253 --> 00:33:07.554
+I'm going to plug the numbers in.
+
+00:33:07.574 --> 00:33:08.394
+This is a good deal.
+
+00:33:08.414 --> 00:33:09.974
+I have to repair value.
+
+00:33:10.234 --> 00:33:11.174
+Like, come on, man.
+
+00:33:11.234 --> 00:33:11.515
+Oh, no, no.
+
+00:33:13.135 --> 00:33:13.776
+It's legendary.
+
+00:33:13.796 --> 00:33:15.076
+I'm about to throw it in the chat
+
+00:33:15.096 --> 00:33:16.276
+so people can understand.
+
+00:33:16.296 --> 00:33:16.455
+Indeed.
+
+00:33:16.496 --> 00:33:19.856
+So let's get to the fun stuff, man.
+
+00:33:20.037 --> 00:33:23.397
+So that was just like showing live the
+
+00:33:23.458 --> 00:33:26.019
+whole work function.
+
+00:33:26.058 --> 00:33:27.239
+So again, that's the work function.
+
+00:33:27.739 --> 00:33:28.638
+You go to new chat.
+
+00:33:28.919 --> 00:33:30.299
+This is like a brand new feature from
+
+00:33:30.339 --> 00:33:30.819
+ChatGPT.
+
+00:33:31.846 --> 00:33:34.048
+And up here at the top,
+
+00:33:34.067 --> 00:33:36.768
+you just click the work tab,
+
+00:33:37.709 --> 00:33:39.028
+and then you can actually build out your
+
+00:33:39.048 --> 00:33:44.891
+stuff.
+
+00:33:45.351 --> 00:33:45.590
+All right.
+
+00:33:45.651 --> 00:33:47.471
+So it says I can work on anything.
+
+00:33:47.530 --> 00:33:49.852
+Summarize my to-dos, draft up.
+
+00:33:50.612 --> 00:33:51.811
+Oh, yeah, yeah, yeah.
+
+00:33:51.832 --> 00:33:54.512
+Emails, okay.
+
+00:33:54.532 --> 00:33:54.712
+Yeah, man,
+
+00:33:54.732 --> 00:33:55.854
+remember we talked about the whole
+
+00:33:55.894 --> 00:33:56.513
+scheduling thing?
+
+00:33:56.554 --> 00:33:57.634
+Like, that really –
+
+00:33:58.156 --> 00:33:58.537
+That works.
+
+00:33:58.557 --> 00:33:59.218
+It actually works.
+
+00:33:59.238 --> 00:33:59.738
+Yeah, man.
+
+00:34:00.377 --> 00:34:00.538
+Yeah.
+
+00:34:01.638 --> 00:34:04.079
+I'm guilty because like it pops up on
+
+00:34:04.119 --> 00:34:04.599
+my phone.
+
+00:34:04.660 --> 00:34:06.280
+I'm like, oh my gosh,
+
+00:34:06.300 --> 00:34:07.401
+I get so excited.
+
+00:34:08.041 --> 00:34:09.822
+So now I just got to integrate it
+
+00:34:09.862 --> 00:34:11.963
+into my go high level stuff.
+
+00:34:11.983 --> 00:34:12.523
+Check this out.
+
+00:34:12.664 --> 00:34:14.905
+I get a tech brief every single day.
+
+00:34:15.485 --> 00:34:16.704
+This was today's tech brief.
+
+00:34:17.706 --> 00:34:19.907
+I just talking about what's going on AI.
+
+00:34:22.068 --> 00:34:23.268
+Ooh, I like that.
+
+00:34:23.327 --> 00:34:24.809
+Every single morning I get it, man.
+
+00:34:24.829 --> 00:34:26.630
+So this was today's the sixteenth.
+
+00:34:27.463 --> 00:34:29.744
+I had one for the fifteenth every morning,
+
+00:34:29.784 --> 00:34:30.103
+bro.
+
+00:34:32.364 --> 00:34:32.844
+So cool.
+
+00:34:33.184 --> 00:34:33.644
+I can actually,
+
+00:34:33.724 --> 00:34:34.844
+I can have the email to me if
+
+00:34:34.905 --> 00:34:35.206
+I want.
+
+00:34:35.246 --> 00:34:35.585
+You can do,
+
+00:34:36.045 --> 00:34:37.126
+you can do tons of stuff.
+
+00:34:38.806 --> 00:34:40.086
+So maybe I could, okay.
+
+00:34:41.108 --> 00:34:42.847
+I could ask people to join my newsletter.
+
+00:34:44.009 --> 00:34:45.009
+Yeah.
+
+00:34:45.048 --> 00:34:45.329
+Sure.
+
+00:34:45.349 --> 00:34:46.489
+And that's just a tech brief.
+
+00:34:46.648 --> 00:34:46.969
+Okay.
+
+00:34:48.050 --> 00:34:49.590
+Yep.
+
+00:34:49.610 --> 00:34:51.311
+Let me, let me change my, um,
+
+00:34:53.088 --> 00:34:54.849
+my sharing real quick.
+
+00:34:55.409 --> 00:34:57.130
+What was your prompt for something like
+
+00:34:57.170 --> 00:34:58.951
+that?
+
+00:34:59.050 --> 00:35:00.871
+I think I was using...
+
+00:35:00.952 --> 00:35:03.532
+It might have been like a thing where
+
+00:35:03.552 --> 00:35:05.853
+I was... They already had a prompt,
+
+00:35:06.213 --> 00:35:06.893
+like a news brief,
+
+00:35:06.914 --> 00:35:07.994
+and I just modified it.
+
+00:35:08.715 --> 00:35:09.355
+I could tell you.
+
+00:35:09.375 --> 00:35:09.974
+Just give me one sec.
+
+00:35:09.994 --> 00:35:15.097
+Well, thank you.
+
+00:35:16.918 --> 00:35:18.338
+That's a nice newsletter.
+
+00:35:18.438 --> 00:35:19.818
+That's a cool... Thanks, thanks.
+
+00:35:19.878 --> 00:35:21.280
+And that's just like my personal thing.
+
+00:35:21.300 --> 00:35:22.300
+It's not even something I share.
+
+00:35:23.364 --> 00:35:24.364
+See, that's what I'm telling them.
+
+00:35:24.405 --> 00:35:25.065
+You should share it.
+
+00:35:25.085 --> 00:35:26.065
+That's why I'm giving them, you know,
+
+00:35:26.085 --> 00:35:27.005
+throwing it out there.
+
+00:35:27.365 --> 00:35:28.505
+Just share it.
+
+00:35:28.525 --> 00:35:30.186
+It literally is just like an easy prompt.
+
+00:35:30.387 --> 00:35:33.027
+And actually, yeah, I can scroll right.
+
+00:35:33.248 --> 00:35:34.347
+It's the cool thing about ChatGPT.
+
+00:35:34.407 --> 00:35:35.467
+I can scroll right to the top.
+
+00:35:36.148 --> 00:35:37.688
+So the original prompt was.
+
+00:35:37.748 --> 00:35:38.048
+Oh, snap.
+
+00:35:38.068 --> 00:35:38.248
+My bad.
+
+00:35:38.268 --> 00:35:42.670
+There we go.
+
+00:35:43.451 --> 00:35:46.010
+Oh, my bad.
+
+00:35:46.030 --> 00:35:46.070
+Oh,
+
+00:35:46.090 --> 00:35:46.871
+you were trying to add it to the
+
+00:35:46.891 --> 00:35:47.152
+stage.
+
+00:35:47.172 --> 00:35:47.391
+You're good.
+
+00:35:47.411 --> 00:35:47.492
+Yeah.
+
+00:35:47.512 --> 00:35:48.572
+All right.
+
+00:35:48.612 --> 00:35:49.811
+So the original prompt was send me a
+
+00:35:49.831 --> 00:35:51.913
+daily brief about topics I care about.
+
+00:35:53.054 --> 00:35:56.277
+And then of course, and then said,
+
+00:35:56.297 --> 00:35:57.476
+before I said stuff like,
+
+00:35:57.538 --> 00:35:59.038
+what are the topics you care about as
+
+00:35:59.057 --> 00:36:00.119
+AI automation,
+
+00:36:00.719 --> 00:36:02.599
+business software as a solution,
+
+00:36:02.619 --> 00:36:04.240
+entrepreneurship, Microsoft, um,
+
+00:36:04.320 --> 00:36:06.722
+what kind of stories do you,
+
+00:36:06.742 --> 00:36:07.722
+should I emphasize?
+
+00:36:08.182 --> 00:36:09.983
+So actionable opportunities, tools,
+
+00:36:10.063 --> 00:36:10.664
+products,
+
+00:36:11.304 --> 00:36:13.126
+and then how should the briefing feel?
+
+00:36:13.226 --> 00:36:13.525
+Exactly.
+
+00:36:13.746 --> 00:36:14.527
+Executive summary.
+
+00:36:15.226 --> 00:36:16.047
+That was it.
+
+00:36:16.628 --> 00:36:18.548
+After that, it said done.
+
+00:36:19.148 --> 00:36:21.811
+It's up the step to start next day.
+
+00:36:23.945 --> 00:36:25.708
+repeated back to me what the focus was,
+
+00:36:26.349 --> 00:36:27.050
+the format.
+
+00:36:28.092 --> 00:36:30.516
+And now every morning, nine o'clock,
+
+00:36:30.597 --> 00:36:32.860
+I'm hit with a daily brief, man.
+
+00:36:34.827 --> 00:36:36.048
+That's so powerful, though,
+
+00:36:36.168 --> 00:36:36.730
+I'm telling you.
+
+00:36:36.829 --> 00:36:38.510
+That is so powerful.
+
+00:36:39.512 --> 00:36:41.972
+It's like you got your own assistant
+
+00:36:42.152 --> 00:36:44.155
+that's sending you, you know,
+
+00:36:44.215 --> 00:36:45.795
+the topics like a president.
+
+00:36:47.317 --> 00:36:49.318
+I mean, he's Larry Culture,
+
+00:36:49.358 --> 00:36:51.300
+the president of the game, for real.
+
+00:36:51.940 --> 00:36:54.141
+You need to follow and tune in,
+
+00:36:54.222 --> 00:36:54.762
+for sure.
+
+00:36:55.242 --> 00:36:56.963
+If you guys go into right here,
+
+00:36:57.123 --> 00:37:00.146
+top scheduled, you can click on that.
+
+00:37:00.266 --> 00:37:01.686
+Actually, it'll give you ideas.
+
+00:37:02.188 --> 00:37:03.068
+So here's a couple things I have
+
+00:37:03.108 --> 00:37:03.588
+scheduled.
+
+00:37:04.505 --> 00:37:06.085
+I just thought the real estate deal lab
+
+00:37:06.166 --> 00:37:07.266
+idea is still running.
+
+00:37:07.807 --> 00:37:08.228
+Like again,
+
+00:37:08.248 --> 00:37:10.590
+there's no real limit to what you could
+
+00:37:10.610 --> 00:37:10.789
+do.
+
+00:37:11.271 --> 00:37:12.632
+I can have it scan my emails.
+
+00:37:13.172 --> 00:37:15.594
+So I can set that up to connect
+
+00:37:15.634 --> 00:37:16.914
+to my,
+
+00:37:18.275 --> 00:37:19.737
+I think it automatically has connectors
+
+00:37:19.777 --> 00:37:20.637
+into your Gmail.
+
+00:37:21.719 --> 00:37:23.740
+We can have it scan it, summarize,
+
+00:37:24.661 --> 00:37:25.862
+action on emails.
+
+00:37:28.664 --> 00:37:29.985
+Here we go, add source.
+
+00:37:31.487 --> 00:37:33.489
+Yeah, so you can connect it using this.
+
+00:37:35.139 --> 00:37:36.039
+Add your Gmail.
+
+00:37:36.960 --> 00:37:37.800
+It's going to pop up.
+
+00:37:37.840 --> 00:37:38.440
+It's going to connect.
+
+00:37:38.460 --> 00:37:39.201
+All that fun stuff.
+
+00:37:41.422 --> 00:37:41.922
+But yeah,
+
+00:37:42.041 --> 00:37:42.983
+there's tons of things you could do.
+
+00:37:44.782 --> 00:37:45.704
+There's plugins.
+
+00:37:47.244 --> 00:37:48.844
+So let's say there's a specific
+
+00:37:48.965 --> 00:37:51.365
+application you want to have integrated
+
+00:37:51.445 --> 00:37:52.706
+into your ChatGPT.
+
+00:37:52.726 --> 00:37:53.885
+Canva's a popular one.
+
+00:37:54.847 --> 00:37:56.567
+What's another popular one here?
+
+00:37:56.586 --> 00:37:57.527
+Like your Dropbox.
+
+00:37:57.947 --> 00:37:59.088
+A lot of people store files there.
+
+00:37:59.108 --> 00:38:00.007
+Your Google Drive.
+
+00:38:00.688 --> 00:38:02.469
+You can have that automatically plugged in
+
+00:38:02.548 --> 00:38:03.909
+to your ChatGPT.
+
+00:38:05.019 --> 00:38:05.239
+Man,
+
+00:38:05.260 --> 00:38:06.300
+there's so much stuff we got to get
+
+00:38:06.320 --> 00:38:07.621
+into here at Deliriculture,
+
+00:38:07.681 --> 00:38:10.740
+but we got to stay focused, man.
+
+00:38:11.061 --> 00:38:12.461
+Yeah, let's go back to building.
+
+00:38:12.501 --> 00:38:13.302
+Go back to building.
+
+00:38:13.601 --> 00:38:14.521
+Go back to building.
+
+00:38:14.961 --> 00:38:16.503
+You know how fast we could build websites,
+
+00:38:16.563 --> 00:38:20.422
+so let's go to green.
+
+00:38:22.943 --> 00:38:26.804
+So, yeah, she said the Del Crits.
+
+00:38:28.123 --> 00:38:31.389
+X said, I never really use the connectors,
+
+00:38:31.429 --> 00:38:32.811
+but I'll have to check it out.
+
+00:38:33.813 --> 00:38:36.317
+I didn't know there were so many useful
+
+00:38:36.396 --> 00:38:36.597
+ones.
+
+00:38:36.657 --> 00:38:38.139
+Definitely a lot of useful ones.
+
+00:38:40.617 --> 00:38:43.179
+and at the end of the day uh
+
+00:38:43.199 --> 00:38:45.501
+we're gonna have a tutorial so so you
+
+00:38:45.541 --> 00:38:47.382
+definitely want to want to stay tuned for
+
+00:38:47.422 --> 00:38:50.344
+that because i bug him about all this
+
+00:38:50.744 --> 00:38:54.407
+all the time i'm like explain it to
+
+00:38:54.447 --> 00:38:56.268
+me like a third grader because i need
+
+00:38:56.307 --> 00:38:59.989
+it uh so yeah oh wow okay you
+
+00:39:00.010 --> 00:39:02.331
+remember them days it's like remember them
+
+00:39:02.351 --> 00:39:06.094
+days yep well yeah it says green that's
+
+00:39:06.114 --> 00:39:07.295
+what i had here folks okay
+
+00:39:08.846 --> 00:39:11.929
+It's like when I had hair.
+
+00:39:11.989 --> 00:39:13.070
+Man, it's awesome stuff.
+
+00:39:13.489 --> 00:39:13.889
+All right,
+
+00:39:13.929 --> 00:39:15.731
+so we're building a website for Green
+
+00:39:15.791 --> 00:39:16.773
+Foods Market.
+
+00:39:16.833 --> 00:39:17.233
+Let's see.
+
+00:39:17.273 --> 00:39:21.436
+You guys, there's already...
+
+00:39:22.217 --> 00:39:23.577
+There's already a site there,
+
+00:39:23.978 --> 00:39:26.179
+and we got to change that out because
+
+00:39:26.219 --> 00:39:29.682
+I want it to be more centric on...
+
+00:39:30.684 --> 00:39:31.684
+Should I drop some pictures?
+
+00:39:31.704 --> 00:39:31.764
+Yes.
+
+00:39:35.244 --> 00:39:35.403
+Okay,
+
+00:39:35.423 --> 00:39:36.585
+so I'm going to send you some pictures
+
+00:39:36.625 --> 00:39:37.505
+by email right now.
+
+00:39:37.525 --> 00:39:48.931
+I still got to visit the shop, man.
+
+00:39:48.972 --> 00:39:50.893
+I got to do that.
+
+00:39:50.913 --> 00:39:51.273
+Oh, yeah, man.
+
+00:39:51.313 --> 00:39:51.913
+Come on down.
+
+00:39:52.072 --> 00:39:53.454
+Come on down.
+
+00:39:53.594 --> 00:39:55.715
+And we're really going to revamp it in
+
+00:39:55.815 --> 00:39:57.556
+a certain kind of way because there's so
+
+00:39:57.576 --> 00:39:59.217
+much stuff I've done already, right?
+
+00:40:00.838 --> 00:40:01.599
+And we want to do...
+
+00:40:03.300 --> 00:40:03.880
+some more.
+
+00:40:05.485 --> 00:40:06.485
+There's so much to be done.
+
+00:40:07.068 --> 00:40:08.309
+So let me see here.
+
+00:40:41.224 --> 00:40:43.925
+and this is uh green foods market really
+
+00:40:44.106 --> 00:40:47.588
+like a huge labor of love for my
+
+00:40:47.648 --> 00:40:55.271
+folks who are just amazing people um very
+
+00:40:55.291 --> 00:40:58.474
+humble people and they do a lot in
+
+00:40:58.494 --> 00:41:00.434
+the community so i sent you i sent
+
+00:41:00.454 --> 00:41:03.097
+you some pictures just now let me see
+
+00:41:03.117 --> 00:41:04.938
+it you know kind of want to let
+
+00:41:04.958 --> 00:41:07.039
+me see here
+
+00:41:26.074 --> 00:41:30.896
+Got to add my dad in there.
+
+00:41:31.036 --> 00:41:32.418
+I didn't get him in the photo shoot.
+
+00:41:32.557 --> 00:41:33.938
+I got him a photo shoot after,
+
+00:41:33.958 --> 00:41:35.681
+but it wasn't like that.
+
+00:41:35.701 --> 00:41:35.780
+Yeah.
+
+00:42:01.115 --> 00:42:03.757
+You hear music and on your side I
+
+00:42:03.777 --> 00:42:04.617
+Heard it earlier.
+
+00:42:04.697 --> 00:42:05.219
+I don't hear it.
+
+00:42:05.239 --> 00:42:05.318
+No I
+
+00:42:09.536 --> 00:42:10.617
+Let's start playing it again.
+
+00:42:10.717 --> 00:42:12.338
+I just wasn't sure it was coming through.
+
+00:42:18.159 --> 00:42:18.440
+Again,
+
+00:42:18.500 --> 00:42:20.541
+if you want to listen to the vibes,
+
+00:42:21.221 --> 00:42:23.561
+they're a culture radio stream,
+
+00:42:23.621 --> 00:42:27.282
+lo-fi for us bias and for seven.
+
+00:42:28.443 --> 00:42:29.164
+I mean, I could play it.
+
+00:42:29.463 --> 00:42:30.483
+I could play it on my side.
+
+00:42:30.523 --> 00:42:31.144
+That's easy.
+
+00:42:31.224 --> 00:42:31.724
+I love that.
+
+00:42:33.224 --> 00:42:35.306
+I'm so serious,
+
+00:42:36.045 --> 00:42:37.226
+but then it might be too loud.
+
+00:42:37.246 --> 00:42:37.646
+I don't know.
+
+00:42:41.365 --> 00:42:46.407
+No, it's all good.
+
+00:42:46.706 --> 00:42:47.108
+All right,
+
+00:42:47.148 --> 00:42:50.847
+I'm going to play it on my side.
+
+00:42:50.907 --> 00:42:51.148
+All right.
+
+00:42:51.168 --> 00:42:51.947
+All right, I see a picture.
+
+00:42:51.967 --> 00:42:53.088
+Second set of pictures came through.
+
+00:42:53.108 --> 00:42:56.248
+You got more pictures.
+
+00:42:56.268 --> 00:42:57.650
+Hold on, hold on.
+
+00:42:57.769 --> 00:42:58.269
+Hold on.
+
+00:42:58.289 --> 00:43:00.090
+We got a plethora to choose from.
+
+00:43:00.170 --> 00:43:01.989
+Okay, hold on.
+
+00:43:02.030 --> 00:43:02.811
+Go, go, go.
+
+00:43:03.871 --> 00:43:04.271
+Let's see.
+
+00:43:36.902 --> 00:43:38.262
+Could you hear it on your side right
+
+00:43:38.302 --> 00:43:40.724
+now?
+
+00:43:40.764 --> 00:43:41.503
+No, I can't hear it.
+
+00:43:47.742 --> 00:43:48.943
+All right.
+
+00:43:49.103 --> 00:43:49.483
+All right.
+
+00:44:16.657 --> 00:44:18.378
+no it's it's like coming across real
+
+00:44:18.418 --> 00:44:22.643
+staticky oh there was just a train go
+
+00:44:22.663 --> 00:44:25.264
+by all right so
+
+00:44:43.822 --> 00:44:47.184
+real quick this is what we'll do so
+
+00:44:47.204 --> 00:44:50.027
+we'll add this and of course this goes
+
+00:44:50.106 --> 00:44:51.728
+all back down to like the prompts right
+
+00:44:52.128 --> 00:44:58.253
+right so i'm gonna keep it real simple
+
+00:44:58.333 --> 00:45:03.215
+and i'm going to go back chat gpt
+
+00:45:03.255 --> 00:45:13.043
+you chat you turn it off because it's
+
+00:45:13.123 --> 00:45:13.463
+it's like
+
+00:45:20.076 --> 00:45:20.695
+All right.
+
+00:45:20.715 --> 00:45:35.978
+I got, let's see.
+
+00:45:36.079 --> 00:45:37.358
+And then I have some other ones,
+
+00:45:37.418 --> 00:45:38.778
+but yeah.
+
+00:45:39.619 --> 00:45:41.579
+So you throw it back into chat GPT,
+
+00:45:41.699 --> 00:45:41.960
+right?
+
+00:45:42.059 --> 00:45:43.000
+And putting in a prompt.
+
+00:45:44.467 --> 00:45:46.429
+Yeah, so the process,
+
+00:45:46.509 --> 00:45:47.710
+and this is the best process I've seen
+
+00:45:48.050 --> 00:45:49.311
+when it comes to building websites,
+
+00:45:50.510 --> 00:45:55.494
+is focusing first on your brand voice and
+
+00:45:55.554 --> 00:45:56.195
+image, right?
+
+00:45:57.375 --> 00:46:00.416
+So your brand is always unique.
+
+00:46:01.197 --> 00:46:05.260
+You don't want like to determine your
+
+00:46:05.280 --> 00:46:07.840
+brand because then you get that AI slot
+
+00:46:07.860 --> 00:46:10.702
+that looks like everybody's stuff looks
+
+00:46:10.722 --> 00:46:11.123
+the same.
+
+00:46:11.768 --> 00:46:14.811
+someone to find your brand within ChatGPT
+
+00:46:15.512 --> 00:46:17.293
+and have it kind of mock it up
+
+00:46:17.373 --> 00:46:20.135
+or give you like a sample or a
+
+00:46:22.297 --> 00:46:23.938
+roadmap or a blueprint to work from.
+
+00:46:24.659 --> 00:46:26.420
+So I'm just going to say here I'm
+
+00:46:26.440 --> 00:46:28.641
+building a website for people to market.
+
+00:46:30.603 --> 00:46:32.563
+Market.
+
+00:46:34.626 --> 00:46:36.027
+Like YouTube.
+
+00:46:36.126 --> 00:46:37.527
+All right.
+
+00:46:40.987 --> 00:46:42.768
+This time I'll just say four different.
+
+00:46:44.447 --> 00:46:48.050
+I think the maximum amount of images you
+
+00:46:48.070 --> 00:46:50.291
+can do at one time is like ten.
+
+00:46:52.132 --> 00:46:52.371
+Of course,
+
+00:46:52.391 --> 00:46:53.411
+it won't take longer for us to get
+
+00:46:53.431 --> 00:46:55.273
+that ten images.
+
+00:46:55.293 --> 00:46:59.795
+What I've noticed is I would say three
+
+00:46:59.835 --> 00:47:01.715
+and four is the sweet spot.
+
+00:47:01.856 --> 00:47:04.637
+If you ask for more than that many
+
+00:47:04.657 --> 00:47:05.317
+variations,
+
+00:47:05.356 --> 00:47:06.958
+you're not going to really get much value
+
+00:47:07.577 --> 00:47:07.918
+out of it.
+
+00:47:08.802 --> 00:47:10.003
+they're going to kind of look the same.
+
+00:47:10.443 --> 00:47:11.965
+So if you say three or four,
+
+00:47:12.284 --> 00:47:14.146
+you will get some kind of different
+
+00:47:14.806 --> 00:47:16.407
+looking styles that you can really pick
+
+00:47:16.447 --> 00:47:16.688
+from.
+
+00:47:17.329 --> 00:47:21.211
+So four different examples.
+
+00:47:22.672 --> 00:47:23.594
+Or I would say mock-up. ...
+
+00:47:41.101 --> 00:47:42.501
+I'm like thinking and type at the same
+
+00:47:42.541 --> 00:47:42.842
+time.
+
+00:47:43.222 --> 00:47:44.063
+That's what I like to type.
+
+00:47:44.083 --> 00:47:46.065
+A lot of people actually do like voice,
+
+00:47:46.306 --> 00:47:48.929
+but I can't like, I can't talk.
+
+00:47:48.949 --> 00:47:51.851
+I feel like I can't talk it out.
+
+00:47:51.931 --> 00:47:53.592
+I can like think about it and type
+
+00:47:53.632 --> 00:47:53.893
+it out.
+
+00:47:53.934 --> 00:47:55.494
+That's just the way my brain works at
+
+00:47:55.514 --> 00:47:58.518
+least.
+
+00:47:58.597 --> 00:47:58.858
+All right.
+
+00:47:58.878 --> 00:48:00.800
+I do a little bit of both.
+
+00:48:00.820 --> 00:48:03.882
+If I'm in a rush,
+
+00:48:03.922 --> 00:48:05.304
+just talk to it.
+
+00:48:27.393 --> 00:48:31.295
+I'm saying this because I'm like,
+
+00:48:31.496 --> 00:48:33.297
+I don't want it to be like, hey,
+
+00:48:33.458 --> 00:48:34.820
+oh, here's a site you already have.
+
+00:48:34.840 --> 00:48:35.800
+Let me just recreate it.
+
+00:48:35.820 --> 00:48:37.161
+No, this is a very outdated site.
+
+00:48:38.483 --> 00:48:38.923
+Which one?
+
+00:48:39.724 --> 00:48:41.565
+The square space site.
+
+00:48:41.726 --> 00:48:43.327
+Oh, yeah, that's definitely out there.
+
+00:48:43.347 --> 00:48:44.527
+So I'm just going to be like, hey.
+
+00:48:45.108 --> 00:48:46.088
+I did that.
+
+00:48:46.108 --> 00:48:48.188
+That was before all of these wonderful
+
+00:48:48.228 --> 00:48:48.789
+things were happening.
+
+00:48:48.809 --> 00:48:51.351
+That was done in two thousand fifteen.
+
+00:48:52.431 --> 00:48:53.572
+Think somewhere around there.
+
+00:48:54.032 --> 00:48:56.273
+Wow.
+
+00:48:56.293 --> 00:48:57.114
+It's a Facebook.
+
+00:48:57.375 --> 00:48:58.454
+I was going to take that as I
+
+00:48:58.474 --> 00:48:58.835
+take.
+
+00:49:00.755 --> 00:49:02.657
+A Facebook and then we're going to dump
+
+00:49:03.177 --> 00:49:03.938
+images here.
+
+00:49:06.516 --> 00:49:07.677
+And what I like to do is I
+
+00:49:07.717 --> 00:49:09.338
+like to have a project folder.
+
+00:49:09.798 --> 00:49:11.161
+This is actually not a light,
+
+00:49:11.181 --> 00:49:12.581
+but it's very, it's super important.
+
+00:49:13.282 --> 00:49:15.885
+Here's like all my projects I'm working on
+
+00:49:16.085 --> 00:49:16.525
+currently.
+
+00:49:17.327 --> 00:49:17.668
+Yeah.
+
+00:49:18.447 --> 00:49:19.530
+And I have to bring it to market
+
+00:49:19.610 --> 00:49:20.170
+right here.
+
+00:49:20.570 --> 00:49:21.931
+So that's where we'll keep it like
+
+00:49:21.972 --> 00:49:22.612
+organized then.
+
+00:49:23.277 --> 00:49:23.617
+Yes,
+
+00:49:23.677 --> 00:49:25.259
+and when you go to actually build it
+
+00:49:25.298 --> 00:49:25.898
+with code,
+
+00:49:26.679 --> 00:49:28.621
+it's super important to keep all that
+
+00:49:29.242 --> 00:49:31.123
+organized in its own folder because it
+
+00:49:31.143 --> 00:49:33.744
+actually creates the application and files
+
+00:49:34.206 --> 00:49:36.206
+within that folder to be able to run
+
+00:49:36.266 --> 00:49:36.387
+it.
+
+00:49:37.288 --> 00:49:37.748
+Here we go.
+
+00:49:37.827 --> 00:49:40.471
+I believe there's going to be a lot
+
+00:49:40.490 --> 00:49:41.050
+of green.
+
+00:49:41.610 --> 00:49:42.411
+It's going to pick up on...
+
+00:49:44.132 --> 00:49:45.233
+Here we go.
+
+00:49:45.855 --> 00:49:46.074
+Run it.
+
+00:49:49.215 --> 00:49:51.175
+So it's going to analyze the images.
+
+00:49:51.195 --> 00:49:53.536
+It's going to look at the Facebook.
+
+00:49:53.576 --> 00:49:54.755
+It's going to look at the current site.
+
+00:49:57.117 --> 00:49:58.376
+And it's going to create some website
+
+00:49:58.416 --> 00:50:02.617
+mock-ups with the knowledge that we have
+
+00:50:02.697 --> 00:50:03.697
+of Green Foods Market.
+
+00:50:04.858 --> 00:50:05.579
+And then if you're like,
+
+00:50:05.619 --> 00:50:07.318
+let's say you don't have an established
+
+00:50:07.358 --> 00:50:08.659
+business like Green Foods Market,
+
+00:50:08.980 --> 00:50:10.599
+let's say you're doing a startup,
+
+00:50:11.059 --> 00:50:12.940
+it's still important for you to think
+
+00:50:12.980 --> 00:50:13.900
+those things through.
+
+00:50:13.920 --> 00:50:15.141
+You're going to think about, okay,
+
+00:50:16.833 --> 00:50:19.235
+How do I want my brand to look?
+
+00:50:19.436 --> 00:50:21.918
+What is my brand about?
+
+00:50:21.938 --> 00:50:25.382
+A lot of people that don't have websites,
+
+00:50:25.822 --> 00:50:27.585
+that starts with how you do your flyers.
+
+00:50:27.804 --> 00:50:30.266
+We talked about two weeks ago,
+
+00:50:30.347 --> 00:50:32.469
+people were advertising their business
+
+00:50:32.510 --> 00:50:32.769
+cards.
+
+00:50:33.199 --> 00:50:34.481
+Like you still have to think through that
+
+00:50:34.521 --> 00:50:35.862
+process when you're creating a business
+
+00:50:35.902 --> 00:50:37.643
+card, when you're creating a flyer.
+
+00:50:37.702 --> 00:50:39.824
+So even if you don't have a full
+
+00:50:39.844 --> 00:50:40.304
+website,
+
+00:50:40.364 --> 00:50:41.726
+but you've already got to the point where
+
+00:50:41.766 --> 00:50:44.307
+you have a business card or a flyer,
+
+00:50:44.929 --> 00:50:46.809
+use that as your brand, you know,
+
+00:50:47.030 --> 00:50:49.572
+or modify that to the way you like
+
+00:50:49.652 --> 00:50:49.751
+it.
+
+00:50:50.293 --> 00:50:51.634
+And then say, okay, you know,
+
+00:50:51.713 --> 00:50:53.235
+Davel is my brand.
+
+00:50:53.795 --> 00:50:54.715
+I could then use that,
+
+00:50:55.817 --> 00:50:57.938
+easily transform that to a website.
+
+00:50:57.958 --> 00:50:58.559
+So here we go, man.
+
+00:50:58.579 --> 00:51:00.360
+This is actually going a little bit fast.
+
+00:51:00.380 --> 00:51:00.820
+It's already...
+
+00:51:02.414 --> 00:51:04.257
+thinking about some things as you can see
+
+00:51:04.297 --> 00:51:06.259
+it already has seems like the strong
+
+00:51:06.378 --> 00:51:08.119
+positioning around health being a health
+
+00:51:08.139 --> 00:51:11.202
+food store in the market plant-based
+
+00:51:11.744 --> 00:51:13.826
+neighborhood market with groceries fruit
+
+00:51:13.846 --> 00:51:16.007
+trees like is it on point already oh
+
+00:51:16.027 --> 00:51:18.889
+yeah oh yeah definitely definitely on
+
+00:51:18.949 --> 00:51:21.311
+point based on the information we gave it
+
+00:51:21.331 --> 00:51:24.155
+which is just pictures a facebook page an
+
+00:51:24.215 --> 00:51:24.996
+outdated website
+
+00:51:27.878 --> 00:51:29.581
+You're going to throw that shade at me,
+
+00:51:29.621 --> 00:51:29.702
+huh?
+
+00:51:29.822 --> 00:51:31.304
+All right, I got you.
+
+00:51:31.344 --> 00:51:32.125
+It was definitely at me.
+
+00:51:32.144 --> 00:51:32.766
+It's all good, man.
+
+00:51:32.826 --> 00:51:33.547
+We having fun.
+
+00:51:33.567 --> 00:51:34.106
+We having fun.
+
+00:51:34.126 --> 00:51:35.349
+It was embarrassing to see.
+
+00:51:35.369 --> 00:51:36.190
+I know.
+
+00:51:36.731 --> 00:51:38.052
+It's like, you did this.
+
+00:51:38.927 --> 00:51:40.009
+And, you know, some of those pictures,
+
+00:51:40.048 --> 00:51:41.570
+I had to upload them myself.
+
+00:51:41.610 --> 00:51:42.811
+Like, I had to, like,
+
+00:51:43.612 --> 00:51:45.253
+put a white background in the back.
+
+00:51:45.672 --> 00:51:48.355
+So I had, like, a little cardboard box.
+
+00:51:48.494 --> 00:51:50.297
+I would have the picture,
+
+00:51:50.856 --> 00:51:52.237
+the item in the middle.
+
+00:51:52.539 --> 00:51:54.239
+I had to take that picture.
+
+00:51:54.599 --> 00:51:56.181
+Then I would have, oh, yeah.
+
+00:51:56.601 --> 00:51:57.541
+Yep, you've seen it.
+
+00:51:57.561 --> 00:52:01.065
+You know exactly which one it is, too.
+
+00:52:01.746 --> 00:52:03.246
+Yeah, I see it.
+
+00:52:03.266 --> 00:52:05.989
+I know it's this one.
+
+00:52:06.009 --> 00:52:06.469
+I see it right here.
+
+00:52:06.489 --> 00:52:06.768
+Oh, yeah.
+
+00:52:07.090 --> 00:52:07.969
+Those are definitely it.
+
+00:52:07.989 --> 00:52:08.630
+Those are definitely it.
+
+00:52:08.650 --> 00:52:08.771
+Uh-huh.
+
+00:52:09.773 --> 00:52:11.494
+Damn, I grabbed it from the other side.
+
+00:52:11.534 --> 00:52:13.315
+Yeah, it was something.
+
+00:52:13.356 --> 00:52:13.795
+Trust me.
+
+00:52:13.815 --> 00:52:13.916
+Yep.
+
+00:52:15.496 --> 00:52:18.099
+But I loaded every one of those products.
+
+00:52:18.119 --> 00:52:19.219
+Wow.
+
+00:52:19.280 --> 00:52:21.922
+Grabbed them from the other, like that,
+
+00:52:22.202 --> 00:52:25.625
+like the honey guy.
+
+00:52:25.644 --> 00:52:25.724
+Wow.
+
+00:52:25.764 --> 00:52:26.905
+Yeah, you know them, right?
+
+00:52:27.826 --> 00:52:28.387
+No, I don't.
+
+00:52:29.146 --> 00:52:30.708
+Yeah, so they're local as well.
+
+00:52:31.429 --> 00:52:32.829
+They used to come out to our farmers
+
+00:52:32.909 --> 00:52:34.311
+markets that we used to have over here
+
+00:52:34.351 --> 00:52:35.032
+every Sunday.
+
+00:52:35.891 --> 00:52:37.719
+And every other Sunday or something like
+
+00:52:37.759 --> 00:52:39.023
+that, we had quite a bit.
+
+00:52:39.043 --> 00:52:39.344
+We had...
+
+00:52:40.134 --> 00:52:43.054
+like, sixty to seventy events at once.
+
+00:52:43.155 --> 00:52:44.454
+Like, it was a lot of events.
+
+00:52:44.954 --> 00:52:46.574
+And I would always tell people, like,
+
+00:52:46.996 --> 00:52:47.376
+number one,
+
+00:52:47.416 --> 00:52:48.976
+you're doing this type of work.
+
+00:52:49.056 --> 00:52:50.396
+Make sure you're visible and make sure you
+
+00:52:50.436 --> 00:52:51.056
+have that brand,
+
+00:52:51.097 --> 00:52:53.597
+but also hit that community hard as hell.
+
+00:52:54.976 --> 00:52:55.797
+And that's what we did.
+
+00:52:56.157 --> 00:52:57.697
+We went to everybody's events.
+
+00:52:57.878 --> 00:52:59.358
+I went to everybody's events that were
+
+00:52:59.378 --> 00:53:00.079
+doing anything.
+
+00:53:01.179 --> 00:53:02.199
+And then, you know,
+
+00:53:02.219 --> 00:53:03.858
+they came out and supported us.
+
+00:53:03.898 --> 00:53:05.559
+And, you know, we had a great time.
+
+00:53:05.599 --> 00:53:06.079
+Great time.
+
+00:53:09.690 --> 00:53:16.697
+community yep yep community there you go
+
+00:53:16.737 --> 00:53:21.722
+wow one man yeah i like it i
+
+00:53:21.762 --> 00:53:23.364
+like it can i see it i i
+
+00:53:23.384 --> 00:53:24.784
+i just need to see it in real
+
+00:53:24.824 --> 00:53:25.945
+time you might have to drop it in
+
+00:53:25.965 --> 00:53:28.007
+the chat somewhere i don't know wow yeah
+
+00:53:29.829 --> 00:53:32.211
+yeah yeah
+
+00:53:34.521 --> 00:53:36.384
+got a shop, you got the plants, herbs,
+
+00:53:36.425 --> 00:53:36.885
+visit.
+
+00:53:37.005 --> 00:53:37.485
+Ooh, that's nice.
+
+00:53:37.505 --> 00:53:39.789
+That's nice.
+
+00:53:39.849 --> 00:53:41.590
+I want to add consultant, too, because,
+
+00:53:41.630 --> 00:53:41.771
+like,
+
+00:53:41.791 --> 00:53:43.172
+a lot of moms used to come in
+
+00:53:43.313 --> 00:53:45.536
+and try to get some info from our
+
+00:53:45.556 --> 00:53:46.036
+mom, too.
+
+00:53:46.077 --> 00:53:46.157
+Yeah.
+
+00:53:48.239 --> 00:53:50.061
+You know, some stuff like that, and then,
+
+00:53:50.242 --> 00:53:51.324
+you know, bookings,
+
+00:53:51.403 --> 00:53:51.543
+and
+
+00:53:52.994 --> 00:53:53.755
+You know, they're retired,
+
+00:53:53.775 --> 00:53:55.615
+so they would love to, you know,
+
+00:53:56.016 --> 00:53:57.697
+get out there and do stuff.
+
+00:53:58.817 --> 00:54:01.318
+Yeah, community, school thing.
+
+00:54:02.257 --> 00:54:04.338
+Yeah, we talked about that.
+
+00:54:04.358 --> 00:54:04.539
+Yeah.
+
+00:54:06.039 --> 00:54:07.079
+How come I can't see it no more,
+
+00:54:07.099 --> 00:54:07.260
+man?
+
+00:54:07.280 --> 00:54:08.159
+You just dropped it away.
+
+00:54:08.179 --> 00:54:09.460
+I was having a mesmerized moment.
+
+00:54:09.541 --> 00:54:10.501
+I was still thinking, man.
+
+00:54:10.621 --> 00:54:11.621
+This is like, just remember,
+
+00:54:11.641 --> 00:54:12.302
+we asked for four,
+
+00:54:12.342 --> 00:54:13.782
+so it's going to do four different.
+
+00:54:14.242 --> 00:54:15.382
+Oh, gotcha, gotcha.
+
+00:54:15.402 --> 00:54:18.204
+Yeah.
+
+00:54:18.224 --> 00:54:19.364
+Plant-based pantry.
+
+00:54:19.443 --> 00:54:20.405
+Ooh, I like that.
+
+00:54:20.425 --> 00:54:20.505
+Yeah.
+
+00:54:23.706 --> 00:54:24.246
+That's right.
+
+00:54:24.306 --> 00:54:26.306
+Now the hits of AI slop up in
+
+00:54:26.708 --> 00:54:27.007
+that.
+
+00:54:27.027 --> 00:54:28.467
+This is the method, though, Chris.
+
+00:54:28.507 --> 00:54:29.248
+This is the method.
+
+00:54:29.307 --> 00:54:32.628
+So you got to get through the mock-up
+
+00:54:33.228 --> 00:54:34.509
+within ChatGPT.
+
+00:54:35.329 --> 00:54:35.708
+I'm telling you,
+
+00:54:35.929 --> 00:54:37.889
+ChatGPT has the best image generation I've
+
+00:54:37.909 --> 00:54:39.789
+seen out of all the AI models.
+
+00:54:39.909 --> 00:54:42.210
+They're so good right now.
+
+00:54:42.429 --> 00:54:43.190
+They're so good.
+
+00:54:44.331 --> 00:54:45.431
+I'm going to, I mean,
+
+00:54:45.530 --> 00:54:46.891
+I'm still over at the shop.
+
+00:54:47.331 --> 00:54:49.592
+And let me see if I could call
+
+00:54:49.891 --> 00:54:51.532
+the mama green foods herself so she could
+
+00:54:51.552 --> 00:54:52.231
+take a look at this.
+
+00:54:52.849 --> 00:54:53.891
+It's not even over yet, man.
+
+00:54:53.911 --> 00:54:54.231
+Hey, man.
+
+00:54:54.271 --> 00:54:54.831
+You know I get excited.
+
+00:54:54.851 --> 00:54:55.072
+Come on, man.
+
+00:54:55.092 --> 00:54:59.195
+You know I get excited.
+
+00:54:59.775 --> 00:55:01.617
+Oh, man.
+
+00:55:01.677 --> 00:55:01.858
+Yeah,
+
+00:55:01.878 --> 00:55:03.619
+this is the step one in the method.
+
+00:55:04.440 --> 00:55:05.960
+We should get a couple more,
+
+00:55:06.121 --> 00:55:08.003
+and then we go from here.
+
+00:55:08.963 --> 00:55:11.306
+We take it into our CLI.
+
+00:55:11.326 --> 00:55:12.586
+We actually filled out the website.
+
+00:55:12.606 --> 00:55:13.867
+There we go.
+
+00:55:13.887 --> 00:55:17.070
+So version one, blah, blah, blah.
+
+00:55:17.090 --> 00:55:17.471
+Man, come on.
+
+00:55:17.490 --> 00:55:18.271
+Give me version two, three, four.
+
+00:55:18.391 --> 00:55:18.431
+So...
+
+00:55:29.925 --> 00:55:30.585
+And then though, Chris,
+
+00:55:30.606 --> 00:55:55.083
+that's only on the medium reasoning.
+
+00:55:55.123 --> 00:55:55.545
+Wow.
+
+00:55:57.061 --> 00:55:59.103
+Yeah, it was like one very... Oh,
+
+00:55:59.163 --> 00:56:00.103
+here's the second one.
+
+00:56:01.204 --> 00:56:02.264
+Here's the second one, man.
+
+00:56:02.284 --> 00:56:04.306
+Oh, wow.
+
+00:56:04.405 --> 00:56:06.306
+Wow.
+
+00:56:07.007 --> 00:56:08.088
+Remember,
+
+00:56:08.128 --> 00:56:09.909
+we asked for four different options.
+
+00:56:09.929 --> 00:56:10.889
+It's going to give us four.
+
+00:56:10.909 --> 00:56:13.731
+Oh, I like that.
+
+00:56:13.851 --> 00:56:15.130
+Yeah.
+
+00:56:15.150 --> 00:56:15.590
+That's the cool thing.
+
+00:56:15.612 --> 00:56:18.032
+It's like very different fonts.
+
+00:56:18.092 --> 00:56:19.072
+Like, remember now,
+
+00:56:19.092 --> 00:56:21.795
+a lot of people look at AI stuff
+
+00:56:21.815 --> 00:56:22.514
+and it's like, oh, man,
+
+00:56:22.534 --> 00:56:23.695
+I already know it's AI because of the
+
+00:56:23.715 --> 00:56:25.016
+font and the way it looks.
+
+00:56:25.056 --> 00:56:25.657
+So that had to come through.
+
+00:56:26.697 --> 00:56:29.197
+are very different.
+
+00:56:30.759 --> 00:56:34.079
+So basically you put that prompt in there
+
+00:56:34.259 --> 00:56:37.280
+and you see the four that you kind
+
+00:56:37.320 --> 00:56:37.679
+of like,
+
+00:56:37.699 --> 00:56:40.780
+you maybe edit it and tweak it.
+
+00:56:41.780 --> 00:56:43.101
+What's the next step?
+
+00:56:43.400 --> 00:56:44.041
+What happens next?
+
+00:56:44.061 --> 00:56:48.922
+So the image is just a mock-up for
+
+00:56:48.942 --> 00:56:50.882
+the actual AI,
+
+00:56:50.902 --> 00:56:52.342
+your CLI to go off of.
+
+00:56:52.882 --> 00:56:53.603
+So the next step
+
+00:56:54.744 --> 00:56:56.786
+is that project photo that we have.
+
+00:56:57.585 --> 00:57:00.809
+I'll actually download the mock-up image.
+
+00:57:01.168 --> 00:57:02.650
+So I got Mama Green foods right here.
+
+00:57:02.670 --> 00:57:03.990
+Hey, Mama Green.
+
+00:57:04.751 --> 00:57:06.193
+Hi.
+
+00:57:06.233 --> 00:57:07.474
+We're working on the website.
+
+00:57:07.653 --> 00:57:09.094
+We're working on the website right now.
+
+00:57:09.335 --> 00:57:10.876
+Can you show us the other one right
+
+00:57:10.896 --> 00:57:11.217
+there?
+
+00:57:11.297 --> 00:57:11.657
+Yeah.
+
+00:57:11.916 --> 00:57:12.197
+Oh, wow.
+
+00:57:12.217 --> 00:57:12.557
+I like that one.
+
+00:57:12.577 --> 00:57:13.318
+I like that one.
+
+00:57:13.338 --> 00:57:19.242
+That was one of my first ones.
+
+00:57:19.322 --> 00:57:19.762
+Wow.
+
+00:57:21.664 --> 00:57:23.405
+I had them do a photo shoot.
+
+00:57:25.235 --> 00:57:26.297
+So they have their own products.
+
+00:57:26.697 --> 00:57:27.998
+That's what we were discussing and working
+
+00:57:28.038 --> 00:57:28.438
+on today.
+
+00:57:28.458 --> 00:57:30.079
+So yeah,
+
+00:57:30.099 --> 00:57:35.643
+this is- Those pictures I haven't even
+
+00:57:35.663 --> 00:57:36.382
+seen yet.
+
+00:57:36.402 --> 00:57:37.244
+They're in my laptop.
+
+00:57:37.284 --> 00:57:38.545
+They live in the laptop.
+
+00:57:41.126 --> 00:57:42.447
+Let me see if it's guiding me more.
+
+00:57:42.467 --> 00:57:43.427
+I was still working.
+
+00:57:43.927 --> 00:57:44.909
+So I asked it before.
+
+00:57:44.949 --> 00:57:46.789
+It's going to generate the other two.
+
+00:57:46.809 --> 00:57:49.652
+It's still marching away.
+
+00:57:52.780 --> 00:57:53.382
+I think right now,
+
+00:57:53.442 --> 00:57:54.603
+this is the top one.
+
+00:57:55.123 --> 00:57:57.485
+The white background.
+
+00:57:58.085 --> 00:57:58.505
+I love it.
+
+00:57:59.266 --> 00:58:00.106
+It's very clean.
+
+00:58:01.286 --> 00:58:02.128
+Very inviting.
+
+00:58:03.949 --> 00:58:04.909
+You can see everything.
+
+00:58:05.811 --> 00:58:06.791
+Very organized.
+
+00:58:07.452 --> 00:58:08.913
+You got your plant-based pantry.
+
+00:58:09.652 --> 00:58:11.775
+I love the way they said pantry, though.
+
+00:58:12.014 --> 00:58:14.255
+I love that.
+
+00:58:14.376 --> 00:58:14.956
+I like that.
+
+00:58:15.356 --> 00:58:16.818
+That was clean.
+
+00:58:16.938 --> 00:58:19.440
+There's a section you can put the story
+
+00:58:20.280 --> 00:58:22.041
+behind the green foods market.
+
+00:58:23.251 --> 00:58:24.331
+Yeah.
+
+00:58:24.672 --> 00:58:26.074
+Plants and herbs right there to shop.
+
+00:58:26.514 --> 00:58:27.735
+So the plants and herbs can be like,
+
+00:58:27.775 --> 00:58:28.036
+you know,
+
+00:58:28.056 --> 00:58:30.559
+there's some informational stuff.
+
+00:58:31.199 --> 00:58:33.762
+And they can buy it, too,
+
+00:58:33.862 --> 00:58:35.804
+because what we have is a lot of
+
+00:58:35.864 --> 00:58:37.686
+dried herbs from the garden right now.
+
+00:58:38.407 --> 00:58:40.349
+Yeah, so much, man, so much.
+
+00:58:40.429 --> 00:58:40.509
+Yeah.
+
+00:58:44.644 --> 00:58:45.525
+our roots.
+
+00:58:45.606 --> 00:58:46.945
+Even the copy is different too.
+
+00:58:46.965 --> 00:58:49.268
+It's not like it's the same headers up
+
+00:58:49.307 --> 00:58:49.527
+top.
+
+00:58:49.547 --> 00:58:52.809
+It's like market, garden, our roots.
+
+00:58:54.971 --> 00:58:57.172
+Explore the market, meet the family.
+
+00:58:57.291 --> 00:58:58.992
+You could always cut and paste some of
+
+00:58:59.012 --> 00:59:01.293
+them to mix it up.
+
+00:59:01.333 --> 00:59:03.875
+This is all going to be the first
+
+00:59:03.914 --> 00:59:04.115
+step.
+
+00:59:04.135 --> 00:59:07.016
+This is like we're on a whiteboard.
+
+00:59:07.036 --> 00:59:10.679
+They're throwing stuff.
+
+00:59:10.759 --> 00:59:11.119
+Exactly.
+
+00:59:11.139 --> 00:59:12.159
+Here's the next one.
+
+00:59:13.039 --> 00:59:14.141
+Boom, here's another one.
+
+00:59:14.956 --> 00:59:16.036
+Oh, wow.
+
+00:59:16.077 --> 00:59:16.717
+Remember, guys,
+
+00:59:16.737 --> 00:59:18.659
+we got totally different sites.
+
+00:59:19.498 --> 00:59:20.378
+Ideas right here.
+
+00:59:20.639 --> 00:59:21.420
+Three ideas.
+
+00:59:22.079 --> 00:59:23.059
+Wow.
+
+00:59:23.119 --> 00:59:23.521
+Already.
+
+00:59:24.701 --> 00:59:27.041
+It's working on the fourth one.
+
+00:59:27.302 --> 00:59:29.443
+I really like that picture.
+
+00:59:30.023 --> 00:59:32.503
+I know you guys are not going with
+
+00:59:32.543 --> 00:59:32.963
+this one.
+
+00:59:33.465 --> 00:59:35.324
+I'm like, nope.
+
+00:59:37.766 --> 00:59:38.947
+It's got like salmon in there.
+
+00:59:40.094 --> 00:59:41.936
+yeah definitely definitely not gonna work
+
+00:59:41.976 --> 00:59:43.956
+but i love that background picture the one
+
+00:59:43.976 --> 00:59:46.760
+right here yeah this one's nice yeah yeah
+
+00:59:46.980 --> 00:59:48.701
+that's a dope picture this is a close
+
+00:59:48.780 --> 00:59:51.423
+one i think the white backgrounds and look
+
+00:59:51.443 --> 00:59:54.806
+yeah i think it works in or no
+
+00:59:54.846 --> 00:59:57.728
+no you gotta start way before that you're
+
+00:59:57.748 --> 01:00:02.552
+gonna start the market we started at in
+
+01:00:02.713 --> 01:00:03.514
+oh seven
+
+01:00:05.373 --> 01:00:07.873
+but it wasn't Green Foods Market, right?
+
+01:00:07.934 --> 01:00:09.335
+So my parents had it as the right
+
+01:00:09.375 --> 01:00:09.976
+arm ministry.
+
+01:00:11.996 --> 01:00:12.936
+And they had,
+
+01:00:13.577 --> 01:00:15.998
+because they believe that the health
+
+01:00:16.039 --> 01:00:18.619
+message is the right arm of the gospel.
+
+01:00:18.639 --> 01:00:19.740
+That was the whole concept.
+
+01:00:20.141 --> 01:00:24.943
+Like you cannot be not healthy and believe
+
+01:00:24.963 --> 01:00:25.903
+in God kind of thing.
+
+01:00:26.545 --> 01:00:29.385
+You had to be healthy, mind, body,
+
+01:00:29.425 --> 01:00:30.606
+and soul, so.
+
+01:00:31.940 --> 01:00:34.101
+They believe that one thousand percent.
+
+01:00:34.262 --> 01:00:34.942
+And it's, you know,
+
+01:00:35.001 --> 01:00:38.862
+it's backed by the Bible itself and and
+
+01:00:39.402 --> 01:00:40.423
+just health in general.
+
+01:00:40.643 --> 01:00:41.923
+You had to have a good mind anyway.
+
+01:00:42.724 --> 01:00:43.403
+Exactly.
+
+01:00:43.543 --> 01:00:43.583
+So.
+
+01:00:43.623 --> 01:00:49.106
+So, yeah, that's what they were.
+
+01:00:49.166 --> 01:00:49.286
+True.
+
+01:00:49.385 --> 01:00:49.485
+Yeah.
+
+01:00:49.505 --> 01:00:51.246
+This one and definitely the first one.
+
+01:00:52.766 --> 01:00:54.807
+So it's still it's still working away on
+
+01:00:54.947 --> 01:00:55.568
+this last one.
+
+01:01:04.672 --> 01:01:05.793
+And this is kind of the same thing
+
+01:01:05.813 --> 01:01:06.373
+we did with yours.
+
+01:01:06.414 --> 01:01:06.833
+Actually,
+
+01:01:06.853 --> 01:01:08.335
+this is the exact same thing we did
+
+01:01:08.355 --> 01:01:08.954
+with your site.
+
+01:01:09.476 --> 01:01:10.556
+We had, like, what,
+
+01:01:10.596 --> 01:01:12.697
+three different options?
+
+01:01:13.418 --> 01:01:15.878
+And then we actually took some things from
+
+01:01:16.179 --> 01:01:17.840
+other options and mixed them in.
+
+01:01:17.860 --> 01:01:20.342
+So it's kind of like we knew what
+
+01:01:20.362 --> 01:01:21.583
+we wanted to do, but then we're like,
+
+01:01:21.682 --> 01:01:21.862
+oh,
+
+01:01:21.922 --> 01:01:23.543
+we'll take some ideas from this one and
+
+01:01:23.563 --> 01:01:24.965
+throw it in.
+
+01:01:24.985 --> 01:01:26.606
+That's kind of how we developed the real
+
+01:01:26.626 --> 01:01:26.925
+estate deal lab.
+
+01:01:26.945 --> 01:01:27.985
+I love that hand treatment.
+
+01:01:28.025 --> 01:01:30.108
+So that's how we came here.
+
+01:01:30.128 --> 01:01:32.268
+We're like, yeah, like, have this.
+
+01:01:35.713 --> 01:01:37.014
+You could take some of that and throw
+
+01:01:37.034 --> 01:01:37.434
+it on there.
+
+01:01:37.514 --> 01:01:38.775
+I love this top part here.
+
+01:01:39.235 --> 01:01:40.336
+This is elegant.
+
+01:01:40.797 --> 01:01:41.677
+Very premium.
+
+01:01:43.699 --> 01:01:45.300
+Maybe you could take that other picture.
+
+01:01:45.340 --> 01:01:47.141
+Maybe you could take that picture with her
+
+01:01:47.302 --> 01:01:48.844
+from there and throw it on there.
+
+01:01:56.710 --> 01:01:56.971
+Yeah.
+
+01:01:56.990 --> 01:01:58.391
+Yeah, it's really just a picture, really.
+
+01:01:58.411 --> 01:02:00.914
+Everything else is spot on.
+
+01:02:02.284 --> 01:02:04.125
+So I'm already thinking about the prompt.
+
+01:02:04.144 --> 01:02:04.724
+It would be like,
+
+01:02:04.764 --> 01:02:07.847
+take the hero image from here.
+
+01:02:08.568 --> 01:02:09.867
+Right.
+
+01:02:09.887 --> 01:02:13.831
+Yeah, that would really, really be good.
+
+01:02:14.791 --> 01:02:15.751
+Oh, here's the fourth one.
+
+01:02:15.891 --> 01:02:16.092
+All right.
+
+01:02:17.231 --> 01:02:17.452
+Oh, wow.
+
+01:02:17.472 --> 01:02:19.273
+This is like a cultural type of,
+
+01:02:19.614 --> 01:02:20.594
+I feel like I'm going to a jazz
+
+01:02:20.614 --> 01:02:21.914
+festival as soon as I see it.
+
+01:02:22.034 --> 01:02:22.956
+Right, right, right.
+
+01:02:22.976 --> 01:02:24.235
+My mom probably would not love it.
+
+01:02:24.255 --> 01:02:26.918
+I feel like I'm about to listen to
+
+01:02:26.938 --> 01:02:30.239
+the blues, like New Orleans or something.
+
+01:02:30.340 --> 01:02:30.579
+Yeah.
+
+01:02:31.757 --> 01:02:33.900
+we're jazzing i love how they take like
+
+01:02:33.920 --> 01:02:35.681
+the picture and everything and like just
+
+01:02:35.740 --> 01:02:39.083
+incorporates it into this guys like this
+
+01:02:39.123 --> 01:02:42.965
+is all done by chat dbt blowing me
+
+01:02:43.005 --> 01:02:45.126
+away i want all the images by the
+
+01:02:45.246 --> 01:02:47.947
+way because that's amazing yeah like this
+
+01:02:48.007 --> 01:02:51.891
+is really beautiful oh more than a market
+
+01:02:51.951 --> 01:02:55.612
+it's a living community i made it i
+
+01:02:55.632 --> 01:02:57.054
+made it i made a real hard decision
+
+01:02:57.114 --> 01:02:57.273
+now
+
+01:02:58.960 --> 01:03:00.541
+How did I choose from all this, Donville?
+
+01:03:00.561 --> 01:03:03.822
+You just gave me four different premium
+
+01:03:03.882 --> 01:03:04.342
+sites.
+
+01:03:04.722 --> 01:03:08.164
+Four is just too much.
+
+01:03:08.224 --> 01:03:08.625
+Wow.
+
+01:03:10.065 --> 01:03:10.266
+Insane.
+
+01:03:12.126 --> 01:03:16.708
+Man.
+
+01:03:16.789 --> 01:03:17.590
+Wow.
+
+01:03:17.610 --> 01:03:21.251
+We got some things to think about, man.
+
+01:03:21.351 --> 01:03:21.771
+All right.
+
+01:03:21.791 --> 01:03:24.532
+I know we're short on time,
+
+01:03:25.074 --> 01:03:25.753
+so we're going to
+
+01:03:25.947 --> 01:03:26.527
+Paul's here.
+
+01:03:26.867 --> 01:03:27.929
+We're still going to work on this.
+
+01:03:28.190 --> 01:03:29.411
+So this is something we're going to work
+
+01:03:29.512 --> 01:03:29.652
+on.
+
+01:03:29.793 --> 01:03:30.833
+I'm going to send you these images,
+
+01:03:30.873 --> 01:03:31.315
+Nathaniel.
+
+01:03:31.335 --> 01:03:31.414
+Yeah.
+
+01:03:32.836 --> 01:03:34.860
+And definitely I'll send them up in the
+
+01:03:34.960 --> 01:03:35.260
+email.
+
+01:03:39.798 --> 01:03:41.599
+Can't you just send the link and we
+
+01:03:41.619 --> 01:03:43.481
+can work on it together in that way?
+
+01:03:44.362 --> 01:03:47.085
+Yes, I believe I can.
+
+01:03:47.105 --> 01:03:48.204
+That's something we found out the other
+
+01:03:48.224 --> 01:03:48.324
+day.
+
+01:03:48.344 --> 01:03:49.266
+You can just share.
+
+01:03:49.326 --> 01:03:51.568
+You can share the thing.
+
+01:03:52.068 --> 01:03:52.748
+I was so happy.
+
+01:03:52.768 --> 01:03:53.389
+I was like, man,
+
+01:03:53.449 --> 01:03:54.190
+I showed Donville something.
+
+01:03:54.210 --> 01:03:54.929
+I just shared a link.
+
+01:03:54.949 --> 01:03:55.070
+Right.
+
+01:03:55.090 --> 01:04:02.195
+Here we go.
+
+01:04:04.157 --> 01:04:04.657
+That's awesome.
+
+01:04:04.677 --> 01:04:05.398
+Wow.
+
+01:04:23.483 --> 01:04:24.545
+Very good stuff.
+
+01:04:24.605 --> 01:04:25.686
+Very good stuff.
+
+01:04:27.733 --> 01:04:29.034
+If you have any questions, folks,
+
+01:04:29.195 --> 01:04:30.494
+of what just happened or you want to
+
+01:04:30.534 --> 01:04:31.074
+see more,
+
+01:04:31.215 --> 01:04:33.735
+definitely follow and subscribe to Larry
+
+01:04:33.775 --> 01:04:34.235
+Culture.
+
+01:04:34.695 --> 01:04:36.717
+He's doing amazing things out here.
+
+01:04:37.717 --> 01:04:39.938
+Super excited for all of the new
+
+01:04:39.978 --> 01:04:40.697
+developments.
+
+01:04:41.418 --> 01:04:42.338
+If you want to see more,
+
+01:04:42.358 --> 01:04:43.518
+if you want him to work on a
+
+01:04:43.599 --> 01:04:44.500
+project for you,
+
+01:04:44.599 --> 01:04:45.900
+we're definitely open to that.
+
+01:04:47.561 --> 01:04:48.701
+We're going to be doing it in the
+
+01:04:48.721 --> 01:04:49.840
+community as well.
+
+01:04:51.121 --> 01:04:54.023
+So definitely keep in touch with us as
+
+01:04:54.083 --> 01:04:54.262
+well.
+
+01:04:57.516 --> 01:04:59.559
+That's been a good Tech Thursday.
+
+01:05:01.420 --> 01:05:02.219
+Hey, I stayed awake.
+
+01:05:02.260 --> 01:05:02.621
+Look at me.
+
+01:05:02.940 --> 01:05:03.300
+Awake.
+
+01:05:03.842 --> 01:05:04.382
+All right.
+
+01:05:04.442 --> 01:05:05.003
+Wide awake.
+
+01:05:05.822 --> 01:05:06.304
+Yeah, I know.
+
+01:05:06.364 --> 01:05:07.644
+I got to take this little drive,
+
+01:05:07.704 --> 01:05:09.045
+but yeah, I'm wide awake.
+
+01:05:12.648 --> 01:05:13.068
+All good.
+
+01:05:13.128 --> 01:05:13.309
+All good.
+
+01:05:13.329 --> 01:05:14.710
+We got W Stream in the chat.
+
+01:05:14.730 --> 01:05:18.632
+Yeah, appreciate that.
+
+01:05:18.672 --> 01:05:19.813
+Thanks for staying with us.
+
+01:05:21.905 --> 01:05:22.626
+We're going to sign out.
+
+01:05:22.666 --> 01:05:25.067
+We'll continue to work on the website.
+
+01:05:25.206 --> 01:05:26.186
+Of course, next week,
+
+01:05:26.807 --> 01:05:28.307
+the website will definitely be live by
+
+01:05:28.347 --> 01:05:29.889
+then, so we can actually walk you through.
+
+01:05:30.489 --> 01:05:31.668
+There's going to be a lot of cool
+
+01:05:31.688 --> 01:05:33.969
+features that we'll put up on there.
+
+01:05:33.989 --> 01:05:38.911
+Oh, yeah.
+
+01:05:38.931 --> 01:05:39.612
+Thank you, Daniel.
+
+01:05:39.711 --> 01:05:40.452
+Always a pleasure.
+
+01:05:40.873 --> 01:05:41.873
+Y'all have a great night.
+
+01:05:42.413 --> 01:05:43.914
+Stay safe out there.
+
+01:05:43.934 --> 01:05:44.813
+Build now.
+
+01:05:45.534 --> 01:05:45.974
+Yes.
+
+01:05:46.635 --> 01:05:46.994
+Peace.
+
