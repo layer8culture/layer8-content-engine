@@ -1,0 +1,157 @@
+# Layer8 Studio configuration. Everything tunable lives here; secrets live in .env.
+
+# Kill switch. true (or a file named PAUSE next to this config) blocks ALL publishing.
+paused: false
+
+timezone: America/New_York
+
+# The "brains". Any model the Copilot CLI accepts.
+model: claude-opus-5.5
+copilot:
+  command: copilot
+  timeout_minutes: 25
+  # Domains the model may web_fetch while researching (in addition to the RSS links we hand it).
+  allow_urls:
+    - openai.com
+    - anthropic.com
+    - blog.google
+    - deepmind.google
+    - github.blog
+    - huggingface.co
+    - techcrunch.com
+    - theverge.com
+    - arstechnica.com
+    - technologyreview.com
+    - microsoft.com
+    - venturebeat.com
+
+# RSS/Atom feeds pulled before planning (last `news_days` days).
+news_days: 5
+news_feeds:
+  - {name: OpenAI, url: "https://openai.com/news/rss.xml"}
+  - {name: Google AI, url: "https://blog.google/technology/ai/rss/"}
+  - {name: GitHub Blog, url: "https://github.blog/feed/"}
+  - {name: Hugging Face, url: "https://huggingface.co/blog/feed.xml"}
+  - {name: TechCrunch AI, url: "https://techcrunch.com/category/artificial-intelligence/feed/"}
+  - {name: The Verge AI, url: "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"}
+  - {name: Ars Technica AI, url: "https://arstechnica.com/ai/feed/"}
+  - {name: MIT Technology Review AI, url: "https://www.technologyreview.com/topic/artificial-intelligence/feed"}
+
+platforms:
+  instagram: true
+  youtube: true
+  tiktok: false   # off for now
+  x: false        # off for now
+
+# Daily cadence (ceilings the planner fills; gates may hold some back).
+cadence:
+  layer8culture:
+    instagram_posts: 3          # 2-3 recommended; one of them is the reel
+    formats: [carousel, reel, single]   # rotation hint; story is used on Tech Thursday days
+    youtube_shorts: 1           # the reel is cross-posted as a YouTube Short
+  radio:
+    instagram_posts: 1
+    youtube_short_when_loop_clip: true  # needs a clip in inbox/video/radio-*.mp4
+  tech_thursday:
+    weekday: thursday
+    promo_days: [wednesday, thursday]
+    recap_day: friday
+
+# Facts the planner may state. Leave a value empty and the model will not mention it.
+facts:
+  website: https://layer8culture.io
+  tech_thursday_time: ""          # e.g. "Thursdays 8 PM ET" - empty = never state a time
+  tech_thursday_url: ""           # e.g. the YouTube channel/live URL
+  radio_stream_url: "https://www.youtube.com/watch?v=j0VlqqJp5FE"   # verify it's still the live stream
+  radio_stream_is_live_24_7: false   # set true only when the 24/7 stream is confirmed running
+  sponsor: ""                     # e.g. FOBFLO (only when a sponsor post is wanted)
+
+# Posting windows / gaps (copied from the legacy engine).
+schedule_windows_file: config/schedule-windows.json
+
+# Publishing
+publish:
+  # How far ahead a post is pushed to Postiz (scheduled there at its exact time).
+  # The publish task runs every 30 min, so heroes can arrive until shortly before post time.
+  lookahead_minutes: 50
+  # If the laptop was off and a post time passed, still post it if we're within this window; else mark missed.
+  catch_up_grace_minutes: 180
+  youtube_privacy: public   # YouTube may still force private until the Google app is verified
+  # Integration (channel) IDs. Env vars override these. Empty => that route is skipped, not errored.
+  channels:
+    layer8culture:
+      instagram: {env: LAYER8_IG_CHANNEL_ID, default: cmqd9915w0001o5717h436ivp}
+      youtube: {env: YOUTUBE_LAYER8_CHANNEL_ID, default: ""}
+      tiktok: {env: TIKTOK_CHANNEL_ID, default: ""}
+    radio:
+      instagram: {env: LOFI_IG_CHANNEL_ID, default: cmqgzb1xv000qo571zuz5lqfm}
+      youtube: {env: YOUTUBE_LOFI_CHANNEL_ID, default: ""}
+
+# Quality gates (fully automatic posting => these are the safety net)
+gates:
+  max_hashtags_instagram: 8
+  max_hashtags_youtube: 5
+  max_exclamations: 1
+  max_emojis: 3
+  hook_max_chars: 140
+  caption_max_chars: 2200
+  duplicate_lookback_days: 21
+  duplicate_similarity: 0.55
+  min_font_scale: 0.62          # renderer may shrink copy to 62% before failing text-fit
+  beat_max_words: 5
+  beat_max_chars: 26
+  allowed_link_domains: [layer8culture.io, youtube.com, youtu.be, instagram.com]
+  banned_phrases:
+    - revolutionary ai solutions
+    - disrupting the industry
+    - next-generation synergy
+    - unlocking innovation at scale
+    - ai-powered transformation platform
+    - game-changing paradigm shift
+    - game changer
+    - game-changer
+    - mind-blowing
+    - mind blowing
+    - insane
+    - crushing it
+    - 10x your
+    - you won't believe
+    - secret hack
+    - hack your
+    - unleash
+    - supercharge
+    - skyrocket
+    - level up your hustle
+    - grind never stops
+    - rise and grind
+    - limited time
+    - act now
+    - don't miss out
+    - guaranteed
+    - "100%"
+    - everyone is using
+    - nobody is talking about
+    - in today's fast-paced world
+    - delve
+  radio_banned_topics: [prompt, chatgpt, claude, gemini, openai, tutorial, how to use, ai news]
+
+# Visuals
+visual:
+  hero_watch: true                 # ingest picks up studio/inbox/<filename>.png|jpg
+  ken_burns_reels_with_hero: true
+  layer8_audio_bed: ""             # optional licensed audio file for layer8 reels (path relative to studio/)
+  reel_seconds: 10
+
+# Premium video (Higgsfield). Disabled unless HIGGSFIELD_API_KEY is set ("key_id:key_secret").
+higgsfield:
+  enabled: true
+  # Model endpoint path from console.higgsfield.ai (e.g. a Kling / Veo / Seedance image-to-video route).
+  model_path: ""
+  monthly_credit_cap: 0            # 0 = never spend
+  credits_per_job_estimate: 40
+  use_for: [tech_thursday]
+
+notify:
+  # Set DISCORD_WEBHOOK_URL or SLACK_WEBHOOK_URL in .env to receive summaries.
+  on_run_daily: true
+  on_publish: true
