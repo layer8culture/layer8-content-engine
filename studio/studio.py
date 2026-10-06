@@ -120,6 +120,10 @@ def cmd_publish(a, cfg):
         d = config.parse_date(a.date, cfg) if a.date else now.astimezone(config.tz(cfg)).date()
         plan = load_plan(d)
         if plan is None:
+            cutoff = int(cfg["publish"].get("same_day_plan_cutoff_hour", 14))
+            if now.astimezone(config.tz(cfg)).hour >= cutoff:
+                log(f"no plan for today ({d}) and it's past {cutoff}:00 — not planning same-day; run-daily covers tomorrow")
+                return
             log(f"no plan for today ({d}); generating one now")
             plan, manifest, results, _ = produce(d, cfg)
         else:

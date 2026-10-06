@@ -76,6 +76,8 @@ publish:
   lookahead_minutes: 50
   # If the laptop was off and a post time passed, still post it if we're within this window; else mark missed.
   catch_up_grace_minutes: 180
+  # If today has no plan (laptop was off at 19:00), publish plans same-day only before this hour.
+  same_day_plan_cutoff_hour: 14
   youtube_privacy: public   # YouTube may still force private until the Google app is verified
   # Integration (channel) IDs. Env vars override these. Empty => that route is skipped, not errored.
   channels:
