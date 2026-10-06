@@ -130,7 +130,7 @@ def publish_due(plan: dict, d: date, cfg: dict, manifest: dict, gate_results: di
                     except Exception as exc:  # noqa: BLE001
                         fails = sum(1 for r in context.read_jsonl(POSTED_LOG) if r.get("id") == post["id"] and r.get("platform") == platform and r.get("status") == "failed")
                         row = {**base, "status": "failed-final" if fails >= 2 else "failed", "reason": str(exc)[:500]}
-            if row["status"] != "dry-run":
+            if not dry:
                 _log(row)
             actions.append(row)
             log(f"  {row['status']:<9} {post['id']} → {platform} @ {when}" + (f"  ({row.get('reason')})" if row.get("reason") else ""))

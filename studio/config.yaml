@@ -81,11 +81,11 @@ publish:
   channels:
     layer8culture:
       instagram: {env: LAYER8_IG_CHANNEL_ID, default: cmqd9915w0001o5717h436ivp}
-      youtube: {env: YOUTUBE_LAYER8_CHANNEL_ID, default: ""}
+      youtube: {env: YOUTUBE_LAYER8_CHANNEL_ID, default: cmqlaqfas0001tf7fizmjs2ks}
       tiktok: {env: TIKTOK_CHANNEL_ID, default: ""}
     radio:
       instagram: {env: LOFI_IG_CHANNEL_ID, default: cmqgzb1xv000qo571zuz5lqfm}
-      youtube: {env: YOUTUBE_LOFI_CHANNEL_ID, default: ""}
+      youtube: {env: YOUTUBE_LOFI_CHANNEL_ID, default: cmqlar2520003tf7ffudzw17i}
 
 # Quality gates (fully automatic posting => these are the safety net)
 gates:

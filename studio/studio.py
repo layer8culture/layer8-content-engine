@@ -18,6 +18,11 @@ import time
 from datetime import datetime
 
 from studio_lib import config, gates, heroes, notify, planner, preview, render
+
+# Windows consoles / Task Scheduler redirects default to cp1252; never crash on a "→".
+for _s in (sys.stdout, sys.stderr):
+    if hasattr(_s, "reconfigure"):
+        _s.reconfigure(encoding="utf-8", errors="replace")
 from studio_lib.config import DATA, POSTED_LOG, ROOT, plan_path
 from studio_lib.context import read_jsonl
 from studio_lib.schedule import due, parse

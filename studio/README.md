@@ -19,7 +19,7 @@ There is **no human approval step**. Safety comes from the gates and the kill sw
 1. `cd studio`
 2. `pip install -r requirements.txt` and then `python -m playwright install chromium`
 3. `cd templates\remotion; npm install; cd ..\..`
-4. `copy .env.example .env` and fill in `POSTIZ_URL`, `POSTIZ_API_KEY`, and the YouTube channel IDs (optional: webhook, `HIGGSFIELD_API_KEY`).
+4. `copy .env.example .env` and fill in `POSTIZ_URL` (https://postiz.layer8culture.io) and `POSTIZ_API_KEY` (Postiz → Settings → Public API); channel IDs default from `config.yaml` (optional: webhook, `HIGGSFIELD_API_KEY`).
 5. `copilot` → log in once if needed. The model is set by `model:` in `config.yaml`.
 6. Fill in `facts:` in `config.yaml` (Tech Thursday time/URL, radio stream URL). The planner never states a fact that is blank there.
 7. Test run: `python studio.py dry-run`. This plans and renders tomorrow without publishing. Open `data\media\<date>\preview.html` to review it.

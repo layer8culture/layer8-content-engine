@@ -141,6 +141,20 @@ def test_publish_respects_gates_and_channels(plan, cfg, monkeypatch, tmp_path):
     assert blocked and blocked[0]["status"] == "blocked"
 
 
+def test_dry_publish_never_writes_log(plan, cfg, monkeypatch):
+    from datetime import datetime, timedelta
+
+    from studio_lib.schedule import assign_schedule
+
+    monkeypatch.setattr(context, "read_jsonl", lambda p: [])
+    logged = []
+    monkeypatch.setattr(publish, "_log", logged.append)
+    assign_schedule(plan, cfg["schedule_windows"], cfg["timezone"])
+    late = datetime.fromisoformat(plan["posts"][0]["schedule"]["instagram"]) + timedelta(hours=8)
+    acts = publish.publish_due(plan, D, cfg, {}, {}, now=late, dry=True, log=lambda *_: None)
+    assert acts and not logged
+
+
 def test_pause_switch(cfg, tmp_path, monkeypatch):
     from studio_lib import config
 
