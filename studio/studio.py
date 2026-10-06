@@ -2,6 +2,7 @@
 
   python studio.py plan       [--date YYYY-MM-DD] [--force]
   python studio.py render     [--date ...] [--only ID ...]
+  python studio.py heroes     [--date ...]        # manual ChatGPT desk: copies prompts, files your downloads
   python studio.py ingest     [--date ...]        # pick up ChatGPT heroes from inbox/, re-render those posts
   python studio.py publish    [--now ISO]         # just-in-time push of due posts to Postiz (every 30 min)
   python studio.py run-daily  [--date ...]        # nightly: plan tomorrow, render, prompt pack, gates, preview
@@ -104,6 +105,26 @@ def cmd_ingest(a, cfg):
     log(f"ingested {total} hero image(s)")
 
 
+def cmd_heroes(a, cfg):
+    from studio_lib import herodesk
+
+    today = datetime.now(config.tz(cfg)).date()
+    d = config.parse_date(a.date, cfg) if a.date else herodesk.default_date(today)
+    if d is None:
+        log("No prompt pack with missing heroes. (The 7 PM run writes inbox/PROMPTS-<tomorrow>.md.)")
+        return
+    if a.downloads:
+        os.environ["STUDIO_DOWNLOADS_DIR"] = a.downloads
+    pack = herodesk.load_pack(d)
+    desk = herodesk.run(pack, cfg, log=log, open_browser=not a.no_browser)
+    if desk.saved:
+        log("filing heroes into the day's posts …")
+        a.date = d.isoformat()
+        cmd_ingest(a, cfg)
+    if desk.skipped:
+        log("skipped (template version will post): " + ", ".join(s.filename for s in desk.skipped))
+
+
 def cmd_publish(a, cfg):
     from studio_lib import publish
 
@@ -167,6 +188,11 @@ def cmd_run_daily(a, cfg):
         msg += "\nBlocked:\n" + "\n".join(blocked)
     if cfg["notify"].get("on_run_daily"):
         notify.send(msg, log=log)
+    if (cfg.get("heroes") or {}).get("toast", True) and heroes.shots_for(plan):
+        from studio_lib import herodesk
+
+        herodesk.toast("Hero prompts ready — run heroes",
+                       f"{len(heroes.shots_for(plan))} ChatGPT shots for {d}. Double-click 'Layer8 Heroes' on your desktop.")
 
 
 def cmd_status(a, cfg):
@@ -232,12 +258,16 @@ def main(argv=None):
     sp.add_argument("--ahead", action="store_true", help="schedule the whole day in Postiz now, at planned times")
     sp.add_argument("--replace", action="store_true",
                     help="delete + re-schedule already-scheduled posts (same time, current media); pair with --only")
+    sp = sub.add_parser("heroes", help="manual ChatGPT hero desk: clipboard + Downloads watcher")
+    sp.add_argument("--date", help="YYYY-MM-DD (default: next prompt pack with missing heroes)")
+    sp.add_argument("--downloads", help="folder to watch instead of your Downloads folder")
+    sp.add_argument("--no-browser", action="store_true", help="don't open chatgpt.com")
     a = ap.parse_args(argv)
     config.load_env()
     config.ensure_dirs()
     cfg = config.load_config()
     {"plan": cmd_plan, "render": cmd_render, "ingest": cmd_ingest, "publish": cmd_publish, "run-daily": cmd_run_daily,
-     "status": cmd_status, "dry-run": cmd_dry_run}[a.cmd](a, cfg)
+     "status": cmd_status, "dry-run": cmd_dry_run, "heroes": cmd_heroes}[a.cmd](a, cfg)
 
 
 if __name__ == "__main__":

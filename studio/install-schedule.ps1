@@ -48,4 +48,13 @@ Register-ScheduledTask -TaskName "LayerStudio-Publish" -Action (New-StudioAction
     -Settings $settings -Principal $principal -Description "Layer8 Studio: publish due posts to Postiz" -Force | Out-Null
 
 Get-ScheduledTask -TaskName $Names | Select-Object TaskName, State | Format-Table
+
+# Desktop shortcut for the manual ChatGPT hero desk.
+$lnk = Join-Path ([Environment]::GetFolderPath("Desktop")) "Layer8 Heroes.lnk"
+$sc = (New-Object -ComObject WScript.Shell).CreateShortcut($lnk)
+$sc.TargetPath = Join-Path $Studio "heroes.cmd"
+$sc.WorkingDirectory = $Studio
+$sc.Description = "Layer8 Studio: copy ChatGPT hero prompts and file your downloads"
+$sc.Save()
+Write-Host "Desktop shortcut: $lnk"
 Write-Host "Installed. Logs: $Studio\data\logs\  |  Pause: New-Item '$Studio\PAUSE'"

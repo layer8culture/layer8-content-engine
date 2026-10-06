@@ -142,6 +142,12 @@ gates:
   radio_banned_topics: [prompt, chatgpt, claude, gemini, openai, tutorial, how to use, ai news]
 
 # Visuals
+# Manual ChatGPT hero desk (python studio.py heroes / heroes.cmd). Never automates chatgpt.com.
+heroes:
+  downloads_dir: ""     # empty = your Windows Downloads folder; env STUDIO_DOWNLOADS_DIR overrides
+  settle_seconds: 1.0    # a download counts once its size stops changing this long
+  toast: true            # Windows toast after the 7 PM run when a prompt pack is ready
+
 visual:
   hero_watch: true                 # ingest picks up studio/inbox/<filename>.png|jpg
   ken_burns_reels_with_hero: true
