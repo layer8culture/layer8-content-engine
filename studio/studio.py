@@ -16,7 +16,7 @@ import json
 import os
 import sys
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from studio_lib import config, gates, heroes, notify, planner, preview, render
 
@@ -140,34 +140,56 @@ def cmd_publish(a, cfg):
             now = now.replace(tzinfo=config.tz(cfg))
         d = config.parse_date(a.date, cfg) if a.date else now.astimezone(config.tz(cfg)).date()
         plan = load_plan(d)
-        if plan is None:
-            cutoff = int(cfg["publish"].get("same_day_plan_cutoff_hour", 14))
-            if now.astimezone(config.tz(cfg)).hour >= cutoff:
-                log(f"no plan for today ({d}) and it's past {cutoff}:00 — not planning same-day; run-daily covers tomorrow")
-                return
-            log(f"no plan for today ({d}); generating one now")
-            plan, manifest, results, _ = produce(d, cfg)
+        cutoff = int(cfg["publish"].get("same_day_plan_cutoff_hour", 14))
+        if plan is None and now.astimezone(config.tz(cfg)).hour >= cutoff:
+            log(f"no plan for today ({d}) and it's past {cutoff}:00 — not planning same-day; run-daily covers tomorrow")
         else:
-            changed = heroes.ingest(plan, d, log=log)
-            manifest = render.load_manifest(d)
-            missing = [p["id"] for p in plan["posts"] if p["id"] not in manifest]
-            if changed or missing:
-                manifest = render.render_plan(plan, d, cfg, only=set(changed + missing), log=log)
-            results = gates.run_gates(plan, d, cfg, manifest)
-            gates.save(results, d)
-            if changed:
-                preview.build(plan, d, manifest, results, heroes.status(plan, d), cfg)
-        actions = publish.publish_due(plan, d, cfg, manifest, results, now=now, dry=a.dry, log=log,
-                                      only=set(a.only) if a.only else None, ahead=a.ahead,
-                                      force_replace=a.replace)
-        if actions and cfg["notify"].get("on_publish") and not a.dry:
-            notify.send("Layer8 Studio publish:\n" + "\n".join(
-                f"{r['status']} {r['id']} → {r['platform']}" + (f" ({r.get('reason', '')[:120]})" if r.get("reason") else "")
-                for r in actions), log=log)
-        if not actions:
-            log("nothing due")
+            _publish_day(a, cfg, d, plan, now)
+        miss = None if (a.dry or a.date or a.only) else missed_daily(now, cfg)
+        if miss:
+            log(f"no plan for tomorrow ({miss}) yet — the 19:00 run-daily was missed; producing it now")
+            produce(miss, cfg)
     finally:
         release_lock()
+
+
+def _publish_day(a, cfg, d, plan, now):
+    from studio_lib import publish
+
+    if plan is None:
+        log(f"no plan for today ({d}); generating one now")
+        plan, manifest, results, _ = produce(d, cfg)
+    else:
+        changed = heroes.ingest(plan, d, log=log)
+        manifest = render.load_manifest(d)
+        missing = [p["id"] for p in plan["posts"] if p["id"] not in manifest]
+        if changed or missing:
+            manifest = render.render_plan(plan, d, cfg, only=set(changed + missing), log=log)
+        results = gates.run_gates(plan, d, cfg, manifest)
+        gates.save(results, d)
+        if changed:
+            preview.build(plan, d, manifest, results, heroes.status(plan, d), cfg)
+    actions = publish.publish_due(plan, d, cfg, manifest, results, now=now, dry=a.dry, log=log,
+                                  only=set(a.only) if a.only else None, ahead=a.ahead,
+                                  force_replace=a.replace)
+    if actions and cfg["notify"].get("on_publish") and not a.dry:
+        notify.send("Layer8 Studio publish:\n" + "\n".join(
+            f"{r['status']} {r['id']} → {r['platform']}" + (f" ({r.get('reason', '')[:120]})" if r.get("reason") else "")
+            for r in actions), log=log)
+    if not actions:
+        log("nothing due")
+
+
+def missed_daily(now, cfg):
+    """Tomorrow's date if run-daily should have produced its plan by now but hasn't, else None."""
+    hour = (cfg.get("publish") or {}).get("catch_up_daily_after_hour")
+    if hour is None:
+        return None
+    local = now.astimezone(config.tz(cfg))
+    if local.hour < int(hour):
+        return None
+    tomorrow = local.date() + timedelta(days=1)
+    return None if plan_path(tomorrow).exists() else tomorrow
 
 
 def cmd_run_daily(a, cfg):

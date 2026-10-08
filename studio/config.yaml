@@ -78,6 +78,8 @@ publish:
   catch_up_grace_minutes: 180
   # If today has no plan (laptop was off at 19:00), publish plans same-day only before this hour.
   same_day_plan_cutoff_hour: 14
+  # Self-heal a missed 19:00 run-daily: from this hour on, a publish run with no plan for tomorrow makes one.
+  catch_up_daily_after_hour: 20
   # A post already scheduled in Postiz with the template version is swapped (delete + re-schedule, same time)
   # when its ChatGPT hero lands later — unless it goes out within replace_min_lead_minutes.
   replace_on_media_change: true

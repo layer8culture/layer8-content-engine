@@ -25,7 +25,9 @@ There is **no human approval step**. Safety comes from the gates and the kill sw
 7. Test run: `python studio.py dry-run`. This plans and renders tomorrow without publishing. Open `data\media\<date>\preview.html` to review it.
 8. Schedule it: `powershell -ExecutionPolicy Bypass -File install-schedule.ps1` (remove with `-Uninstall`).
 
-The tasks use *StartWhenAvailable*, so a run missed while the laptop was off fires when it wakes.
+The tasks use *StartWhenAvailable*, so a run missed while the laptop was off fires when it wakes. If the 19:00 plan is still missing after 20:00 for any reason, the next publish run makes it (`publish.catch_up_daily_after_hour`).
+
+Tasks launch `task.ps1` through `conhost.exe --headless`, so Windows never hands them to Windows Terminal. On 10/7 a hung Terminal blocked every task launch. Each run writes `=== start` and `=== end … exit N` lines to `data\logs\task-<job>.log`. A run with a start line and no end line means it hung or was killed.
 
 ## Commands
 
