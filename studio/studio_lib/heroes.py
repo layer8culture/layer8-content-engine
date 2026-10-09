@@ -58,19 +58,24 @@ def write_prompt_pack(plan: dict, d: date, deadline: str | None = None) -> Path 
     lines = [f"# ChatGPT hero batch — {d.isoformat()}", "",
              f"Save each image into `studio/inbox/` with the exact filename shown. "
              f"Anything not saved by post time{f' ({deadline})' if deadline else ''} falls back to the template design automatically.",
-             "", "## STEP 1 — Paste once at the start of a new ChatGPT chat", "",
-             "You are my image studio for the Layer8Culture brand. I'll give you a numbered shot list.",
-             "Generate ONE image per reply, in order, starting with #1. After each image, wait.",
-             'When I type "next", generate the next shot. When I type "redo", regenerate the',
-             "current shot with a fresh variation. Don't ask me questions or add commentary;",
-             "just reply with the image and its filename.", "", LAYER8_STYLE, "",
-             "At the end of each reply, give the filename from the shot list so I can save it.", "",
-             "## STEP 2 — Paste the shot list", "", "SHOT LIST:"]
+             "",
+             "ChatGPT may or may not return multiple separate image files from one prompt; a Pro subscription does not guarantee it. "
+             "If it returns one, ask it to continue the remaining shots. Never use a collage.",
+             "", "## ONE-PASTE PROMPT", "",
+             "You are my image studio for the Layer8Culture brand.", "", LAYER8_STYLE, "",
+             "BATCH REQUEST:",
+             f"Generate ALL {len(shots)} numbered shots from this single request when your image interface supports it. "
+             "Each shot must be a SEPARATE downloadable image with the exact filename in brackets.",
+             "Never combine shots into a collage, contact sheet, grid, diptych, or multi-panel image. "
+             "Preserve each requested aspect ratio and complete the full list without waiting for me to type “next”.",
+             "If your current interface can only generate one image per response, generate the first shot now. "
+             "When I say “continue”, generate the rest in order without making me paste the style or list again.",
+             "", "SHOT LIST:"]
     for i, s in enumerate(shots, 1):
         fmt = "VERTICAL 9:16 (1080x1920). " if s["aspect"] == "9:16" else ""
         extra = RADIO_OVERRIDE + " " if s["brand"] == "radio" else ""
         lines.append(f"{i}. [{s['filename']}] {fmt}{extra}{s['shot']}")
-    lines += ["", "Start with #1 now.", ""]
+    lines += ["", "Begin now. Return images only, each as its own downloadable file.", ""]
     path = INBOX / f"PROMPTS-{d.isoformat()}.md"
     path.write_text("\n".join(lines), encoding="utf-8")
     return path

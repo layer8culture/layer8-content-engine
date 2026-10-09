@@ -6,7 +6,7 @@ It replaces the GitHub Actions engine (still in the repo root as legacy).
 *Technology has seven layers. We're the eighth.*
 
 ```
-19:00 daily  run-daily  → news + transcript + history → Claude Opus 5.5 (Copilot CLI) → plan JSON
+19:00 daily  run-daily  → news + transcript + history → configured Copilot CLI model → plan JSON
                           → render (Playwright stills, Remotion reels) → ChatGPT prompt pack
                           → quality gates → preview.html
 every 30 min publish    → ingest heroes from inbox/ → re-render → gates → Postiz (due posts only)
@@ -33,7 +33,7 @@ Tasks launch `task.ps1` through `conhost.exe --headless`, so Windows never hands
 
 | Command | What it does |
 |---|---|
-| `python studio.py plan [--date D] [--force]` | Ask Opus for the day's plan → `data/plans/D.json` |
+| `python studio.py plan [--date D] [--force]` | Ask the configured model for the day's plan → `data/plans/D.json` |
 | `python studio.py render [--date D] [--only ID..]` | Render stills and reels → `data/media/D/` |
 | `python studio.py heroes [--date D] [--downloads DIR]` | Manual ChatGPT hero desk: copies the prompts, watches Downloads, files each image, then ingests |
 | `python studio.py ingest [--date D]` | Pick up ChatGPT heroes from `inbox/`, crop, and re-render |
@@ -71,10 +71,10 @@ A failing post is blocked and logged; the others still go out. Every attempt is 
 
 After the 19:00 run you'll get a "Hero prompts ready" toast. Double-click **Layer8 Heroes** on your desktop (or run `studio\heroes.cmd`, or `python studio.py heroes [--date D]`):
 
-1. Step 1 (the locked style preamble) is already on your clipboard, and chatgpt.com opens in your browser. Start a new chat, paste, and send.
-2. Press **Enter** in the Heroes window. Step 2 (the shot list, missing shots only) is now on your clipboard. Paste it into ChatGPT.
-3. Click **download** on each image (type `next` in ChatGPT for the next one). The window watches your Downloads folder and files each new image, in order, as the exact shot filename in `studio\inbox\` (converted to PNG). It prints `✓ 2/4 saved as …` and warns if the aspect looks wrong.
-   - Keys: `r` = redo (the next download replaces the last shot), `s` = skip the current shot (the template version is used), `q` = quit, Enter = copy the shot list again.
+1. One combined prompt (locked style + every missing shot) is already on your clipboard, and chatgpt.com opens in your browser. Start a new chat, paste once, and send. The prompt asks for every shot as a **separate downloadable image**, never a collage/contact sheet.
+2. ChatGPT's current image interface may still return only one image per response; **ChatGPT Pro does not guarantee multi-image batch output**. If that happens, tell it `continue` for the remaining shots. Press **Enter** in the Heroes window anytime to copy a fresh combined prompt containing only shots still missing.
+3. Click **download** on each image. Exact requested filenames are mapped automatically even if images finish out of order. If the browser gives a generic name such as `ChatGPT Image.png`, Studio will *not* guess from arrival order: it waits for you to press the displayed shot number. It prints `✓ 2/4 saved as …` and warns if the aspect looks wrong.
+   - Keys: `1`–`9` = map the pending generic download to that shot, `n` = explicitly map it to the next missing shot (sequential fallback), `r` = redo the last shot, `s` = skip the next missing shot (template fallback), `q` = quit, Enter = copy a remaining-shots prompt.
 4. When every shot is filled it runs `ingest`, which crops to 4:5 or 9:16, composites the brand type into the dark lower 45%, and swaps the hero into the post.
 
 Only images downloaded after you start count; partial downloads (`.crdownload`, `.tmp`) are ignored. To watch a different folder, set `heroes.downloads_dir` in `config.yaml`, set `STUDIO_DOWNLOADS_DIR`, or pass `--downloads`. You can still save images into `studio\inbox\` by hand with the exact filenames from `inbox\PROMPTS-<date>.md`.
