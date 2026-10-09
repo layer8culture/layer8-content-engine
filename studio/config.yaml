@@ -6,7 +6,10 @@ paused: false
 timezone: America/New_York
 
 # The "brains". Any model the Copilot CLI accepts.
-model: claude-opus-5.5
+# claude-opus-5.5 was retired from the Copilot CLI's model list on/around 2026-10-08
+# (confirmed via `copilot --model claude-opus-5.5` -> "Model ... is not available"),
+# which silently broke the 7 PM planning run. claude-sonnet-5.5 is the current flagship.
+model: claude-sonnet-5.5
 copilot:
   command: copilot
   timeout_minutes: 25
