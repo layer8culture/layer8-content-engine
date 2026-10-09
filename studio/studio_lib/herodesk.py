@@ -1,9 +1,9 @@
-"""Manual ChatGPT hero desk: clipboard + Downloads watcher + filing. Never touches chatgpt.com.
+"""Manual ChatGPT hero desk: clipboard + Downloads watcher + filing. Never controls chatgpt.com.
 
-The user pastes the prompts into ChatGPT and clicks download. This module only
-(1) puts the prompt text on the clipboard, (2) opens chatgpt.com in the default browser,
-(3) watches the Downloads folder, and (4) files each new image under the next expected
-hero filename in studio/inbox/.
+The user pastes one combined batch prompt into ChatGPT and clicks download. This module
+only puts text on the clipboard, opens the site, watches Downloads, and files images.
+Generic browser filenames require an explicit shot-number choice; arrival order is never
+assumed unless the user deliberately presses ``n`` for the sequential fallback.
 """
 from __future__ import annotations
 
@@ -42,8 +42,13 @@ class Shot:
 @dataclass
 class Pack:
     date: date
-    step1: str
+    preamble: str
     shots: list[Shot]
+
+    @property
+    def step1(self) -> str:
+        """Compatibility alias for callers/tests built around the original two-paste flow."""
+        return self.preamble
 
 
 def parse_prompts(text: str, d: date) -> Pack:
@@ -55,23 +60,57 @@ def parse_prompts(text: str, d: date) -> Pack:
                 return i
         raise ValueError(f"PROMPTS file has no '{prefix}' section")
 
-    s1, s2 = idx("## STEP 1"), idx("## STEP 2")
-    step1 = "\n".join(lines[s1 + 1:s2]).strip()
+    one = next((i for i, ln in enumerate(lines) if ln.strip().upper().startswith("## ONE-PASTE PROMPT")), None)
+    if one is not None:
+        shot_list = next((i for i in range(one + 1, len(lines)) if lines[i].strip().upper() == "SHOT LIST:"), None)
+        if shot_list is None:
+            raise ValueError("PROMPTS file has no 'SHOT LIST:' section")
+        batch = next((i for i in range(one + 1, shot_list) if lines[i].strip().upper() == "BATCH REQUEST:"), shot_list)
+        preamble = "\n".join(lines[one + 1:batch]).strip()
+        shot_lines = lines[shot_list + 1:]
+    else:
+        s1, s2 = idx("## STEP 1"), idx("## STEP 2")
+        preamble = "\n".join(lines[s1 + 1:s2]).strip()
+        shot_lines = lines[s2 + 1:]
     shots = []
-    for ln in lines[s2 + 1:]:
+    for ln in shot_lines:
         m = SHOT_RE.match(ln)
         if m:
             shots.append(Shot(int(m.group(1)), m.group(2).strip(), m.group(3).strip()))
     shots.sort(key=lambda s: s.n)
     if not shots:
         raise ValueError("PROMPTS file has no numbered shots")
-    return Pack(d, step1, shots)
+    return Pack(d, preamble, shots)
 
 
 def step2_text(shots: list[Shot]) -> str:
-    """Shot list for just the remaining shots, renumbered so 'Start with #1' still holds."""
+    """Shot list for remaining shots, renumbered for a follow-up/continue request."""
     body = [f"{i}. [{s.filename}] {s.text}" for i, s in enumerate(shots, 1)]
-    return "\n".join(["SHOT LIST:", *body, "", "Start with #1 now."])
+    return "\n".join(["SHOT LIST:", *body])
+
+
+def combined_prompt_text(pack: Pack, shots: list[Shot]) -> str:
+    """One paste containing the locked style and all remaining shot instructions."""
+    return "\n\n".join([
+        pack.preamble.strip(),
+        (
+            "BATCH REQUEST:\n"
+            f"Generate ALL {len(shots)} numbered shots from this single request when your image interface supports it. "
+            "Each shot must be a SEPARATE downloadable image with the exact filename in brackets. "
+            "Never combine shots into a collage, contact sheet, grid, diptych, or multi-panel image. "
+            "Preserve each shot's requested aspect ratio and complete the full list without waiting for me to type “next”.\n\n"
+            "If your current interface can only generate one image per response, generate the first remaining shot now. "
+            "When I say “continue”, generate the rest in order without making me paste the style or list again."
+        ),
+        step2_text(shots),
+        "Begin now. Return images only, each as its own downloadable file.",
+    ])
+
+
+def match_download(path: Path, shots: list[Shot]) -> Shot | None:
+    """Reliably map only an exact expected filename/stem; generic names need confirmation."""
+    stem = path.stem.casefold()
+    return next((s for s in shots if Path(s.filename).stem.casefold() == stem), None)
 
 
 def hero_present(filename: str, d: date, inbox: Path = INBOX) -> bool:
@@ -179,9 +218,8 @@ class DownloadWatcher:
 
 @dataclass
 class Desk:
-    """Assigns downloads to shots in order; 'r' makes the next download replace the last one, 's' skips."""
+    """Tracks explicit/out-of-order saves plus an opt-in sequential fallback."""
     shots: list[Shot]
-    pos: int = 0
     last: Shot | None = None
     redo_pending: bool = False
     skipped: list[Shot] = field(default_factory=list)
@@ -189,7 +227,7 @@ class Desk:
 
     @property
     def current(self) -> Shot | None:
-        return self.shots[self.pos] if self.pos < len(self.shots) else None
+        return next((s for s in self.shots if s not in self.saved and s not in self.skipped), None)
 
     @property
     def done(self) -> bool:
@@ -204,25 +242,32 @@ class Desk:
         s = self.current
         if s:
             self.skipped.append(s)
-            self.pos += 1
         return s
 
+    def accept(self, shot: Shot) -> Shot:
+        if shot not in self.saved:
+            self.saved.append(shot)
+        if shot in self.skipped:
+            self.skipped.remove(shot)
+        self.last = shot
+        self.redo_pending = False
+        return shot
+
     def target(self) -> Shot | None:
+        """Choose the next shot only after the user explicitly requests sequential mapping."""
         if self.redo_pending and self.last:
-            self.redo_pending = False
-            return self.last
+            return self.accept(self.last)
         s = self.current
         if s:
-            self.pos += 1
-            self.last = s
-            self.saved.append(s)
-        return s
+            return self.accept(s)
+        return None
 
 
 def file_image(src: Path, shot: Shot, inbox: Path = INBOX) -> tuple[Path, str | None]:
     """Move a download into inbox/ as <shot filename>.png. Returns (dest, aspect warning or None)."""
     dest = inbox / f"{Path(shot.filename).stem}.png"
     inbox.mkdir(parents=True, exist_ok=True)
+    dest.unlink(missing_ok=True)
     with Image.open(src) as im:
         w, h = im.size
         if src.suffix.lower() == ".png":
@@ -300,26 +345,50 @@ def run(pack: Pack, cfg: dict, *, log=print, open_browser: bool = True, keys=rea
     for i, s in enumerate(todo, 1):
         log(f"  {i}. {s.filename} ({s.aspect})")
     log(f"Watching downloads in: {folder}")
-    ok = clipboard(pack.step1)
+    ok = clipboard(combined_prompt_text(pack, todo))
     if open_browser:
         os.startfile(CHATGPT_URL) if os.name == "nt" else None  # just opens the URL; we never control the page
     log("")
-    log("1) STEP 1 is " + ("on your clipboard" if ok else "NOT on the clipboard (copy it from the PROMPTS file)")
-        + " — start a NEW ChatGPT chat, paste, send.")
-    log("2) Press Enter here to copy STEP 2 (the shot list); paste it into ChatGPT.")
-    log("3) Download each image (type 'next' in ChatGPT for the following one). Files are saved automatically.")
-    log("Keys: Enter = copy shot list again   r = redo last (next download replaces it)   s = skip current   q = quit")
-    step2_sent = False
+    log("ONE combined prompt is " + ("on your clipboard" if ok else "NOT on the clipboard (copy it from the PROMPTS file)")
+        + " — start a NEW ChatGPT chat, paste once, and send.")
+    log("Ask ChatGPT to continue if it returns only one image; multi-image output is interface-dependent, not guaranteed by Pro.")
+    log("Download every image. Exact filenames map automatically; generic names wait for your explicit shot number.")
+    log("Keys: 1-9 = map pending download to shot   n = map to next shot (sequential fallback)")
+    log("      Enter = copy a prompt for remaining shots   r = redo last   s = skip next   q = quit")
+    pending: list[Path] = []
+
+    def save(src: Path, shot: Shot) -> None:
+        try:
+            dest, warn = file_image(src, desk.accept(shot), inbox)
+        except Exception as exc:  # noqa: BLE001
+            log(f"  ✗ could not read {src.name}: {exc}")
+            desk.redo_pending = True
+            return
+        watcher.forget(src.name)
+        n = todo.index(shot) + 1
+        log(f"✓ {n}/{len(todo)} saved as {dest.name}" + (f"  ⚠ {warn}" if warn else ""))
+
     while not desk.done:
         k = keys()
         if k == "enter":
-            ok2 = clipboard(step2_text(todo))
-            log(("STEP 2 copied — paste it into ChatGPT." if ok2 else "Could not copy STEP 2; copy it from the PROMPTS file.")
-                + ("" if not step2_sent else " (again)"))
-            step2_sent = True
+            left = [s for s in todo if s not in desk.saved and s not in desk.skipped]
+            ok2 = clipboard(combined_prompt_text(pack, left))
+            log("Remaining-shots prompt copied — paste it into the same ChatGPT chat."
+                if ok2 else "Could not copy; use the PROMPTS file and ask ChatGPT to continue.")
+        elif k and k.isdigit() and k != "0" and pending:
+            i = int(k) - 1
+            if i >= len(todo):
+                log(f"shot {k} does not exist")
+            else:
+                save(pending.pop(0), todo[i])
+        elif k == "n" and pending:
+            shot = desk.target()
+            if shot:
+                save(pending.pop(0), shot)
         elif k == "r":
             s = desk.redo()
-            log(f"↺ redo: the next download will replace {s.filename}" if s else "nothing to redo yet")
+            log(f"↺ redo {s.filename}: download it again; exact name auto-maps, or select its number."
+                if s else "nothing to redo yet")
         elif k == "s":
             s = desk.skip()
             if s:
@@ -328,19 +397,13 @@ def run(pack: Pack, cfg: dict, *, log=print, open_browser: bool = True, keys=rea
             log("quit — heroes saved so far are kept")
             break
         for f in watcher.poll():
-            shot = desk.target()
-            if not shot:
-                log(f"  ignoring extra download {f.name}")
-                continue
-            try:
-                dest, warn = file_image(f, shot, inbox)
-            except Exception as exc:  # noqa: BLE001
-                log(f"  ✗ could not read {f.name}: {exc}")
-                desk.redo_pending = True
-                continue
-            watcher.forget(f.name)
-            n = todo.index(shot) + 1
-            log(f"✓ {n}/{len(todo)} saved as {dest.name}" + (f"  ⚠ {warn}" if warn else ""))
+            shot = match_download(f, todo)
+            if shot:
+                save(f, shot)
+            else:
+                pending.append(f)
+                log(f"? {f.name} has no reliable filename mapping. Press 1-{len(todo)} to assign it, "
+                    "or n for the next missing shot.")
         if not desk.done:
             sleep(0.4)
     return desk

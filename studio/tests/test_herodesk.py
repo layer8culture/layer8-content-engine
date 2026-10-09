@@ -29,6 +29,24 @@ SHOT LIST:
 Start with #1 now.
 """
 
+ONE_PASTE_PACK = """# ChatGPT hero batch — 2026-10-08
+
+## ONE-PASTE PROMPT
+
+You are my image studio.
+LOCKED STYLE:
+- No text.
+
+BATCH REQUEST:
+Generate every shot as a separate image. Never a collage.
+
+SHOT LIST:
+1. [20261008-hero-a.png] A desk at night.
+2. [20261008-hero-b.png] VERTICAL 9:16 (1080x1920). A reel shot.
+
+Begin now.
+"""
+
 
 def _pack(tmp_path, monkeypatch):
     monkeypatch.setattr(herodesk, "media_dir", lambda d: tmp_path / "media" / d.isoformat())
@@ -48,6 +66,21 @@ def test_parse_step1_and_ordered_shots(tmp_path, monkeypatch):
     assert [s.aspect for s in p.shots] == ["4:5", "9:16", "4:5"]
 
 
+def test_parse_one_paste_pack_and_combined_remaining_prompt(tmp_path, monkeypatch):
+    monkeypatch.setattr(herodesk, "media_dir", lambda d: tmp_path / "media" / d.isoformat())
+    (tmp_path / f"PROMPTS-{D}.md").write_text(ONE_PASTE_PACK, encoding="utf-8")
+    p = herodesk.load_pack(D, tmp_path)
+    assert "LOCKED STYLE" in p.preamble and "BATCH REQUEST" not in p.preamble
+    assert [s.filename for s in p.shots] == ["20261008-hero-a.png", "20261008-hero-b.png"]
+    txt = herodesk.combined_prompt_text(p, [p.shots[1]])
+    assert "LOCKED STYLE" in txt
+    assert "Generate ALL 1 numbered shots" in txt
+    assert "SEPARATE downloadable image" in txt
+    assert "Never combine shots into a collage" in txt
+    assert "20261008-hero-b.png" in txt and "20261008-hero-a.png" not in txt
+    assert "only generate one image per response" in txt
+
+
 def test_remaining_skips_existing_and_renumbers_step2(tmp_path, monkeypatch):
     p = _pack(tmp_path, monkeypatch)
     _img(tmp_path / "20261008-hero-a.png")
@@ -56,7 +89,7 @@ def test_remaining_skips_existing_and_renumbers_step2(tmp_path, monkeypatch):
     rem = herodesk.remaining(p, tmp_path)
     assert [s.filename for s in rem] == ["20261008-hero-b.png"]
     txt = herodesk.step2_text(rem)
-    assert "1. [20261008-hero-b.png]" in txt and "hero-a" not in txt and txt.endswith("Start with #1 now.")
+    assert "1. [20261008-hero-b.png]" in txt and "hero-a" not in txt
 
 
 def test_default_date_picks_next_pack_with_missing(tmp_path, monkeypatch):
@@ -131,24 +164,29 @@ def test_file_image_converts_and_warns(tmp_path):
     assert warn2 is None
 
 
-def test_run_end_to_end_with_keys(tmp_path, monkeypatch):
+def test_download_mapping_requires_exact_name_or_explicit_choice(tmp_path):
+    shots = [herodesk.Shot(1, "hero-a.png", ""), herodesk.Shot(2, "hero-b.png", "")]
+    assert herodesk.match_download(tmp_path / "hero-b.jpg", shots) == shots[1]
+    assert herodesk.match_download(tmp_path / "ChatGPT Image Oct 9.png", shots) is None
+
+
+def test_run_batch_end_to_end_maps_out_of_order_and_confirms_generic(tmp_path, monkeypatch):
     p = _pack(tmp_path, monkeypatch)
     dl = tmp_path / "dl"
     dl.mkdir()
     clock = Clock()
     w = herodesk.DownloadWatcher(dl, settle_seconds=0.5, clock=clock)
     clips = []
-    # script: each tick = one loop iteration; actions run before the key is read
+    # Exact filenames may arrive out of order and auto-map. A generic filename remains
+    # pending until the user explicitly presses the shot number.
     script = [
-        (None, "enter"),
+        (lambda: _img(dl / "20261008-radio-c.png"), None),
+        (None, None),                                      # exact -> shot 3
         (lambda: _img(dl / "ChatGPT Image 1.png"), None),
-        (None, None),                                   # settle -> s1 (hero-a)
-        (None, "r"),
-        (lambda: _img(dl / "ChatGPT Image 2.png"), None),
-        (None, None),                                   # replaces hero-a
-        (None, "s"),                                    # skip hero-b
-        (lambda: _img(dl / "ChatGPT Image 1.png"), None),  # same name reused after filing
-        (None, None),                                   # -> radio-c
+        (None, None),                                      # generic -> pending, not filed
+        (None, "1"),                                       # explicitly map to shot 1
+        (lambda: _img(dl / "20261008-hero-b.png", size=(1080, 1920)), None),
+        (None, None),                                      # exact -> shot 2
     ]
     ticks = iter(script)
 
@@ -163,11 +201,10 @@ def test_run_end_to_end_with_keys(tmp_path, monkeypatch):
     desk = herodesk.run(p, {}, log=logs.append, open_browser=False, keys=keys, sleep=lambda s: None,
                         watcher=w, clipboard=lambda t: clips.append(t) or True, inbox=tmp_path)
     assert desk.done
-    assert clips[0] == p.step1 and clips[1].startswith("SHOT LIST:")
-    assert (tmp_path / "20261008-hero-a.png").exists() and (tmp_path / "20261008-radio-c.png").exists()
-    assert not (tmp_path / "20261008-hero-b.png").exists()
-    assert [s.filename for s in desk.skipped] == ["20261008-hero-b.png"]
-    assert sum("saved as 20261008-hero-a.png" in m for m in logs) == 2
+    assert len(clips) == 1 and "BATCH REQUEST" in clips[0] and "SEPARATE downloadable image" in clips[0]
+    assert all((tmp_path / n).exists() for n in
+               ("20261008-hero-a.png", "20261008-hero-b.png", "20261008-radio-c.png"))
+    assert any("no reliable filename mapping" in m for m in logs)
     assert list(dl.iterdir()) == []
 
 
