@@ -101,17 +101,25 @@ def run_copilot(prompt_file: str, cfg: dict, log_name: str) -> int:
     log = ROOT / "data" / "logs" / log_name
     log.parent.mkdir(parents=True, exist_ok=True)
     with log.open("w", encoding="utf-8") as out:
-        proc = subprocess.run(args, cwd=ROOT, stdout=out, stderr=subprocess.STDOUT, text=True,
-                              encoding="utf-8", errors="replace",
-                              timeout=int(cfg["copilot"].get("timeout_minutes", 25)) * 60)
-    if proc.returncode != 0:
+        try:
+            proc = subprocess.run(args, cwd=ROOT, stdout=out, stderr=subprocess.STDOUT, text=True,
+                                  encoding="utf-8", errors="replace",
+                                  timeout=int(cfg["copilot"].get("timeout_minutes", 25)) * 60)
+            returncode = proc.returncode
+        except subprocess.TimeoutExpired:
+            # Copilot frequently finishes the instructed write before spending too long
+            # validating/explaining it. make_plan validates the draft independently, so
+            # preserve that completed work rather than failing the whole scheduled run.
+            out.write("\nStudio: Copilot timed out; validating any draft it already wrote.\n")
+            returncode = 124
+    if returncode != 0:
         tail = log.read_text(encoding="utf-8", errors="replace")
         if re.search(r'Model ".*" from --model flag is not available', tail):
             raise RuntimeError(
                 f"configured model {cfg['model']!r} is no longer available from the Copilot CLI "
                 f"(see {log.relative_to(ROOT)}) — update `model:` in config.yaml to a current model name"
             )
-    return proc.returncode
+    return returncode
 
 
 def _load_draft(path) -> tuple[dict | None, list[str]]:
