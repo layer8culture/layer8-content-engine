@@ -43,10 +43,13 @@ def _email_settings() -> tuple[dict | None, str | None]:
         port = int(os.environ.get("SMTP_PORT", "465" if _truthy("SMTP_USE_SSL") else "587"))
     except ValueError:
         return None, "SMTP_PORT must be an integer"
+    user = os.environ.get("SMTP_USER", "").strip()
+    password = os.environ.get("SMTP_PASSWORD", "")
+    if user and not password:
+        return None, "SMTP_PASSWORD is required when SMTP_USER is configured"
     return {
         "to": recipient, "host": host, "port": port, "from": sender,
-        "user": os.environ.get("SMTP_USER", "").strip(),
-        "password": os.environ.get("SMTP_PASSWORD", ""),
+        "user": user, "password": password,
         "ssl": _truthy("SMTP_USE_SSL"),
         "starttls": _truthy("SMTP_STARTTLS", True),
     }, None

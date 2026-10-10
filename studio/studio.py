@@ -274,6 +274,22 @@ def cmd_dry_run(a, cfg):
     log(f"\npreview: {page}")
 
 
+def cmd_email_test(a, cfg):
+    recipient = os.environ.get("NOTIFY_EMAIL_TO", "").strip()
+    if not recipient:
+        sys.exit("email test failed: NOTIFY_EMAIL_TO is not configured")
+    ok = notify.send_email(
+        "Layer8 Studio email test",
+        "Layer8 Studio's daily email is configured correctly.\n\n"
+        "Future 5 PM preparation emails will include planned times, gate status, missing heroes, "
+        "and the one-paste prompt pack.",
+        log=log,
+    )
+    if not ok:
+        sys.exit("email test failed; see the message above")
+    log(f"test email accepted for {recipient}")
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="studio.py", description="Layer8 Studio")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -298,12 +314,13 @@ def main(argv=None):
     sp.add_argument("--date", help="YYYY-MM-DD (default: next prompt pack with missing heroes)")
     sp.add_argument("--downloads", help="folder to watch instead of your Downloads folder")
     sp.add_argument("--no-browser", action="store_true", help="don't open chatgpt.com")
+    sub.add_parser("email-test", help="send one recipient-only SMTP configuration test")
     a = ap.parse_args(argv)
     config.load_env()
     config.ensure_dirs()
     cfg = config.load_config()
     {"plan": cmd_plan, "render": cmd_render, "ingest": cmd_ingest, "publish": cmd_publish, "run-daily": cmd_run_daily,
-     "status": cmd_status, "dry-run": cmd_dry_run, "heroes": cmd_heroes}[a.cmd](a, cfg)
+     "status": cmd_status, "dry-run": cmd_dry_run, "heroes": cmd_heroes, "email-test": cmd_email_test}[a.cmd](a, cfg)
 
 
 if __name__ == "__main__":
