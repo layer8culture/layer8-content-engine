@@ -2,13 +2,16 @@
 
 The user pastes one combined batch prompt into ChatGPT and clicks download. This module
 only puts text on the clipboard, opens the site, watches Downloads, and files images.
-Generic browser filenames require an explicit shot-number choice; arrival order is never
-assumed unless the user deliberately presses ``n`` for the sequential fallback.
+Generic browser filenames are matched by local Copilot vision only when confidence and
+uniqueness checks pass; arrival order is never assumed. Explicit shot numbers and ``n``
+remain safe fallbacks.
 """
 from __future__ import annotations
 
 import os
 import re
+import json
+import hashlib
 import shutil
 import subprocess
 import tempfile
@@ -49,6 +52,14 @@ class Pack:
     def step1(self) -> str:
         """Compatibility alias for callers/tests built around the original two-paste flow."""
         return self.preamble
+
+
+@dataclass
+class VisualMatch:
+    shot: Shot
+    confidence: float
+    runner_up_confidence: float
+    evidence: str
 
 
 def parse_prompts(text: str, d: date) -> Pack:
@@ -111,6 +122,123 @@ def match_download(path: Path, shots: list[Shot]) -> Shot | None:
     """Reliably map only an exact expected filename/stem; generic names need confirmation."""
     stem = path.stem.casefold()
     return next((s for s in shots if Path(s.filename).stem.casefold() == stem), None)
+
+
+def _json_object(text: str) -> dict:
+    start, end = text.find("{"), text.rfind("}")
+    if start < 0 or end < start:
+        raise ValueError("Copilot vision returned no JSON object")
+    return json.loads(text[start:end + 1])
+
+
+def visual_match_downloads(paths: list[Path], shots: list[Shot], cfg: dict, *, log=print,
+                           runner=subprocess.run) -> tuple[dict[Path, VisualMatch], dict[Path, str]]:
+    """Match generic downloads by visible scene content using the already configured Copilot CLI.
+
+    Decisions must clear both an absolute confidence floor and a runner-up margin. Any duplicate
+    shot assignment, malformed response, or uncertain result remains pending for explicit mapping.
+    """
+    if not paths:
+        return {}, {}
+    settings = cfg.get("heroes") or {}
+    if not settings.get("visual_match_enabled", True):
+        return {}, {p: "automatic visual matching is disabled" for p in paths}
+    exe = shutil.which((cfg.get("copilot") or {}).get("command", "copilot"))
+    if not exe:
+        return {}, {p: "Copilot CLI is unavailable" for p in paths}
+    floor = float(settings.get("visual_match_confidence", 0.85))
+    margin = float(settings.get("visual_match_margin", 0.15))
+    scene_lines = [f"{s.n}. {s.text}" for s in shots]
+    prompt = "\n".join([
+        "Match each attached image to exactly one numbered scene using visible content only.",
+        "Ignore attachment order and every filename clue, including timestamps, UUIDs, trailing numbers, and '(1)' duplicate suffixes.",
+        "Do not force a match. Return ONLY compact JSON with this shape:",
+        '{"matches":[{"file":"exact attachment basename","shot":1,"confidence":0.95,'
+        '"runner_up_shot":2,"runner_up_confidence":0.10,"evidence":"brief visible cues"}],'
+        '"ambiguous":[{"file":"basename","reason":"why"}]}',
+        "Use confidence from 0 to 1. Assign each scene at most once. Mark uncertain images ambiguous.",
+        "SCENES:",
+        *scene_lines,
+    ])
+    args = [exe, "-p", prompt, "--model", cfg["model"], "-s", "--no-ask-user", "--no-custom-instructions"]
+    for path in paths:
+        args += ["--attachment", str(path)]
+    try:
+        proc = runner(args, capture_output=True, text=True, encoding="utf-8", errors="replace",
+                      timeout=int(settings.get("visual_match_timeout_seconds", 180)))
+    except Exception as exc:  # noqa: BLE001
+        return {}, {p: f"Copilot vision failed: {exc}" for p in paths}
+    if proc.returncode != 0:
+        detail = (proc.stderr or proc.stdout or "unknown error").strip().splitlines()[-1][:200]
+        return {}, {p: f"Copilot vision failed: {detail}" for p in paths}
+    try:
+        result = _json_object(proc.stdout)
+    except Exception as exc:  # noqa: BLE001
+        return {}, {p: f"Copilot vision response was invalid: {exc}" for p in paths}
+
+    by_name = {p.name.casefold(): p for p in paths}
+    by_shot = {s.n: s for s in shots}
+    accepted: dict[Path, VisualMatch] = {}
+    rejected: dict[Path, str] = {}
+    for item in result.get("ambiguous") or []:
+        path = by_name.get(str(item.get("file", "")).casefold())
+        if path:
+            rejected[path] = str(item.get("reason") or "Copilot vision marked it ambiguous")
+    for item in result.get("matches") or []:
+        path = by_name.get(str(item.get("file", "")).casefold())
+        try:
+            shot = by_shot.get(int(item.get("shot")))
+        except (TypeError, ValueError):
+            shot = None
+        if not path or not shot:
+            continue
+        try:
+            confidence = float(item.get("confidence"))
+            runner_up = float(item.get("runner_up_confidence") or 0)
+        except (TypeError, ValueError):
+            rejected[path] = "Copilot vision returned invalid confidence values"
+            continue
+        if confidence < floor:
+            rejected[path] = f"visual confidence {confidence:.2f} is below {floor:.2f}"
+        elif confidence - runner_up < margin:
+            rejected[path] = f"visual margin {confidence - runner_up:.2f} is below {margin:.2f}"
+        else:
+            accepted[path] = VisualMatch(shot, confidence, runner_up, str(item.get("evidence") or ""))
+
+    collisions: dict[int, list[Path]] = {}
+    for path, decision in accepted.items():
+        collisions.setdefault(decision.shot.n, []).append(path)
+    for shot_n, files in collisions.items():
+        if len(files) > 1:
+            for path in files:
+                accepted.pop(path, None)
+                rejected[path] = f"multiple downloads matched shot {shot_n}"
+    for path in paths:
+        if path not in accepted and path not in rejected:
+            rejected[path] = "Copilot vision returned no decision"
+    return accepted, rejected
+
+
+def image_digest(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as fh:
+        for chunk in iter(lambda: fh.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def known_image_digests(inbox: Path) -> set[str]:
+    out = set()
+    for folder in (inbox, inbox / "_used"):
+        if not folder.exists():
+            continue
+        for path in folder.iterdir():
+            if path.is_file() and path.suffix.lower() in IMAGE_EXTS:
+                try:
+                    out.add(image_digest(path))
+                except OSError:
+                    pass
+    return out
 
 
 def hero_present(filename: str, d: date, inbox: Path = INBOX) -> bool:
@@ -333,7 +461,8 @@ def read_key() -> str | None:
 
 
 def run(pack: Pack, cfg: dict, *, log=print, open_browser: bool = True, keys=read_key, sleep=time.sleep,
-        watcher: DownloadWatcher | None = None, clipboard=copy_to_clipboard, inbox: Path = INBOX) -> Desk:
+        watcher: DownloadWatcher | None = None, clipboard=copy_to_clipboard, inbox: Path = INBOX,
+        visual_matcher=visual_match_downloads) -> Desk:
     todo = remaining(pack, inbox)
     desk = Desk(todo)
     if not todo:
@@ -352,10 +481,12 @@ def run(pack: Pack, cfg: dict, *, log=print, open_browser: bool = True, keys=rea
     log("ONE combined prompt is " + ("on your clipboard" if ok else "NOT on the clipboard (copy it from the PROMPTS file)")
         + " — start a NEW ChatGPT chat, paste once, and send.")
     log("Ask ChatGPT to continue if it returns only one image; multi-image output is interface-dependent, not guaranteed by Pro.")
-    log("Download every image. Exact filenames map automatically; generic names wait for your explicit shot number.")
+    log("Download every image. Exact filenames map automatically; generic names are matched from visible scene content.")
+    log("If visual confidence is low or assignments conflict, Studio waits for your explicit shot number instead of guessing.")
     log("Keys: 1-9 = map pending download to shot   n = map to next shot (sequential fallback)")
     log("      Enter = copy a prompt for remaining shots   r = redo last   s = skip next   q = quit")
     pending: list[Path] = []
+    digests = known_image_digests(inbox)
 
     def save(src: Path, shot: Shot) -> None:
         try:
@@ -396,14 +527,34 @@ def run(pack: Pack, cfg: dict, *, log=print, open_browser: bool = True, keys=rea
         elif k == "q":
             log("quit — heroes saved so far are kept")
             break
+        generic: list[Path] = []
         for f in watcher.poll():
+            try:
+                digest = image_digest(f)
+            except OSError as exc:
+                log(f"? could not fingerprint {f.name}: {exc}")
+                continue
+            if digest in digests:
+                log(f"» ignored duplicate image bytes: {f.name}")
+                continue
+            digests.add(digest)
             shot = match_download(f, todo)
             if shot:
                 save(f, shot)
             else:
-                pending.append(f)
-                log(f"? {f.name} has no reliable filename mapping. Press 1-{len(todo)} to assign it, "
-                    "or n for the next missing shot.")
+                generic.append(f)
+        if generic:
+            candidates = [s for s in todo if s not in desk.saved and s not in desk.skipped]
+            matched, uncertain = visual_matcher(generic, candidates, cfg, log=log)
+            for f, decision in matched.items():
+                log(f"◎ visually matched {f.name} → shot {decision.shot.n} "
+                    f"({decision.confidence:.2f}; {decision.evidence})")
+                save(f, decision.shot)
+            for f in generic:
+                if f not in matched:
+                    pending.append(f)
+                    log(f"? {f.name}: {uncertain.get(f, 'no reliable visual mapping')}. "
+                        f"Press 1-{len(todo)} to assign it, or n for the next missing shot.")
         if not desk.done:
             sleep(0.4)
     return desk

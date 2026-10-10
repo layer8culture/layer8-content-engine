@@ -1,4 +1,7 @@
 import os
+import json
+import shutil
+import subprocess
 import time
 from datetime import date
 from pathlib import Path
@@ -54,8 +57,8 @@ def _pack(tmp_path, monkeypatch):
     return herodesk.load_pack(D, tmp_path)
 
 
-def _img(path: Path, size=(1080, 1350), fmt="PNG"):
-    Image.new("RGB", size, "navy").save(path, fmt)
+def _img(path: Path, size=(1080, 1350), fmt="PNG", color="navy"):
+    Image.new("RGB", size, color).save(path, fmt)
     return path
 
 
@@ -168,6 +171,44 @@ def test_download_mapping_requires_exact_name_or_explicit_choice(tmp_path):
     shots = [herodesk.Shot(1, "hero-a.png", ""), herodesk.Shot(2, "hero-b.png", "")]
     assert herodesk.match_download(tmp_path / "hero-b.jpg", shots) == shots[1]
     assert herodesk.match_download(tmp_path / "ChatGPT Image Oct 9.png", shots) is None
+    assert herodesk.match_download(tmp_path / "ChatGPT Image Oct 9 (1).png", shots) is None
+
+
+def test_visual_match_accepts_only_confident_unique_results(tmp_path, monkeypatch):
+    monkeypatch.setattr(herodesk.shutil, "which", lambda command: "copilot")
+    files = [_img(tmp_path / "generic-a.png"), _img(tmp_path / "generic-b.png", size=(1080, 1920))]
+    shots = [herodesk.Shot(1, "hero-a.png", "a dark hallway and blue door"),
+             herodesk.Shot(2, "hero-b.png", "a cyclist facing blue terrain")]
+    payload = {"matches": [
+        {"file": files[0].name, "shot": 1, "confidence": .96, "runner_up_shot": 2,
+         "runner_up_confidence": .12, "evidence": "hallway"},
+        {"file": files[1].name, "shot": 2, "confidence": .74, "runner_up_shot": 1,
+         "runner_up_confidence": .30, "evidence": "unclear"},
+    ], "ambiguous": []}
+
+    def runner(args, **kwargs):
+        assert "--attachment" in args and "Ignore attachment order" in args[2]
+        return subprocess.CompletedProcess(args, 0, json.dumps(payload), "")
+
+    matched, uncertain = herodesk.visual_match_downloads(
+        files, shots, {"model": "claude-sonnet-5.5", "heroes": {}}, runner=runner)
+    assert matched[files[0]].shot == shots[0]
+    assert files[1] in uncertain and "below 0.85" in uncertain[files[1]]
+
+
+def test_visual_match_rejects_duplicate_shot_assignments(tmp_path, monkeypatch):
+    monkeypatch.setattr(herodesk.shutil, "which", lambda command: "copilot")
+    files = [_img(tmp_path / "a.png"), _img(tmp_path / "b.png")]
+    shots = [herodesk.Shot(1, "hero-a.png", "scene a"), herodesk.Shot(2, "hero-b.png", "scene b")]
+    payload = {"matches": [
+        {"file": p.name, "shot": 1, "confidence": .95, "runner_up_confidence": .05, "evidence": "same"}
+        for p in files
+    ], "ambiguous": []}
+    runner = lambda args, **kwargs: subprocess.CompletedProcess(args, 0, json.dumps(payload), "")
+    matched, uncertain = herodesk.visual_match_downloads(
+        files, shots, {"model": "claude-sonnet-5.5", "heroes": {}}, runner=runner)
+    assert not matched
+    assert all("multiple downloads matched shot 1" in uncertain[p] for p in files)
 
 
 def test_run_batch_end_to_end_maps_out_of_order_and_confirms_generic(tmp_path, monkeypatch):
@@ -182,7 +223,7 @@ def test_run_batch_end_to_end_maps_out_of_order_and_confirms_generic(tmp_path, m
     script = [
         (lambda: _img(dl / "20261008-radio-c.png"), None),
         (None, None),                                      # exact -> shot 3
-        (lambda: _img(dl / "ChatGPT Image 1.png"), None),
+        (lambda: _img(dl / "ChatGPT Image 1.png", color="maroon"), None),
         (None, None),                                      # generic -> pending, not filed
         (None, "1"),                                       # explicitly map to shot 1
         (lambda: _img(dl / "20261008-hero-b.png", size=(1080, 1920)), None),
@@ -198,14 +239,52 @@ def test_run_batch_end_to_end_maps_out_of_order_and_confirms_generic(tmp_path, m
         return key
 
     logs = []
+    def visual_matcher(paths, shots, cfg, log):
+        return {}, {path: "test ambiguity" for path in paths}
+
     desk = herodesk.run(p, {}, log=logs.append, open_browser=False, keys=keys, sleep=lambda s: None,
-                        watcher=w, clipboard=lambda t: clips.append(t) or True, inbox=tmp_path)
+                        watcher=w, clipboard=lambda t: clips.append(t) or True, inbox=tmp_path,
+                        visual_matcher=visual_matcher)
     assert desk.done
     assert len(clips) == 1 and "BATCH REQUEST" in clips[0] and "SEPARATE downloadable image" in clips[0]
     assert all((tmp_path / n).exists() for n in
                ("20261008-hero-a.png", "20261008-hero-b.png", "20261008-radio-c.png"))
-    assert any("no reliable filename mapping" in m for m in logs)
+    assert any("test ambiguity" in m for m in logs)
     assert list(dl.iterdir()) == []
+
+
+def test_run_visually_maps_generic_batch_and_ignores_duplicate_bytes(tmp_path, monkeypatch):
+    p = _pack(tmp_path, monkeypatch)
+    dl = tmp_path / "dl"
+    dl.mkdir()
+    clock = Clock()
+    w = herodesk.DownloadWatcher(dl, settle_seconds=0.5, clock=clock)
+    script = [
+        (lambda: (_img(dl / "generic.png"), shutil.copyfile(dl / "generic.png", dl / "duplicate.png")), None),
+        (None, None),
+    ]
+    ticks = iter(script)
+
+    def keys():
+        act, key = next(ticks, (None, "q"))
+        if act:
+            act()
+        clock.t += 1
+        return key
+
+    calls = []
+
+    def visual_matcher(paths, shots, cfg, log):
+        calls.append(paths)
+        path = paths[0]
+        return {path: herodesk.VisualMatch(shots[0], .97, .05, "desk")}, {}
+
+    logs = []
+    herodesk.run(p, {}, log=logs.append, open_browser=False, keys=keys, sleep=lambda s: None,
+                 watcher=w, clipboard=lambda t: True, inbox=tmp_path, visual_matcher=visual_matcher)
+    assert len(calls) == 1 and len(calls[0]) == 1
+    assert (tmp_path / "20261008-hero-a.png").exists()
+    assert any("ignored duplicate image bytes" in line for line in logs)
 
 
 def test_downloads_dir_override(monkeypatch, tmp_path):

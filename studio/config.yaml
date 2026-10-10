@@ -151,6 +151,10 @@ gates:
 heroes:
   downloads_dir: ""     # empty = your Windows Downloads folder; env STUDIO_DOWNLOADS_DIR overrides
   settle_seconds: 1.0    # a download counts once its size stops changing this long
+  visual_match_enabled: true
+  visual_match_confidence: 0.85
+  visual_match_margin: 0.15
+  visual_match_timeout_seconds: 180
   toast: true            # Windows toast after the 5 PM run when a prompt pack is ready
 
 visual:
