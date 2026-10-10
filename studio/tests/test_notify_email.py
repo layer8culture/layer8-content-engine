@@ -1,7 +1,11 @@
 import json
+import argparse
 from datetime import date
 from pathlib import Path
 
+import pytest
+
+import studio
 from studio_lib import notify
 
 
@@ -31,6 +35,7 @@ def _smtp_env(monkeypatch):
     monkeypatch.setenv("NOTIFY_EMAIL_TO", "owner@example.com")
     monkeypatch.setenv("SMTP_HOST", "smtp.example.com")
     monkeypatch.setenv("SMTP_FROM", "studio@example.com")
+    monkeypatch.setenv("SMTP_PASSWORD", "test-app-password")
 
 
 def test_daily_email_attaches_prompt_labels_times_and_deduplicates(monkeypatch, tmp_path):
@@ -67,3 +72,39 @@ def test_missing_smtp_is_an_explicit_blocker(monkeypatch):
     logs = []
     assert not notify.send_email("subject", "body", log=logs.append)
     assert any("SMTP_HOST and SMTP_FROM are required" in line for line in logs)
+
+
+def test_authenticated_smtp_requires_app_password(monkeypatch):
+    monkeypatch.setenv("NOTIFY_EMAIL_TO", "owner@example.com")
+    monkeypatch.setenv("SMTP_HOST", "smtp.gmail.com")
+    monkeypatch.setenv("SMTP_FROM", "owner@example.com")
+    monkeypatch.setenv("SMTP_USER", "owner@example.com")
+    monkeypatch.delenv("SMTP_PASSWORD", raising=False)
+    settings, reason = notify._email_settings()
+    assert settings is None
+    assert reason == "SMTP_PASSWORD is required when SMTP_USER is configured"
+
+
+def test_email_test_sends_only_to_configured_recipient(monkeypatch):
+    monkeypatch.setenv("NOTIFY_EMAIL_TO", "owner@example.com")
+    sent = []
+    monkeypatch.setattr(notify, "send_email",
+                        lambda subject, body, **kwargs: sent.append((subject, body)) or True)
+    monkeypatch.setattr(studio, "log", lambda message: None)
+    studio.cmd_email_test(argparse.Namespace(), {})
+    assert len(sent) == 1
+    assert sent[0][0] == "Layer8 Studio email test"
+
+
+def test_email_test_fails_without_recipient(monkeypatch):
+    monkeypatch.delenv("NOTIFY_EMAIL_TO", raising=False)
+    with pytest.raises(SystemExit, match="NOTIFY_EMAIL_TO"):
+        studio.cmd_email_test(argparse.Namespace(), {})
+
+
+def test_secure_setup_script_uses_masked_input_and_no_cli_password():
+    script = (Path(__file__).resolve().parent.parent / "setup-email.ps1").read_text(encoding="utf-8")
+    assert "Read-Host" in script and "-AsSecureString" in script
+    assert "SecureStringToBSTR" in script and "ZeroFreeBSTR" in script
+    assert "SMTP_PASSWORD = $password" in script
+    assert "studio.py" in script and "email-test" in script

@@ -31,6 +31,8 @@ Tasks launch `task.ps1` through `conhost.exe --headless`, so Windows never hands
 
 For one daily email after next-day content is actually prepared, set `NOTIFY_EMAIL_TO` plus the SMTP fields in `.env`. The email labels times as **planned** (not proof of Postiz scheduling), lists failed gates and missing heroes, and attaches the one-paste prompt pack. A per-date marker prevents duplicate success emails when the 18:00 catch-up runs. Gmail users need an app password; Studio never uses or stores a normal Google password.
 
+For Gmail, enable 2-Step Verification and create an app password yourself at <https://myaccount.google.com/apppasswords>. Then double-click `setup-email.cmd`, or run `powershell -ExecutionPolicy Bypass -File setup-email.ps1 -Test`. Password input is masked and never appears in the command line or shell history; the script preserves existing `.env` values, stores the app password only in gitignored `.env`, and sends one test email only to `NOTIFY_EMAIL_TO`. You can repeat just the test later with `python studio.py email-test`.
+
 ## Commands
 
 | Command | What it does |
