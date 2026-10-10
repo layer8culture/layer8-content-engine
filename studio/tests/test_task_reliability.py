@@ -23,9 +23,9 @@ def at(cfg, s):
 
 def test_missed_daily_only_after_hour_and_only_if_tomorrow_unplanned(cfg, monkeypatch, tmp_path):
     monkeypatch.setattr(studio, "plan_path", lambda d: tmp_path / f"{d}.json")
-    cfg["publish"]["catch_up_daily_after_hour"] = 20
-    assert studio.missed_daily(at(cfg, "2026-10-07T19:30:00"), cfg) is None
-    miss = studio.missed_daily(at(cfg, "2026-10-07T20:00:00"), cfg)
+    cfg["publish"]["catch_up_daily_after_hour"] = 18
+    assert studio.missed_daily(at(cfg, "2026-10-07T17:30:00"), cfg) is None
+    miss = studio.missed_daily(at(cfg, "2026-10-07T18:00:00"), cfg)
     assert str(miss) == "2026-10-08"
     (tmp_path / "2026-10-08.json").write_text("{}")
     assert studio.missed_daily(at(cfg, "2026-10-07T23:00:00"), cfg) is None
@@ -48,29 +48,35 @@ def publish_env(cfg, monkeypatch, tmp_path):
     monkeypatch.setattr(studio, "acquire_lock", lambda: True)
     monkeypatch.setattr(studio, "release_lock", lambda: None)
     monkeypatch.setattr(config, "is_paused", lambda c: False)
-    monkeypatch.setattr(studio, "produce", lambda d, c, **k: produced.append(str(d)))
+    monkeypatch.setattr(studio, "produce",
+                        lambda d, c, **k: (produced.append(str(d)) or ({}, {}, {}, tmp_path / "preview.html")))
+    monkeypatch.setattr(studio, "_daily_ready", lambda *a, **k: None)
     monkeypatch.setattr(studio, "log", lambda m: None)
-    cfg["publish"]["catch_up_daily_after_hour"] = 20
+    cfg["publish"]["catch_up_daily_after_hour"] = 18
     cfg["publish"]["same_day_plan_cutoff_hour"] = 14
     return cfg, produced
 
 
 def test_publish_catches_up_missed_run_daily_even_with_no_plan_today(publish_env):
     cfg, produced = publish_env
-    studio.cmd_publish(_args(now="2026-10-07T21:00:00"), cfg)
+    studio.cmd_publish(_args(now="2026-10-07T18:00:00"), cfg)
     assert produced == ["2026-10-08"]  # tomorrow only — never same-day after the cutoff
 
 
 def test_publish_does_not_catch_up_before_hour_or_on_dry_runs(publish_env):
     cfg, produced = publish_env
     studio.cmd_publish(_args(now="2026-10-07T16:00:00"), cfg)
-    studio.cmd_publish(_args(now="2026-10-07T21:00:00", dry=True), cfg)
+    studio.cmd_publish(_args(now="2026-10-07T18:00:00", dry=True), cfg)
     assert produced == []
 
 
 def test_tasks_launch_through_headless_conhost_not_the_default_terminal():
     assert "System32\\conhost.exe" in INSTALL and "--headless powershell.exe" in INSTALL
     assert "task.ps1" in INSTALL and "-WindowStyle Hidden -Command" not in INSTALL
+
+
+def test_daily_task_defaults_to_5pm():
+    assert '[string]$DailyTime = "17:00"' in INSTALL
 
 
 def test_publish_repetition_does_not_kill_the_last_run():

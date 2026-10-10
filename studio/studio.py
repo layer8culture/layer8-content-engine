@@ -147,8 +147,13 @@ def cmd_publish(a, cfg):
             _publish_day(a, cfg, d, plan, now)
         miss = None if (a.dry or a.date or a.only) else missed_daily(now, cfg)
         if miss:
-            log(f"no plan for tomorrow ({miss}) yet — the 19:00 run-daily was missed; producing it now")
-            produce(miss, cfg)
+            log(f"no plan for tomorrow ({miss}) yet — the 17:00 run-daily was missed; producing it now")
+            try:
+                plan, manifest, results, page = produce(miss, cfg)
+                _daily_ready(plan, miss, results, page, cfg)
+            except Exception as exc:
+                notify.send_daily_failure(miss, exc, log=log)
+                raise
     finally:
         release_lock()
 
@@ -198,9 +203,17 @@ def cmd_run_daily(a, cfg):
         log("another studio run is in progress; skipping")
         return
     try:
-        plan, manifest, results, page = produce(d, cfg, force_plan=a.force)
+        try:
+            plan, manifest, results, page = produce(d, cfg, force_plan=a.force)
+        except Exception as exc:
+            notify.send_daily_failure(d, exc, log=log)
+            raise
     finally:
         release_lock()
+    _daily_ready(plan, d, results, page, cfg)
+
+
+def _daily_ready(plan, d, results, page, cfg):
     ok = sum(r["pass"] for r in results.values())
     msg = (f"Layer8 Studio planned {d} — {len(plan['posts'])} posts, {ok} pass gates"
            f"{' (PAUSED: nothing will post)' if config.is_paused(cfg) else ''}.\n{plan.get('summary', '')}\n"
@@ -210,6 +223,7 @@ def cmd_run_daily(a, cfg):
         msg += "\nBlocked:\n" + "\n".join(blocked)
     if cfg["notify"].get("on_run_daily"):
         notify.send(msg, log=log)
+    notify.send_daily_ready(plan, d, results, page, heroes.status(plan, d), log=log)
     if (cfg.get("heroes") or {}).get("toast", True) and heroes.shots_for(plan):
         from studio_lib import herodesk
 

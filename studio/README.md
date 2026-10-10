@@ -6,7 +6,7 @@ It replaces the GitHub Actions engine (still in the repo root as legacy).
 *Technology has seven layers. We're the eighth.*
 
 ```
-19:00 daily  run-daily  → news + transcript + history → configured Copilot CLI model → plan JSON
+17:00 daily  run-daily  → news + transcript + history → configured Copilot CLI model → plan JSON
                           → render (Playwright stills, Remotion reels) → ChatGPT prompt pack
                           → quality gates → preview.html
 every 30 min publish    → ingest heroes from inbox/ → re-render → gates → Postiz (due posts only)
@@ -25,9 +25,11 @@ There is **no human approval step**. Safety comes from the gates and the kill sw
 7. Test run: `python studio.py dry-run`. This plans and renders tomorrow without publishing. Open `data\media\<date>\preview.html` to review it.
 8. Schedule it: `powershell -ExecutionPolicy Bypass -File install-schedule.ps1` (remove with `-Uninstall`).
 
-The tasks use *StartWhenAvailable*, so a run missed while the laptop was off fires when it wakes. If the 19:00 plan is still missing after 20:00 for any reason, the next publish run makes it (`publish.catch_up_daily_after_hour`).
+The tasks use *StartWhenAvailable*, so a run missed while the laptop was off fires when it wakes. If the 17:00 plan is still missing after 18:00 for any reason, the next publish run makes it (`publish.catch_up_daily_after_hour`).
 
 Tasks launch `task.ps1` through `conhost.exe --headless`, so Windows never hands them to Windows Terminal. On 10/7 a hung Terminal blocked every task launch. Each run writes `=== start` and `=== end … exit N` lines to `data\logs\task-<job>.log`. A run with a start line and no end line means it hung or was killed.
+
+For one daily email after next-day content is actually prepared, set `NOTIFY_EMAIL_TO` plus the SMTP fields in `.env`. The email labels times as **planned** (not proof of Postiz scheduling), lists failed gates and missing heroes, and attaches the one-paste prompt pack. A per-date marker prevents duplicate success emails when the 18:00 catch-up runs. Gmail users need an app password; Studio never uses or stores a normal Google password.
 
 ## Commands
 
@@ -69,7 +71,7 @@ A failing post is blocked and logged; the others still go out. Every attempt is 
 
 ## ChatGPT hero images (manual, ~5 min/day)
 
-After the 19:00 run you'll get a "Hero prompts ready" toast. Double-click **Layer8 Heroes** on your desktop (or run `studio\heroes.cmd`, or `python studio.py heroes [--date D]`):
+After the 17:00 run you'll get a "Hero prompts ready" toast. Double-click **Layer8 Heroes** on your desktop (or run `studio\heroes.cmd`, or `python studio.py heroes [--date D]`):
 
 1. One combined prompt (locked style + every missing shot) is already on your clipboard, and chatgpt.com opens in your browser. Start a new chat, paste once, and send. The prompt asks for every shot as a **separate downloadable image**, never a collage/contact sheet.
 2. ChatGPT's current image interface may still return only one image per response; **ChatGPT Pro does not guarantee multi-image batch output**. If that happens, tell it `continue` for the remaining shots. Press **Enter** in the Heroes window anytime to copy a fresh combined prompt containing only shots still missing.

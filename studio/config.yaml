@@ -79,10 +79,10 @@ publish:
   lookahead_minutes: 50
   # If the laptop was off and a post time passed, still post it if we're within this window; else mark missed.
   catch_up_grace_minutes: 180
-  # If today has no plan (laptop was off at 19:00), publish plans same-day only before this hour.
+  # If today has no plan (laptop was off at 17:00), publish plans same-day only before this hour.
   same_day_plan_cutoff_hour: 14
-  # Self-heal a missed 19:00 run-daily: from this hour on, a publish run with no plan for tomorrow makes one.
-  catch_up_daily_after_hour: 20
+  # Self-heal a missed 17:00 run-daily: from this hour on, a publish run with no plan for tomorrow makes one.
+  catch_up_daily_after_hour: 18
   # A post already scheduled in Postiz with the template version is swapped (delete + re-schedule, same time)
   # when its ChatGPT hero lands later — unless it goes out within replace_min_lead_minutes.
   replace_on_media_change: true
@@ -151,7 +151,7 @@ gates:
 heroes:
   downloads_dir: ""     # empty = your Windows Downloads folder; env STUDIO_DOWNLOADS_DIR overrides
   settle_seconds: 1.0    # a download counts once its size stops changing this long
-  toast: true            # Windows toast after the 7 PM run when a prompt pack is ready
+  toast: true            # Windows toast after the 5 PM run when a prompt pack is ready
 
 visual:
   hero_watch: true                 # ingest picks up studio/inbox/<filename>.png|jpg

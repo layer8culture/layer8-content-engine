@@ -1,7 +1,7 @@
 <#
 Registers the Layer8 Studio scheduled tasks for the current user (no admin needed).
 
-  LayerStudio-Daily    19:00 every day        python studio.py run-daily   (plan tomorrow, render, prompt pack, gates, preview)
+  LayerStudio-Daily    17:00 every day        python studio.py run-daily   (plan tomorrow, render, prompt pack, gates, preview)
   LayerStudio-Publish  every 30 min, 06:00-23:00  python studio.py publish  (ingest heroes, gates, push due posts to Postiz)
 
 Both use StartWhenAvailable, so a run missed while the laptop was off/asleep fires when it's back.
@@ -10,7 +10,7 @@ Pause posting without touching tasks:  New-Item studio\PAUSE
 #>
 param(
     [switch]$Uninstall,
-    [string]$DailyTime = "19:00",
+    [string]$DailyTime = "17:00",
     [string]$Python = (Get-Command python -ErrorAction Stop).Source
 )
 
