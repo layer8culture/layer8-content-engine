@@ -111,7 +111,7 @@ def cmd_heroes(a, cfg):
     today = datetime.now(config.tz(cfg)).date()
     d = config.parse_date(a.date, cfg) if a.date else herodesk.default_date(today)
     if d is None:
-        log("No prompt pack with missing heroes. (The 7 PM run writes inbox/PROMPTS-<tomorrow>.md.)")
+        log("No prompt pack with missing heroes. (The 5 PM run writes inbox/PROMPTS-<tomorrow>.md.)")
         return
     if a.downloads:
         os.environ["STUDIO_DOWNLOADS_DIR"] = a.downloads
