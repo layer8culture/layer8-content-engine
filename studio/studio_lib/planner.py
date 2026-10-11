@@ -73,7 +73,42 @@ def build_slots(d: date, cfg: dict) -> list[dict]:
     return slots
 
 
-def build_prompt(d: date, cfg: dict, slots: list[dict], news_path: str, history_path: str, transcript_path: str | None, draft_path: str) -> str:
+def _limited_text(path: str | None, max_chars: int) -> str:
+    if not path:
+        return "(none available)"
+    text = (ROOT / path).read_text(encoding="utf-8", errors="replace")
+    if len(text) <= max_chars:
+        return text
+    return text[:max_chars].rstrip() + f"\n\n[Studio truncated this source after {max_chars} characters.]"
+
+
+def write_context_bundle(d: date, cfg: dict, news_path: str, history_path: str,
+                         transcript_path: str | None) -> str:
+    """Write one bounded source file so the planner does not churn across many repeated reads."""
+    context_dir = ROOT / "data" / "context"
+    context_dir.mkdir(parents=True, exist_ok=True)
+    rel = f"data/context/planning-{d.isoformat()}.md"
+    brand_files = [
+        "brand/voice-layer8culture.md", "brand/voice-lofi.md", "brand/visual-style.md",
+        "brand/hashtags.md", "brand/topics-layer8culture.md", "brand/topics-radio.md",
+        "brand/viral-formats.md",
+    ]
+    sections = ["# Layer8 Studio planning source bundle", "",
+                "Read this file once, then write the draft. Do not reread sections.", ""]
+    for path in brand_files:
+        sections += [f"## {path}", _limited_text(path, 20_000), ""]
+    news_limit = int((cfg.get("copilot") or {}).get("news_context_chars", 12_000))
+    transcript_limit = int((cfg.get("copilot") or {}).get(
+        "transcript_context_chars_recap" if d.weekday() == 4 else "transcript_context_chars", 14_000))
+    sections += [f"## {news_path}", _limited_text(news_path, news_limit), "",
+                 f"## {history_path}", _limited_text(history_path, 12_000), "",
+                 f"## {transcript_path or 'latest transcript'}", _limited_text(transcript_path, transcript_limit), ""]
+    (ROOT / rel).write_text("\n".join(sections), encoding="utf-8")
+    return rel
+
+
+def build_prompt(d: date, cfg: dict, slots: list[dict], news_path: str, history_path: str,
+                 transcript_path: str | None, draft_path: str, bundle_path: str | None = None) -> str:
     wd = WEEKDAYS[d.weekday()]
     req = "\n".join(
         f"{i + 1}. id {s['id']} — brand {s['brand']}, format {s['format']}, platforms {s['platforms']} — {s['note']}"
@@ -82,13 +117,23 @@ def build_prompt(d: date, cfg: dict, slots: list[dict], news_path: str, history_
     tline = f"- {transcript_path}  — latest Tech Thursday transcript (primary source for recaps and lessons)" if transcript_path else "- (no Tech Thursday transcript available)"
     facts = "\n".join(f"- {k}: {v}" for k, v in (cfg.get("facts") or {}).items() if v not in ("", None))
     tmpl = (ROOT / "templates" / "plan-prompt.md").read_text(encoding="utf-8")
-    return tmpl.format(
+    prompt = tmpl.format(
         date=d.isoformat(), weekday=wd.title(), compact=d.strftime("%Y%m%d"), requirements=req,
         news_path=news_path, history_path=history_path, transcript_line=tline,
         banned="; ".join(cfg["gates"]["banned_phrases"]), facts=facts or "- (none)",
         radio_banned=", ".join(cfg["gates"].get("radio_banned_topics", [])),
         draft_path=draft_path, schema=schema.SCHEMA_DOC,
     )
+    if bundle_path:
+        prompt = re.sub(
+            r"## READ FIRST.*?(?=## TODAY'S SLOTS)",
+            "## READ FIRST\n"
+            f"- {bundle_path} — bounded brand, news, history, and transcript context\n\n"
+            "Read that single bundle once. Do not glob for other files, reread the bundle, or consult source code.\n\n",
+            prompt,
+            flags=re.S,
+        )
+    return prompt
 
 
 def run_copilot(prompt_file: str, cfg: dict, log_name: str) -> int:
@@ -151,7 +196,8 @@ def make_plan(d: date, cfg: dict, *, force: bool = False, log=print) -> dict:
     draft = ROOT / draft_rel
     if draft.exists():
         draft.unlink()
-    prompt = build_prompt(d, cfg, slots, news_rel, hist_rel, tr_rel, draft_rel)
+    bundle_rel = write_context_bundle(d, cfg, news_rel, hist_rel, tr_rel)
+    prompt = build_prompt(d, cfg, slots, news_rel, hist_rel, tr_rel, draft_rel, bundle_rel)
     prompt_rel = f"data/plans/{d.isoformat()}.prompt.md"
     (ROOT / prompt_rel).write_text(prompt, encoding="utf-8")
     log(f"asking {cfg['model']} via Copilot CLI for {len(slots)} posts …")
@@ -159,6 +205,11 @@ def make_plan(d: date, cfg: dict, *, force: bool = False, log=print) -> dict:
     plan, errs = _load_draft(draft)
     if plan is not None:
         errs = schema.validate_plan(plan, d.isoformat()) + _slot_errors(plan, slots)
+    if rc == 124 and plan is None:
+        raise RuntimeError(
+            "planner timed out before writing a draft; stopped without repeated repair loops "
+            f"(see data/logs/plan-{d.isoformat()}.log)"
+        )
     attempt = 1
     while errs and attempt <= 2:
         log(f"plan invalid (rc={rc}); repair attempt {attempt}: {errs[:6]}")
