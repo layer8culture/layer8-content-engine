@@ -1,0 +1,508 @@
+[
+  {
+    "id": "20261004-layer8culture-tiktok-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-10-04T08:15:00-04:00",
+    "text": "GitHub Copilot CLI just shipped dynamic workflows \u2014 multi-step automations you build once and run from your terminal.\n\nOur whole content engine already runs on Copilot CLI. This just means the next pipeline takes fewer prompts to stand up.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#GitHubCopilot",
+      "#BuildInPublic",
+      "#AIagents",
+      "#TechTok"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "build-in-public",
+    "hook_score": 85,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Vertical 9:16 extreme macro shot: a dark terminal window fills the frame, cursor blinking, as lines of code appear to type themselves; beside it, a glowing translucent pipeline diagram unfurls across connected panels, stages lighting up one by one in electric blue; a hand occasionally rests near a keyboard at the frame edge. Shallow depth of field, electric blue and deep navy palette, no logos, no readable or rendered text, subtle keyboard clicks and a soft synth pulse, premium late-night energy. COMPOSITION FOR TYPOGRAPHY: leave the upper-center band calm and simple and the lower third clean dark negative space, no faces or fine detail there. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "headline": "ONE PROMPT. A WHOLE PIPELINE.",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Vertical 9:16 cinematic macro shot: a dark terminal window fills the frame, cursor blinking, as lines of code type themselves into existence; a glowing pipeline diagram unfurls across connected translucent panels showing stages lighting up one by one in electric blue; a hand rests near a keyboard at the frame edge. Documentary realism, shallow depth of field, electric blue and deep navy palette, no logos, no on-screen text, subtle keyboard clicks and a soft synth pulse, premium late-night energy.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "ONE PROMPT",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "BUILDS THE FLOW",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "WE RUN ON THIS",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261004-layer8culture-tiktok-2",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-10-04T11:30:00-04:00",
+    "text": "OpenAI just gave every paid tier an always-on agent that keeps working after you close the laptop.\n\nWe just finished a 24-hour live build. Turns out the humans were the bottleneck, not the tools.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIagents",
+      "#AIFluency",
+      "#OpenAI",
+      "#BuildWithAI"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "ai-fluency",
+    "hook_score": 81,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, high contrast. Vertical 9:16: a vast glowing agent-graph of electric-blue nodes assembles in mid-air above a tiny human silhouette standing on a dark platform; behind them a sky compresses a day/night cycle into a fast arc of light through tall glass. Abstract, vast, mostly faceless, shallow depth of field, electric blue and deep navy palette, no logos, no readable or rendered text, ambient hum and soft clicks. COMPOSITION FOR TYPOGRAPHY: keep the upper-center band calm and the lower third clean dark negative space. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "headline": "THE AGENT NEVER CLOCKS OUT",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Vertical 9:16 cinematic: a vast glowing agent-graph of electric-blue nodes assembles in mid-air above a tiny human silhouette on a dark platform, nodes multiplying and staying lit as a day/night cycle compresses into a fast arc of light through tall glass behind them. Documentary realism meets abstract data visualization, shallow depth of field, electric blue and deep navy palette, no on-screen text, ambient hum and soft clicks, premium and vast, not cluttered.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "WE WENT 24 HRS",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "IT DOESN'T STOP",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "AI IS NOW STAFF",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261004-layer8culture-tiktok-3",
+    "account": "layer8culture",
+    "category": "Behind the Scenes",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-10-04T13:45:00-04:00",
+    "text": "Tech Thursday isn't a sterile studio \u2014 it's a lab with a fish tank, home-cooked food, and a 24-hour build running in the background.\n\nThe tools change every week. The culture is the constant.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#BlackTechCulture",
+      "#TechThursday",
+      "#Afrofuturism",
+      "#BuildInPublic"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "black-tech-culture",
+    "hook_score": 78,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, Black tech futurism, Afrofuturist grandeur, strong negative space, warm practical lighting, high contrast. Vertical 9:16: a luminous Afrofuturist cityscape at golden hour glimpsed through a window, transitioning into a cozy late-night creator lab interior \u2014 warm wood desk, a fish tank glowing blue in the background, string lights, the standalone '8' motif etched into a dark wall panel; camera pulls back slowly from steam rising off a mug to reveal the full warm, lived-in space with the skyline glowing beyond the glass. Warm gold and electric blue lighting, documentary realism, shallow depth of field, no logos, no readable or rendered text, soft ambient room tone and distant city hum. COMPOSITION FOR TYPOGRAPHY: keep the upper-center band calm and the lower third clean dark negative space. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "headline": "THIS ISN'T A STUDIO. IT'S A LAB.",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Vertical 9:16 cinematic: a luminous Afrofuturist cityscape at golden hour is glimpsed through a window, then the camera pulls back slowly from steam rising off a mug to reveal a cozy late-night creator lab \u2014 warm wood desk, a glowing fish tank, string lights, a standalone '8' motif etched into a dark wall panel, the futuristic skyline glowing beyond the glass. Warm gold and electric blue lighting, documentary realism, shallow depth of field, no on-screen text, soft ambient room tone and distant city hum.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "NOT A STUDIO",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "IT'S A LAB",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "IT'S A CULTURE",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261004-layer8culture-tiktok-4",
+    "account": "layer8culture",
+    "category": "Creator Systems",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-10-04T16:20:00-04:00",
+    "text": "Gemini 4 Argon just landed with a 1M-token window, and GPT-6.1 Sol and Claude Opus 5.5 are already in the mix.\n\nThe edge isn't picking a favorite model. It's knowing which one to reach for on which job.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#Gemini",
+      "#ArtificialIntelligence",
+      "#CreatorTech",
+      "#AItools"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "cinematic-coding",
+    "hook_score": 76,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, minimal composition, strong negative space, high contrast. Vertical 9:16 extreme macro: layered panes of glass scroll past each other with light trails, cursor-like particles drifting like embers, reflections of a cityscape within the glass; one pane's glow shifts from electric blue to cool white suggesting a handoff between systems. Abstract, premium, mostly faceless, shallow depth of field, no logos, no readable or rendered text, ambient synth hum and soft mechanical clicks. COMPOSITION FOR TYPOGRAPHY: keep the upper-center band calm and the lower third clean dark negative space. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "headline": "ONE MODEL ISN'T A STACK",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Vertical 9:16 cinematic extreme macro: layered glass panes scroll past each other with light trails, cursor-like particles drifting like embers, reflections of a cityscape within the glass; the camera glides between panes as one pane's glow shifts from electric blue to cool white, suggesting a handoff between systems. Abstract, premium, mostly faceless, shallow depth of field, no on-screen text, ambient synth hum and soft mechanical clicks.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "ONE MODEL",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "ISN'T A STACK",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "LEARN TO SWITCH",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261004-layer8culture-tiktok-5",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-10-04T19:10:00-04:00",
+    "text": "We just wrapped a 24-hour live build with ChatGPT, Claude, and Copilot \u2014 no scripts, no safety net, just the tools and the work.\n\nA consumer would've tapped out at hour two. We shipped builds until sunrise.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#BuildInPublic",
+      "#TechThursday",
+      "#AIBuilders",
+      "#FutureBuilders"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "transformation",
+    "hook_score": 83,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, human-centered AI themes, Black tech futurism, strong negative space, warm practical lighting, high contrast. Vertical 9:16: a confident Black creator walks from a dim, cluttered passive space (a glowing phone held low, scrolling light on their face) through a threshold of light into a bright, focused studio workspace with multiple monitors; dawn breaks through a window as they arrive. Slow tracking push, electric blue and warm dawn-gold palette, documentary realism, shallow depth of field, no logos, no readable or rendered text, rising ambient swell and soft footsteps. COMPOSITION FOR TYPOGRAPHY: keep the upper-center band calm and the lower third clean dark negative space. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "headline": "A CONSUMER WOULD HAVE QUIT",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Vertical 9:16 cinematic: a confident Black creator walks from a dim, cluttered passive space (a glowing phone held low, scrolling light on their face) through a threshold of light into a bright, focused studio workspace with multiple monitors; dawn breaks through a window as they arrive. Slow tracking push, electric blue and warm dawn-gold palette, documentary realism, shallow depth of field, no on-screen text, rising ambient swell and soft footsteps.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "24 HRS. NO STOP.",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "CONSUMERS QUIT",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "BUILDERS FINISH",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261004-layer8culture-instagram-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-10-04T09:00:00-04:00",
+    "text": "GitHub Copilot CLI just shipped dynamic workflows \u2014 automations you build once and run from your terminal.\n\nOur entire content engine (the one that posted this) already runs on Copilot CLI. This update just means fewer prompts per pipeline.\n\nFollow @layer8culture for the build.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#BuildInPublic",
+      "#AIFluency",
+      "#CreatorTech",
+      "#GitHubCopilot",
+      "#AItools",
+      "#Automation",
+      "#DevCommunity",
+      "#AIagents"
+    ],
+    "hashtags_in_first_comment": true,
+    "trial_reel": true,
+    "visual": {
+      "source": "reuse",
+      "of": "20261004-layer8culture-tiktok-1",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20261004-layer8culture-instagram-2",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-10-04T20:00:00-04:00",
+    "text": "We just wrapped a 24-hour live build with ChatGPT, Claude, and Copilot CLI. No scripts. No safety net.\n\nA consumer taps out at hour two. A builder ships until sunrise.\n\nFollow @layer8culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#BuildInPublic",
+      "#TechThursday",
+      "#AIBuilders",
+      "#FutureBuilders",
+      "#CreatorEconomy",
+      "#SideProject",
+      "#DevCommunity"
+    ],
+    "hashtags_in_first_comment": true,
+    "trial_reel": true,
+    "visual": {
+      "source": "reuse",
+      "of": "20261004-layer8culture-tiktok-5",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20261004-layer8culture-youtube-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "youtube",
+    "format": "reel",
+    "schedule_time": "2026-10-04T09:30:00-04:00",
+    "youtube_title": "GitHub Copilot CLI Just Shipped Dynamic Workflows #Shorts",
+    "text": "GitHub Copilot CLI now supports dynamic workflows \u2014 multi-step automations from one terminal session. Our content engine already runs on Copilot CLI end to end.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Shorts",
+      "#Layer8Culture",
+      "#GitHubCopilot",
+      "#AIagents",
+      "#BuildInPublic"
+    ],
+    "visual": {
+      "source": "reuse",
+      "of": "20261004-layer8culture-tiktok-1",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20261004-layer8culture-youtube-2",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "youtube",
+    "format": "reel",
+    "schedule_time": "2026-10-04T20:30:00-04:00",
+    "youtube_title": "We Built Live for 24 Hours Straight With AI #Shorts",
+    "text": "We just wrapped a 24-hour live build with ChatGPT, Claude, and Copilot CLI \u2014 no scripts, no safety net. The tools didn't get tired. We almost did.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Shorts",
+      "#Layer8Culture",
+      "#BuildInPublic",
+      "#TechThursday",
+      "#AIBuilders"
+    ],
+    "visual": {
+      "source": "reuse",
+      "of": "20261004-layer8culture-tiktok-5",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20261004-layer8culture-instagram-3",
+    "account": "layer8culture",
+    "category": "Creator Systems",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-10-04T12:15:00-04:00",
+    "text": "Gemini 4 Argon just shipped with a 1M-token window. GPT-6.1 Sol and Claude Opus 5.5 are already in rotation.\n\nMost people still pick one model and marry it. Builders pick the model for the job \u2014 fast and cheap for drafts, deep reasoning for the hard stuff.\n\nComment BUILD and I'll send you the workflow map.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#AIFluency",
+      "#CreatorTech",
+      "#BuildInPublic",
+      "#Gemini",
+      "#ArtificialIntelligence",
+      "#AItools",
+      "#PromptEngineering",
+      "#DevCommunity"
+    ],
+    "hashtags_in_first_comment": true,
+    "comment_to_dm": {
+      "campaign": "ig_comment_dm_build_map",
+      "keyword": "BUILD",
+      "offer": "AI Builder Workflow Map",
+      "dm_prompt": "Want the workflow map? Here it is: <approved public link>. What are you trying to build with AI right now?",
+      "public_reply": "Sent. Check your DMs.",
+      "route": "builder_nurture"
+    },
+    "visual": {
+      "source": "library",
+      "aspect": "1:1",
+      "quality": "high",
+      "slides": [
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, minimal composition, strong negative space, high contrast. A dark workshop pegboard holds several translucent glowing screens, each a slightly different hue (electric blue, cool white, soft cyan), arranged like tools hung for a craftsman; shallow depth of field, premium, no logos, no readable or rendered text. COMPOSITION FOR TYPOGRAPHY: leave the lower-left clean dark negative space. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "PICK YOUR MODEL LIKE A TOOL",
+          "subtext": "Not a religion",
+          "accent": "TOOL",
+          "kicker": "AI STACK",
+          "role": "cover"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, strong negative space, high contrast. A vast glowing data cathedral of towering translucent light columns stretches into the distance, suggesting an enormous context window; a small silhouette stands at its base looking up. Shallow depth of field, premium, no logos, no readable or rendered text. COMPOSITION FOR TYPOGRAPHY: leave the lower-left clean dark negative space. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "GEMINI 4 ARGON DROPPED",
+          "subtext": "1M-token context, phased rollout",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, strong negative space, high contrast. A fast ember-like spark trail streaks diagonally through darkness, leaving a brief motion-blurred glow, suggesting speed and cheap iteration. Shallow depth of field, premium, no logos, no readable or rendered text. COMPOSITION FOR TYPOGRAPHY: leave the lower-left clean dark negative space. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "GPT-6.1 SOL FOR SPEED",
+          "subtext": "Fast, cheap iteration",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, strong negative space, high contrast. A deep, still pool of water reflects a single point of electric-blue light above, calm and undisturbed, suggesting depth and heavy reasoning. Shallow depth of field, premium, no logos, no readable or rendered text. COMPOSITION FOR TYPOGRAPHY: leave the lower-left clean dark negative space. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "CLAUDE OPUS FOR DEPTH",
+          "subtext": "Heavy reasoning, high stakes",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, strong negative space, high contrast. A pair of hands reaches toward a dark workbench where several glowing tool-shaped icons hover, selecting one among them; warm practical lighting mixed with electric blue glow. Shallow depth of field, premium, no logos, no readable or rendered text. COMPOSITION FOR TYPOGRAPHY: leave the lower-left clean dark negative space. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "MATCH MODEL TO JOB",
+          "subtext": "Not budget to ego",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, strong negative space, high contrast. A single standalone glowing '8' motif floats alone in a vast, minimal dark void, clean and quiet. Shallow depth of field, premium, no logos, no readable or rendered text. COMPOSITION FOR TYPOGRAPHY: leave the lower-left clean dark negative space. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "SAVE THIS FOR YOUR STACK",
+          "footer": "FOLLOW @LAYER8CULTURE",
+          "role": "cta"
+        }
+      ],
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261004-layer8culture-instagram-4",
+    "account": "layer8culture",
+    "category": "Tech Thursday Promos",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-10-04T17:45:00-04:00",
+    "text": "We just wrapped 24 straight hours live \u2014 building, testing, and talking shop with ChatGPT, Claude, and Copilot CLI running the whole time.\n\nHere's what actually held up after hour twelve.\n\nSave this before your next build session.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#BuildInPublic",
+      "#LiveStream",
+      "#AIBuilders",
+      "#TechShow",
+      "#CreatorEconomy",
+      "#DevCommunity"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "library",
+      "aspect": "1:1",
+      "quality": "medium",
+      "slides": [
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, strong negative space, high contrast. A dark digital clock-like glow counts upward in the distance (abstract light, not readable digits), bathing a modest creator desk setup in soft blue light at night. Shallow depth of field, premium, no logos, no readable or rendered text. COMPOSITION FOR TYPOGRAPHY: leave the lower-left clean dark negative space. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "24 HOURS. NO SCRIPT.",
+          "subtext": "What we learned live",
+          "role": "cover"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, strong negative space, high contrast. A lone figure sits calm and resolute at a desk as a storm of faint motion blur swirls just outside a window behind them, undisturbed, committed. Shallow depth of field, premium, no logos, no readable or rendered text. COMPOSITION FOR TYPOGRAPHY: leave the lower-left clean dark negative space. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "LOCKING IN MATTERS",
+          "subtext": "Commitment beats a perfect setup",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, strong negative space, high contrast. A chain of small glowing task-nodes hands off from one to the next across a dark desk surface, each lighting up in sequence without a hand touching them, suggesting continual automated work. Shallow depth of field, premium, no logos, no readable or rendered text. COMPOSITION FOR TYPOGRAPHY: leave the lower-left clean dark negative space. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "AGENTIC CODING IS REAL WORK NOW",
+          "subtext": "Not a demo trick",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, strong negative space, high contrast. A glowing video-editing timeline of translucent clips floats above a dark desk, a hand testing a new tool live, experimental and curious energy. Shallow depth of field, premium, no logos, no readable or rendered text. COMPOSITION FOR TYPOGRAPHY: leave the lower-left clean dark negative space. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "TEST NEW TOOLS LIVE",
+          "subtext": "We tried a new AI video tool on air",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, warm practical lighting, strong negative space, high contrast. A warm wood desk corner with a steaming mug and a softly glowing fish tank in the background, cozy and human, just off to the side of the main build setup. Shallow depth of field, premium, no logos, no readable or rendered text. COMPOSITION FOR TYPOGRAPHY: leave the lower-left clean dark negative space. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "THE CULTURE CARRIES THE GRIND",
+          "subtext": "Real food, real talk, real build",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, strong negative space, high contrast. A single standalone glowing '8' motif floats alone in a vast, minimal dark void, clean and quiet. Shallow depth of field, premium, no logos, no readable or rendered text. COMPOSITION FOR TYPOGRAPHY: leave the lower-left clean dark negative space. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+          "headline": "SAVE THIS / FOLLOW FOR THE NEXT ONE",
+          "role": "cta"
+        }
+      ],
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261004-layer8culture-instagram-5",
+    "account": "layer8culture",
+    "category": "Community Questions",
+    "platform": "instagram",
+    "format": "story",
+    "schedule_time": "2026-10-04T14:30:00-04:00",
+    "text": "New models dropped this week (Gemini 4 Argon, GPT-6.1 Sol, Claude Opus 5.5). Team 'install it day one' or team 'wait for the reviews'? Reply and tell us which.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#BuildInPublic"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, minimal composition, strong negative space, high contrast. A single glowing dial sits in darkness with two faint light paths branching from it, abstract and simple, suggesting a choice point. Shallow depth of field, premium, no logos, no readable or rendered text. COMPOSITION FOR TYPOGRAPHY: leave the lower third clean dark negative space for an interactive sticker. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "headline": "DAY ONE OR WAIT?",
+      "subtext": "Tell us below",
+      "library_hint": "default branded graphic"
+    }
+  }
+]
