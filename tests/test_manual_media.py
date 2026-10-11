@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from PIL import Image
+from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
@@ -430,6 +430,306 @@ class OptionalSdkImportTests(unittest.TestCase):
                 pass
         importlib.reload(openai_gen)  # restore the real SDK state for other tests
         self.assertEqual(SDK_AT_IMPORT, openai_gen.OPENAI_SDK_AVAILABLE)
+
+
+class HeadlineScrimTests(unittest.TestCase):
+    """The scrim must stay legible without crushing the art it sits on."""
+
+    @staticmethod
+    def plate(level, size=(512, 640)):
+        return Image.new("RGBA", size, (level, level, level, 255))
+
+    @staticmethod
+    def mean_lum(im, box=None):
+        grey = im.convert("L")
+        if box:
+            grey = grey.crop(box)
+        hist = grey.histogram()
+        total = sum(hist) or 1
+        return sum(v * c for v, c in enumerate(hist)) / total
+
+    def test_dark_plate_keeps_most_of_its_light(self):
+        # The old scrim pushed 54-60% of the frame to 80-90% black regardless of
+        # content, which erased already-dark art. A near-black plate has nothing
+        # to spare, so it must come through nearly untouched.
+        src = self.plate(12)
+        out = openai_gen._bottom_scrim(src, text_top=400)
+        kept = self.mean_lum(out, (0, 400, 512, 640)) / self.mean_lum(src)
+        self.assertGreater(kept, 0.80, "scrim crushed an already-dark plate")
+
+    def test_bright_plate_still_gets_a_real_scrim(self):
+        # The flip side: legibility is the constraint. Bright art must be pulled
+        # down or white type on it is unreadable.
+        src = self.plate(220)
+        out = openai_gen._bottom_scrim(src, text_top=400)
+        self.assertLess(self.mean_lum(out, (0, 400, 512, 640)),
+                        openai_gen.SCRIM_TARGET_LUM * 1.35)
+
+    def test_scrim_strength_tracks_plate_brightness(self):
+        alphas = [openai_gen._scrim_peak_alpha(
+            self.mean_lum(self.plate(level))) for level in (10, 90, 180, 250)]
+        self.assertEqual(alphas, sorted(alphas), "scrim should scale with the plate")
+        self.assertLessEqual(max(alphas), openai_gen.SCRIM_MAX_ALPHA)
+        self.assertGreaterEqual(min(alphas), openai_gen.SCRIM_MIN_ALPHA)
+
+    def test_gradient_does_not_band(self):
+        # The old ramp used integer alpha per row: every step boundary was a hard
+        # full-width horizontal line, giving visible 5-6px stripes at the 2K
+        # master. Dithering has to break those boundaries into a crosshatch.
+        h, text_top, w = 2048, 1600, 256
+        alpha = openai_gen._scrim_alpha_map(w, h, text_top=text_top, peak=200)
+        ramp_start = text_top - int(h * openai_gen.SCRIM_RAMP_FRAC)
+        rows = [tuple(alpha.getpixel((x, y)) for x in range(w))
+                for y in range(ramp_start, text_top)]
+
+        longest = run = 1
+        for i in range(1, len(rows)):
+            run = run + 1 if rows[i] == rows[i - 1] else 1
+            longest = max(longest, run)
+        self.assertLessEqual(longest, 6, f"banded: {longest}px of constant alpha")
+
+        # The part that actually kills the stripe: most rows are not a single
+        # flat alpha, so step boundaries stop being straight lines.
+        dithered = sum(1 for row in rows if len(set(row)) > 1)
+        self.assertGreater(dithered / len(rows), 0.5,
+                           "ramp rows are flat; dither is not being applied")
+
+    def test_scrim_is_deterministic(self):
+        # Ordered dither, not RNG: identical input must render identical bytes.
+        a = openai_gen._scrim_alpha_map(128, 256, text_top=150, peak=170)
+        b = openai_gen._scrim_alpha_map(128, 256, text_top=150, peak=170)
+        self.assertEqual(list(a.getdata()), list(b.getdata()))
+
+    def test_scrim_accepts_a_non_rgba_plate(self):
+        # Both render_* callers hand over RGBA, but the helper is called
+        # directly by tooling and used to convert internally. Losing that
+        # turned an RGB plate into "ValueError: image has wrong mode".
+        rgb = self.plate(120, (256, 512)).convert("RGB")
+        out = openai_gen._bottom_scrim(rgb, text_top=300)
+        self.assertEqual("RGBA", out.mode)
+
+    def test_top_anchored_layouts_do_not_become_full_frame_dimmers(self):
+        # top_text_media_card puts its type at ~8% height; without the floor the
+        # scrim would cover the whole frame at peak alpha.
+        src = self.plate(200, (256, 512))
+        out = openai_gen._bottom_scrim(src, text_top=20)
+        self.assertGreater(self.mean_lum(out, (0, 0, 256, 100)), 150,
+                           "scrim dimmed the top of the frame")
+
+
+class DarknessGuardTests(unittest.TestCase):
+    def test_near_black_drop_is_flagged(self):
+        im = Image.new("RGB", (64, 64), (6, 6, 8))
+        self.assertTrue(manual_media_ingest.warn_if_too_dark("img-1", im))
+
+    def test_normal_drop_is_not_flagged(self):
+        im = Image.new("RGB", (64, 64), (120, 118, 130))
+        self.assertFalse(manual_media_ingest.warn_if_too_dark("img-2", im))
+
+    def test_guard_reports_mean_and_shadow_share(self):
+        im = Image.new("RGB", (10, 10), (0, 0, 0))
+        im.paste(Image.new("RGB", (10, 5), (200, 200, 200)), (0, 0))
+        mean, shadow = manual_media_ingest.darkness_report(im)
+        self.assertAlmostEqual(shadow, 0.5, places=2)
+        self.assertGreater(mean, 90)
+
+
+FONTS_PRESENT = (openai_gen.BEBAS_NEUE_PATH.exists()
+                 and openai_gen.INTER_PATH.exists()
+                 and openai_gen.SPACE_GROTESK_PATH.exists())
+
+
+@unittest.skipUnless(FONTS_PRESENT, "brand fonts are not installed")
+class TypographyLayoutTests(unittest.TestCase):
+    """Type must stay inside the safe area and keep the brand's hierarchy.
+
+    The reported batch had headlines running to within 2.9% of the bottom edge
+    on a 4.5% margin, because the measured block height left out the pre-subtext
+    gap and the last line's glyph depth. These lock the measure to the draw.
+    """
+
+    LONG_SUB = ("Raspberry Pi is shipping MHS drivers, Hugging Face is adding it "
+                "to LeRobot, and the whole stack lands for makers this week "
+                "without a rewrite.")
+
+    @staticmethod
+    def plate(path, size, level=0):
+        Image.new("RGB", size, (level, level, level)).save(path)
+        return path
+
+    @staticmethod
+    def lowest_ink(path, threshold=170):
+        """Bottom-most row carrying type. Rendered on a black plate, the only
+        bright pixels are the glyphs themselves."""
+        im = Image.open(path).convert("L")
+        w, h = im.size
+        px = im.load()
+        for y in range(h - 1, -1, -1):
+            if any(px[x, y] > threshold for x in range(w)):
+                return y
+        return -1
+
+    def render(self, td, size, **visual):
+        path = Path(td) / "plate.png"
+        self.plate(path, size)
+        spec = {"headline": "ONE DRIVER, ANY DEVICE"}
+        spec.update(visual)
+        self.assertTrue(openai_gen.render_editorial_drop(path, spec),
+                        "renderer bailed out; fonts missing?")
+        return path
+
+    def safe_limit(self, h):
+        return h - int(h * openai_gen.EDITORIAL_BOTTOM_MARGIN)
+
+    def test_editorial_drop_keeps_every_element_inside_the_safe_area(self):
+        # 1:1 feed and 9:16 vertical, with the full stack of elements present.
+        for size in ((1024, 1024), (720, 1280)):
+            with self.subTest(size=size), tempfile.TemporaryDirectory() as td:
+                path = self.render(
+                    td, size,
+                    kicker="TRY THIS WEEK",
+                    subtext=self.LONG_SUB,
+                    footer="SWIPE FOR MORE",
+                )
+                limit = self.safe_limit(size[1])
+                self.assertLessEqual(
+                    self.lowest_ink(path), limit + 2,
+                    f"type ran past the {openai_gen.EDITORIAL_BOTTOM_MARGIN:.1%} "
+                    f"safe margin at {size[0]}x{size[1]}")
+
+    def test_footer_is_seated_inside_the_safe_area_not_on_the_edge(self):
+        # The footer used to be drawn at a hard-coded 3.5% from the bottom while
+        # the block above reserved a lane for it, so it sat outside the margin
+        # the rest of the layout respected.
+        with tempfile.TemporaryDirectory() as td:
+            path = self.render(td, (1024, 1024), footer="SWIPE FOR MORE")
+            self.assertLessEqual(self.lowest_ink(path), self.safe_limit(1024) + 2)
+
+    def test_subtext_only_layout_still_clears_the_margin(self):
+        with tempfile.TemporaryDirectory() as td:
+            path = self.render(td, (1024, 1280), subtext="A short supporting line.")
+            self.assertLessEqual(self.lowest_ink(path), self.safe_limit(1280) + 2)
+
+    def test_headline_only_layout_still_clears_the_margin(self):
+        with tempfile.TemporaryDirectory() as td:
+            path = self.render(td, (1024, 1024))
+            self.assertLessEqual(self.lowest_ink(path), self.safe_limit(1024) + 2)
+
+    def drawn_lines(self, td, **visual):
+        seen = []
+        real = openai_gen._draw_tracked_line
+
+        def spy(draw, x, y, line, *args, **kwargs):
+            seen.append(line)
+            return real(draw, x, y, line, *args, **kwargs)
+
+        with patch.object(openai_gen, "_draw_tracked_line", spy):
+            self.render(td, (1024, 1024), **visual)
+        return seen
+
+    def test_long_subtext_is_never_silently_truncated(self):
+        # The draw loop used to slice sub_lines[:2] while the measure counted
+        # them all, so anything wrapping to three lines lost its tail mid-word.
+        with tempfile.TemporaryDirectory() as td:
+            lines = self.drawn_lines(td, subtext=self.LONG_SUB)
+        # Guard the guard: if the sample stops needing the full SUB_MAX_LINES
+        # this test would pass without exercising anything.
+        sub_lines = [l for l in lines if l.lower() in self.LONG_SUB.lower()]
+        self.assertGreaterEqual(
+            len(sub_lines), openai_gen.SUB_MAX_LINES,
+            "sample subtext no longer wraps far enough to test truncation")
+        rendered = " ".join(lines)
+        for word in self.LONG_SUB.split():
+            self.assertIn(word, rendered, f"subtext lost {word!r}")
+
+    def test_subtext_keeps_its_sentence_case(self):
+        # brand/visual-style.md: "Subtext: Inter, one short supporting line
+        # (optional), Soft White" -- shouting it competes with the headline.
+        sub = "Anthropic just handed them machines."
+        with tempfile.TemporaryDirectory() as td:
+            rendered = " ".join(self.drawn_lines(td, subtext=sub))
+        self.assertIn(sub, rendered)
+
+    def test_type_scale_leaves_square_masters_byte_identical(self):
+        # Square posts were already approved, so the portrait fix must not move
+        # a single glyph on them.
+        for n in (512, 1024, 2048):
+            self.assertEqual(float(n), openai_gen._type_scale(n, n))
+
+    def test_type_scale_lifts_portrait_type_above_its_width(self):
+        # Sizing from width alone set 9:16 caps at ~4.8% of frame height against
+        # 8.5% on 1:1, so vertical headlines read as undersized.
+        w, h = 1152, 2048
+        scale = openai_gen._type_scale(w, h)
+        self.assertGreater(scale, w)
+        self.assertLess(scale, h)
+
+    def font_and_draw(self, size=60):
+        draw = ImageDraw.Draw(Image.new("RGB", (1024, 1024)))
+        return draw, openai_gen._load_font(openai_gen.INTER_PATH, size, "Bold")
+
+    def test_balance_lines_keeps_every_word_and_the_line_count(self):
+        draw, font = self.font_and_draw()
+        text = "ONE DRIVER, ANY DEVICE"
+        greedy = openai_gen._wrap(draw, text, font, 520, 0.0)
+        balanced = openai_gen._balance_lines(draw, text, font, 520, 0.0, greedy)
+        self.assertEqual(len(greedy), len(balanced))
+        self.assertEqual(text.split(), " ".join(balanced).split())
+
+    def test_balance_lines_never_widens_the_longest_line(self):
+        draw, font = self.font_and_draw()
+        text = "ONE DRIVER, ANY DEVICE"
+        greedy = openai_gen._wrap(draw, text, font, 520, 0.0)
+        balanced = openai_gen._balance_lines(draw, text, font, 520, 0.0, greedy)
+        widest = lambda ls: max(openai_gen._line_width(draw, l, font, 0.0)
+                                for l in ls)
+        self.assertLessEqual(widest(balanced), widest(greedy) + 1)
+
+    def test_balance_lines_is_a_no_op_for_a_single_line(self):
+        draw, font = self.font_and_draw()
+        self.assertEqual(["SHORT"],
+                         openai_gen._balance_lines(draw, "SHORT", font, 900, 0.0,
+                                                   ["SHORT"]))
+
+
+class ScrimDetailTests(unittest.TestCase):
+    """Legibility follows local contrast, not just luminance."""
+
+    def test_flat_art_is_untouched_by_the_detail_term(self):
+        # A dead-band keeps previously approved renders bit-identical: smooth
+        # dark art must still land on the bare minimum scrim. The threshold is
+        # spelled out rather than read from the constant, so shrinking the
+        # dead-band to nothing is a failure rather than a silent no-op.
+        lum = 12.0
+        self.assertEqual(openai_gen.SCRIM_MIN_ALPHA,
+                         openai_gen._scrim_peak_alpha(lum))
+        self.assertEqual(openai_gen.SCRIM_MIN_ALPHA,
+                         openai_gen._scrim_peak_alpha(lum, 1.5))
+        self.assertGreaterEqual(openai_gen.SCRIM_DETAIL_DEADBAND, 1.5,
+                                "dead-band no longer covers near-flat art")
+
+    def test_busy_dark_art_gets_more_scrim_than_flat_dark_art(self):
+        # The reported reel was dark enough that luminance alone asked for
+        # nothing, yet busy enough that white type had nothing to sit against.
+        lum = 12.0
+        flat = openai_gen._scrim_peak_alpha(lum, 0.5)
+        busy = openai_gen._scrim_peak_alpha(lum, 3.2)
+        self.assertGreater(busy, flat)
+
+    def test_detail_term_respects_the_scrim_ceiling(self):
+        for lum in (5.0, 120.0, 250.0):
+            self.assertLessEqual(openai_gen._scrim_peak_alpha(lum, 90.0),
+                                 openai_gen.SCRIM_MAX_ALPHA)
+
+    def test_detail_term_is_monotonic(self):
+        alphas = [openai_gen._scrim_peak_alpha(12.0, d)
+                  for d in (0.0, 1.0, 2.0, 3.0, 6.0, 12.0)]
+        self.assertEqual(alphas, sorted(alphas))
+
+    def test_flat_plate_scores_no_detail(self):
+        flat = Image.new("RGBA", (256, 256), (18, 18, 20, 255))
+        self.assertLess(openai_gen._plate_detail(flat, 0),
+                        openai_gen.SCRIM_DETAIL_DEADBAND)
 
 
 if __name__ == "__main__":
