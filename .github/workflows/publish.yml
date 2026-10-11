@@ -3,12 +3,16 @@ name: Publish approved social posts
 on:
   push:
     branches: [main]
-    paths: ["queue/**"]
+    paths: ["queue/**", "assets/generated/**", "assets/library/**"]
   workflow_dispatch:
     inputs:
       queue_file:
         description: Approved queue JSON file to recover
         required: true
+        type: string
+      approval_commit:
+        description: Merged approval commit (defaults to the last first-parent change of this queue)
+        required: false
         type: string
 
 concurrency:
@@ -17,6 +21,9 @@ concurrency:
 
 permissions:
   contents: write
+  pull-requests: read
+  checks: read
+  actions: read
 
 jobs:
   publish:
@@ -25,7 +32,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
-          fetch-depth: 2
+          fetch-depth: 0
 
       - name: Refresh main
         env:
@@ -42,6 +49,13 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install media verification tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          ffmpeg -version >/dev/null
+          ffprobe -version >/dev/null
+
       - name: Schedule approved posts
         env:
           POSTIZ_URL: ${{ secrets.POSTIZ_URL }}
@@ -55,12 +69,17 @@ jobs:
           GHL_ACCESS_TOKEN: ${{ secrets.GHL_ACCESS_TOKEN }}
           GHL_LOCATION_ID: ${{ secrets.GHL_LOCATION_ID }}
           GHL_DEALLAB_INSTAGRAM_ACCOUNT_ID: ${{ secrets.GHL_DEALLAB_INSTAGRAM_ACCOUNT_ID }}
+          GHL_USER_ID: ${{ vars.GHL_USER_ID }}
           GHL_BASE_URL: ${{ vars.GHL_BASE_URL }}
           GHL_API_VERSION: ${{ vars.GHL_API_VERSION }}
           GHL_MEDIA_BASE_URL: ${{ vars.GHL_MEDIA_BASE_URL }}
           RECOVERY_QUEUE_FILE: ${{ inputs.queue_file }}
+          RECOVERY_APPROVAL_COMMIT: ${{ inputs.approval_commit }}
+          TRIGGER_SHA: ${{ github.event.after }}
+          GH_TOKEN: ${{ github.token }}
         run: |
-          pip install requests
+          set -euo pipefail
+          pip install openai requests pillow
           if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
             if [[ ! "$RECOVERY_QUEUE_FILE" =~ ^queue/[^/]+\.json$ ]]; then
               echo "Recovery queue file must match queue/<name>.json."
@@ -71,24 +90,46 @@ jobs:
               exit 1
             fi
             files=("$RECOVERY_QUEUE_FILE")
+            APPROVAL_COMMIT="${RECOVERY_APPROVAL_COMMIT:-$(git log --first-parent -1 --format=%H -- "$RECOVERY_QUEUE_FILE")}"
           else
-            mapfile -t files < <(python scripts/changed_queue_files.py)
+            CHANGED_FILES="$(python scripts/changed_queue_files.py)"
+            if [[ -z "$CHANGED_FILES" ]]; then echo "No changed queue file."; exit 0; fi
+            mapfile -t files <<< "$CHANGED_FILES"
+            APPROVAL_COMMIT="$TRIGGER_SHA"
           fi
           if [ ${#files[@]} -eq 0 ]; then echo "No changed queue file."; exit 0; fi
-          # Publish only the queue files introduced or changed by this push.
+          export DELIVERY_APPROVAL_COMMIT="$APPROVAL_COMMIT"
+          # Select only changed queues or queues referencing this push's changed media.
           DEAL_LAB_PUBLISHER="${DEALLAB_PUBLISHER,,}"
+          failed=0
           for QUEUE_FILE in "${files[@]}"; do
-            echo "Publishing $QUEUE_FILE"
+            if ! python scripts/approval_guard.py "$QUEUE_FILE" --commit "$APPROVAL_COMMIT"; then
+              echo "::error::$QUEUE_FILE has no verified merged approval."
+              failed=1
+              continue
+            fi
+            # Both publisher entry points run the shared future/media preflight
+            # before contacting a provider, including explicit recovery runs.
             if [[ "$QUEUE_FILE" == queue/deallab-*.json && ( "$DEAL_LAB_PUBLISHER" == "gohighlevel" || "$DEAL_LAB_PUBLISHER" == "ghl" ) ]]; then
-              python scripts/post_to_ghl.py "$QUEUE_FILE"
+              python scripts/post_to_ghl.py "$QUEUE_FILE" --commit "$APPROVAL_COMMIT" || failed=1
             else
-              python scripts/post_to_postiz.py "$QUEUE_FILE"
+              python scripts/post_to_postiz.py "$QUEUE_FILE" --commit "$APPROVAL_COMMIT" || failed=1
             fi
           done
-          python scripts/postiz_dedupe.py --apply
+          exit "$failed"
 
-      - name: Commit archive
+      - name: Preserve delivery receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: delivery-receipts-${{ github.run_id }}-${{ github.run_attempt }}
+          path: posted/receipts/${{ github.run_id }}-${{ github.run_attempt }}/
+          if-no-files-found: ignore
+
+      - name: Commit receipts and completed archives
+        if: always()
         run: |
+          if [[ ! -d posted ]]; then exit 0; fi
           git config user.name "layer8-engine"
           git config user.email "engine@layer8culture.io"
           git add posted/ queue/

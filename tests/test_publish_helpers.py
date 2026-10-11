@@ -3,6 +3,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -98,18 +99,15 @@ class ChangedQueueFilesTests(unittest.TestCase):
         def fail_git_fallback(_before, _after):
             raise AssertionError("git fallback should require the triggering commit range")
 
-        files = changed_queue_files.queue_files_for_publish(
-            event,
-            fallback_all=True,
-            git_fallback=fail_git_fallback,
-        )
-
-        self.assertEqual(files, [])
+        with self.assertRaises(ValueError):
+            changed_queue_files.queue_files_for_publish(
+                event, fallback_all=True, git_fallback=fail_git_fallback,
+            )
 
 
 class PostToPostizTests(unittest.TestCase):
     def test_resolve_local_paths_accepts_windows_style_relative_paths(self):
-        with tempfile.TemporaryDirectory() as tmp:
+        with tempfile.TemporaryDirectory(dir=ROOT / "tests") as tmp:
             original_cwd = os.getcwd()
             try:
                 os.chdir(tmp)
@@ -160,7 +158,7 @@ class PostToPostizTests(unittest.TestCase):
 
         self.assertEqual(
             metadata,
-            {"postiz_post_id": "postiz-123", "postiz_status": "scheduled"},
+            {"postiz_post_id": "postiz-123", "postiz_status": "scheduled", "provider_status": "scheduled"},
         )
 
     def test_matching_postiz_post_requires_same_content_and_time(self):
@@ -249,7 +247,7 @@ class PostToPostizTests(unittest.TestCase):
             self.assertEqual(integration_id, post_to_postiz.INTEGRATIONS[("layer8culture", "instagram")])
             self.assertEqual(caption, "Caption\n\n#Layer8Culture")
             self.assertEqual(schedule_time, "2026-06-29T10:00:00-04:00")
-            return {"id": "postiz-existing"}
+            return {"id": "postiz-existing", "state": "QUEUE"}
 
         def fake_upload(_path):
             nonlocal upload_called
@@ -259,7 +257,7 @@ class PostToPostizTests(unittest.TestCase):
         post_to_postiz.find_existing_postiz_duplicate = fake_find
         post_to_postiz.upload_media = fake_upload
         try:
-            with tempfile.TemporaryDirectory() as tmp:
+            with tempfile.TemporaryDirectory(dir=ROOT / "tests") as tmp:
                 media = Path(tmp) / "post-1.png"
                 media.write_bytes(b"image")
                 result = post_to_postiz.schedule(
@@ -279,20 +277,15 @@ class PostToPostizTests(unittest.TestCase):
             post_to_postiz.upload_media = original_upload
 
         self.assertFalse(upload_called)
-        self.assertEqual(
-            result,
-            {
-                "scheduled": False,
-                "integration_id": post_to_postiz.INTEGRATIONS[("layer8culture", "instagram")],
-                "skip_reason": "postiz_duplicate",
-                "postiz_post_id": "postiz-existing",
-            },
-        )
+        self.assertTrue(result["scheduled"])
+        self.assertTrue(result["reconciled"])
+        self.assertEqual(result["delivery_status"], "queued")
+        self.assertEqual(result["postiz_post_id"], "postiz-existing")
 
     def test_main_leaves_queue_unarchived_on_fatal_publish_failure(self):
         original_schedule = post_to_postiz.schedule
 
-        def fake_schedule(_post):
+        def fake_schedule(_post, **_kwargs):
             return {
                 "scheduled": False,
                 "integration_id": "ig-1",
@@ -300,7 +293,7 @@ class PostToPostizTests(unittest.TestCase):
                 "skip_detail": "no resolved media",
             }
 
-        with tempfile.TemporaryDirectory() as tmp:
+        with tempfile.TemporaryDirectory(dir=ROOT / "tests") as tmp:
             original_cwd = os.getcwd()
             try:
                 os.chdir(tmp)
@@ -318,7 +311,10 @@ class PostToPostizTests(unittest.TestCase):
                 )
                 post_to_postiz.schedule = fake_schedule
 
-                with self.assertRaises(SystemExit) as raised:
+                with patch.object(post_to_postiz, "require_publish_ready"), patch.object(
+                    post_to_postiz, "require_approved_payload",
+                    return_value={"state": "approved", "commit": "a" * 40, "revision": "approved"},
+                ), self.assertRaises(SystemExit) as raised:
                     post_to_postiz.main(str(qpath))
             finally:
                 post_to_postiz.schedule = original_schedule

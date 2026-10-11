@@ -1,0 +1,56 @@
+{
+  "_comment": [
+    "Local wall-clock window preferences; gaps, first window start and day_end are hard constraints.",
+    "Accepted plans do not move when this config or analytics change. Use an explicit reschedule.",
+    "Only the exact configured master/cross-platform pair may bypass the global gap."
+  ],
+  "layer8culture": {
+    "timezone": "America/New_York",
+    "min_gap_minutes": 30,
+    "same_platform_min_gap_minutes": 45,
+    "jitter_step_minutes": 5,
+    "day_end": "22:15",
+    "reuse": {"mode": "independent"},
+    "windows": [
+      ["06:30", "07:05"], ["07:18", "07:53"], ["08:06", "08:41"],
+      ["08:54", "09:29"], ["09:42", "10:17"], ["10:30", "11:05"],
+      ["11:18", "11:53"], ["12:06", "12:41"], ["12:54", "13:29"],
+      ["13:42", "14:17"], ["14:30", "15:05"], ["15:18", "15:53"],
+      ["16:06", "16:41"], ["16:54", "17:29"], ["17:42", "18:17"],
+      ["18:30", "19:05"], ["19:18", "19:53"], ["20:06", "20:41"],
+      ["20:54", "21:29"]
+    ]
+  },
+  "lofi": {
+    "timezone": "America/New_York",
+    "min_gap_minutes": 120,
+    "same_platform_min_gap_minutes": 120,
+    "jitter_step_minutes": 5,
+    "day_end": "22:30",
+    "reuse": {
+      "mode": "offset",
+      "offset_minutes": 5,
+      "allowed_platform_pairs": [["instagram", "youtube"]]
+    },
+    "windows": [
+      ["07:30", "08:15"], ["08:45", "09:30"], ["10:00", "10:45"],
+      ["11:15", "12:00"], ["12:30", "13:15"], ["13:45", "14:30"],
+      ["15:00", "15:45"], ["16:15", "17:00"], ["17:30", "18:15"],
+      ["18:45", "19:30"], ["20:00", "20:45"], ["21:15", "22:00"]
+    ]
+  },
+  "deallab": {
+    "timezone": "America/New_York",
+    "min_gap_minutes": 90,
+    "same_platform_min_gap_minutes": 90,
+    "jitter_step_minutes": 5,
+    "day_end": "21:45",
+    "reuse": {"mode": "independent"},
+    "windows": [
+      ["07:30", "08:10"], ["08:45", "09:25"], ["10:00", "10:40"],
+      ["11:15", "11:55"], ["12:30", "13:10"], ["13:45", "14:25"],
+      ["15:00", "15:40"], ["16:15", "16:55"], ["17:30", "18:10"],
+      ["18:45", "19:25"], ["20:00", "20:40"], ["21:00", "21:40"]
+    ]
+  }
+}

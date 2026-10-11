@@ -16,7 +16,12 @@ This module owns the single source of truth for *which* images a queue needs and
 what each one is called, so the prompt pack and the ingest step can never drift.
 It is stdlib-only (no Pillow, no openai) and is safe to import anywhere.
 """
+import hashlib
+import json
+import os
 import pathlib
+import shutil
+import uuid
 from dataclasses import dataclass
 
 # Where hand-generated images are dropped, and where finished ones land.
@@ -46,6 +51,148 @@ VERTICAL_FORMATS = ("story", "reel")
 ACCEPTED_SUFFIXES = (".png", ".jpg", ".jpeg", ".webp")
 
 PROMPT_PACK_SUFFIX = ".prompts.md"
+
+
+def fingerprint(value) -> str:
+    return hashlib.sha256(json.dumps(
+        value, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+    ).encode("utf-8")).hexdigest()
+
+
+def file_fingerprint(path: pathlib.Path) -> str | None:
+    path = filesystem_path(pathlib.Path(path))
+    if not path.is_file():
+        return None
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def staging_path(path: pathlib.Path) -> pathlib.Path:
+    """Keep staged writes on the destination volume for atomic promotion."""
+    return path.with_name(f".{uuid.uuid4().hex}{path.suffix}")
+
+
+def filesystem_path(path: pathlib.Path) -> pathlib.Path:
+    """Content-addressed versions can exceed legacy Windows path limits."""
+    absolute = str(path.absolute())
+    if os.name == "nt" and len(absolute) >= 240 and not absolute.startswith("\\\\?\\"):
+        if absolute.startswith("\\\\"):
+            absolute = "\\\\?\\UNC\\" + absolute[2:]
+        else:
+            absolute = "\\\\?\\" + absolute
+        return pathlib.Path(absolute)
+    return path
+
+
+def atomic_json(path: pathlib.Path, value) -> None:
+    text = json.dumps(value, indent=2, ensure_ascii=True)
+    if path.is_file() and path.read_text(encoding="utf-8") == text:
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    stage = staging_path(path)
+    try:
+        with stage.open("w", encoding="utf-8") as stream:
+            stream.write(text)
+            stream.flush()
+            os.fsync(stream.fileno())
+        stage.replace(path)
+    finally:
+        stage.unlink(missing_ok=True)
+
+
+def snapshot_file(source: pathlib.Path, versions_root: pathlib.Path) -> pathlib.Path:
+    """Preserve bytes under <versions_root>/<sha256><lowercase suffix>."""
+    digest = file_fingerprint(source)
+    if digest is None:
+        raise FileNotFoundError(source)
+    target = filesystem_path(versions_root / f"{digest}{source.suffix.lower()}")
+    target.parent.mkdir(parents=True, exist_ok=True)
+    if not target.exists():
+        stage = staging_path(target)
+        try:
+            shutil.copyfile(source, stage)
+            stage.replace(target)
+        finally:
+            stage.unlink(missing_ok=True)
+    elif file_fingerprint(target) != digest:
+        raise ValueError(f"Immutable media snapshot is corrupt: {target}")
+    return target
+
+
+def record_path(repo_root: pathlib.Path, key: str) -> pathlib.Path:
+    return filesystem_path(
+        repo_root / ".local" / "media" / "artifacts" / f"{fingerprint(key)}.json")
+
+
+def read_record(repo_root: pathlib.Path, key: str) -> dict:
+    path = record_path(repo_root, key)
+    if not path.is_file():
+        return {}
+    record = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(record, dict):
+        raise ValueError(f"Invalid media provenance object: {path}")
+    for field in ("inputs", "outputs"):
+        if field in record and not isinstance(record[field], dict):
+            raise ValueError(f"Invalid media provenance {field}: {path}")
+    for field in ("warnings", "dependencies"):
+        if field in record and (not isinstance(record[field], list)
+                                or any(not isinstance(v, str) for v in record[field])):
+            raise ValueError(f"Invalid media provenance {field}: {path}")
+    return record
+
+
+def write_record(repo_root: pathlib.Path, key: str, record: dict) -> None:
+    atomic_json(record_path(repo_root, key), {**record, "key": key, "version": 1})
+
+
+def relative_path(path: pathlib.Path, repo_root: pathlib.Path) -> str:
+    def normalized(value):
+        resolved = str(value.resolve())
+        if resolved.startswith("\\\\?\\UNC\\"):
+            resolved = "\\\\" + resolved[8:]
+        elif resolved.startswith("\\\\?\\"):
+            resolved = resolved[4:]
+        return pathlib.Path(resolved)
+    try:
+        return normalized(path).relative_to(normalized(repo_root)).as_posix()
+    except ValueError:
+        return normalized(path).as_posix()
+
+
+def outputs_match(record: dict, repo_root: pathlib.Path) -> bool:
+    outputs = record.get("outputs") or {}
+    return bool(outputs) and all(
+        digest and file_fingerprint(repo_root / name) == digest
+        for name, digest in outputs.items()
+    )
+
+
+def invalidate_records(post_ids, repo_root: pathlib.Path,
+                       *, images: bool = True) -> list[str]:
+    """Mark dependents stale without deleting originals or finished versions."""
+    affected = set(post_ids)
+    records = []
+    for path in (repo_root / ".local" / "media" / "artifacts").glob("*.json"):
+        records.append(json.loads(filesystem_path(path).read_text(encoding="utf-8")))
+    while True:
+        expanded = affected | {
+            record["post_id"] for record in records
+            if affected.intersection(record.get("dependencies", []))
+        }
+        if expanded == affected:
+            break
+        affected = expanded
+    for record in records:
+        if record.get("post_id") not in affected:
+            continue
+        if not images and record["key"].startswith("image:"):
+            continue
+        record["status"] = "stale"
+        write_record(repo_root, record["key"], record)
+    return sorted(affected)
 
 
 @dataclass

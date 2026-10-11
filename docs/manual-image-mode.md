@@ -11,13 +11,13 @@ the same publisher.
 
 > **There is a web UI for this.** `python scripts/adhoc_server.py` runs the whole
 > workflow below from a browser — including consuming the single `.zip` ChatGPT
-> returns, instead of saving each file by hand, and publishing the reviewed batch. See
+> returns, instead of saving each file by hand, and preparing an approval PR. See
 > [`adhoc-web-ui.md`](adhoc-web-ui.md). The commands below remain the reference path.
 
 ## What you need
 
 - Python 3.12 (3.11 works) and `pip install pillow` — **no `openai` package, no keys**
-- ffmpeg only if the batch contains reels
+- ffmpeg and ffprobe only if the batch contains reels or video carousel slides
 
 ## The commands
 
@@ -27,14 +27,13 @@ python scripts/openai_gen.py queue/2026-08-18.json --manual
 
 # 2. ... generate the images by hand, save them into assets/manual-inbox/
 
-# 3. Finish them and wire them into the queue
-python scripts/manual_media_ingest.py queue/2026-08-18.json
+# 3. Prepare changed images and required videos together (strictly offline)
+python scripts/prepare_media.py queue/2026-08-18.json
 
-# 4. Optional: reels (ffmpeg only, no Sora needed) and the PR preview
-python scripts/reel_gen.py queue/2026-08-18.json
+# 4. Optional: build the PR preview
 python scripts/build_pr_preview.py queue/2026-08-18.json --repo <owner/repo> --sha <sha> --out pr-body.md
 
-# 5. Publish the finished batch (validates, then commits and pushes to main)
+# 5. Prepare the approval PR; publishing still requires its approved merge
 python scripts/ship_queue.py queue/2026-08-18.json --dry-run
 python scripts/ship_queue.py queue/2026-08-18.json
 ```
@@ -84,9 +83,12 @@ Paste a prompt block into ChatGPT / Copilot and ask for the image. Then:
    `visual.headline` / `subtext` / `accent` / `overlay_position`
 5. write `assets/generated/<image-id>.png` and update `visual.file` / `visual.files`
 
-Consumed drops move to `assets/manual-inbox/_ingested/` so a re-run can never
-double-composite typography onto an already-branded image. Re-generate an image by
-dropping a new file with the same name and running ingest again.
+Consumed drops move to `assets/manual-inbox/_ingested/`. Immutable originals also
+live under `_ingested/_versions/<image-id>/<sha256>.<extension>`. Replacement never
+destroys an earlier original; previous finished images, MP4s and covers are kept
+under `.local/media/outputs/`. A settings change always reuses the original, not an
+already-branded output. Re-generate an image by dropping a new file with the same
+name and running Prepare previews again.
 
 Useful flags:
 
@@ -96,15 +98,61 @@ Useful flags:
 | `--out-dir <dir>` | write finished images somewhere else |
 | `--keep` | leave consumed files in the inbox |
 | `--dry-run` | report what would happen, write nothing |
-| `--strict` | exit non-zero while any expected image is still missing |
+| `--strict` | also exit non-zero while an expected original is missing |
+
+Corrupt images, missing required fonts and failed typography always produce a
+nonzero exit, even without `--strict`. Failed work preserves the input and any old
+finished version; it does not advertise the old output as prepared. Dark sources
+remain nonblocking warnings and are not automatically brightened.
 
 The command is safe to run repeatedly — it reports what's still missing and only
 wires up a carousel once **every** slide is present, so a half-finished batch can
-never publish a short carousel.
+never publish a short carousel. Ingest never replaces a reel's MP4 delivery path
+with its still PNG. A changed still invalidates the reel and its reuse descendants
+until successful video preparation.
+
+## Incremental Prepare previews
+
+`python scripts/prepare_media.py <queue>` finishes only stale or missing images,
+then only required stale/missing reels, covers, video slides and reuse copies.
+Image-only batches never need ffmpeg. An unchanged successful run preserves media
+and queue modification times. Failed artifacts can be retried without redoing
+successful independent work.
+
+The local receipts in `.local/media/artifacts/` contain each artifact's original
+or dependency content hashes, settings hash, renderer/font identity, finished
+output hashes, status and warnings. An existing filename alone is not proof of
+preparation. Pending source replacements, typography edits, changed renderers and
+modified output bytes invalidate readiness. Local receipts do not contain keys
+or other credentials and are not committed; CI separately validates the exact
+committed media manifest.
+
+The command exits nonzero on any failure. `--json <report-path>` additionally writes
+`failed`, `warnings`, `prepared`, `unchanged`, `images_prepared` and
+`videos_prepared`. Silent audio is a visible nonblocking warning, not a reason to
+invent music. Missing required fonts, incomplete video/cover pairs and failed
+renders block preparation.
+
+For separate code and data checkouts, execute the script from the clean code
+checkout and pass `--repo-root <data-root>`. Queues, originals, fonts, audio beds,
+transcripts, finished media and local receipts resolve against that explicit data
+root. Imports and renderer-code fingerprints continue to use the executing code,
+not a possibly stale `scripts/` directory in the data checkout.
+
+Application integrations use `prepare_media.prepare(queue_file: Path, repo_root:
+Path) -> dict`, `preparation_status(posts, repo_root) -> {blockers, warnings}`, and
+`invalidate(post_ids, repo_root) -> list[str]`. Invalidation marks recorded post
+dependencies stale without deleting files. Import/replacement code can call
+`manual_media.snapshot_file(source, versions_root) -> Path` before overwriting a
+source; the helper creates the content-addressed immutable version described above.
 
 ## Reels without an API
 
-Reels still work offline. `scripts/reel_gen.py` renders through Azure Sora-2 only
+Prepare previews always uses local motion/clip rendering, even if Azure video
+credentials happen to be present. It never calls Sora or an image API.
+
+The separate `scripts/reel_gen.py` command retains the CI backend selection:
+it renders through Azure Sora-2 only
 when `AZURE_OPENAI_ENDPOINT` / `AZURE_OPENAI_API_KEY` are set; otherwise it falls
 back to the ffmpeg "motion" renderer, which animates the manually generated still
 and burns in the overlay beats locally. Run it **after** ingest, since it needs
