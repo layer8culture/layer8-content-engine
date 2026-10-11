@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-04T16:11:37.003518+00:00",
+  "generated_at": "2026-09-01T17:36:52.144808+00:00",
   "focus": [
     "helpful AI tips",
     "AI skills",
@@ -25,7 +25,7 @@
         "cli",
         "agentic workflows"
       ],
-      "score": 742,
+      "score": 449,
       "summary": "Use Case: copilot - GitHub Changelog Skip to content / Blog Changelog Docs Customer stories Try GitHub Copilot app Attend GitHub Universe Search Changelog Docs Customer stories Attend GitHub Universe Try GitHub Copilot app Back to blog Changelog Copy RSS feed URL Follow @ghchangelog on X All New Releases Improvements Retired Filters ( 0 selected ) Copilot Clear all Filters ( 0 selected ) Match: Any All Tags...",
       "status": "ok"
     },
@@ -38,7 +38,7 @@
         "developer workflows",
         "mcp"
       ],
-      "score": 432,
+      "score": 431,
       "summary": "The latest on AI & ML - The GitHub Blog Skip to content / Blog Changelog Docs Customer stories Try GitHub Copilot app Attend GitHub Universe AI & ML AI & ML Learn about artificial intelligence and machine learning across the GitHub ecosystem and the wider industry. Generative AI Learn how to build with generative AI. GitHub Copilot Change how you work with GitHub Copilot. LLMs Everything developers need to know...",
       "status": "ok"
     },
@@ -53,7 +53,7 @@
         "prompts"
       ],
       "score": 299,
-      "summary": "What is the Model Context Protocol (MCP)? - Model Context Protocol Documentation Index Fetch the complete documentation index at: /llms.txt Use this file to discover all available pages before exploring further. Skip to main content Model Context Protocol home page Version 2026-07-28 (latest) Search... \u2318 K Ask Assistant Blog GitHub Search... Navigation Get started What is the Model Context Protocol (MCP)?...",
+      "summary": "What is the Model Context Protocol (MCP)? - Model Context Protocol Documentation Index Fetch the complete documentation index at: /llms.txt Use this file to discover all available pages before exploring further. Skip to main content Model Context Protocol home page Version 2026-07-28 (latest) Search... \u2318 K Ask Assistant \u2318 I Blog GitHub Search... Navigation Get started What is the Model Context Protocol (MCP)?...",
       "status": "ok"
     },
     {
@@ -65,7 +65,7 @@
         "servers"
       ],
       "score": 183,
-      "summary": "Example Servers - Model Context Protocol Documentation Index Fetch the complete documentation index at: /llms.txt Use this file to discover all available pages before exploring further. Skip to main content Model Context Protocol home page Version 2026-07-28 (latest) Search... \u2318 K Ask Assistant Blog GitHub Search... Navigation Examples Example Servers Documentation Specification Extensions Registry SEPs Community...",
+      "summary": "Example Servers - Model Context Protocol Documentation Index Fetch the complete documentation index at: /llms.txt Use this file to discover all available pages before exploring further. Skip to main content Model Context Protocol home page Version 2026-07-28 (latest) Search... \u2318 K Ask Assistant \u2318 I Blog GitHub Search... Navigation Examples Example Servers Documentation Specification Extensions Registry SEPs...",
       "status": "ok"
     },
     {
@@ -88,8 +88,8 @@
         "tools",
         "mcp"
       ],
-      "score": 35,
-      "summary": "Newsroom \\ Anthropic Skip to main content Skip to footer Research Policy Commitments Learn News Try Claude Newsroom Press inquires press@anthropic.com Non-media inquiries How to get support Media assets Download press kit Introducing Claude Opus 5 Product Jul 24, 2026 Opus 5 is a step change improvement for the Opus tier powering long-running agents while delivering improvements in coding and professional work....",
+      "score": 40,
+      "summary": "Newsroom \\ Anthropic Skip to main content Skip to footer Research Policy Commitments Learn News Try Claude Newsroom Press inquiries press@anthropic.com Non-media inquiries How to get support Media assets Download press kit Previewing the Model Hardware Standard Announcements Aug 27, 2026 We\u2019re opening a research preview of the Model Hardware Standard (MHS), a shared specification for AI agents to safely operate...",
       "status": "ok"
     },
     {
@@ -109,9 +109,9 @@
     {
       "full_name": "punkpeye/awesome-mcp-servers",
       "url": "https://github.com/punkpeye/awesome-mcp-servers",
-      "stars": 91814,
+      "stars": 93679,
       "language": null,
-      "updated_at": "2026-08-04T15:53:23Z",
+      "updated_at": "2026-09-01T17:16:39Z",
       "description": "A collection of MCP servers.",
       "topics": [
         "ai",
@@ -123,9 +123,9 @@
     {
       "full_name": "modelcontextprotocol/servers",
       "url": "https://github.com/modelcontextprotocol/servers",
-      "stars": 89201,
+      "stars": 90005,
       "language": "TypeScript",
-      "updated_at": "2026-08-04T16:10:29Z",
+      "updated_at": "2026-09-01T16:39:18Z",
       "description": "Model Context Protocol Servers",
       "topics": [],
       "lesson": "Study reference servers to understand how tools, resources, prompts, and permissions fit together.",
@@ -134,9 +134,9 @@
     {
       "full_name": "github/github-mcp-server",
       "url": "https://github.com/github/github-mcp-server",
-      "stars": 31954,
+      "stars": 32650,
       "language": "Go",
-      "updated_at": "2026-08-04T15:19:31Z",
+      "updated_at": "2026-09-01T16:55:33Z",
       "description": "GitHub's official MCP Server",
       "topics": [
         "github",
@@ -149,9 +149,9 @@
     {
       "full_name": "modelcontextprotocol/python-sdk",
       "url": "https://github.com/modelcontextprotocol/python-sdk",
-      "stars": 23887,
+      "stars": 24178,
       "language": "Python",
-      "updated_at": "2026-08-04T15:55:12Z",
+      "updated_at": "2026-09-01T15:11:47Z",
       "description": "The official Python SDK for Model Context Protocol servers and clients",
       "topics": [
         "mcp",
@@ -165,9 +165,9 @@
     {
       "full_name": "modelcontextprotocol/typescript-sdk",
       "url": "https://github.com/modelcontextprotocol/typescript-sdk",
-      "stars": 13060,
+      "stars": 13297,
       "language": "TypeScript",
-      "updated_at": "2026-08-04T15:45:34Z",
+      "updated_at": "2026-09-01T15:11:26Z",
       "description": "The official TypeScript SDK for Model Context Protocol servers and clients",
       "topics": [
         "mcp",
@@ -181,9 +181,9 @@
     {
       "full_name": "hangwin/mcp-chrome",
       "url": "https://github.com/hangwin/mcp-chrome",
-      "stars": 12255,
+      "stars": 12366,
       "language": "TypeScript",
-      "updated_at": "2026-08-04T15:54:38Z",
+      "updated_at": "2026-09-01T15:11:53Z",
       "description": "Chrome MCP Server is a Chrome extension-based Model Context Protocol (MCP) server that exposes your Chrome browser functionality to AI assistants like Claude, enabling complex browser automation, content analysis, and semantic search.",
       "topics": [],
       "lesson": "Browser automation is useful when the workflow needs pages, forms, screenshots, or live web context.",
@@ -192,14 +192,17 @@
     {
       "full_name": "modelcontextprotocol/inspector",
       "url": "https://github.com/modelcontextprotocol/inspector",
-      "stars": 10578,
+      "stars": 10804,
       "language": "TypeScript",
-      "updated_at": "2026-08-04T14:38:17Z",
+      "updated_at": "2026-09-01T16:14:20Z",
       "description": "Visual testing tool for MCP servers",
       "topics": [
+        "cli",
         "debug",
         "mcp",
-        "tool"
+        "tool",
+        "tui",
+        "web"
       ],
       "lesson": "Use inspection tools to test a server before trusting it inside a real workflow.",
       "status": "ok"
@@ -207,9 +210,9 @@
     {
       "full_name": "modelcontextprotocol/registry",
       "url": "https://github.com/modelcontextprotocol/registry",
-      "stars": 7103,
+      "stars": 7210,
       "language": "Go",
-      "updated_at": "2026-08-04T12:30:53Z",
+      "updated_at": "2026-09-01T14:54:34Z",
       "description": "A community driven registry service for Model Context Protocol (MCP) servers.",
       "topics": [
         "mcp",
@@ -221,9 +224,9 @@
     {
       "full_name": "executeautomation/mcp-playwright",
       "url": "https://github.com/executeautomation/mcp-playwright",
-      "stars": 5625,
+      "stars": 5638,
       "language": "TypeScript",
-      "updated_at": "2026-08-04T07:31:26Z",
+      "updated_at": "2026-09-01T08:28:23Z",
       "description": "Playwright Model Context Protocol Server - Tool to automate Browsers and APIs in Claude Desktop, Cline, Cursor IDE and More \ud83d\udd0c",
       "topics": [],
       "lesson": "Browser automation is useful when the workflow needs pages, forms, screenshots, or live web context.",
@@ -232,9 +235,9 @@
     {
       "full_name": "microsoft/mcp",
       "url": "https://github.com/microsoft/mcp",
-      "stars": 3531,
+      "stars": 3631,
       "language": "C#",
-      "updated_at": "2026-08-04T14:40:40Z",
+      "updated_at": "2026-09-01T17:22:58Z",
       "description": "Catalog of official Microsoft MCP (Model Context Protocol) server implementations for AI-powered data access and tool integration",
       "topics": [],
       "lesson": "Enterprise MCP examples show how tool access maps to data boundaries and governance.",
