@@ -87,6 +87,16 @@ def test_shortcut_keeps_custom_hero_icon():
     assert "Layer8Studio\\heroes.ico" in INSTALL and "IconLocation" in INSTALL
 
 
+def test_heroes_launcher_reports_completion_or_error():
+    launcher = (ROOT / "heroes.cmd").read_text(encoding="utf-8")
+    assert 'set "STUDIO_EXIT=%ERRORLEVEL%"' in launcher
+    assert "HEROES COMPLETE" in launcher
+    assert "HEROES STOPPED WITH AN ERROR" in launcher
+    assert "Press any key to close this window." in launcher
+    assert "pause >nul" in launcher
+    assert "exit /b %STUDIO_EXIT%" in launcher
+
+
 @pytest.mark.skipif(os.name != "nt" or not shutil.which("conhost.exe"), reason="Windows only")
 def test_task_wrapper_logs_start_output_and_real_exit_code(tmp_path):
     shutil.copy(TASK, tmp_path / "task.ps1")
