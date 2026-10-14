@@ -17,6 +17,7 @@ import os
 import sys
 import time
 from datetime import datetime, timedelta
+from pathlib import Path
 
 from studio_lib import config, gates, heroes, notify, planner, preview, render
 
@@ -29,6 +30,8 @@ from studio_lib.context import read_jsonl
 from studio_lib.schedule import due, parse
 
 LOCK = DATA / ".lock"
+RUNS = DATA / "runs"
+DATE_LOCKS = DATA / "locks"
 
 
 def log(msg: str) -> None:
@@ -47,6 +50,56 @@ def release_lock() -> None:
     LOCK.unlink(missing_ok=True)
 
 
+def _process_exists(pid: int) -> bool:
+    if os.name == "nt":
+        import ctypes
+
+        handle = ctypes.windll.kernel32.OpenProcess(0x1000, False, pid)
+        if not handle:
+            return False
+        ctypes.windll.kernel32.CloseHandle(handle)
+        return True
+    try:
+        os.kill(pid, 0)
+        return True
+    except (OSError, ValueError):
+        return False
+
+
+def acquire_date_lock(d) -> Path | None:
+    """Atomically prevent two planners for one date without blocking publishing."""
+    DATE_LOCKS.mkdir(parents=True, exist_ok=True)
+    path = DATE_LOCKS / f"plan-{d}.lock"
+    try:
+        fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+    except FileExistsError:
+        try:
+            pid = int(path.read_text(encoding="ascii").strip())
+        except (OSError, ValueError):
+            pid = -1
+        if _process_exists(pid):
+            return None
+        path.unlink(missing_ok=True)
+        fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+    with os.fdopen(fd, "w", encoding="ascii") as fh:
+        fh.write(str(os.getpid()))
+    return path
+
+
+def _run_state(d, stage: str, status: str, **details) -> None:
+    RUNS.mkdir(parents=True, exist_ok=True)
+    path = RUNS / f"{d}.json"
+    try:
+        state = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"date": str(d), "stages": {}}
+    except (OSError, json.JSONDecodeError):
+        state = {"date": str(d), "stages": {}}
+    state["updated_at"] = datetime.now().astimezone().isoformat()
+    state["stages"][stage] = {"status": status, "at": state["updated_at"], **details}
+    tmp = path.with_suffix(".tmp")
+    tmp.write_text(json.dumps(state, indent=2), encoding="utf-8")
+    tmp.replace(path)
+
+
 def load_plan(d):
     p = plan_path(d)
     if not p.exists():
@@ -56,12 +109,16 @@ def load_plan(d):
 
 def produce(d, cfg, *, force_plan=False, reuse=False):
     """Plan (unless present) → ingest heroes → render → prompt pack → gates → preview."""
-    plan = load_plan(d) if reuse else None
+    plan = load_plan(d) if (reuse or not force_plan) else None
     if plan is None:
+        _run_state(d, "plan", "running")
         plan = planner.make_plan(d, cfg, force=force_plan, log=log)
+    _run_state(d, "plan", "complete", posts=len(plan["posts"]))
     heroes.ingest(plan, d, log=log)
+    _run_state(d, "render", "running")
     log("rendering …")
     manifest = render.render_plan(plan, d, cfg, log=log)
+    _run_state(d, "render", "complete", media_posts=len(manifest))
     pack = heroes.write_prompt_pack(plan, d)
     if pack:
         log(f"ChatGPT hero batch: {pack.relative_to(ROOT)}")
@@ -69,7 +126,10 @@ def produce(d, cfg, *, force_plan=False, reuse=False):
     gates.save(results, d)
     for pid, r in results.items():
         log(f"  gates {'PASS' if r['pass'] else 'FAIL'} {pid}" + (f": {'; '.join(r['errors'])}" if r["errors"] else ""))
+    _run_state(d, "gates", "complete" if all(r["pass"] for r in results.values()) else "failed",
+               passed=sum(r["pass"] for r in results.values()), total=len(results))
     page = preview.build(plan, d, manifest, results, heroes.status(plan, d), cfg)
+    _run_state(d, "preview", "complete", path=str(page))
     log(f"preview: {page}")
     return plan, manifest, results, page
 
@@ -131,31 +191,26 @@ def cmd_publish(a, cfg):
     if config.is_paused(cfg):
         log("PAUSED (studio/PAUSE exists or config paused: true) — nothing will be posted.")
         return
+    now = datetime.fromisoformat(a.now) if a.now else datetime.now(config.tz(cfg))
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=config.tz(cfg))
+    d = config.parse_date(a.date, cfg) if a.date else now.astimezone(config.tz(cfg)).date()
     if not acquire_lock():
-        log("another studio run is in progress; skipping")
+        log("another publish run is in progress; skipping")
         return
     try:
-        now = datetime.fromisoformat(a.now) if a.now else datetime.now(config.tz(cfg))
-        if now.tzinfo is None:
-            now = now.replace(tzinfo=config.tz(cfg))
-        d = config.parse_date(a.date, cfg) if a.date else now.astimezone(config.tz(cfg)).date()
         plan = load_plan(d)
         cutoff = int(cfg["publish"].get("same_day_plan_cutoff_hour", 14))
         if plan is None and now.astimezone(config.tz(cfg)).hour >= cutoff:
             log(f"no plan for today ({d}) and it's past {cutoff}:00 — not planning same-day; run-daily covers tomorrow")
         else:
             _publish_day(a, cfg, d, plan, now)
-        miss = None if (a.dry or a.date or a.only) else missed_daily(now, cfg)
-        if miss:
-            log(f"no plan for tomorrow ({miss}) yet — the 17:00 run-daily was missed; producing it now")
-            try:
-                plan, manifest, results, page = produce(miss, cfg)
-                _daily_ready(plan, miss, results, page, cfg)
-            except Exception as exc:
-                notify.send_daily_failure(miss, exc, log=log)
-                raise
     finally:
         release_lock()
+    miss = None if (a.dry or a.date or a.only) else missed_daily(now, cfg)
+    if miss:
+        log(f"no plan for tomorrow ({miss}) yet — the 17:00 run-daily was missed; producing it now")
+        _run_daily_date(miss, cfg)
 
 
 def _publish_day(a, cfg, d, plan, now):
@@ -199,21 +254,55 @@ def missed_daily(now, cfg):
 
 def cmd_run_daily(a, cfg):
     d = config.parse_date(a.date, cfg)
+    _run_daily_date(d, cfg, force=a.force)
+
+
+def _queue_ready_day(plan, d, manifest, results, cfg):
+    if config.is_paused(cfg):
+        return []
+    failed = [pid for pid, result in results.items() if not result["pass"]]
+    if failed:
+        raise RuntimeError(f"not queuing {d}; quality gates failed for {', '.join(failed)}")
     if not acquire_lock():
-        log("another studio run is in progress; skipping")
+        raise RuntimeError("content is ready but the Postiz queue lock is busy; the next recovery run will retry")
+    try:
+        from studio_lib import publish
+
+        actions = publish.publish_due(
+            plan, d, cfg, manifest, results, now=datetime.now(config.tz(cfg)),
+            ahead=True, log=log,
+        )
+    finally:
+        release_lock()
+    bad = [r for r in actions if r["status"] != "scheduled"]
+    if bad:
+        raise RuntimeError("Postiz queue incomplete: " + "; ".join(
+            f"{r['id']}/{r['platform']}={r['status']} {r.get('reason', '')}".strip() for r in bad
+        ))
+    _run_state(d, "queue", "complete", routes=sum(len(p.get("schedule") or {}) for p in plan["posts"]))
+    return actions
+
+
+def _run_daily_date(d, cfg, *, force=False):
+    date_lock = acquire_date_lock(d)
+    if date_lock is None:
+        log(f"a planner for {d} is already running; skipping duplicate")
         return
     try:
         try:
-            plan, manifest, results, page = produce(d, cfg, force_plan=a.force)
+            plan, manifest, results, page = produce(d, cfg, force_plan=force)
+            actions = _queue_ready_day(plan, d, manifest, results, cfg)
+            _daily_ready(plan, d, results, page, cfg, actions)
+            _run_state(d, "daily", "complete")
         except Exception as exc:
+            _run_state(d, "daily", "failed", error=f"{type(exc).__name__}: {exc}")
             notify.send_daily_failure(d, exc, log=log)
             raise
     finally:
-        release_lock()
-    _daily_ready(plan, d, results, page, cfg)
+        date_lock.unlink(missing_ok=True)
 
 
-def _daily_ready(plan, d, results, page, cfg):
+def _daily_ready(plan, d, results, page, cfg, queue_actions=None):
     ok = sum(r["pass"] for r in results.values())
     msg = (f"Layer8 Studio planned {d} — {len(plan['posts'])} posts, {ok} pass gates"
            f"{' (PAUSED: nothing will post)' if config.is_paused(cfg) else ''}.\n{plan.get('summary', '')}\n"
@@ -223,7 +312,10 @@ def _daily_ready(plan, d, results, page, cfg):
         msg += "\nBlocked:\n" + "\n".join(blocked)
     if cfg["notify"].get("on_run_daily"):
         notify.send(msg, log=log)
-    notify.send_daily_ready(plan, d, results, page, heroes.status(plan, d), log=log)
+    if not notify.send_daily_ready(
+        plan, d, results, page, heroes.status(plan, d), queue_actions=queue_actions, log=log
+    ):
+        raise RuntimeError("content was prepared, but the completion email failed; retry is safe")
     if (cfg.get("heroes") or {}).get("toast", True) and heroes.shots_for(plan):
         from studio_lib import herodesk
 

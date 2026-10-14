@@ -1,6 +1,7 @@
 """Regression test for the 2026-10-08 outage: claude-opus-5.5 was retired from the Copilot
 CLI's model list, so the 7 PM planning run silently burned its full timeout on two pointless
 repair attempts before failing with a misleading 'draft file was not written' error."""
+import json
 import pathlib
 from datetime import date
 
@@ -19,31 +20,55 @@ def test_run_copilot_fails_fast_with_a_clear_error_when_the_model_is_unavailable
     monkeypatch.setattr(planner, "ROOT", tmp_path)
 
     def fake_run(args, **kw):
-        kw["stdout"].write('Error: Model "claude-opus-5.5" from --model flag is not available.\n')
-
         class R:
             returncode = 1
+            stdout = 'Error: Model "claude-opus-5.5" from --model flag is not available.\n'
 
         return R()
 
     monkeypatch.setattr(planner.subprocess, "run", fake_run)
     cfg = dict(cfg, model="claude-opus-5.5")
     with pytest.raises(RuntimeError, match="no longer available"):
-        planner.run_copilot("prompt.md", cfg, "plan-test.log")
+        planner.run_copilot("return json", cfg, "plan-test.log")
 
 
-def test_run_copilot_timeout_preserves_a_draft_for_normal_validation(cfg, tmp_path, monkeypatch):
+def test_run_copilot_timeout_is_bounded_and_logged(cfg, tmp_path, monkeypatch):
     monkeypatch.setattr(planner, "ROOT", tmp_path)
 
     def fake_run(args, **kw):
-        (tmp_path / "draft.json").write_text('{"posts": []}', encoding="utf-8")
         raise planner.subprocess.TimeoutExpired(args, 1)
 
     monkeypatch.setattr(planner.subprocess, "run", fake_run)
-    assert planner.run_copilot("prompt.md", cfg, "plan-timeout.log") == 124
-    assert (tmp_path / "draft.json").exists()
+    rc, response = planner.run_copilot("return json", cfg, "plan-timeout.log")
+    assert rc == 124
+    assert "timed out" in response
     log = (tmp_path / "data" / "logs" / "plan-timeout.log").read_text(encoding="utf-8")
-    assert "timed out; validating any draft" in log
+    assert "tool-free Copilot response timed out" in log
+
+
+def test_run_copilot_has_no_autonomous_tools_and_uses_stdin(cfg, tmp_path, monkeypatch):
+    monkeypatch.setattr(planner, "ROOT", tmp_path)
+    seen = {}
+
+    def fake_run(args, **kw):
+        seen["args"], seen["input"] = args, kw["input"]
+
+        class R:
+            returncode = 0
+            stdout = json.dumps({
+                "type": "assistant.message",
+                "data": {"content": '{"ok": true}'},
+            })
+
+        return R()
+
+    monkeypatch.setattr(planner.subprocess, "run", fake_run)
+    rc, response = planner.run_copilot("SELF CONTAINED", cfg, "plan-tool-free.log")
+    assert rc == 0 and response == '{"ok": true}'
+    assert seen["input"] == "SELF CONTAINED"
+    assert "--no-custom-instructions" in seen["args"]
+    for tool in ("read", "write", "shell", "web_fetch"):
+        assert tool in seen["args"]
 
 
 def test_context_bundle_is_single_bounded_source(cfg, tmp_path, monkeypatch):
@@ -87,3 +112,42 @@ def test_build_prompt_replaces_multi_file_reads_with_bundle(cfg, tmp_path, monke
     assert "data/context/planning-day.md" in prompt
     assert "Read that single bundle once" in prompt
     assert "brand/voice-layer8culture.md  — voice" not in prompt
+
+
+def test_self_contained_request_inlines_bundle_and_requires_json_response(tmp_path, monkeypatch):
+    monkeypatch.setattr(planner, "ROOT", tmp_path)
+    (tmp_path / "prompt.md").write_text(
+        "save it as JSON.\n## READ FIRST\n- bundle.md\n## TODAY'S SLOTS\nslots\n"
+        "## OUTPUT\nWrite ONLY valid JSON (UTF-8, no comments, no markdown fences) to the file:\n"
+        "  draft.json\nusing exactly this shape:\n{\"posts\": []}\n"
+        "Do not write any other files. When the file is written, reply with the single word DONE.",
+        encoding="utf-8",
+    )
+    (tmp_path / "bundle.md").write_text("VERIFIED SOURCE", encoding="utf-8")
+    request = planner._self_contained_request("prompt.md", "bundle.md")
+    assert "VERIFIED SOURCE" in request
+    assert "do not request or read files" in request
+    assert "Return ONLY valid JSON" in request
+    assert "draft.json" not in request
+
+
+def test_decode_response_repairs_model_line_wrapping_inside_strings():
+    plan, errors = planner._decode_response('{"summary":"first line\nsecond line","posts":[]}')
+    assert errors == []
+    assert plan["summary"] == "first line\nsecond line"
+
+
+def test_decode_response_strips_terminal_hyperlinks():
+    raw = '{"url":"\x1b]8;id=x;https://example.com\x07https://example.com\x1b]8;;\x07"}'
+    plan, errors = planner._decode_response(raw)
+    assert errors == []
+    assert plan["url"] == "https://example.com"
+
+
+def test_assistant_content_extracts_json_from_event_stream():
+    stream = (
+        '{"type":"session.mcp_server_status_changed","data":{}}\n'
+        + json.dumps({"type": "assistant.message", "data": {"content": '{"posts":[]}'}})
+        + "\n"
+    )
+    assert planner._assistant_content(stream) == '{"posts":[]}'

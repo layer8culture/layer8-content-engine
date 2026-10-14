@@ -74,6 +74,28 @@ def test_missing_smtp_is_an_explicit_blocker(monkeypatch):
     assert any("SMTP_HOST and SMTP_FROM are required" in line for line in logs)
 
 
+def test_daily_email_truthfully_reports_queue_status(monkeypatch, tmp_path):
+    _smtp_env(monkeypatch)
+    FakeSMTP.sent.clear()
+    monkeypatch.setattr(notify.smtplib, "SMTP", FakeSMTP)
+    monkeypatch.setattr(notify, "ROOT", tmp_path)
+    monkeypatch.setattr(notify, "DATA", tmp_path / "data")
+    (tmp_path / "inbox").mkdir()
+    (tmp_path / "inbox" / "PROMPTS-2026-10-15.md").write_text("PROMPT", encoding="utf-8")
+    plan = {"posts": [{
+        "id": "p1", "brand": "layer8culture", "format": "single",
+        "schedule": {"instagram": "2026-10-15T09:30:00-04:00"},
+    }]}
+    actions = [{"id": "p1", "platform": "instagram", "status": "scheduled"}]
+    assert notify.send_daily_ready(
+        plan, date(2026, 10, 15), {"p1": {"pass": True, "errors": []}},
+        Path("preview.html"), [], queue_actions=actions, log=lambda _: None,
+    )
+    body = FakeSMTP.sent[0].get_body().get_content()
+    assert "POSTIZ QUEUE:" in body
+    assert "1/1 routes newly queued" in body
+
+
 def test_authenticated_smtp_requires_app_password(monkeypatch):
     monkeypatch.setenv("NOTIFY_EMAIL_TO", "owner@example.com")
     monkeypatch.setenv("SMTP_HOST", "smtp.gmail.com")

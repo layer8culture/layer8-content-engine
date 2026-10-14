@@ -6,9 +6,9 @@ It replaces the GitHub Actions engine (still in the repo root as legacy).
 *Technology has seven layers. We're the eighth.*
 
 ```
-17:00 daily  run-daily  → news + transcript + history → configured Copilot CLI model → plan JSON
+17:00 daily  run-daily  → deterministic bounded context → one tool-free Copilot JSON response
                           → render (Playwright stills, Remotion reels) → ChatGPT prompt pack
-                          → quality gates → preview.html
+                          → quality gates → preview.html → queue tomorrow in Postiz → email
 every 30 min publish    → ingest heroes from inbox/ → re-render → gates → Postiz (due posts only)
 ```
 
@@ -29,7 +29,9 @@ The tasks use *StartWhenAvailable*, so a run missed while the laptop was off fir
 
 Tasks launch `task.ps1` through `conhost.exe --headless`, so Windows never hands them to Windows Terminal. On 10/7 a hung Terminal blocked every task launch. Each run writes `=== start` and `=== end … exit N` lines to `data\logs\task-<job>.log`. A run with a start line and no end line means it hung or was killed.
 
-For one daily email after next-day content is actually prepared, set `NOTIFY_EMAIL_TO` plus the SMTP fields in `.env`. The email labels times as **planned** (not proof of Postiz scheduling), lists failed gates and missing heroes, and attaches the one-paste prompt pack. A per-date marker prevents duplicate success emails when the 18:00 catch-up runs. Gmail users need an app password; Studio never uses or stores a normal Google password.
+Planning is deliberately not an autonomous coding-agent loop. Python gathers and bounds the approved sources, assigns the required slots, sends one self-contained prompt to Copilot with file/shell/web tools disabled, captures the JSON response, writes it, and validates it. One malformed response gets one bounded repair call. The model never owns persistence, retries, scheduling, or success reporting. Per-stage state is written atomically to `data\runs\<date>.json`; a date-specific planning lock prevents duplicate writers without blocking the every-30-minute publisher.
+
+For one daily email after next-day content is actually prepared, set `NOTIFY_EMAIL_TO` plus the SMTP fields in `.env`. A successful daily run now queues every validated route in Postiz before sending the completion email; the message identifies the Postiz queue state, failed gates, and missing heroes and attaches the one-paste prompt pack. A per-date marker prevents duplicate success emails when the 18:00 catch-up runs. If queueing or email fails, the run exits nonzero and the recovery run safely resumes because plans, posts, and emails are idempotent. Gmail users need an app password; Studio never uses or stores a normal Google password.
 
 For Gmail, enable 2-Step Verification and create an app password yourself at <https://myaccount.google.com/apppasswords>. Then double-click `setup-email.cmd`, or run `powershell -ExecutionPolicy Bypass -File setup-email.ps1 -Test`. Password input is masked and never appears in the command line or shell history; the script preserves existing `.env` values, stores the app password only in gitignored `.env`, and sends one test email only to `NOTIFY_EMAIL_TO`. You can repeat just the test later with `python studio.py email-test`.
 
@@ -42,7 +44,7 @@ For Gmail, enable 2-Step Verification and create an app password yourself at <ht
 | `python studio.py heroes [--date D] [--downloads DIR]` | Manual ChatGPT hero desk: copies the prompts, watches Downloads, files each image, then ingests |
 | `python studio.py ingest [--date D]` | Pick up ChatGPT heroes from `inbox/`, crop, and re-render |
 | `python studio.py publish [--dry] [--date D] [--only ID..] [--ahead]` | Push due posts that passed the gates to Postiz (`--ahead`: schedule the whole day now at its planned times) |
-| `python studio.py run-daily [--date D]` | plan → render → prompt pack → gates → preview |
+| `python studio.py run-daily [--date D]` | plan → render → prompt pack → gates → preview → queue all routes → completion email |
 | `python studio.py dry-run [--date D] [--reuse-plan]` | Same as run-daily, then a publish simulation (no network) |
 | `python studio.py status [--date D]` | Plan, gates, heroes, and what has been posted |
 
@@ -69,7 +71,7 @@ A post is published only if **all** of these pass:
 - Rendered media has the right size and duration.
 - Text fits with no overflow and no headline/body overlap.
 
-A failing post is blocked and logged; the others still go out. Every attempt is appended to `data/posted.jsonl`.
+A daily preparation queues nothing unless every planned post passes. Every publish attempt is appended to `data/posted.jsonl`.
 
 ## ChatGPT hero images (manual, ~5 min/day)
 
