@@ -36,7 +36,10 @@ preserved deployment revision, permits only the five guide documents and their
 shared assets, the Projects assets, and the exact expected Projects script/style
 tags on existing shared-navigation pages. Production deployment remains manual
 and requires the workflow's `DEPLOY` confirmation after a verified full-site
-backup. The same workflow can target the existing `preview` environment first;
-use `verify_live_site.py` against that preview hostname before dispatching the
-production target. Run `verify_live_site.py` against the production URL after
-deployment.
+backup. The workflow uses the Azure
+Static Web Apps CLI's explicit `--env` target, so preview and production are
+not inferred from the branch name or an unsupported action input. Deploy to the
+existing `preview` environment first and run `verify_live_site.py` against that
+hostname before dispatching the production target. The verifier treats CRLF and
+LF as equivalent for text files while still comparing binary assets byte for
+byte. Run it against the production URL after deployment.

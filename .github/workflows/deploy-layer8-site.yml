@@ -51,12 +51,10 @@ jobs:
 
       - name: Deploy verified complete site
         if: steps.token.outputs.enabled == 'true'
-        uses: Azure/static-web-apps-deploy@v1
-        with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_LAYER8CULTURE }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          action: upload
-          deployment_environment: ${{ inputs.deployment_target == 'preview' && 'preview' || '' }}
-          app_location: site
-          output_location: ""
-          skip_app_build: true
+        env:
+          SWA_CLI_DEPLOYMENT_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_LAYER8CULTURE }}
+          DEPLOYMENT_TARGET: ${{ inputs.deployment_target }}
+        run: |
+          npx --yes --package '@azure/static-web-apps-cli@2.0.7' \
+            swa deploy site --swa-config-location site \
+            --env "$DEPLOYMENT_TARGET" --no-use-keychain

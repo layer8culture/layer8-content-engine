@@ -5,9 +5,20 @@ from pathlib import Path
 
 from scripts.build_projects_showcase import PROJECTS_SCRIPT, PROJECTS_STYLESHEET, integrate_document
 from scripts.build_visual_guides import Document, baseline
+from scripts.verify_live_site import comparable_content
 
 
 class ProjectsShowcaseTests(unittest.TestCase):
+    def test_live_verification_ignores_text_line_ending_differences_only(self) -> None:
+        self.assertEqual(
+            comparable_content(Path("index.html"), b"<main>\r\n</main>"),
+            comparable_content(Path("index.html"), b"<main>\n</main>"),
+        )
+        self.assertNotEqual(
+            comparable_content(Path("radio-loop.gif"), b"frame\r\n"),
+            comparable_content(Path("radio-loop.gif"), b"frame\n"),
+        )
+
     def test_integration_only_adds_the_expected_shared_shell_assets(self) -> None:
         homepage = baseline("site/index.html").encode("utf-8")
         integrated_homepage = integrate_document(Path("index.html"), homepage)
