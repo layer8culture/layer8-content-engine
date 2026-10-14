@@ -381,6 +381,14 @@ def build_queue_post(campaign: dict, guide_url: str, schedule_time: str, post_id
     }
 
 
+def write_guide(path: Path, campaign: dict, research: dict) -> None:
+    if path.exists() and "data-visual-guide" in path.read_text(encoding="utf-8"):
+        print(f"Preserving reviewed visual field guide: {path}")
+        return
+    path.write_text(render_guide(campaign, research), encoding="utf-8")
+    print(f"Wrote {path}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--campaign-index", type=int)
@@ -414,7 +422,8 @@ def main() -> None:
 
     guide_dir = SITE_ROOT / "guides" / campaign["slug"]
     guide_dir.mkdir(parents=True, exist_ok=True)
-    (guide_dir / "index.html").write_text(render_guide(campaign, research), encoding="utf-8")
+    guide_path = guide_dir / "index.html"
+    write_guide(guide_path, campaign, research)
 
     QUEUE_ROOT.mkdir(exist_ok=True)
     post = build_queue_post(
@@ -437,7 +446,6 @@ def main() -> None:
     (QUEUE_ROOT / f"weekly-guide-{date}.summary.md").write_text(summary, encoding="utf-8")
     active_path = Path("campaigns/layer8culture-active-guide-campaign.json")
     active_path.write_text(json.dumps(active_campaign, indent=2), encoding="utf-8")
-    print(f"Wrote {guide_dir / 'index.html'}")
     print(f"Wrote {queue_path}")
     print(f"Wrote {active_path}")
 
