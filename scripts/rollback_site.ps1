@@ -17,7 +17,7 @@ if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($env:SWA_CLI_DEPLOYMENT
     throw 'Unable to retrieve deployment credential.'
 }
 try {
-    npx --yes --package '@azure/static-web-apps-cli@2.0.7' swa deploy $site --env production
+    npx --yes --package '@azure/static-web-apps-cli@2.0.7' swa deploy $site --swa-config-location $site --env production --no-use-keychain
     if ($LASTEXITCODE -ne 0) { throw 'Rollback deployment failed.' }
 } finally {
     Remove-Item Env:\SWA_CLI_DEPLOYMENT_TOKEN -ErrorAction SilentlyContinue
