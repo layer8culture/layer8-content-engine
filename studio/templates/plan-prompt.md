@@ -75,7 +75,7 @@ quotes, launches, prices, or guests. A news-driven post must list its article UR
 ## WORK FAST
 Everything you need is in this prompt and the files listed in READ FIRST. These rules ARE the
 automated checks: do NOT read source code, configs, or templates (studio_lib/, templates/,
-config.yaml). Read each brand file once, write the JSON, and finish in under 10 minutes.
+config.yaml). Do not narrate, reason aloud, or plan your response. Return the JSON immediately.
 
 ## FACTS YOU MAY USE
 {facts}

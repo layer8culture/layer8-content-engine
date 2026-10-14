@@ -88,7 +88,8 @@ def _email_marker(d: date) -> Path:
     return DATA / "notifications" / f"daily-email-{d.isoformat()}.json"
 
 
-def send_daily_ready(plan: dict, d: date, results: dict, page: Path, hero_rows: list[dict], log=print) -> bool:
+def send_daily_ready(plan: dict, d: date, results: dict, page: Path, hero_rows: list[dict],
+                     queue_actions: list[dict] | None = None, log=print) -> bool:
     """Send one completion email per content date. Publish retries cannot duplicate it."""
     marker = _email_marker(d)
     if marker.exists():
@@ -97,12 +98,23 @@ def send_daily_ready(plan: dict, d: date, results: dict, page: Path, hero_rows: 
     lines = [
         f"Layer8 Studio prepared content for {d}.",
         "",
-        "PLANNED TIMES (not yet proof of Postiz scheduling):",
+        "POSTIZ QUEUE:" if queue_actions is not None else "PLANNED TIMES (not yet proof of Postiz scheduling):",
     ]
     for post in plan.get("posts", []):
         for platform, when in (post.get("schedule") or {}).items():
             lines.append(f"- {when}: {post['id']} — {post['brand']} {platform} {post['format']}")
     blocked = [f"- {pid}: {'; '.join(r['errors'])}" for pid, r in results.items() if not r["pass"]]
+    if queue_actions is not None:
+        queued = {(r["id"], r["platform"]): r["status"] for r in queue_actions}
+        expected = [
+            (post["id"], platform)
+            for post in plan.get("posts", [])
+            for platform in (post.get("schedule") or {})
+        ]
+        lines.append(
+            f"- Verified by this run: {sum(queued.get(key) == 'scheduled' for key in expected)}/"
+            f"{len(expected)} routes newly queued; previously queued routes remain idempotently unchanged."
+        )
     lines += ["", f"QUALITY GATES: {sum(r['pass'] for r in results.values())}/{len(results)} passed."]
     if blocked:
         lines += ["BLOCKED POSTS:", *blocked]

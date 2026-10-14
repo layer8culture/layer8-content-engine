@@ -51,6 +51,7 @@ def publish_env(cfg, monkeypatch, tmp_path):
     monkeypatch.setattr(studio, "produce",
                         lambda d, c, **k: (produced.append(str(d)) or ({}, {}, {}, tmp_path / "preview.html")))
     monkeypatch.setattr(studio, "_daily_ready", lambda *a, **k: None)
+    monkeypatch.setattr(studio, "_run_daily_date", lambda d, c, **k: produced.append(str(d)))
     monkeypatch.setattr(studio, "log", lambda m: None)
     cfg["publish"]["catch_up_daily_after_hour"] = 18
     cfg["publish"]["same_day_plan_cutoff_hour"] = 14
@@ -68,6 +69,19 @@ def test_publish_does_not_catch_up_before_hour_or_on_dry_runs(publish_env):
     studio.cmd_publish(_args(now="2026-10-07T16:00:00"), cfg)
     studio.cmd_publish(_args(now="2026-10-07T18:00:00", dry=True), cfg)
     assert produced == []
+
+
+def test_date_lock_is_atomic_and_stale_lock_is_recovered(monkeypatch, tmp_path):
+    monkeypatch.setattr(studio, "DATE_LOCKS", tmp_path)
+    d = "2026-10-15"
+    first = studio.acquire_date_lock(d)
+    assert first is not None
+    assert studio.acquire_date_lock(d) is None
+    first.write_text("99999999", encoding="ascii")
+    monkeypatch.setattr(studio, "_process_exists", lambda pid: False)
+    recovered = studio.acquire_date_lock(d)
+    assert recovered is not None
+    recovered.unlink()
 
 
 def test_tasks_launch_through_headless_conhost_not_the_default_terminal():

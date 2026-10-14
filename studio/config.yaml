@@ -12,10 +12,12 @@ timezone: America/New_York
 model: claude-sonnet-5.5
 copilot:
   command: copilot
-  timeout_minutes: 25
-  news_context_chars: 12000
-  transcript_context_chars: 14000
-  transcript_context_chars_recap: 30000
+  # Planning is one tool-free JSON response. Python owns context, persistence and validation.
+  response_timeout_minutes: 10
+  reasoning_effort: low
+  news_context_chars: 8000
+  transcript_context_chars: 0
+  transcript_context_chars_recap: 18000
   # Domains the model may web_fetch while researching (in addition to the RSS links we hand it).
   allow_urls:
     - openai.com
