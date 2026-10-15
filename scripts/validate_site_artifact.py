@@ -1,4 +1,4 @@
-"""Reject incomplete exports and changes outside the five approved guide pages."""
+"""Reject incomplete exports and changes outside the guides and Projects release."""
 from __future__ import annotations
 
 import argparse
@@ -7,6 +7,7 @@ import subprocess
 from pathlib import Path
 
 from build_visual_guides import BASELINE, GUIDES, Document
+from build_projects_showcase import PROJECTS_SCRIPT, PROJECTS_STYLESHEET
 
 
 def main() -> None:
@@ -16,19 +17,46 @@ def main() -> None:
     paths = subprocess.check_output(
         ["git", "ls-tree", "-r", "--name-only", BASELINE, "site"], text=True
     ).splitlines()
-    allowed = {f"guides/{slug}/index.html" for slug in GUIDES}
+    guide_pages = {f"guides/{slug}/index.html" for slug in GUIDES}
+    allowed = set(guide_pages)
     allowed.update({"guides/field-guide.js", "guides/field-guide.css"})
+    project_files = {
+        "projects/section.html",
+        "projects/projects.css",
+        "projects/projects.js",
+        "projects/assets/deal-lab-screenshot.jpg",
+        "projects/assets/green-foods-screenshot.jpg",
+        "projects/assets/radio-loop.gif",
+        "projects/assets/radio-poster.jpg",
+    }
+    allowed.update(project_files)
+    nav_pages = set()
     for source_path in paths:
         relative = source_path.removeprefix("site/")
         target = args.site / Path(relative)
         if not target.is_file():
             raise RuntimeError(f"Missing baseline file: {relative}")
-        if relative in allowed:
-            continue
         original = subprocess.check_output(["git", "show", f"{BASELINE}:{source_path}"])
+        if b"<nav" in original and b"aria-expanded=" in original:
+            nav_pages.add(relative)
+        if relative in guide_pages:
+            continue
+        current = target.read_bytes()
+        if relative in nav_pages:
+            if current.count(PROJECTS_SCRIPT) != 1:
+                raise RuntimeError(f"Shared navigation missing Projects enhancement: {relative}")
+            current = current.replace(PROJECTS_SCRIPT, b"", 1)
+        elif PROJECTS_SCRIPT in current:
+            raise RuntimeError(f"Unexpected Projects script outside shared navigation: {relative}")
+        if relative == "index.html":
+            if current.count(PROJECTS_STYLESHEET) != 1:
+                raise RuntimeError("Homepage missing its Projects stylesheet.")
+            current = current.replace(PROJECTS_STYLESHEET, b"", 1)
+        elif PROJECTS_STYLESHEET in current:
+            raise RuntimeError(f"Projects stylesheet added outside homepage: {relative}")
         # Git checkout may expand LF to CRLF; the deployable artifact must not.
-        if target.read_bytes() != original:
-            raise RuntimeError(f"Non-guide production file changed: {relative}")
+        if current != original:
+            raise RuntimeError(f"Unrelated production file changed: {relative}")
     for slug in GUIDES:
         target = args.site / "guides" / slug / "index.html"
         source = target.read_text(encoding="utf-8")
@@ -41,10 +69,55 @@ def main() -> None:
                 asset = args.site / Path(ref.split("?")[0].lstrip("/"))
                 if not asset.is_file():
                     raise RuntimeError(f"Missing guide dependency: {ref}")
+    for relative in project_files:
+        if not (args.site / Path(relative)).is_file():
+            raise RuntimeError(f"Missing Projects release file: {relative}")
+    expected_files = {path.removeprefix("site/") for path in paths} | allowed
+    actual_files = {
+        path.relative_to(args.site).as_posix()
+        for path in args.site.rglob("*") if path.is_file()
+    }
+    unexpected = actual_files - expected_files
+    if unexpected:
+        raise RuntimeError(f"Unexpected files in complete artifact: {', '.join(sorted(unexpected))}")
+    for relative in nav_pages:
+        source = (args.site / Path(relative)).read_bytes()
+        if source.count(PROJECTS_SCRIPT) != 1:
+            raise RuntimeError(f"Projects navigation missing from shared shell: {relative}")
+    project_html = (args.site / "projects" / "section.html").read_text(encoding="utf-8")
+    project_doc = Document(project_html)
+    if len(project_doc.find("article")) != 4:
+        raise RuntimeError("Projects section must contain exactly four project cards.")
+    if "PREVIEW NOTES" in project_html or "<header" in project_html or "<footer" in project_html:
+        raise RuntimeError("Standalone preview chrome must not ship inside the Projects section.")
+    expected_links = {
+        "https://therealestatedeallab.com/",
+        "https://greenfoodsmarket.com/",
+        "https://www.youtube.com/@layer8cultureradio",
+        "https://sonar.layer8culture.io/",
+    }
+    actual_links = {
+        node.attrs.get("href") for node in project_doc.find("a")
+        if node.attrs.get("href", "").startswith("https://")
+    }
+    if actual_links != expected_links:
+        raise RuntimeError("Projects section links do not match the approved four projects.")
+    for node in project_doc.find("a"):
+        if node.attrs.get("href", "").startswith("https://"):
+            if node.attrs.get("target") != "_blank" or "noopener" not in node.attrs.get("rel", ""):
+                raise RuntimeError("External project links must safely open in a new tab.")
+    for node in project_doc.find("script") + project_doc.find("link") + project_doc.find("img"):
+        ref = node.attrs.get("src") or node.attrs.get("href", "")
+        if ref.startswith("/projects/"):
+            asset = args.site / Path(ref.split("?")[0].lstrip("/"))
+            if not asset.is_file():
+                raise RuntimeError(f"Missing Projects dependency: {ref}")
+    if "prefers-reduced-motion" not in (args.site / "projects" / "projects.css").read_text(encoding="utf-8"):
+        raise RuntimeError("Projects animation styles must respect reduced motion.")
     for relative in allowed:
         if not (args.site / Path(relative)).is_file():
-            raise RuntimeError(f"Missing guide release file: {relative}")
-    print(f"Complete artifact: {len(paths)} baseline files, five visual guides, unchanged non-guide bytes.")
+            raise RuntimeError(f"Missing release file: {relative}")
+    print(f"Complete artifact: {len(paths)} baseline files, five visual guides, four Projects cards, unchanged unrelated bytes.")
     for relative in sorted(allowed):
         print(hashlib.sha256((args.site / Path(relative)).read_bytes()).hexdigest(), relative)
 

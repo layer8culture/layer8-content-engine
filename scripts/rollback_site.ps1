@@ -7,10 +7,10 @@ foreach ($file in $manifest.files) {
     if ((Get-FileHash $path -Algorithm SHA256).Hash.ToLowerInvariant() -ne $file.sha256) {
         throw "Backup checksum mismatch: $($file.path)"
     }
-    if ($VerifyOnly) {
-        Write-Output "Verified all $($manifest.files.Count) rollback files."
-        return
-    }
+}
+if ($VerifyOnly) {
+    Write-Output "Verified all $($manifest.files.Count) rollback files."
+    return
 }
 $env:SWA_CLI_DEPLOYMENT_TOKEN = az staticwebapp secrets list --name swa-layer8culture --resource-group rg-layer8culture --query properties.apiKey --output tsv
 if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($env:SWA_CLI_DEPLOYMENT_TOKEN)) {
