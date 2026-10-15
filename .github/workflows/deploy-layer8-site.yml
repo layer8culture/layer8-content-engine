@@ -34,7 +34,8 @@ jobs:
           test "$CONFIRM" = "DEPLOY"
           git fetch --depth=1 origin b7423550086bbfadd38a98b71e96ff3060fc27f8
           python scripts/build_projects_showcase.py
-          python -m unittest tests.test_visual_guides tests.test_projects_showcase
+          python scripts/build_homepage_refinement.py
+          python -m unittest tests.test_visual_guides tests.test_projects_showcase tests.test_homepage_refinement
           python scripts/validate_site_artifact.py
 
       - name: Check deployment token

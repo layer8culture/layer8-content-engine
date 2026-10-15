@@ -1,4 +1,4 @@
-"""Reject incomplete exports and changes outside the guides and Projects release."""
+"""Reject incomplete exports and changes outside the homepage, guides, and Projects release."""
 from __future__ import annotations
 
 import argparse
@@ -9,6 +9,13 @@ from pathlib import Path
 
 from build_visual_guides import BASELINE, GUIDES, Document
 from build_projects_showcase import PROJECTS_SCRIPT, PROJECTS_STYLESHEET
+from build_homepage_refinement import (
+    CLIENT_COPY,
+    FLIGHT_PAYLOADS,
+    HOMEPAGE_CHUNK,
+    SERVER_COPY,
+    transform_baseline,
+)
 
 
 def main() -> None:
@@ -33,6 +40,7 @@ def main() -> None:
     }
     index_files = {"sitemap.xml", "llms.txt"}
     allowed.update(project_files | index_files)
+    allowed.update({"homepage-refinement.css", "static-page-rhythm.css"})
     nav_pages = set()
     for source_path in paths:
         relative = source_path.removeprefix("site/")
@@ -44,6 +52,8 @@ def main() -> None:
             nav_pages.add(relative)
         if relative in guide_pages:
             continue
+        if relative == "index.html" or relative in FLIGHT_PAYLOADS or relative == HOMEPAGE_CHUNK:
+            original = transform_baseline(relative, original)
         current = target.read_bytes()
         if relative in nav_pages:
             if current.count(PROJECTS_SCRIPT) != 1:
@@ -70,6 +80,12 @@ def main() -> None:
             if current.count(entry) != 1:
                 raise RuntimeError("llms.txt must include the Projects page exactly once.")
             current = current.replace(entry, b"", 1)
+        if relative == "index.html" or relative in FLIGHT_PAYLOADS or relative == HOMEPAGE_CHUNK:
+            if relative == "index.html" and relative in nav_pages:
+                current = current.replace(PROJECTS_SCRIPT, b"", 1)
+            if current != original:
+                raise RuntimeError(f"Homepage refinement differs from the approved transform: {relative}")
+            continue
         # Git checkout may expand LF to CRLF; the deployable artifact must not.
         if current != original:
             raise RuntimeError(f"Unrelated production file changed: {relative}")
@@ -146,6 +162,12 @@ def main() -> None:
                 raise RuntimeError(f"Missing Projects dependency: {ref}")
     if "prefers-reduced-motion" not in (args.site / "projects" / "projects.css").read_text(encoding="utf-8"):
         raise RuntimeError("Projects animation styles must respect reduced motion.")
+    for relative in ("homepage-refinement.css", "static-page-rhythm.css"):
+        if not (args.site / relative).is_file():
+            raise RuntimeError(f"Missing approved compact-rhythm stylesheet: {relative}")
+    homepage = (args.site / "index.html").read_text(encoding="utf-8")
+    if any(copy not in homepage for _, copy in (*SERVER_COPY, *CLIENT_COPY)):
+        raise RuntimeError("Homepage export does not contain the approved concise copy.")
     for relative in allowed:
         if not (args.site / Path(relative)).is_file():
             raise RuntimeError(f"Missing release file: {relative}")

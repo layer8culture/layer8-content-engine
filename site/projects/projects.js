@@ -1,6 +1,24 @@
 (() => {
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
+  const pageStylesheet = () => {
+    const path = window.location.pathname;
+    if (path === "/") return "/homepage-refinement.css";
+    if (/^\/guides(?:\/[^/]+)?\/?$/.test(path) || /^\/projects\/?$/.test(path)) {
+      return "/static-page-rhythm.css";
+    }
+    return null;
+  };
+
+  const installPageStyles = () => {
+    const href = pageStylesheet();
+    if (!href || document.querySelector(`link[rel="stylesheet"][href="${href}"]`)) return;
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = href;
+    document.head.append(link);
+  };
+
   const closeMobileNav = () => {
     const nativeDialog = document.querySelector('dialog[aria-label="Main navigation"]');
     if (nativeDialog?.open) {
@@ -107,6 +125,7 @@
     };
 
     const installAllLinks = () => {
+      installPageStyles();
       addNavLink(document.querySelector("body > nav > div > ul"));
       installMobileLink();
       installStaticMobileNav();
@@ -117,6 +136,7 @@
     installAllLinks();
     const observer = new MutationObserver(installAllLinks);
     observer.observe(document.body, { childList: true, subtree: true });
+    window.addEventListener("popstate", installPageStyles);
   };
 
   const installStaticHeaderBackground = () => {
@@ -195,6 +215,7 @@
   };
 
   if (document.querySelector('script[src*="/_next/static/chunks/"]')) {
+    installPageStyles();
     const installAfterHydration = () => window.setTimeout(initialize, 900);
     if (document.readyState === "complete") {
       installAfterHydration();

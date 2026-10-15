@@ -1,0 +1,176 @@
+#top {
+  min-height: 740px !important;
+}
+
+#top > div:has(h1) {
+  padding-block: 0 !important;
+}
+
+#top .hero-display-2col {
+  font-size: 64px !important;
+  line-height: 0.97 !important;
+}
+
+#top div:has(> img[src="/hero/builder-studio.png"]) {
+  height: 740px !important;
+  max-height: 740px !important;
+}
+
+#sponsors,
+#about,
+#build,
+#stream,
+#recap,
+#work,
+#join {
+  padding-block: 72px !important;
+}
+
+#sponsors h2 {
+  font-size: 32px !important;
+  line-height: 1.08 !important;
+}
+
+#sponsors p:not(.font-eyebrow) {
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+}
+
+#about > div:last-child {
+  gap: 36px !important;
+}
+
+#about p.font-display-tight {
+  font-size: 52px !important;
+  line-height: 1.08 !important;
+}
+
+#about p.text-base {
+  font-size: 18px !important;
+  line-height: 1.6 !important;
+}
+
+#build h2,
+#stream h2,
+#work h2 {
+  font-size: 44px !important;
+  line-height: 1.08 !important;
+}
+
+#recap h2,
+#join h2 {
+  font-size: 40px !important;
+  line-height: 1.08 !important;
+}
+
+#build h3,
+#work h3 {
+  font-size: 28px !important;
+  line-height: 1.15 !important;
+}
+
+#build .group.relative.grid,
+#work .group.relative.grid {
+  grid-template-columns: 44px minmax(0, 2.2fr) minmax(0, 1.4fr) !important;
+  gap: 24px !important;
+  padding-block: 28px !important;
+}
+
+#work .group.relative.grid {
+  grid-template-columns: 44px minmax(0, 1.4fr) minmax(0, 1.6fr) !important;
+}
+
+#build .group.relative.grid > p,
+#work .group.relative.grid > p {
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+}
+
+#stream div:has(> img[src="/stream/podcast-workspace.png"]) {
+  height: 430px !important;
+}
+
+#join div:has(> img[src="/join/global-network.png"]) {
+  height: 340px !important;
+}
+
+@media (max-width: 767px) {
+  #top {
+    min-height: 0 !important;
+  }
+
+  #top > div:has(h1) {
+    gap: 24px !important;
+    padding-top: 104px !important;
+    padding-bottom: 40px !important;
+  }
+
+  #top .hero-display-2col {
+    font-size: 36px !important;
+    line-height: 1.02 !important;
+  }
+
+  #top div:has(> img[src="/hero/builder-studio.png"]) {
+    height: 300px !important;
+    max-height: none !important;
+  }
+
+  #sponsors,
+  #about,
+  #build,
+  #stream,
+  #recap,
+  #work,
+  #join {
+    padding-block: 56px !important;
+  }
+
+  #about > div:last-child {
+    gap: 28px !important;
+  }
+
+  #about p.font-display-tight,
+  #build h2,
+  #stream h2,
+  #work h2,
+  #recap h2,
+  #join h2 {
+    font-size: 32px !important;
+    line-height: 1.12 !important;
+  }
+
+  #build h3,
+  #work h3 {
+    font-size: 24px !important;
+    line-height: 1.15 !important;
+  }
+
+  #about p.text-base,
+  #build .group.relative.grid > p,
+  #work .group.relative.grid > p {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+  }
+
+  #build .group.relative.grid,
+  #work .group.relative.grid {
+    grid-template-columns: 28px minmax(0, 1fr) !important;
+    column-gap: 16px !important;
+    row-gap: 16px !important;
+    padding-block: 24px !important;
+  }
+
+  #stream div:has(> img[src="/stream/podcast-workspace.png"]) {
+    height: 230px !important;
+  }
+
+  #join div:has(> img[src="/join/global-network.png"]) {
+    height: 220px !important;
+  }
+}
+
+@media (max-width: 359px) {
+  #top .hero-display-2col {
+    font-size: 32px !important;
+  }
+}
