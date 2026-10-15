@@ -107,6 +107,14 @@ def test_default_date_picks_next_pack_with_missing(tmp_path, monkeypatch):
     assert herodesk.default_date(date(2026, 10, 9), tmp_path) is None
 
 
+def test_status_date_reuses_complete_pack_for_truthful_noop_status(tmp_path, monkeypatch):
+    p = _pack(tmp_path, monkeypatch)
+    for shot in p.shots:
+        _img(tmp_path / shot.filename, size=(1080, 1920) if shot.aspect == "9:16" else (1080, 1350))
+    assert herodesk.default_date(D, tmp_path) is None
+    assert herodesk.status_date(D, tmp_path) == D
+
+
 class Clock:
     def __init__(self):
         self.t = 0.0

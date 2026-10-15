@@ -6,8 +6,10 @@ set "STUDIO_EXIT=%ERRORLEVEL%"
 echo.
 if "%STUDIO_EXIT%"=="0" (
   echo ========================================
-  echo HEROES COMPLETE
-  echo Images saved during this run were filed and ingested.
+  echo HEROES WORKFLOW FINISHED
+  echo Read the HEROES / POSTIZ STATUS summary above.
+  echo It says whether media is only local, waiting for the publisher,
+  echo or verified updated in Postiz, with the next eligible check time.
   echo Press any key to close this window.
   echo ========================================
 ) else (

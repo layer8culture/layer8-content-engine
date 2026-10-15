@@ -271,6 +271,19 @@ def default_date(today: date, inbox: Path = INBOX) -> date | None:
     return None
 
 
+def status_date(today: date, inbox: Path = INBOX) -> date | None:
+    """Incomplete pack first; otherwise the nearest current/future pack for a no-op status rerun."""
+    incomplete = default_date(today, inbox)
+    if incomplete:
+        return incomplete
+    dates = sorted(
+        date.fromisoformat(m.group(1))
+        for f in inbox.glob("PROMPTS-*.md")
+        if (m := PROMPTS_RE.match(f.name)) and date.fromisoformat(m.group(1)) >= today
+    )
+    return dates[0] if dates else None
+
+
 def downloads_dir(cfg: dict) -> Path:
     override = os.environ.get("STUDIO_DOWNLOADS_DIR") or ((cfg.get("heroes") or {}).get("downloads_dir") or "")
     if override:
