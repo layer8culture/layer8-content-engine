@@ -95,11 +95,15 @@ class ProjectsShowcaseTests(unittest.TestCase):
     def test_motion_has_pause_offscreen_and_reduced_motion_support(self) -> None:
         css = Path("site/projects/projects.css").read_text(encoding="utf-8")
         javascript = Path("site/projects/projects.js").read_text(encoding="utf-8")
+        guide_javascript = Path("site/guides/field-guide.js").read_text(encoding="utf-8")
         self.assertIn("prefers-reduced-motion: reduce", css)
         self.assertIn("IntersectionObserver", javascript)
         self.assertIn('window.matchMedia("(prefers-reduced-motion: reduce)")', javascript)
         self.assertIn('window.location.hash === "#projects"', javascript)
         self.assertIn('window.location.replace("/projects/")', javascript)
+        self.assertIn('nav.classList.toggle("bg-ink-bg/70", scrolled)', javascript)
+        self.assertIn('nav.classList.toggle("backdrop-blur-2xl", scrolled)', javascript)
+        self.assertNotIn("navBackground", guide_javascript)
 
     def test_sonar_sweep_uses_its_svg_viewbox_center_as_the_pivot(self) -> None:
         css = Path("site/projects/projects.css").read_text(encoding="utf-8")
