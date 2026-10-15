@@ -45,7 +45,8 @@ const slugs = [
         await page.waitForFunction(() => !document.querySelector(".fg-motion").disabled);
         if (width < 768) {
           await page.locator('body > nav button[aria-expanded]').click();
-          assert.equal(await page.locator("dialog[open] a").count(), 5);
+          await page.locator('dialog[open] a[data-projects-nav]').waitFor();
+          assert.equal(await page.locator("dialog[open] a").count(), 6);
           await page.keyboard.press("Escape");
           await page.waitForFunction(() =>
             document.querySelector('body > nav button[aria-expanded]').getAttribute("aria-expanded") === "false");

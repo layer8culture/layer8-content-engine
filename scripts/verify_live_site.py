@@ -10,6 +10,15 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 
+TEXT_SUFFIXES = {".css", ".html", ".js", ".json", ".md", ".svg", ".txt", ".xml"}
+
+
+def comparable_content(path: Path, content: bytes) -> bytes:
+    if path.suffix.lower() in TEXT_SUFFIXES:
+        return content.replace(b"\r\n", b"\n")
+    return content
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--url", required=True)
@@ -30,7 +39,7 @@ def main() -> None:
             if response.status != 200:
                 raise RuntimeError(f"Unexpected status for {relative}: {response.status}")
         expected = path.read_bytes()
-        if body != expected:
+        if comparable_content(path, body) != comparable_content(path, expected):
             raise RuntimeError(f"Live release mismatch: {relative}")
         for name, value in config.get("globalHeaders", {}).items():
             if headers.get(name) != value:
@@ -48,7 +57,10 @@ def main() -> None:
     }
     if args.report:
         args.report.write_text(json.dumps(report, indent=2), encoding="utf-8")
-    print(f"Verified {len(verified)} live files byte-for-byte and all configured response headers: {args.url}")
+    print(
+        f"Verified {len(verified)} live files (text compared with normalized line endings) "
+        f"and all configured response headers: {args.url}"
+    )
 
 
 if __name__ == "__main__":

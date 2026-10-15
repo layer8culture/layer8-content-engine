@@ -18,9 +18,9 @@ five guides and must not replace this full artifact.
 ```powershell
 git fetch --depth=1 origin b7423550086bbfadd38a98b71e96ff3060fc27f8
 python scripts\build_visual_guides.py
-python -m unittest tests.test_visual_guides
+python scripts\build_projects_showcase.py
+python -m unittest tests.test_visual_guides tests.test_projects_showcase
 python scripts\validate_site_artifact.py
-python scripts\verify_live_site.py --url https://www.layer8culture.io
 ```
 
 All original explanations, prompts, checklists, reading links, metadata and anchors
@@ -30,10 +30,13 @@ Native links, disclosure elements and a native mobile-menu dialog supply keyboar
 behavior. Without JavaScript, all topics and original references are available.
 Motion stops offscreen, on user pause, and when reduced motion is requested.
 
-Only the guide HTML and its two shared enhancement assets change. Existing Next
-runtime and non-guide routes remain byte-identical. Guide HTML intentionally does
-not hydrate with its obsolete React Flight payload, which would restore the old
-guide. The guide library's links are ordinary document links. Old exported payloads
+The visual-guide build changes only the guide HTML and its two shared enhancement
+assets. The Projects release adds one exact navigation script tag to pages that
+already contain the shared navigation, plus a stylesheet on the homepage; the
+complete-artifact validator requires every other baseline byte to remain intact.
+Guide HTML intentionally does not hydrate with its obsolete React Flight payload,
+which would restore the old guide. The guide library's links are ordinary document
+links. Old exported payloads
 are retained as baseline files but are not used by the refreshed documents.
 
 Weekly generation preserves reviewed visual guide pages instead of overwriting
@@ -69,3 +72,14 @@ pinned; preview environments are optional, not separate infrastructure.
 The deploy workflow is manual-only and requires `DEPLOY`. Its artifact validator
 refuses missing baseline files or non-guide changes. Direct SWA CLI deployment must
 run the same validator and use a complete artifact, never just the guide directory.
+
+After deploying to the existing preview environment or production, compare every
+public artifact file and configured header with the corresponding live URL:
+
+```powershell
+python scripts\verify_live_site.py --url https://www.layer8culture.io
+```
+
+The approved homepage Projects section, its post-hydration integration, and its
+client-rendering/SEO tradeoff are documented in
+[`projects-showcase-release.md`](projects-showcase-release.md).
