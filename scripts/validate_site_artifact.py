@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import re
 import subprocess
 from pathlib import Path
 
@@ -21,6 +22,7 @@ def main() -> None:
     allowed = set(guide_pages)
     allowed.update({"guides/field-guide.js", "guides/field-guide.css"})
     project_files = {
+        "projects/index.html",
         "projects/section.html",
         "projects/projects.css",
         "projects/projects.js",
@@ -29,7 +31,8 @@ def main() -> None:
         "projects/assets/radio-loop.gif",
         "projects/assets/radio-poster.jpg",
     }
-    allowed.update(project_files)
+    index_files = {"sitemap.xml", "llms.txt"}
+    allowed.update(project_files | index_files)
     nav_pages = set()
     for source_path in paths:
         relative = source_path.removeprefix("site/")
@@ -48,12 +51,25 @@ def main() -> None:
             current = current.replace(PROJECTS_SCRIPT, b"", 1)
         elif PROJECTS_SCRIPT in current:
             raise RuntimeError(f"Unexpected Projects script outside shared navigation: {relative}")
-        if relative == "index.html":
-            if current.count(PROJECTS_STYLESHEET) != 1:
-                raise RuntimeError("Homepage missing its Projects stylesheet.")
-            current = current.replace(PROJECTS_STYLESHEET, b"", 1)
-        elif PROJECTS_STYLESHEET in current:
-            raise RuntimeError(f"Projects stylesheet added outside homepage: {relative}")
+        if relative != "projects/index.html" and PROJECTS_STYLESHEET in current:
+            raise RuntimeError(f"Projects stylesheet added outside the Projects page: {relative}")
+        if relative == "sitemap.xml":
+            entry = (
+                b"  <url>\n"
+                b"    <loc>https://www.layer8culture.io/projects/</loc>\n"
+                b"    <lastmod>2026-10-14</lastmod>\n"
+                b"    <changefreq>monthly</changefreq>\n"
+                b"    <priority>0.8</priority>\n"
+                b"  </url>\n"
+            )
+            if current.count(entry) != 1:
+                raise RuntimeError("Sitemap must include the Projects page exactly once.")
+            current = current.replace(entry, b"", 1)
+        elif relative == "llms.txt":
+            entry = b"- https://www.layer8culture.io/projects/\n"
+            if current.count(entry) != 1:
+                raise RuntimeError("llms.txt must include the Projects page exactly once.")
+            current = current.replace(entry, b"", 1)
         # Git checkout may expand LF to CRLF; the deployable artifact must not.
         if current != original:
             raise RuntimeError(f"Unrelated production file changed: {relative}")
@@ -84,6 +100,22 @@ def main() -> None:
         source = (args.site / Path(relative)).read_bytes()
         if source.count(PROJECTS_SCRIPT) != 1:
             raise RuntimeError(f"Projects navigation missing from shared shell: {relative}")
+    project_page = (args.site / "projects" / "index.html").read_text(encoding="utf-8")
+    project_doc = Document(project_page)
+    if "https://www.layer8culture.io/projects/" not in project_page:
+        raise RuntimeError("Projects page must declare its canonical URL.")
+    if "<title>Projects | Layer8.Culture</title>" not in project_page:
+        raise RuntimeError("Projects page must declare its page title.")
+    if len(project_doc.find("main")) != 1 or len(project_doc.find("footer")) != 1:
+        raise RuntimeError("Projects page must reuse the shared page shell.")
+    if len(project_doc.find("h1")) != 1:
+        raise RuntimeError("Projects page must contain one page-level heading.")
+    if project_page.count(PROJECTS_STYLESHEET.decode("ascii")) != 1:
+        raise RuntimeError("Projects page must load its own stylesheet exactly once.")
+    if PROJECTS_SCRIPT.decode("ascii") not in project_page:
+        raise RuntimeError("Projects page must load the shared navigation enhancement.")
+    if re.search(r'<script[^>]+/_next/static/chunks/', project_page) or "self.__next_f.push" in project_page:
+        raise RuntimeError("Static Projects page must not start a mismatched Next hydration.")
     project_html = (args.site / "projects" / "section.html").read_text(encoding="utf-8")
     project_doc = Document(project_html)
     if len(project_doc.find("article")) != 4:
@@ -117,7 +149,7 @@ def main() -> None:
     for relative in allowed:
         if not (args.site / Path(relative)).is_file():
             raise RuntimeError(f"Missing release file: {relative}")
-    print(f"Complete artifact: {len(paths)} baseline files, five visual guides, four Projects cards, unchanged unrelated bytes.")
+    print(f"Complete artifact: {len(paths)} baseline files, five visual guides, four Projects cards, standalone page, unchanged unrelated bytes.")
     for relative in sorted(allowed):
         print(hashlib.sha256((args.site / Path(relative)).read_bytes()).hexdigest(), relative)
 
