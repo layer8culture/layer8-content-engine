@@ -41,7 +41,7 @@ For Gmail, enable 2-Step Verification and create an app password yourself at <ht
 |---|---|
 | `python studio.py plan [--date D] [--force]` | Ask the configured model for the day's plan → `data/plans/D.json` |
 | `python studio.py render [--date D] [--only ID..]` | Render stills and reels → `data/media/D/` |
-| `python studio.py heroes [--date D] [--downloads DIR]` | Manual ChatGPT hero desk: copies the prompts, watches Downloads, files each image, then ingests |
+| `python studio.py heroes [--date D] [--downloads DIR] [--import-recent 15] [--sync]` | Manual ChatGPT hero desk; optional bounded recent import and explicit immediate Postiz reconciliation |
 | `python studio.py ingest [--date D]` | Pick up ChatGPT heroes from `inbox/`, crop, and re-render |
 | `python studio.py publish [--dry] [--date D] [--only ID..] [--ahead]` | Push due posts that passed the gates to Postiz (`--ahead`: schedule the whole day now at its planned times) |
 | `python studio.py run-daily [--date D]` | plan → render → prompt pack → gates → preview → queue all routes → completion email |
@@ -50,11 +50,12 @@ For Gmail, enable 2-Step Verification and create an app password yourself at <ht
 
 Dates default to tomorrow for plan/run-daily/dry-run and to today otherwise.
 
-## Pause / kill switch
+## Pause Studio changes
 
-- Create an empty file `studio\PAUSE` (`New-Item studio\PAUSE`) to stop all publishing immediately. Delete it to resume.
+- Create an empty file `studio\PAUSE` (`New-Item studio\PAUSE`) to stop Studio from creating or replacing Postiz posts. Delete it to resume.
 - Or set `paused: true` in `config.yaml`.
 - Planning and rendering keep running while paused, so you can review previews.
+- **Already queued Postiz posts remain scheduled.** PAUSE is not a cloud emergency-cancel switch and never deletes queued posts.
 
 ## Quality gates (`studio_lib/gates.py`)
 
@@ -83,13 +84,15 @@ After the 17:00 run you'll get a "Hero prompts ready" toast. Double-click **Laye
    - Keys: `1`–`9` = map the pending generic download to that shot, `n` = explicitly map it to the next missing shot (sequential fallback), `r` = redo the last shot, `s` = skip the next missing shot (template fallback), `q` = quit, Enter = copy a remaining-shots prompt.
 4. When every shot is filled it runs `ingest`, which crops to 4:5 or 9:16, composites the brand type into the dark lower 45%, and swaps the hero into the post.
 
-Only images downloaded after you start count; partial downloads (`.crdownload`, `.tmp`), duplicate image bytes, and assets already filed in `inbox\_used` are ignored. The watcher runs only while the **Layer8 Heroes** window is open; scheduled daily/publish tasks do not continuously scan Downloads. To watch a different folder, set `heroes.downloads_dir` in `config.yaml`, set `STUDIO_DOWNLOADS_DIR`, or pass `--downloads`. You can still save images into `studio\inbox\` by hand with the exact filenames from `inbox\PROMPTS-<date>.md`.
+Only images downloaded after you start count by default; partial downloads (`.crdownload`, `.tmp`), duplicate image bytes, and assets already filed in `inbox\_used` are ignored. If the images were downloaded just before opening Heroes, opt in with `python studio.py heroes --date D --import-recent 15`. The bounded import considers only supported images modified in the last 1–120 minutes and still uses exact-name or confidence-gated visual matching; Studio never broadly scans or imports older Downloads. The watcher runs only while the **Layer8 Heroes** window is open; scheduled daily/publish tasks do not continuously scan Downloads. To watch a different folder, set `heroes.downloads_dir` in `config.yaml`, set `STUDIO_DOWNLOADS_DIR`, or pass `--downloads`. You can still save images into `studio\inbox\` by hand with the exact filenames from `inbox\PROMPTS-<date>.md`.
 
 Before the Heroes window closes, it prints a dated **HEROES / POSTIZ STATUS** summary. This reports how many images were matched, ingested, missing, or skipped; render and gate results; every route's planned ET time; and one of these truthful states: `LOCAL MEDIA READY`, `WAITING FOR PUBLISH`, `POSTIZ VERIFIED UPDATED`, `PAUSED`, `BLOCKED BY GATES`, `TOO CLOSE TO REPLACE`, or an explicit verification/error state. A local hero render alone is never described as uploaded. For tomorrow's images downloaded tonight, the normal first eligible publisher check is **06:00 ET tomorrow**, then every 30 minutes through 23:00; today's images use the next half-hour check. The displayed handoff is conditional on the laptop being on, the scheduled task succeeding, and the route remaining outside the 10-minute replacement cutoff. Network upload completion cannot be promised to the second. Rerunning Heroes after every image is already present performs no image work and refreshes this status.
 
 If a hero image has not arrived by post time, the template version is posted instead. Studio never drives chatgpt.com: it only opens the URL, uses the clipboard, and watches your Downloads folder.
 
-If the template version was already sent to Postiz (for example with `publish --ahead`), the publish run on the post's day swaps it: it deletes the queued Postiz post and re-schedules it at the same time with the hero version. Posts within 10 minutes of going out are left alone. To swap tomorrow's posts tonight, run `python studio.py ingest --date D`, then `python studio.py publish --date D --ahead`. To force a re-send, add `--replace --only <ids>`.
+If the template version was already sent to Postiz (for example with `publish --ahead`), the publish run on the post's day swaps it at the same planned time. The replacement is journaled and reconciled against live Postiz state; ambiguous delete/create outcomes stop as `needs_attention` rather than blindly retrying. Posts within 10 minutes of going out and published posts are left alone. To explicitly sync tomorrow's prepared heroes tonight, run `python studio.py heroes --date D --sync` (or `python studio.py ingest --date D`, then `python studio.py publish --date D --ahead`). To force a selected re-send, add `--replace --only <ids>`.
+
+Each scheduled task writes authoritative health to `data\health\task-<job>.json`; use that file, `data\runs\<date>.json`, and route reconciliation rather than Task Scheduler's outer conhost result. Route operations are checkpointed under `data\media\<date>\.operations\`, rendered media is fingerprinted for safe reuse, and current hero verification requires the exact rendered media revision recorded in the ledger plus a live Postiz route ID.
 
 ## Video extras
 

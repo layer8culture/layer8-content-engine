@@ -312,12 +312,23 @@ def downloads_dir(cfg: dict) -> Path:
 class DownloadWatcher:
     """Reports image files that appear after start and have stopped growing."""
 
-    def __init__(self, folder: Path, settle_seconds: float = 1.0, clock=time.monotonic):
+    def __init__(self, folder: Path, settle_seconds: float = 1.0, clock=time.monotonic,
+                 include_recent_minutes: int = 0):
         self.folder = folder
         self.settle = settle_seconds
         self.clock = clock
         self.started = time.time()
-        self.preexisting = {(p.name, p.stat().st_mtime_ns) for p in folder.iterdir()} if folder.exists() else set()
+        cutoff = self.started - max(0, min(include_recent_minutes, 120)) * 60
+        self.preexisting = {
+            (p.name, p.stat().st_mtime_ns)
+            for p in folder.iterdir()
+            if not (
+                include_recent_minutes
+                and p.is_file()
+                and p.suffix.lower() in IMAGE_EXTS
+                and p.stat().st_mtime >= cutoff
+            )
+        } if folder.exists() else set()
         self.seen: set[str] = set()
         self.sizes: dict[str, tuple[int, float]] = {}
 
@@ -475,18 +486,23 @@ def read_key() -> str | None:
 
 def run(pack: Pack, cfg: dict, *, log=print, open_browser: bool = True, keys=read_key, sleep=time.sleep,
         watcher: DownloadWatcher | None = None, clipboard=copy_to_clipboard, inbox: Path = INBOX,
-        visual_matcher=visual_match_downloads) -> Desk:
+        visual_matcher=visual_match_downloads, include_recent_minutes: int = 0) -> Desk:
     todo = remaining(pack, inbox)
     desk = Desk(todo)
     if not todo:
         log(f"All {len(pack.shots)} heroes for {pack.date} are already in. Nothing to do.")
         return desk
     folder = downloads_dir(cfg)
-    watcher = watcher or DownloadWatcher(folder, float((cfg.get("heroes") or {}).get("settle_seconds", 1.0)))
+    watcher = watcher or DownloadWatcher(
+        folder, float((cfg.get("heroes") or {}).get("settle_seconds", 1.0)),
+        include_recent_minutes=include_recent_minutes,
+    )
     log(f"Hero desk — {pack.date}: {len(todo)} of {len(pack.shots)} shots to make")
     for i, s in enumerate(todo, 1):
         log(f"  {i}. {s.filename} ({s.aspect})")
     log(f"Watching downloads in: {folder}")
+    if include_recent_minutes:
+        log(f"OPT-IN: also considering image downloads from the last {min(include_recent_minutes, 120)} minutes.")
     ok = clipboard(combined_prompt_text(pack, todo))
     if open_browser:
         os.startfile(CHATGPT_URL) if os.name == "nt" else None  # just opens the URL; we never control the page

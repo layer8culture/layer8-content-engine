@@ -7,7 +7,7 @@ import shutil
 import subprocess
 from datetime import date
 
-from . import context, news, schema
+from . import context, gates, news, schema
 from .config import INBOX, PLANS, ROOT, plan_path
 from .schedule import assign_schedule
 
@@ -197,12 +197,18 @@ def run_copilot(prompt_text: str, cfg: dict, log_name: str) -> tuple[int, str]:
         response += "\nStudio: tool-free Copilot response timed out.\n"
         returncode = 124
     log.write_text(response, encoding="utf-8")
+    if returncode == 124:
+        return returncode, response
     if returncode != 0:
         if re.search(r'Model ".*" from --model flag is not available', response):
             raise RuntimeError(
                 f"configured model {cfg['model']!r} is no longer available from the Copilot CLI "
                 f"(see {log.relative_to(ROOT)}) — update `model:` in config.yaml to a current model name"
             )
+        raise RuntimeError(
+            f"Copilot CLI failed before returning a plan (exit {returncode}; see {log.relative_to(ROOT)}): "
+            f"{response.strip()[:300] or 'no output'}"
+        )
     return returncode, response
 
 
@@ -293,7 +299,7 @@ def make_plan(d: date, cfg: dict, *, force: bool = False, log=print) -> dict:
     if plan is not None:
         draft.write_text(json.dumps(plan, indent=2, ensure_ascii=False), encoding="utf-8")
     if plan is not None:
-        errs = schema.validate_plan(plan, d.isoformat()) + _slot_errors(plan, slots)
+        errs = schema.validate_plan(plan, d.isoformat()) + _slot_errors(plan, slots) + _content_gate_errors(plan, d, cfg)
     if rc == 124:
         raise RuntimeError(
             "tool-free planner timed out before returning valid JSON "
@@ -314,7 +320,7 @@ def make_plan(d: date, cfg: dict, *, force: bool = False, log=print) -> dict:
         plan, errs = _decode_response(response)
         if plan is not None:
             draft.write_text(json.dumps(plan, indent=2, ensure_ascii=False), encoding="utf-8")
-            errs = schema.validate_plan(plan, d.isoformat()) + _slot_errors(plan, slots)
+            errs = schema.validate_plan(plan, d.isoformat()) + _slot_errors(plan, slots) + _content_gate_errors(plan, d, cfg)
         attempt += 1
     if errs:
         raise RuntimeError(f"planner failed validation: {errs}")
@@ -343,3 +349,12 @@ def _slot_errors(plan: dict, slots: list[dict]) -> list[str]:
     if extra:
         errs.append(f"unexpected post ids: {sorted(extra)}")
     return errs
+
+
+def _content_gate_errors(plan: dict, d: date, cfg: dict) -> list[str]:
+    results = gates.run_gates(plan, d, cfg, manifest=None)
+    return [
+        f"{post_id}: {error}"
+        for post_id, result in results.items()
+        for error in result.get("errors", [])
+    ]
