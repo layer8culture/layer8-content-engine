@@ -913,6 +913,20 @@ Example:
 > We have to learn the tools, build with them, and shape what comes next.  
 > That’s Layer8Culture.
 
+### YouTube Metadata
+
+Lead Short titles with the actual topic, problem, or lesson. Add a restrained
+`| Layer8Culture` or `| Tech Thursday` suffix only when it fits within YouTube's
+100-character title limit and improves clarity. `#Shorts` is optional.
+
+Each Short gets a unique description rather than a copy of its Instagram caption.
+Open with a plain answer sentence, explain the real lesson plus one useful action
+or limitation, and include one verified Layer8Culture or Tech Thursday link.
+Use the canonical `Layer8Culture` name consistently; “Layer 8 Culture” and
+“Layer Eight Culture” may appear naturally in prose but never as a keyword list.
+Do not invent chapter timestamps, guests, claims, facts, or links. Tags support
+classification but are not a visibility strategy.
+
 ### Hashtag Direction
 
 Use selectively:

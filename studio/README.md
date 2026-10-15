@@ -74,6 +74,13 @@ A post is published only if **all** of these pass:
 
 A daily preparation queues nothing unless every planned post passes. Every publish attempt is appended to `data/posted.jsonl`.
 
+YouTube Shorts use separate `youtube_title` and `youtube_description` fields. Titles lead with the
+actual lesson or listening use case, with a restrained brand/show suffix only when useful.
+Descriptions are unique to YouTube, use only configured links, and are sent by Postiz as
+`value[].content`; the title/visibility/made-for-kids/tags fields are sent in documented YouTube
+settings. Studio does not add invented chapters or treat tags as a visibility shortcut. Radio
+metadata remains lo-fi/music/focus only.
+
 ## ChatGPT hero images (manual, ~5 min/day)
 
 After the 17:00 run you'll get a "Hero prompts ready" toast. Double-click **Layer8 Heroes** on your desktop (or run `studio\heroes.cmd`, or `python studio.py heroes [--date D]`):

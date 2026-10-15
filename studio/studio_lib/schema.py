@@ -33,7 +33,8 @@ SCHEMA_DOC = """
       "hook": "the first line of the caption, verbatim",
       "caption": "full Instagram caption starting with the hook; ONE CTA; no hashtags inside",
       "hashtags": ["#Layer8Culture", "..."],
-      "youtube_title": "required when youtube is a platform; <= 100 chars; ends with #Shorts",
+      "youtube_title": "required when youtube is a platform; 2-100 chars; topic-first, accurate, restrained brand/show suffix only when useful",
+      "youtube_description": "required when youtube is a platform; 80-1200 chars; unique platform-native lesson/session description with only verified links",
       "kicker": "small label, <= 34 chars, e.g. 'AI FIELD GUIDE' (layer8) or 'NIGHT CODING' (radio)",
       "slides": [
         {"layout": "cover|point|cta|quote|list|story", "headline": "<= 32 chars", "accent": "optional blue/gold second line <= 32 chars",
@@ -99,8 +100,11 @@ def validate_post(p: dict, date_compact: str) -> list[str]:
         e("hashtags must be a non-empty list of #Tags")
     if "youtube" in plats:
         t = p.get("youtube_title")
-        if not _s(t) or not 2 <= len(t) <= 100 or "#shorts" not in t.lower():
-            e("youtube_title required (2-100 chars, include #Shorts)")
+        if not _s(t) or not 2 <= len(t) <= 100:
+            e("youtube_title required (2-100 chars)")
+        desc = p.get("youtube_description")
+        if not _s(desc) or not 80 <= len(desc) <= 1200:
+            e("youtube_description required (80-1200 chars)")
     slides = p.get("slides")
     if fmt in {"carousel", "single", "story"}:
         if not isinstance(slides, list):

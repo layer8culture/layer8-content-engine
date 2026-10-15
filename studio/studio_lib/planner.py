@@ -44,7 +44,10 @@ def build_slots(d: date, cfg: dict) -> list[dict]:
         s = {"brand": "layer8culture", "format": fmt, "platforms": ["instagram"], "note": "your choice of category; practical AI lesson or a fresh AI news angle"}
         if fmt == "reel" and shorts_left > 0:
             s["platforms"] = ["instagram", "youtube"]
-            s["note"] = "the day's strongest hook; cross-posted as a YouTube Short (needs youtube_title)"
+            s["note"] = (
+                "the day's strongest hook; cross-posted as a YouTube Short "
+                "(needs topic-first youtube_title and unique youtube_description)"
+            )
             shorts_left -= 1
         slots.append(s)
     if wd in tt.get("promo_days", []) and wd != tt.get("weekday", "thursday"):

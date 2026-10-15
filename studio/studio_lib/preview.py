@@ -58,7 +58,11 @@ def build(plan: dict, d: date, manifest: dict, gate_results: dict, hero_rows: li
         if h:
             hero = (f'<div class="hero">Hero: <code>{esc(h["filename"])}</code> — '
                     f'{"composited ✓" if h["ready"] else "waiting for ChatGPT image (template version posts if it never arrives)"}</div>')
-        yt = f'<div><b>YouTube title:</b> {esc(p["youtube_title"])}</div>' if p.get("youtube_title") else ""
+        yt = (
+            f'<div><b>YouTube title:</b> {esc(p["youtube_title"])}</div>'
+            f'<div><b>YouTube description:</b><pre>{esc(p.get("youtube_description", ""))}</pre></div>'
+            if p.get("youtube_title") else ""
+        )
         src = "".join(f'<li><a href="{esc(u)}" style="color:#7fa3ff">{esc(u)}</a></li>' for u in p.get("sources") or [])
         cards.append(f"""
 <section class="post"><div class="media">{''.join(media) or '<div class="pill fail">no media</div>'}</div>

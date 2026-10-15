@@ -108,8 +108,14 @@ Banned phrases: "revolutionary AI solutions", "disrupting the industry",
   let the build/clip carry it, calm premium energy (never hype). CTA to watch
   a verified next step. Use the clean 8–12s cinematic master + composited micro-lesson
   per viral-formats.md, not a required library clip. 3–5 relevant hashtags.
-- **YouTube**: platform-native description with the same factual lesson and a
-  search-friendly title ending #Shorts. Reuse an eligible master, not a new render.
+- **YouTube**: use an accurate topic-first title. Add a restrained `| Layer8Culture`
+  or `| Tech Thursday` suffix only when it fits naturally; `#Shorts` is optional.
+  Write a unique platform-native description that opens with the real lesson,
+  explains one useful action or limitation, and includes one relevant configured
+  channel/show link. Do not copy the Instagram caption, invent chapter timestamps,
+  or treat tags as a visibility shortcut. Use `Layer8Culture` consistently;
+  “Layer 8 Culture” or “Layer Eight Culture” may appear naturally in prose, never
+  as a keyword list. Reuse an eligible master, not a new render.
   Actual upload visibility must be reconciled, not inferred from OAuth status.
 - **Caption north star** (Section 22): "We can't spend the AI era only scrolling
   and consuming. We have to learn the tools, build with them, and shape what

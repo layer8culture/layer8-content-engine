@@ -38,6 +38,19 @@ quotes, launches, prices, or guests. A news-driven post must list its article UR
   ONE CTA matched to format (carousel → "Save this."; reel → follow/share; single → a real question;
   story → "Reply and tell us."). Hashtags go ONLY in the "hashtags" array (Layer8Culture 5-8,
   Radio 4-7; YouTube Shorts include #Shorts). Captions 400-1400 characters.
+- Every YouTube route gets separate platform-native metadata:
+  - `youtube_title`: accurate topic/use-case first, 2-100 characters. Add `| Layer8Culture`,
+    `| Tech Thursday`, or `| Layer8Culture Radio` only when it still reads naturally and fits.
+    `#Shorts` is optional, never required. Do not lead with the brand/show name.
+  - `youtube_description`: 80-1200 characters and NOT a copy of the Instagram caption. Open with
+    a plain answer sentence explaining the actual lesson (Layer8Culture) or listening use case
+    (Radio), then add one useful detail/limitation or mood and ONE CTA. Include one relevant URL
+    from FACTS. Never invent chapters, timestamps, guests, claims, availability, or links.
+  - Use the canonical name `Layer8Culture`. “Layer 8 Culture” or “Layer Eight Culture” may appear
+    naturally in prose, but never list spelling variants or stuff keywords.
+  - Radio metadata stays music/focus only and names one natural use case such as coding, studying,
+    deep work, writing, design, morning focus, late-night coding, rainy focus, or sleep focus.
+    Do not add AI lessons to Radio.
 - Layer8Culture slide copy is set in Bebas Neue caps: headlines <= 22 characters ideal (hard max 32),
   "accent" = the punch line shown in Electric Blue. Body <= 160 chars. Use "code" for an example
   prompt the reader can copy. Carousel: slide 1 layout "cover", middle slides "point" (or "list"),
@@ -66,7 +79,8 @@ quotes, launches, prices, or guests. A news-driven post must list its article UR
 - Radio text must not contain: {radio_banned}. No "24/7"/"live now" claims unless listed in FACTS.
 - No clock times or show times unless listed in FACTS.
 - Hook <= 140 chars. Max 1 "!" per post, max 3 emoji (prefer none). Hashtags unique, never inside captions.
-- YouTube gets only the FIRST 5 hashtags, so put #Shorts first on reels that go to YouTube.
+- Postiz sends only the FIRST 5 hashtags as YouTube tags. Treat them as supporting metadata, not
+  a visibility hack; never repeat a keyword list in the title or description.
 - Reel beats: <= 5 words and <= 26 characters each.
 - Text must fit the template: cover headlines that sit over a hero photo get only ~450px, so keep
   each cover headline line short (2-3 short lines max). The renderer shrinks type to 62% before failing.
