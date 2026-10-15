@@ -1,12 +1,12 @@
 (() => {
-  const scriptUrl = new URL(document.currentScript.src);
-  const sectionUrl = new URL("section.html", scriptUrl);
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   const closeMobileNav = () => {
     const nativeDialog = document.querySelector('dialog[aria-label="Main navigation"]');
     if (nativeDialog?.open) {
       nativeDialog.close();
+      document.querySelector('body > nav button[aria-expanded="true"]')
+        ?.setAttribute("aria-expanded", "false");
       return;
     }
     const menuButton = document.querySelector('body > nav button[aria-expanded="true"]');
@@ -21,14 +21,27 @@
     if (!guidesLink) return;
 
     const link = document.createElement("a");
-    link.href = "/#projects";
+    link.href = "/projects/";
     link.className = guidesLink.className;
     link.dataset.projectsNav = "true";
     link.textContent = "Projects";
+    if (/^\/projects\/?$/.test(window.location.pathname)) {
+      link.classList.remove("text-ink-dim");
+      link.classList.add("text-ink");
+      link.setAttribute("aria-current", "page");
+    }
     link.addEventListener("click", closeMobileNav);
     const item = guidesLink.parentElement.cloneNode(false);
     item.append(link);
     guidesLink.parentElement.before(item);
+  };
+
+  const dedupeNavLink = container => {
+    const links = container?.querySelectorAll("[data-projects-nav]");
+    if (!links || links.length < 2) return;
+    links.forEach((link, index) => {
+      if (index > 0) link.closest("li")?.remove();
+    });
   };
 
   const installNav = () => {
@@ -38,17 +51,67 @@
       const guidesLink = dialog.querySelector('a[href="/guides/"]');
       if (!guidesLink || dialog.querySelector("[data-projects-nav]")) return;
       const link = document.createElement("a");
-      link.href = "/#projects";
+      link.href = "/projects/";
       link.className = guidesLink.className;
       link.dataset.projectsNav = "true";
       link.textContent = "Projects";
+      if (/^\/projects\/?$/.test(window.location.pathname)) {
+        link.classList.remove("text-ink-dim");
+        link.classList.add("text-ink");
+        link.setAttribute("aria-current", "page");
+      }
       link.addEventListener("click", closeMobileNav);
       guidesLink.before(link);
+    };
+
+    const installStaticMobileNav = () => {
+      if (document.querySelector('script[src*="/_next/static/chunks/"]')) return;
+      if (!/^\/projects\/?$/.test(window.location.pathname)) return;
+      const button = document.querySelector('body > nav button[aria-expanded]');
+      const desktopNav = document.querySelector("body > nav > div > ul");
+      if (!button || !desktopNav ||
+          document.querySelector('dialog[aria-label="Main navigation"], [role="dialog"]')) return;
+
+      const dialog = document.createElement("dialog");
+      dialog.id = "projects-mobile-menu";
+      dialog.setAttribute("aria-label", "Main navigation");
+      dialog.setAttribute("role", "dialog");
+      dialog.className = "l8-projects__mobile-menu";
+      const links = desktopNav.cloneNode(true);
+      links.className = "l8-projects__mobile-links";
+      links.querySelectorAll("li").forEach(item => item.className = "l8-projects__mobile-item");
+      links.querySelectorAll("a").forEach(link => {
+        link.classList.remove("relative", "inline-block", "text-ink-dim");
+        link.classList.add("l8-projects__mobile-link");
+      });
+      dialog.append(links);
+      document.body.append(dialog);
+      button.setAttribute("aria-controls", dialog.id);
+      button.addEventListener("click", () => {
+        if (dialog.open) {
+          dialog.close();
+          button.setAttribute("aria-expanded", "false");
+        } else {
+          dialog.showModal();
+          button.setAttribute("aria-expanded", "true");
+          dialog.querySelector("a")?.focus();
+        }
+      });
+      dialog.addEventListener("close", () => button.setAttribute("aria-expanded", "false"));
+      dialog.addEventListener("click", event => {
+        if (event.target === dialog) dialog.close();
+      });
+      links.addEventListener("click", event => {
+        if (event.target.closest("a")) dialog.close();
+      });
     };
 
     const installAllLinks = () => {
       addNavLink(document.querySelector("body > nav > div > ul"));
       installMobileLink();
+      installStaticMobileNav();
+      dedupeNavLink(document.querySelector("body > nav > div > ul"));
+      dedupeNavLink(document.querySelector('dialog[aria-label="Main navigation"], [role="dialog"]'));
     };
 
     installAllLinks();
@@ -106,38 +169,24 @@
     applyMotion();
   };
 
-  const loadProjects = async () => {
-    const response = await fetch(sectionUrl, { credentials: "same-origin" });
-    if (!response.ok) {
-      throw new Error(`Projects section request failed: ${response.status} ${response.statusText}`);
+  const initialize = () => {
+    if (window.location.pathname === "/" && window.location.hash === "#projects") {
+      window.location.replace("/projects/");
+      return;
     }
-    const markup = await response.text();
-    const template = document.createElement("template");
-    template.innerHTML = markup.trim();
-    const section = template.content.querySelector("#projects");
-    const buildSection = document.querySelector("#build");
-    const streamSection = document.querySelector("#stream");
-    if (!section || !buildSection || !streamSection) {
-      throw new Error("Projects integration could not find its section or homepage insertion points.");
-    }
-    streamSection.before(section);
-    enableProjectMotion(section);
-    if (window.location.hash === "#projects") {
-      window.requestAnimationFrame(() => section.scrollIntoView({ block: "start" }));
-    }
+    installNav();
+    const section = document.querySelector("#projects");
+    if (section) enableProjectMotion(section);
   };
 
-  const installAfterHydration = () => {
-    window.setTimeout(() => {
-      installNav();
-      if (window.location.pathname !== "/") return;
-      loadProjects().catch(error => console.error("Unable to load the approved Projects section.", error));
-    }, 900);
-  };
-
-  if (document.readyState === "complete") {
-    installAfterHydration();
+  if (document.querySelector('script[src*="/_next/static/chunks/"]')) {
+    const installAfterHydration = () => window.setTimeout(initialize, 900);
+    if (document.readyState === "complete") {
+      installAfterHydration();
+    } else {
+      window.addEventListener("load", installAfterHydration, { once: true });
+    }
   } else {
-    window.addEventListener("load", installAfterHydration, { once: true });
+    initialize();
   }
 })();

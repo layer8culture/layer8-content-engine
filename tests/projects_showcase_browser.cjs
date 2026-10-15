@@ -12,7 +12,7 @@ const projectUrls = [
 
 async function waitForProjects(page) {
   await page.locator("#projects").waitFor({ state: "visible" });
-  await page.locator('body > nav a[data-projects-nav][href="/#projects"]').waitFor({ state: "attached" });
+  await page.locator('body > nav a[data-projects-nav][href="/projects/"]').waitFor({ state: "attached" });
 }
 
 async function waitForProjectAnchor(page) {
@@ -69,16 +69,31 @@ async function assertRadarSweep(page, width) {
         if (response.status() >= 400) errors.push(`${response.status()} ${response.url()}`);
       });
       await page.goto(base, { waitUntil: "networkidle" });
+      await page.waitForTimeout(1100);
+      assert.equal(await page.locator("#projects").count(), 0, "Projects are not on the homepage");
+      assert.equal(await page.locator("#build").evaluate(node =>
+        node.nextElementSibling?.id === "stream"
+      ), true, "homepage Build flows directly into Stream");
+      assert.equal(await page.locator('body > nav a[data-projects-nav][href="/projects/"]').count(), 1);
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), true,
+        `homepage overflows at ${width}px`);
+
+      await page.goto(`${base}/projects/`, { waitUntil: "networkidle" });
       await waitForProjects(page);
 
       assert.equal(await page.locator("#projects article").count(), 4);
-      assert.equal(await page.locator("#projects h2").textContent(), "REAL PEOPLE.REAL BUILDS.");
+      assert.equal(await page.locator("#projects h1").textContent(), "REAL PEOPLE.REAL BUILDS.");
       assert.equal(await page.locator("body > nav").count(), 1);
       assert.equal(await page.locator("footer").count(), 1);
-      assert.equal(await page.locator("#projects").evaluate(node =>
-        Boolean(node.previousElementSibling?.id === "build" &&
-          node.nextElementSibling?.id === "stream")
-      ), true);
+      assert.equal(await page.title(), "Projects | Layer8.Culture");
+      assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"),
+        "https://www.layer8culture.io/projects/");
+      assert.equal(await page.locator('body > nav a[data-projects-nav][aria-current="page"]').count(), 1);
+      if (width === 1440) {
+        await page.reload({ waitUntil: "networkidle" });
+        await waitForProjects(page);
+        assert.equal(await page.locator("#projects article").count(), 4);
+      }
 
       const links = await page.locator("#projects article a[target=_blank]").evaluateAll(nodes =>
         nodes.map(node => ({
@@ -128,19 +143,40 @@ async function assertRadarSweep(page, width) {
       if (width < 768) {
         await page.locator('body > nav button[aria-expanded]').click();
         const menu = page.locator('[role="dialog"]');
-        await menu.locator('a[data-projects-nav][href="/#projects"]').waitFor();
-        assert.equal(await menu.locator("a").count(), 7);
+        await menu.locator('a[data-projects-nav][href="/projects/"]').waitFor();
+        assert.equal(await menu.locator('a[data-projects-nav]').count(), 1);
         await menu.locator('a[data-projects-nav]').click();
-        await page.waitForURL("**/#projects");
-        await page.waitForFunction(() => !document.querySelector('[role="dialog"]'));
+        await page.waitForFunction(() => {
+          const dialog = document.querySelector('[role="dialog"]');
+          return !dialog || !dialog.open;
+        });
         await waitForProjects(page);
-        await waitForProjectAnchor(page);
       }
 
       assert.deepEqual(errors, [], `browser errors at ${width}px`);
       console.log(`PASS ${width}px homepage, nav, card links, motion, and responsive overflow`);
       await page.close();
     }
+
+    const homeMobile = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    const homeMobileErrors = [];
+    homeMobile.on("pageerror", error => homeMobileErrors.push(error.message));
+    homeMobile.on("console", message => {
+      if (message.type() === "error") homeMobileErrors.push(`console: ${message.text()}`);
+    });
+    await homeMobile.goto(base, { waitUntil: "networkidle" });
+    await homeMobile.locator('body > nav a[data-projects-nav][href="/projects/"]')
+      .waitFor({ state: "attached" });
+    await homeMobile.locator('body > nav button[aria-expanded]').click();
+    const homeMenu = homeMobile.locator('[role="dialog"]');
+    await homeMenu.locator('a[data-projects-nav][href="/projects/"]').waitFor();
+    assert.equal(await homeMenu.locator('a[data-projects-nav]').count(), 1);
+    await homeMenu.locator('a[data-projects-nav]').click();
+    await homeMobile.waitForURL("**/projects/");
+    await waitForProjects(homeMobile);
+    assert.deepEqual(homeMobileErrors, []);
+    await homeMobile.close();
+    console.log("PASS homepage mobile navigation opens the standalone Projects page without hydration errors");
 
     const reduced = await browser.newPage({ viewport: { width: 390, height: 900 } });
     const reducedErrors = [];
@@ -149,7 +185,7 @@ async function assertRadarSweep(page, width) {
       if (message.type() === "error") reducedErrors.push(`console: ${message.text()}`);
     });
     await reduced.emulateMedia({ reducedMotion: "reduce" });
-    await reduced.goto(base, { waitUntil: "networkidle" });
+    await reduced.goto(`${base}/projects/`, { waitUntil: "networkidle" });
     await waitForProjects(reduced);
     await reduced.locator("[data-radio-card]").scrollIntoViewIfNeeded();
     await reduced.locator("[data-sonar-card]").scrollIntoViewIfNeeded();
@@ -163,6 +199,19 @@ async function assertRadarSweep(page, width) {
     await reduced.close();
     console.log("PASS reduced-motion poster and stopped Sonar radar");
 
+    const legacy = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    const legacyErrors = [];
+    legacy.on("pageerror", error => legacyErrors.push(error.message));
+    legacy.on("console", message => {
+      if (message.type() === "error") legacyErrors.push(`console: ${message.text()}`);
+    });
+    await legacy.goto(`${base}/#projects`, { waitUntil: "networkidle" });
+    await legacy.waitForURL("**/projects/");
+    await waitForProjects(legacy);
+    assert.deepEqual(legacyErrors, []);
+    await legacy.close();
+    console.log("PASS legacy /#projects links redirect to the standalone page");
+
     const guide = await browser.newPage({ viewport: { width: 390, height: 844 } });
     const guideErrors = [];
     guide.on("pageerror", error => guideErrors.push(error.message));
@@ -173,11 +222,11 @@ async function assertRadarSweep(page, width) {
     await guide.locator("h1").waitFor();
     await guide.locator('body > nav button[aria-expanded]').click();
     const guideMenu = guide.locator('dialog[aria-label="Main navigation"]');
-    await guideMenu.locator('a[data-projects-nav][href="/#projects"]').waitFor();
+    await guideMenu.locator('a[data-projects-nav][href="/projects/"]').waitFor();
+    assert.equal(await guideMenu.locator('a[data-projects-nav]').count(), 1);
     await guideMenu.locator('a[data-projects-nav]').click();
-    await guide.waitForURL("**/#projects");
+    await guide.waitForURL("**/projects/");
     await waitForProjects(guide);
-    await waitForProjectAnchor(guide);
     assert.equal(await guide.locator("#projects article").count(), 4);
     assert.deepEqual(guideErrors, []);
     await guide.close();

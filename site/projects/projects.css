@@ -8,6 +8,41 @@
   scroll-margin-top: 6rem;
 }
 
+.l8-projects-page {
+  padding-top: 7rem;
+}
+
+.l8-projects__mobile-menu {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  border: 0;
+  padding: 7rem 2rem 2rem;
+  background: #050505;
+  color: var(--project-ink);
+}
+
+.l8-projects__mobile-menu::backdrop {
+  background: #000c;
+}
+
+.l8-projects__mobile-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.l8-projects__mobile-link {
+  color: var(--project-ink);
+  font-size: 1rem;
+}
+
 .l8-projects__inner {
   max-width: 1320px;
   margin: 0 auto;
