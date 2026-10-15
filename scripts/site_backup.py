@@ -20,6 +20,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--destination", type=Path, required=True)
     parser.add_argument("--revision", required=True)
+    parser.add_argument("--successful-deployment-run", type=int, required=True)
     parser.add_argument("--url", default="https://www.layer8culture.io")
     parser.add_argument("--original-checkout", type=Path)
     args = parser.parse_args()
@@ -75,8 +76,12 @@ def main() -> None:
         "created_utc": datetime.now(timezone.utc).isoformat(),
         "production_url": args.url,
         "source_revision": args.revision,
+        "successful_deployment_run_url": (
+            f"https://github.com/layer8culture/layer8-content-engine/actions/runs/"
+            f"{args.successful_deployment_run}"
+        ),
         "azure_resource": "rg-layer8culture/swa-layer8culture",
-        "successful_deployment_run": 30958611132,
+        "successful_deployment_run": args.successful_deployment_run,
         "archives": {
             path.name: digest(path.read_bytes()) for path in destination.glob("*.zip")
         },
