@@ -131,6 +131,9 @@ def test_build_prompt_replaces_multi_file_reads_with_bundle(cfg, tmp_path, monke
     assert "data/context/planning-day.md" in prompt
     assert "Read that single bundle once" in prompt
     assert "brand/voice-layer8culture.md  — voice" not in prompt
+    assert "youtube_description" in prompt
+    assert "Do not lead with the brand/show name" in prompt
+    assert "`#Shorts` is optional" in prompt
 
 
 def test_self_contained_request_inlines_bundle_and_requires_json_response(tmp_path, monkeypatch):

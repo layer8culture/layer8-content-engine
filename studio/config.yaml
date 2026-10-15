@@ -71,6 +71,7 @@ facts:
   website: https://layer8culture.io
   tech_thursday_time: "Thursdays 9 PM ET"     # layer8culture.io: "Every Thursday · 9 PM EST" (verified 2026-10-06)
   tech_thursday_url: "https://www.youtube.com/@layer8culture"
+  radio_channel_url: "https://www.youtube.com/@Layer8CultureRadio"
   radio_stream_url: "https://www.youtube.com/@Layer8CultureRadio/live"   # stable; always points at the current live stream
   radio_stream_is_live_24_7: true    # verified live 2026-10-06 ("24/7 Lo-Fi Coding Radio"); set false if the stream goes down
   sponsor: ""                     # e.g. FOBFLO (only when a sponsor post is wanted)

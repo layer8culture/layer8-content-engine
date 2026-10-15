@@ -48,13 +48,16 @@ Avoid:
 - Rotate one clear use case per YouTube title: coding, studying, deep work,
   writing, design, morning focus, late-night coding, rainy focus, jazz coding,
   cosmic focus, or sleep focus.
+- Lead with that use case or session mood. Add `| Layer8Culture Radio` only when
+  it still reads calmly and fits; `#Shorts` is optional.
 - YouTube descriptions should open with a plain answer sentence, for example:
   "Afrofuturist lo-fi for coding, studying, and deep work."
 - Every YouTube description should choose ONE listening or subscription CTA.
   Only point to an actual available session or freshly verified public livestream.
   Do not require a "live now" or 24/7 availability claim to fill a template.
 - Keep SEO human. No keyword stuffing, no loud growth-hack language, and no
-  generic lofi cliches.
+  generic lofi cliches. Never copy the Instagram caption as the YouTube
+  description or invent chapter timestamps for a Short.
 
 ## Instagram post types (Section 13 — pick one per post)
 1. **Brand Intro** — announce the channel; who it's for; reinforce "Study. Build. Focus."

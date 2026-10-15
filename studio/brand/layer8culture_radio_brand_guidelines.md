@@ -158,6 +158,9 @@ Every YouTube title should include one primary use case or session mood, such as
 coding, studying, deep work, writing, design, morning focus, late-night coding,
 rainy focus, jazz coding, cosmic focus, or sleep focus.
 
+Lead with that use case or mood. Add `| Layer8Culture Radio` only when the
+suffix reads naturally and fits the 100-character limit. `#Shorts` is optional.
+
 Every YouTube description should begin with a short answer-style sentence that
 helps search and answer engines understand the video:
 
@@ -173,7 +176,8 @@ available session without being live. A feed entry, supplied URL, or old success
 does not establish either current live status or public availability.
 
 Avoid keyword stuffing. The metadata should sound like Layer8Culture Radio, not
-a list of search terms.
+a list of search terms. The YouTube description must be written for the session,
+not copied from Instagram, and must not invent chapter timestamps for a Short.
 
 ### Voice & Tone
 

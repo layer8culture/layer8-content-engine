@@ -28,6 +28,14 @@ def test_youtube_title_required(plan):
     assert any("youtube_title" in e for e in schema.validate_post(reel, "20261230"))
 
 
+def test_youtube_description_required_and_title_does_not_need_shorts(plan):
+    reel = plan["posts"][1]
+    assert "#Shorts" not in reel["youtube_title"]
+    assert schema.validate_post(reel, "20261230") == []
+    reel.pop("youtube_description")
+    assert any("youtube_description" in e for e in schema.validate_post(reel, "20261230"))
+
+
 def test_caption_must_start_with_hook(post):
     post["caption"] = "Something else. " + post["caption"]
     assert any("start with the hook" in e for e in schema.validate_post(post, "20261230"))

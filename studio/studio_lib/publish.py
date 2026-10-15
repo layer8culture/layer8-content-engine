@@ -42,16 +42,17 @@ def media_for(post: dict, platform: str, d: date, manifest: dict) -> list:
 def caption_for(post: dict, platform: str, cfg: dict) -> str:
     tags = post.get("hashtags") or []
     if platform == "youtube":
-        tags = tags[: cfg["gates"].get("max_hashtags_youtube", 5)]
+        return post["youtube_description"].strip()
     return f"{post['caption'].strip()}\n\n{' '.join(tags)}".strip()
 
 
 def settings_for(post: dict, platform: str, cfg: dict) -> dict:
     if platform == "youtube":
-        s = {"title": post["youtube_title"].strip()[:100], "type": cfg["publish"].get("youtube_privacy", "public"),
+        s = {"__type": "youtube", "title": post["youtube_title"].strip()[:100],
+             "type": cfg["publish"].get("youtube_privacy", "public"),
              "selfDeclaredMadeForKids": "no"}
         tags, total = [], 0
-        for t in post.get("hashtags") or []:
+        for t in (post.get("hashtags") or [])[: cfg["gates"].get("max_hashtags_youtube", 5)]:
             label = t.lstrip("#")
             if total + len(label) <= 480:
                 tags.append({"value": label, "label": label})
@@ -410,6 +411,9 @@ def publish_due(plan: dict, d: date, cfg: dict, manifest: dict, gate_results: di
                 continue
             base = {"id": post["id"], "date": d.isoformat(), "brand": post["brand"], "platform": platform,
                     "format": post["format"], "topic": post.get("topic"), "hook": post.get("hook"), "when": when}
+            if platform == "youtube":
+                base["youtube_title"] = post.get("youtube_title")
+                base["youtube_description"] = post.get("youtube_description")
             if old_ids:
                 base["replaces"] = old_ids
             if not cfg["platforms"].get(platform, False):

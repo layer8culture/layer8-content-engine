@@ -89,6 +89,60 @@ def test_reel_beat_limits(plan, cfg):
     assert any("beat 1" in e for e in errs(reel, cfg))
 
 
+def test_youtube_metadata_is_topic_first_unique_and_grounded(plan, cfg):
+    reel = plan["posts"][1]
+    assert not errs(reel, cfg)
+    reel["youtube_title"] = "Layer8Culture: Brief AI Like a New Hire"
+    assert any("lead with the topic" in e for e in errs(reel, cfg))
+    reel["youtube_title"] = "Brief AI Like a New Hire #AI #Shorts"
+    assert any("only one optional #Shorts" in e for e in errs(reel, cfg))
+    reel["youtube_title"] = "Brief AI Like a New Hire | Layer8Culture"
+    reel["youtube_description"] = reel["caption"]
+    assert any("not identical" in e for e in errs(reel, cfg))
+    reel["youtube_description"] = (
+        "A practical AI brief starts with the outcome and the limits.\n\n"
+        "0:00 The lesson\n"
+        "Build with Layer8Culture: https://layer8culture.io"
+    )
+    assert any("chapter timestamps" in e for e in errs(reel, cfg))
+
+
+def test_youtube_description_rejects_unconfigured_or_extra_links(plan, cfg):
+    reel = plan["posts"][1]
+    reel["youtube_description"] += "\nMore: https://spam.example.net/video"
+    assert any("non-allowed domain" in e for e in errs(reel, cfg))
+    reel["youtube_description"] = (
+        "A clear AI brief names the outcome, context, limits, and review step before work starts. "
+        "Try it on one task and compare the result. Subscribe for more practical lessons."
+    )
+    assert any("configured channel/show link" in e for e in errs(reel, cfg))
+
+
+def test_radio_youtube_metadata_stays_music_and_focus_only(plan, cfg):
+    radio = plan["posts"][3]
+    radio.update(
+        format="reel", category="loop-reel", platforms=["instagram", "youtube"],
+        youtube_title="Rainy Night Coding Lo-Fi | Layer8Culture Radio",
+        youtube_description=(
+            "Afrofuturist lo-fi for late-night coding and deep work, with a calm rainy-room mood. "
+            "Subscribe for more focus rooms from Layer8Culture Radio: "
+            "https://www.youtube.com/@Layer8CultureRadio"
+        ),
+        reel={"beats": [{"text": "RAINY NIGHT"}, {"text": "STAY FOCUSED"}],
+              "cta": "Stay with one thing.", "loop_clip": "radio-rain.mp4"},
+    )
+    radio.pop("slides")
+    assert not errs(radio, cfg)
+    radio["youtube_title"] = "A Better Work Session | Layer8Culture Radio"
+    radio["youtube_description"] = (
+        "A practical ChatGPT lesson for business owners. Learn more at "
+        "https://www.youtube.com/@Layer8CultureRadio"
+    )
+    errors = errs(radio, cfg)
+    assert any("radio must stay" in e for e in errors)
+    assert any("music or focus use case" in e for e in errors)
+
+
 def test_duplicate_vs_history(plan, cfg, monkeypatch):
     rows = [{"date": "2026-12-20", "brand": "layer8culture", "topic": "redact customer data before you prompt", "hook": ""}]
     monkeypatch.setattr(context, "history", lambda days, before: rows)
@@ -101,6 +155,28 @@ def test_duplicate_within_plan(plan, cfg, monkeypatch):
     plan["posts"][2]["topic"] = plan["posts"][0]["topic"]
     plan["posts"][2]["hook"] = plan["posts"][0]["hook"]
     assert "20261230-l8-03" in gates.duplicate_checks(plan, D, cfg)
+
+
+def test_duplicate_youtube_description_vs_history(plan, cfg, monkeypatch):
+    reel = plan["posts"][1]
+    rows = [{
+        "date": "2026-12-20", "brand": "layer8culture",
+        "topic": "different topic", "hook": "different hook",
+        "youtube_description": reel["youtube_description"],
+    }]
+    monkeypatch.setattr(context, "history", lambda days, before: rows)
+    assert reel["id"] in gates.duplicate_checks(plan, D, cfg)
+
+
+def test_postiz_youtube_mapping_uses_description_and_documented_settings(plan, cfg):
+    reel = plan["posts"][1]
+    reel["hashtags"] += ["#ExtraOne", "#ExtraTwo", "#ExtraThree"]
+    assert publish.caption_for(reel, "youtube", cfg) == reel["youtube_description"]
+    settings = publish.settings_for(reel, "youtube", cfg)
+    assert settings["__type"] == "youtube"
+    assert settings["title"] == reel["youtube_title"]
+    assert settings["type"] == cfg["publish"]["youtube_privacy"]
+    assert len(settings["tags"]) == cfg["gates"]["max_hashtags_youtube"]
 
 
 def test_media_gate_flags_overflow_and_missing(plan, cfg, tmp_path, monkeypatch):

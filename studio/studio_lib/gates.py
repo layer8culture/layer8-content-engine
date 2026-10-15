@@ -21,7 +21,7 @@ EXPECTED = {"carousel": (1080, 1350), "single": (1080, 1350), "story": (1080, 19
 
 
 def all_text(p: dict) -> str:
-    bits = [p.get("hook"), p.get("caption"), p.get("youtube_title"), p.get("kicker")]
+    bits = [p.get("hook"), p.get("caption"), p.get("youtube_title"), p.get("youtube_description"), p.get("kicker")]
     for s in p.get("slides") or []:
         if isinstance(s, dict):
             bits += [s.get("headline"), s.get("accent"), s.get("body"), s.get("code"), *(s.get("items") or [])]
@@ -79,11 +79,15 @@ def text_checks(p: dict, cfg: dict) -> tuple[list[str], list[str]]:
     if m:
         errs.append(f"placeholder text: '{m.group(0)}'")
     allowed = [d.lower() for d in g.get("allowed_link_domains", [])]
-    for url in URL_RE.findall(caption):
-        host = urlparse(url if "://" in url else "https://" + url).hostname or ""
-        host = host.lower().removeprefix("www.")
-        if not any(host == d or host.endswith("." + d) for d in allowed):
-            errs.append(f"link to non-allowed domain: {url}")
+    link_texts = [caption]
+    if "youtube" in (p.get("platforms") or []):
+        link_texts.append(p.get("youtube_description") or "")
+    for link_text in link_texts:
+        for url in URL_RE.findall(link_text):
+            host = urlparse(url if "://" in url else "https://" + url).hostname or ""
+            host = host.lower().removeprefix("www.")
+            if not any(host == d or host.endswith("." + d) for d in allowed):
+                errs.append(f"link to non-allowed domain: {url}")
     facts = cfg.get("facts") or {}
     if not facts.get("tech_thursday_time") and TIME_RE.search(text):
         errs.append(f"states a time ('{TIME_RE.search(text).group(0)}') but no show time is configured in facts")
@@ -102,6 +106,34 @@ def text_checks(p: dict, cfg: dict) -> tuple[list[str], list[str]]:
         if len(t) > g.get("beat_max_chars", 26):
             errs.append(f"beat {i + 1} is {len(t)} chars > {g.get('beat_max_chars', 26)}")
     if "youtube" in (p.get("platforms") or []):
+        title = (p.get("youtube_title") or "").strip()
+        description = (p.get("youtube_description") or "").strip()
+        if re.match(r"^(?:layer\s*8\s*culture|layer8culture|layer eight culture|tech thursday)\b", title, re.I):
+            errs.append("youtube title must lead with the topic, not the brand or show name")
+        title_tags = re.findall(r"#[A-Za-z0-9_]+", title)
+        if len(title_tags) > 1 or any(tag.lower() != "#shorts" for tag in title_tags):
+            errs.append("youtube title may contain only one optional #Shorts hashtag")
+        if description and re.sub(r"\s+", " ", description).casefold() == re.sub(r"\s+", " ", caption).casefold():
+            errs.append("youtube_description must be platform-native, not identical to the Instagram caption")
+        if re.search(r"(?m)^\s*\d{1,2}:\d{2}\s+", description):
+            errs.append("youtube_description must not invent chapter timestamps for a Short")
+        urls = URL_RE.findall(description)
+        if len(urls) > 2:
+            errs.append("youtube_description has more than 2 links")
+        facts = cfg.get("facts") or {}
+        verified_links = (
+            [facts.get("radio_channel_url"), facts.get("radio_stream_url")]
+            if p.get("brand") == "radio"
+            else [facts.get("website"), facts.get("tech_thursday_url")]
+        )
+        verified_links = [str(link).rstrip("/") for link in verified_links if link]
+        if verified_links and not any(link in description.rstrip("/") for link in verified_links):
+            errs.append("youtube_description needs one relevant configured channel/show link")
+        if p.get("brand") == "radio" and not re.search(
+            r"\b(lo-?fi|coding beats|study music|focus music|deep work|music for builders|focus room)\b",
+            f"{title}\n{description}", re.I,
+        ):
+            errs.append("radio YouTube metadata needs one natural music or focus use case")
         yt = sum(len(t) for t in tags[: g.get("max_hashtags_youtube", 5)])
         if yt > 450:
             errs.append("youtube tags too long")
@@ -116,6 +148,7 @@ def duplicate_checks(plan: dict, d: date, cfg: dict) -> dict[str, list[str]]:
     posts = plan.get("posts", [])
     for i, p in enumerate(posts):
         key = f"{p.get('topic', '')} {p.get('hook', '')}"
+        p_desc = re.sub(r"\s+", " ", p.get("youtube_description") or "").strip().casefold()
         for r in hist:
             if r.get("brand") not in (p.get("brand"), "lofi" if p.get("brand") == "radio" else None):
                 continue
@@ -123,9 +156,16 @@ def duplicate_checks(plan: dict, d: date, cfg: dict) -> dict[str, list[str]]:
             if s >= thr:
                 out.setdefault(p["id"], []).append(f"repeats a recent post ({r.get('date')}: '{(r.get('topic') or r.get('hook') or '')[:60]}', sim {s:.2f})")
                 break
+            old_desc = re.sub(r"\s+", " ", r.get("youtube_description") or "").strip().casefold()
+            if p_desc and old_desc == p_desc:
+                out.setdefault(p["id"], []).append(f"reuses a recent YouTube description ({r.get('date')})")
+                break
         for q in posts[:i]:
             if q.get("brand") == p.get("brand") and context.similarity(key, f"{q.get('topic', '')} {q.get('hook', '')}") >= thr:
                 out.setdefault(p["id"], []).append(f"duplicates {q['id']} in today's plan")
+            q_desc = re.sub(r"\s+", " ", q.get("youtube_description") or "").strip().casefold()
+            if p_desc and p_desc == q_desc:
+                out.setdefault(p["id"], []).append(f"reuses the same YouTube description as {q['id']}")
     return out
 
 

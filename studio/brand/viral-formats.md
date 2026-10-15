@@ -126,7 +126,9 @@ garbled screen text.
 Short, native, hook-style. End with the CTA, lightly rotated around:
 **"Follow Layer8Culture if you're building with AI."** (variants: "Follow @layer8culture
 if you're building with AI." / "Save this if you're done just watching AI happen.").
-For YouTube, also set a `youtube_title` ending with `#Shorts`.
+For YouTube, also set a topic-first `youtube_title` (2-100 characters) and a
+unique platform-native `youtube_description`. `#Shorts` is optional; use a
+restrained `| Layer8Culture` or `| Tech Thursday` suffix only when it fits.
 
 ## 7. Schema (per video, in the queue)
 ```
