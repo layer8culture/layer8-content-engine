@@ -163,13 +163,14 @@ def cmd_ingest(a, cfg):
             preview.build(plan, dd, manifest, res, heroes.status(plan, dd), cfg)
             total += len(changed)
     log(f"ingested {total} hero image(s)")
+    return total
 
 
 def cmd_heroes(a, cfg):
-    from studio_lib import herodesk
+    from studio_lib import hero_report, herodesk
 
     today = datetime.now(config.tz(cfg)).date()
-    d = config.parse_date(a.date, cfg) if a.date else herodesk.default_date(today)
+    d = config.parse_date(a.date, cfg) if a.date else herodesk.status_date(today)
     if d is None:
         log("No prompt pack with missing heroes. (The 5 PM run writes inbox/PROMPTS-<tomorrow>.md.)")
         return
@@ -177,12 +178,20 @@ def cmd_heroes(a, cfg):
         os.environ["STUDIO_DOWNLOADS_DIR"] = a.downloads
     pack = herodesk.load_pack(d)
     desk = herodesk.run(pack, cfg, log=log, open_browser=not a.no_browser)
+    ingested = 0
     if desk.saved:
         log("filing heroes into the day's posts …")
         a.date = d.isoformat()
-        cmd_ingest(a, cfg)
+        ingested = cmd_ingest(a, cfg)
     if desk.skipped:
         log("skipped (template version will post): " + ", ".join(s.filename for s in desk.skipped))
+    plan = load_plan(d)
+    if not plan:
+        raise RuntimeError(f"heroes were processed, but no plan exists for {d}")
+    hero_report.report(
+        plan, d, cfg, pack_total=len(pack.shots), matched=len(desk.saved),
+        ingested=ingested, skipped=len(desk.skipped), log=log,
+    )
 
 
 def cmd_publish(a, cfg):
