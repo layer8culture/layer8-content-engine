@@ -5,6 +5,7 @@ import json
 import os
 import smtplib
 import ssl
+import time
 from datetime import date
 from email.message import EmailMessage
 from pathlib import Path
@@ -12,6 +13,7 @@ from pathlib import Path
 import requests
 
 from .config import DATA, ROOT
+from . import health
 
 
 def send(text: str, log=print) -> None:
@@ -55,7 +57,8 @@ def _email_settings() -> tuple[dict | None, str | None]:
     }, None
 
 
-def send_email(subject: str, body: str, *, attachment: Path | None = None, log=print) -> bool:
+def send_email(subject: str, body: str, *, attachment: Path | None = None, log=print,
+               attempts: int = 2, retry_seconds: float = 1.0) -> bool:
     settings, reason = _email_settings()
     if reason:
         log(f"  email not sent: {reason}")
@@ -65,23 +68,28 @@ def send_email(subject: str, body: str, *, attachment: Path | None = None, log=p
     msg.set_content(body)
     if attachment and attachment.exists():
         msg.add_attachment(attachment.read_bytes(), maintype="text", subtype="markdown", filename=attachment.name)
-    try:
-        if settings["ssl"]:
-            smtp = smtplib.SMTP_SSL(settings["host"], settings["port"], timeout=30,
-                                    context=ssl.create_default_context())
-        else:
-            smtp = smtplib.SMTP(settings["host"], settings["port"], timeout=30)
-        with smtp:
-            if settings["starttls"] and not settings["ssl"]:
-                smtp.starttls(context=ssl.create_default_context())
-            if settings["user"]:
-                smtp.login(settings["user"], settings["password"])
-            smtp.send_message(msg)
-        log(f"  email sent to {settings['to']}")
-        return True
-    except Exception as exc:  # noqa: BLE001 - notification failure must not discard content
-        log(f"  email failed: {exc}")
-        return False
+    last = None
+    for attempt in range(1, max(1, attempts) + 1):
+        try:
+            if settings["ssl"]:
+                smtp = smtplib.SMTP_SSL(settings["host"], settings["port"], timeout=30,
+                                        context=ssl.create_default_context())
+            else:
+                smtp = smtplib.SMTP(settings["host"], settings["port"], timeout=30)
+            with smtp:
+                if settings["starttls"] and not settings["ssl"]:
+                    smtp.starttls(context=ssl.create_default_context())
+                if settings["user"]:
+                    smtp.login(settings["user"], settings["password"])
+                smtp.send_message(msg)
+            log(f"  SMTP accepted notification for {settings['to']} (delivery is provider-controlled)")
+            return True
+        except Exception as exc:  # noqa: BLE001 - notification failure must not discard content
+            last = exc
+            if attempt < attempts:
+                time.sleep(retry_seconds)
+    log(f"  email failed after {max(1, attempts)} attempt(s): {last}")
+    return False
 
 
 def _email_marker(d: date) -> Path:
@@ -89,7 +97,7 @@ def _email_marker(d: date) -> Path:
 
 
 def send_daily_ready(plan: dict, d: date, results: dict, page: Path, hero_rows: list[dict],
-                     queue_actions: list[dict] | None = None, log=print) -> bool:
+                     queue_actions: list[dict] | None = None, cfg: dict | None = None, log=print) -> bool:
     """Send one completion email per content date. Publish retries cannot duplicate it."""
     marker = _email_marker(d)
     if marker.exists():
@@ -97,6 +105,7 @@ def send_daily_ready(plan: dict, d: date, results: dict, page: Path, hero_rows: 
         return True
     lines = [
         f"Layer8 Studio prepared content for {d}.",
+        "This email was accepted by the configured SMTP server; final inbox delivery is provider-controlled.",
         "",
         "POSTIZ QUEUE:" if queue_actions is not None else "PLANNED TIMES (not yet proof of Postiz scheduling):",
     ]
@@ -112,8 +121,9 @@ def send_daily_ready(plan: dict, d: date, results: dict, page: Path, hero_rows: 
             for platform in (post.get("schedule") or {})
         ]
         lines.append(
-            f"- Verified by this run: {sum(queued.get(key) == 'scheduled' for key in expected)}/"
-            f"{len(expected)} routes newly queued; previously queued routes remain idempotently unchanged."
+            f"- Live reconciliation passed for all {len(expected)} expected routes. "
+            f"{sum(queued.get(key) == 'scheduled' for key in expected)} were newly scheduled or replaced by this run; "
+            "previously verified routes remained unchanged."
         )
     lines += ["", f"QUALITY GATES: {sum(r['pass'] for r in results.values())}/{len(results)} passed."]
     if blocked:
@@ -128,6 +138,12 @@ def send_daily_ready(plan: dict, d: date, results: dict, page: Path, hero_rows: 
         "",
         "The prompt pack is attached. Paste it once into ChatGPT; if only one image is returned, say “continue”.",
     ]
+    if (ROOT / "PAUSE").exists() or bool((cfg or {}).get("paused")):
+        lines += [
+            "",
+            "PAUSE NOTE: Studio will not create, replace, or send additional Postiz posts while paused.",
+            "Posts already queued in Postiz remain scheduled; PAUSE does not cancel cloud posts.",
+        ]
     prompt = ROOT / "inbox" / f"PROMPTS-{d}.md"
     ok = send_email(f"Layer8 Studio: {d} content ready", "\n".join(lines), attachment=prompt, log=log)
     if ok:
@@ -137,10 +153,36 @@ def send_daily_ready(plan: dict, d: date, results: dict, page: Path, hero_rows: 
     return ok
 
 
+def _send_failure_once(scope: str, d: date | str, subject: str, body: str,
+                       error: Exception, log=print) -> bool:
+    marker = health.failure_marker(scope, d, error)
+    if marker.exists():
+        log(f"  duplicate {scope} failure email suppressed ({marker.name})")
+        return True
+    ok = send_email(subject, body, log=log)
+    if ok:
+        health.mark_failure_notified(marker, scope=scope, date=str(d), error=f"{type(error).__name__}: {error}")
+    return ok
+
+
 def send_daily_failure(d: date, error: Exception, log=print) -> bool:
-    return send_email(
+    return _send_failure_once(
+        "daily", d,
         f"Layer8 Studio: {d} preparation FAILED",
         f"Layer8 Studio could not prepare content for {d}.\n\nError: {type(error).__name__}: {error}\n\n"
-        "No success notification was recorded. Check data/logs/task-run-daily.log.",
-        log=log,
+        "No success notification was recorded. Existing Postiz posts were not cancelled. "
+        "Check data/runs/<date>.json and data/logs/task-run-daily.log.",
+        error, log=log,
+    )
+
+
+def send_publish_failure(d: date | str, error: Exception, log=print) -> bool:
+    return _send_failure_once(
+        "publish", d,
+        f"Layer8 Studio: publishing needs attention ({d})",
+        f"Layer8 Studio publishing did not complete cleanly for {d}.\n\n"
+        f"Error: {type(error).__name__}: {error}\n\n"
+        "Existing Postiz posts were not automatically cancelled. Check data/health/publish.json, "
+        "data/media/<date>/.operations/, and data/logs/task-publish.log before retrying destructive actions.",
+        error, log=log,
     )

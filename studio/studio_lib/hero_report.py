@@ -80,6 +80,9 @@ def build_report(plan: dict, d: date, cfg: dict, *, pack_total: int, matched: in
             ids = _postiz_ids(row)
             states = [live_states.get(pid) for pid in ids if live_states and pid in live_states]
             hero_ready = bool(ready.get(post["id"])) and bool((manifest.get(post["id"]) or {}).get("hero"))
+            current_revision = (manifest.get(post["id"]) or {}).get("media_revision")
+            queued_revision = row.get("media_revision")
+            revision_matches = bool(current_revision and queued_revision == current_revision)
             gate_pass = bool((gate_results.get(post["id"]) or {}).get("pass"))
             label = ""
             if paused:
@@ -91,7 +94,7 @@ def build_report(plan: dict, d: date, cfg: dict, *, pack_total: int, matched: in
             elif not gate_pass:
                 label = "BLOCKED BY GATES"
                 blocked += 1
-            elif row.get("status") == "scheduled" and row.get("hero") is True:
+            elif row.get("status") == "scheduled" and row.get("hero") is True and revision_matches:
                 if any(state in {"QUEUE", "PUBLISHED"} for state in states):
                     label = "POSTIZ VERIFIED UPDATED" if "QUEUE" in states else "POSTIZ HERO PUBLISHED"
                     verified += 1
@@ -111,7 +114,7 @@ def build_report(plan: dict, d: date, cfg: dict, *, pack_total: int, matched: in
                 else:
                     label = "WAITING FOR PUBLISH"
                     waiting += 1
-            elif row.get("status") in {"blocked", "missed", "failed", "failed-final"}:
+            elif row.get("status") in {"blocked", "missed", "failed", "failed-final", "needs_attention"}:
                 label = f"POSTIZ {str(row['status']).upper()}"
                 blocked += 1
             elif when <= now.astimezone(config.tz(cfg)):
@@ -145,7 +148,10 @@ def build_report(plan: dict, d: date, cfg: dict, *, pack_total: int, matched: in
     if verified == total_routes and total_routes:
         lines.append(f"Result: POSTIZ VERIFIED UPDATED — {verified}/{total_routes} routes use hero media.")
     elif paused:
-        lines.append("Result: PAUSED — local media is kept, but Studio will not update Postiz until resumed.")
+        lines.append(
+            "Result: PAUSED — Studio will not create or replace posts until resumed. "
+            "Existing Postiz queue entries remain scheduled."
+        )
     elif blocked:
         lines.append(f"Result: ACTION REQUIRED — {blocked}/{total_routes} routes are blocked, too late, or unverified.")
     else:

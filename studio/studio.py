@@ -15,11 +15,10 @@ import argparse
 import json
 import os
 import sys
-import time
 from datetime import datetime, timedelta
-from pathlib import Path
 
-from studio_lib import config, gates, heroes, notify, planner, preview, render
+from studio_lib import config, gates, health, heroes, notify, planner, preview, render
+from studio_lib.locks import FileLock, LockBusy
 
 # Windows consoles / Task Scheduler redirects default to cp1252; never crash on a "→".
 for _s in (sys.stdout, sys.stderr):
@@ -32,6 +31,7 @@ from studio_lib.schedule import due, parse
 LOCK = DATA / ".lock"
 RUNS = DATA / "runs"
 DATE_LOCKS = DATA / "locks"
+_publish_lock: FileLock | None = None
 
 
 def log(msg: str) -> None:
@@ -39,51 +39,27 @@ def log(msg: str) -> None:
 
 
 def acquire_lock() -> bool:
-    if LOCK.exists() and time.time() - LOCK.stat().st_mtime < 90 * 60:
+    global _publish_lock
+    try:
+        _publish_lock = FileLock.acquire(LOCK, "publish", stale_seconds=90 * 60)
+    except LockBusy:
         return False
-    LOCK.parent.mkdir(parents=True, exist_ok=True)
-    LOCK.write_text(str(os.getpid()))
     return True
 
 
 def release_lock() -> None:
-    LOCK.unlink(missing_ok=True)
+    global _publish_lock
+    if _publish_lock:
+        _publish_lock.release()
+        _publish_lock = None
 
 
-def _process_exists(pid: int) -> bool:
-    if os.name == "nt":
-        import ctypes
-
-        handle = ctypes.windll.kernel32.OpenProcess(0x1000, False, pid)
-        if not handle:
-            return False
-        ctypes.windll.kernel32.CloseHandle(handle)
-        return True
-    try:
-        os.kill(pid, 0)
-        return True
-    except (OSError, ValueError):
-        return False
-
-
-def acquire_date_lock(d) -> Path | None:
+def acquire_date_lock(d) -> FileLock | None:
     """Atomically prevent two planners for one date without blocking publishing."""
-    DATE_LOCKS.mkdir(parents=True, exist_ok=True)
-    path = DATE_LOCKS / f"plan-{d}.lock"
     try:
-        fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
-    except FileExistsError:
-        try:
-            pid = int(path.read_text(encoding="ascii").strip())
-        except (OSError, ValueError):
-            pid = -1
-        if _process_exists(pid):
-            return None
-        path.unlink(missing_ok=True)
-        fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
-    with os.fdopen(fd, "w", encoding="ascii") as fh:
-        fh.write(str(os.getpid()))
-    return path
+        return FileLock.acquire(DATE_LOCKS / f"plan-{d}.lock", f"plan-{d}", stale_seconds=30 * 60)
+    except LockBusy:
+        return None
 
 
 def _run_state(d, stage: str, status: str, **details) -> None:
@@ -114,6 +90,15 @@ def produce(d, cfg, *, force_plan=False, reuse=False):
         _run_state(d, "plan", "running")
         plan = planner.make_plan(d, cfg, force=force_plan, log=log)
     _run_state(d, "plan", "complete", posts=len(plan["posts"]))
+    preflight = gates.run_gates(plan, d, cfg, manifest=None)
+    preflight_errors = [
+        f"{pid}: {'; '.join(result['errors'])}"
+        for pid, result in preflight.items() if not result["pass"]
+    ]
+    if preflight_errors:
+        _run_state(d, "preflight", "failed", errors=preflight_errors)
+        raise RuntimeError("preflight gates failed before render: " + " | ".join(preflight_errors))
+    _run_state(d, "preflight", "complete", passed=len(preflight))
     heroes.ingest(plan, d, log=log)
     _run_state(d, "render", "running")
     log("rendering …")
@@ -128,6 +113,7 @@ def produce(d, cfg, *, force_plan=False, reuse=False):
         log(f"  gates {'PASS' if r['pass'] else 'FAIL'} {pid}" + (f": {'; '.join(r['errors'])}" if r["errors"] else ""))
     _run_state(d, "gates", "complete" if all(r["pass"] for r in results.values()) else "failed",
                passed=sum(r["pass"] for r in results.values()), total=len(results))
+    heroes.finalize(d, {pid for pid, result in results.items() if result["pass"]}, log=log)
     page = preview.build(plan, d, manifest, results, heroes.status(plan, d), cfg)
     _run_state(d, "preview", "complete", path=str(page))
     log(f"preview: {page}")
@@ -160,6 +146,7 @@ def cmd_ingest(a, cfg):
             manifest = render.render_plan(plan, dd, cfg, only=set(changed), log=log)
             res = gates.run_gates(plan, dd, cfg, manifest)
             gates.save(res, dd)
+            heroes.finalize(dd, {pid for pid, result in res.items() if result["pass"]}, log=log)
             preview.build(plan, dd, manifest, res, heroes.status(plan, dd), cfg)
             total += len(changed)
     log(f"ingested {total} hero image(s)")
@@ -177,7 +164,17 @@ def cmd_heroes(a, cfg):
     if a.downloads:
         os.environ["STUDIO_DOWNLOADS_DIR"] = a.downloads
     pack = herodesk.load_pack(d)
-    desk = herodesk.run(pack, cfg, log=log, open_browser=not a.no_browser)
+    plan = load_plan(d)
+    if not plan:
+        raise RuntimeError(f"no plan exists for hero pack {d}")
+    log(f"Target content date: {d}")
+    for post in plan.get("posts", []):
+        for platform, when in (post.get("schedule") or {}).items():
+            log(f"  {parse(when).astimezone(config.tz(cfg)).strftime('%a %I:%M %p ET')}  {post['id']} → {platform}")
+    desk = herodesk.run(
+        pack, cfg, log=log, open_browser=not a.no_browser,
+        include_recent_minutes=a.import_recent or 0,
+    )
     ingested = 0
     if desk.saved:
         log("filing heroes into the day's posts …")
@@ -185,9 +182,14 @@ def cmd_heroes(a, cfg):
         ingested = cmd_ingest(a, cfg)
     if desk.skipped:
         log("skipped (template version will post): " + ", ".join(s.filename for s in desk.skipped))
-    plan = load_plan(d)
-    if not plan:
-        raise RuntimeError(f"heroes were processed, but no plan exists for {d}")
+    if a.sync:
+        log(f"sync requested — reconciling {d} with Postiz now")
+        from types import SimpleNamespace
+
+        _publish_day(
+            SimpleNamespace(dry=False, only=None, ahead=True, replace=False),
+            cfg, d, plan, datetime.now(config.tz(cfg)),
+        )
     hero_report.report(
         plan, d, cfg, pack_total=len(pack.shots), matched=len(desk.saved),
         ingested=ingested, skipped=len(desk.skipped), log=log,
@@ -198,24 +200,18 @@ def cmd_publish(a, cfg):
     from studio_lib import publish
 
     if config.is_paused(cfg):
-        log("PAUSED (studio/PAUSE exists or config paused: true) — nothing will be posted.")
+        log("PAUSED — Studio will not create or replace posts. Existing Postiz queue entries remain scheduled.")
         return
     now = datetime.fromisoformat(a.now) if a.now else datetime.now(config.tz(cfg))
     if now.tzinfo is None:
         now = now.replace(tzinfo=config.tz(cfg))
     d = config.parse_date(a.date, cfg) if a.date else now.astimezone(config.tz(cfg)).date()
-    if not acquire_lock():
-        log("another publish run is in progress; skipping")
-        return
-    try:
-        plan = load_plan(d)
-        cutoff = int(cfg["publish"].get("same_day_plan_cutoff_hour", 14))
-        if plan is None and now.astimezone(config.tz(cfg)).hour >= cutoff:
-            log(f"no plan for today ({d}) and it's past {cutoff}:00 — not planning same-day; run-daily covers tomorrow")
-        else:
-            _publish_day(a, cfg, d, plan, now)
-    finally:
-        release_lock()
+    plan = load_plan(d)
+    cutoff = int(cfg["publish"].get("same_day_plan_cutoff_hour", 14))
+    if plan is None and now.astimezone(config.tz(cfg)).hour >= cutoff:
+        log(f"no plan for today ({d}) and it's past {cutoff}:00 — not planning same-day; run-daily covers tomorrow")
+    else:
+        _publish_day(a, cfg, d, plan, now)
     miss = None if (a.dry or a.date or a.only) else missed_daily(now, cfg)
     if miss:
         log(f"no plan for tomorrow ({miss}) yet — the 17:00 run-daily was missed; producing it now")
@@ -236,21 +232,38 @@ def _publish_day(a, cfg, d, plan, now):
             manifest = render.render_plan(plan, d, cfg, only=set(changed + missing), log=log)
         results = gates.run_gates(plan, d, cfg, manifest)
         gates.save(results, d)
+        heroes.finalize(d, {pid for pid, result in results.items() if result["pass"]}, log=log)
         if changed:
             preview.build(plan, d, manifest, results, heroes.status(plan, d), cfg)
-    actions = publish.publish_due(plan, d, cfg, manifest, results, now=now, dry=a.dry, log=log,
-                                  only=set(a.only) if a.only else None, ahead=a.ahead,
-                                  force_replace=a.replace)
+    if not a.dry and not acquire_lock():
+        log("another publish run is in progress; skipping cloud handoff")
+        return []
+    try:
+        actions = publish.publish_due(plan, d, cfg, manifest, results, now=now, dry=a.dry, log=log,
+                                      only=set(a.only) if a.only else None, ahead=a.ahead,
+                                      force_replace=a.replace)
+    finally:
+        if not a.dry:
+            release_lock()
     if actions and cfg["notify"].get("on_publish") and not a.dry:
         notify.send("Layer8 Studio publish:\n" + "\n".join(
             f"{r['status']} {r['id']} → {r['platform']}" + (f" ({r.get('reason', '')[:120]})" if r.get("reason") else "")
             for r in actions), log=log)
+    failures = [r for r in actions if r.get("status") in {"failed", "failed-final", "needs_attention", "blocked"}]
+    if failures and not a.dry:
+        notify.send_publish_failure(
+            d,
+            RuntimeError("; ".join(
+                f"{r['id']}/{r['platform']}={r['status']}: {r.get('reason', '')}" for r in failures
+            )),
+            log=log,
+        )
     if not actions:
         log("nothing due")
 
 
 def missed_daily(now, cfg):
-    """Tomorrow's date if run-daily should have produced its plan by now but hasn't, else None."""
+    """Tomorrow's date when durable daily stages are incomplete, even if a plan file exists."""
     hour = (cfg.get("publish") or {}).get("catch_up_daily_after_hour")
     if hour is None:
         return None
@@ -258,7 +271,14 @@ def missed_daily(now, cfg):
     if local.hour < int(hour):
         return None
     tomorrow = local.date() + timedelta(days=1)
-    return None if plan_path(tomorrow).exists() else tomorrow
+    path = RUNS / f"{tomorrow}.json"
+    if not path.exists():
+        return tomorrow
+    try:
+        state = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return tomorrow
+    return None if ((state.get("stages") or {}).get("daily") or {}).get("status") == "complete" else tomorrow
 
 
 def cmd_run_daily(a, cfg):
@@ -288,6 +308,10 @@ def _queue_ready_day(plan, d, manifest, results, cfg):
         raise RuntimeError("Postiz queue incomplete: " + "; ".join(
             f"{r['id']}/{r['platform']}={r['status']} {r.get('reason', '')}".strip() for r in bad
         ))
+    issues = publish.reconcile_expected(plan, d, cfg, manifest)
+    if issues:
+        _run_state(d, "queue", "needs_attention", issues=issues)
+        raise RuntimeError("Postiz queue reconciliation failed: " + "; ".join(issues))
     _run_state(d, "queue", "complete", routes=sum(len(p.get("schedule") or {}) for p in plan["posts"]))
     return actions
 
@@ -308,13 +332,14 @@ def _run_daily_date(d, cfg, *, force=False):
             notify.send_daily_failure(d, exc, log=log)
             raise
     finally:
-        date_lock.unlink(missing_ok=True)
+        date_lock.release()
 
 
 def _daily_ready(plan, d, results, page, cfg, queue_actions=None):
     ok = sum(r["pass"] for r in results.values())
     msg = (f"Layer8 Studio planned {d} — {len(plan['posts'])} posts, {ok} pass gates"
-           f"{' (PAUSED: nothing will post)' if config.is_paused(cfg) else ''}.\n{plan.get('summary', '')}\n"
+           f"{' (PAUSED: Studio changes are stopped; existing Postiz entries remain scheduled)' if config.is_paused(cfg) else ''}.\n"
+           f"{plan.get('summary', '')}\n"
            f"Hero batch: studio/inbox/PROMPTS-{d}.md\nPreview: {page}")
     blocked = [f"- {pid}: {'; '.join(r['errors'])[:200]}" for pid, r in results.items() if not r["pass"]]
     if blocked:
@@ -322,7 +347,7 @@ def _daily_ready(plan, d, results, page, cfg, queue_actions=None):
     if cfg["notify"].get("on_run_daily"):
         notify.send(msg, log=log)
     if not notify.send_daily_ready(
-        plan, d, results, page, heroes.status(plan, d), queue_actions=queue_actions, log=log
+        plan, d, results, page, heroes.status(plan, d), queue_actions=queue_actions, cfg=cfg, log=log
     ):
         raise RuntimeError("content was prepared, but the completion email failed; retry is safe")
     if (cfg.get("heroes") or {}).get("toast", True) and heroes.shots_for(plan):
@@ -335,6 +360,21 @@ def _daily_ready(plan, d, results, page, cfg, queue_actions=None):
 def cmd_status(a, cfg):
     d = config.parse_date(a.date, cfg, default_offset=0)
     log(f"Layer8 Studio — {'PAUSED' if config.is_paused(cfg) else 'active'} — model {cfg['model']}")
+    if config.is_paused(cfg):
+        log("PAUSE stops new Studio creates/replacements only; existing Postiz queue entries remain scheduled.")
+    for name in ("task-run-daily", "task-publish", "run-daily", "publish"):
+        path = DATA / "health" / f"{name}.json"
+        if not path.exists():
+            continue
+        try:
+            row = json.loads(path.read_text(encoding="utf-8-sig"))
+            log(
+                f"health {name}: {row.get('status', 'unknown')} at "
+                f"{row.get('updated_at', 'unknown')}"
+                + (f" — {row.get('error')}" if row.get("error") else "")
+            )
+        except (OSError, json.JSONDecodeError):
+            log(f"health {name}: unreadable ({path})")
     posted = {(r["id"], r["platform"]): r for r in read_jsonl(POSTED_LOG)}
     now = datetime.now(config.tz(cfg))
     for dd in sorted({d, config.parse_date(None, cfg)}):
@@ -415,13 +455,31 @@ def main(argv=None):
     sp.add_argument("--date", help="YYYY-MM-DD (default: next prompt pack with missing heroes)")
     sp.add_argument("--downloads", help="folder to watch instead of your Downloads folder")
     sp.add_argument("--no-browser", action="store_true", help="don't open chatgpt.com")
+    sp.add_argument(
+        "--import-recent", type=int, metavar="MINUTES",
+        help="opt in to matching existing image downloads from the last 1-120 minutes",
+    )
+    sp.add_argument(
+        "--sync", action="store_true",
+        help="after ingest, immediately reconcile this prepared date with Postiz",
+    )
     sub.add_parser("email-test", help="send one recipient-only SMTP configuration test")
     a = ap.parse_args(argv)
     config.load_env()
     config.ensure_dirs()
     cfg = config.load_config()
-    {"plan": cmd_plan, "render": cmd_render, "ingest": cmd_ingest, "publish": cmd_publish, "run-daily": cmd_run_daily,
-     "status": cmd_status, "dry-run": cmd_dry_run, "heroes": cmd_heroes, "email-test": cmd_email_test}[a.cmd](a, cfg)
+    health.update_job(a.cmd, "running")
+    try:
+        {"plan": cmd_plan, "render": cmd_render, "ingest": cmd_ingest, "publish": cmd_publish, "run-daily": cmd_run_daily,
+         "status": cmd_status, "dry-run": cmd_dry_run, "heroes": cmd_heroes, "email-test": cmd_email_test}[a.cmd](a, cfg)
+    except Exception as exc:
+        health.update_job(a.cmd, "failed", error=f"{type(exc).__name__}: {exc}")
+        if a.cmd == "publish":
+            d = getattr(a, "date", None) or datetime.now(config.tz(cfg)).date().isoformat()
+            notify.send_publish_failure(d, exc, log=log)
+        raise
+    else:
+        health.update_job(a.cmd, "complete")
 
 
 if __name__ == "__main__":

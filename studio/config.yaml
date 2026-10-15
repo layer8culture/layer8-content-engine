@@ -1,6 +1,7 @@
 # Layer8 Studio configuration. Everything tunable lives here; secrets live in .env.
 
-# Kill switch. true (or a file named PAUSE next to this config) blocks ALL publishing.
+# Studio change switch. true (or a PAUSE file) blocks new Postiz creates/replacements.
+# It does NOT cancel posts already queued in Postiz; those remain scheduled.
 paused: false
 
 timezone: America/New_York

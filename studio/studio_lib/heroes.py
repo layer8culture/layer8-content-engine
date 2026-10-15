@@ -5,6 +5,8 @@ the images with the exact filenames listed. Missing heroes fall back to the temp
 """
 from __future__ import annotations
 
+import hashlib
+import json
 import shutil
 from datetime import date
 from pathlib import Path
@@ -12,6 +14,7 @@ from pathlib import Path
 from PIL import Image, ImageOps
 
 from .config import INBOX, media_dir
+from .locks import FileLock
 
 ASPECTS = {"4:5": (1080, 1350), "9:16": (1080, 1920)}
 EXTS = (".png", ".jpg", ".jpeg", ".webp")
@@ -101,21 +104,90 @@ def crop_to(src: Path, aspect: str, dest: Path) -> Path:
     return dest
 
 
+def _digest(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _state_path(d: date) -> Path:
+    return media_dir(d) / "hero-state.json"
+
+
+def _load_state(d: date) -> dict:
+    path = _state_path(d)
+    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+
+
+def _save_state(d: date, state: dict) -> None:
+    path = _state_path(d)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_suffix(".json.tmp")
+    tmp.write_text(json.dumps(state, indent=2), encoding="utf-8")
+    tmp.replace(path)
+
+
 def ingest(plan: dict, d: date, log=print) -> list[str]:
-    """Crop any newly arrived heroes for this plan. Returns post ids that need re-rendering."""
+    """Stage newly arrived heroes without consuming their source until render/gates succeed."""
+    with FileLock.acquire(media_dir(d) / ".media.lock", f"hero-ingest-{d}", stale_seconds=30 * 60):
+        return _ingest_locked(plan, d, log=log)
+
+
+def _ingest_locked(plan: dict, d: date, log=print) -> list[str]:
     changed = []
-    used = INBOX / "_used"
+    state = _load_state(d)
+    manifest_path = media_dir(d) / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.exists() else {}
     for s in shots_for(plan):
         src = _find(s["filename"])
         if not src:
             continue
+        source_revision = _digest(src)
         dest = media_dir(d) / "heroes" / s["filename"]
-        crop_to(src, s["aspect"], dest)
-        used.mkdir(exist_ok=True)
-        shutil.move(str(src), str(used / src.name))
-        changed.append(s["post"])
-        log(f"  hero ingested: {s['filename']} -> {s['post']} ({s['aspect']})")
+        previous = state.get(s["post"]) or {}
+        if previous.get("source_revision") != source_revision or not dest.exists():
+            crop_to(src, s["aspect"], dest)
+        cropped_revision = _digest(dest)
+        state[s["post"]] = {
+            "filename": s["filename"], "source": str(src), "source_revision": source_revision,
+            "cropped_revision": cropped_revision, "stage": "ingested",
+        }
+        rendered = manifest.get(s["post"]) or {}
+        if rendered.get("hero_revision") != cropped_revision or rendered.get("error"):
+            changed.append(s["post"])
+        log(f"  hero staged: {s['filename']} -> {s['post']} ({s['aspect']})")
+    _save_state(d, state)
     return changed
+
+
+def finalize(d: date, post_ids: set[str], log=print) -> None:
+    """Archive source images only after their current revision rendered and passed gates."""
+    with FileLock.acquire(media_dir(d) / ".media.lock", f"hero-finalize-{d}", stale_seconds=30 * 60):
+        _finalize_locked(d, post_ids, log=log)
+
+
+def _finalize_locked(d: date, post_ids: set[str], log=print) -> None:
+    state = _load_state(d)
+    manifest_path = media_dir(d) / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.exists() else {}
+    used = INBOX / "_used"
+    for post_id in post_ids:
+        row = state.get(post_id) or {}
+        rendered = manifest.get(post_id) or {}
+        if row.get("stage") != "ingested" or rendered.get("hero_revision") != row.get("cropped_revision"):
+            continue
+        src = Path(row.get("source") or "")
+        if src.exists() and src.parent.resolve() == INBOX.resolve():
+            used.mkdir(exist_ok=True)
+            dest = used / src.name
+            dest.unlink(missing_ok=True)
+            shutil.move(str(src), str(dest))
+        row["stage"] = "complete"
+        state[post_id] = row
+        log(f"  hero finalized: {row.get('filename')} ({post_id})")
+    _save_state(d, state)
 
 
 def status(plan: dict, d: date) -> list[dict]:

@@ -2,15 +2,19 @@
 from __future__ import annotations
 
 import html
+import hashlib
 import json
 import shutil
 import subprocess
+import uuid
 from datetime import date
 from pathlib import Path
 
 from .config import FONTS, INBOX, REMOTION, ROOT, TEMPLATES, media_dir
+from .locks import FileLock
 
 SIZES = {"carousel": (1080, 1350), "single": (1080, 1350), "story": (1080, 1920), "reel": (1080, 1920)}
+RENDER_REVISION = "studio-render-v3"
 
 FIT_JS = """
 async (minK) => {
@@ -44,6 +48,42 @@ def hero_file(post: dict, d: date) -> Path | None:
         return None
     p = media_dir(d) / "heroes" / h["filename"]
     return p if p.exists() else None
+
+
+def file_fingerprint(path: Path | None) -> str | None:
+    if not path or not path.exists():
+        return None
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def input_fingerprint(post: dict, d: date, cfg: dict) -> tuple[str, str | None]:
+    hero = hero_file(post, d)
+    hero_revision = file_fingerprint(hero)
+    reel = post.get("reel") or {}
+    clip = reel.get("loop_clip")
+    if not clip and (INBOX / "video" / f"{post['id']}.mp4").exists():
+        clip = f"{post['id']}.mp4"
+    clip_revision = file_fingerprint(INBOX / "video" / clip) if clip else None
+    bed = cfg["visual"].get("layer8_audio_bed")
+    bed_revision = file_fingerprint(ROOT / bed) if bed else None
+    payload = json.dumps({
+        "renderer": RENDER_REVISION, "post": post, "hero": hero_revision,
+        "clip": clip_revision, "audio": bed_revision,
+    }, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest(), hero_revision
+
+
+def media_fingerprint(files: list[str], d: date) -> str:
+    digest = hashlib.sha256()
+    for name in files:
+        path = media_dir(d) / name
+        digest.update(name.encode("utf-8"))
+        digest.update((file_fingerprint(path) or "missing").encode("ascii"))
+    return digest.hexdigest()
 
 
 def _slide_html(post: dict, slide: dict, idx: int, total: int, hero: Path | None) -> str:
@@ -110,7 +150,7 @@ def render_stills(posts: list[dict], d: date, cfg: dict, log=print) -> dict:
     from playwright.sync_api import sync_playwright
 
     out = media_dir(d)
-    tmp = out / "_html"
+    tmp = out / "_html" / uuid.uuid4().hex
     tmp.mkdir(parents=True, exist_ok=True)
     min_k = float(cfg["gates"].get("min_font_scale", 0.62))
     results = {}
@@ -136,6 +176,7 @@ def render_stills(posts: list[dict], d: date, cfg: dict, log=print) -> dict:
             results[post["id"]] = {"files": files, "fit": fits, "hero": hero is not None}
             log(f"  rendered {post['id']} ({fmt}, {len(files)} image{'s' if len(files) != 1 else ''}{', hero' if hero else ''})")
         browser.close()
+    shutil.rmtree(tmp, ignore_errors=True)
     return results
 
 
@@ -158,9 +199,8 @@ def render_reel(post: dict, d: date, cfg: dict, log=print) -> dict:
     ensure_remotion(log)
     out = media_dir(d)
     pub = REMOTION / "public"
-    tmp = pub / "_job"
-    if tmp.exists():
-        shutil.rmtree(tmp)
+    token = uuid.uuid4().hex
+    tmp = pub / "_jobs" / token
     tmp.mkdir(parents=True)
     reel = post.get("reel") or {}
     props = {
@@ -174,28 +214,34 @@ def render_reel(post: dict, d: date, cfg: dict, log=print) -> dict:
         clip = f"{post['id']}.mp4"  # manual / Higgsfield premium clip
     if clip and (INBOX / "video" / clip).exists():
         shutil.copy2(INBOX / "video" / clip, tmp / clip)
-        props["bgVideo"] = f"_job/{clip}"
+        props["bgVideo"] = f"_jobs/{token}/{clip}"
     elif hero and cfg["visual"].get("ken_burns_reels_with_hero", True):
         shutil.copy2(hero, tmp / hero.name)
-        props["hero"] = f"_job/{hero.name}"
+        props["hero"] = f"_jobs/{token}/{hero.name}"
     bed = cfg["visual"].get("layer8_audio_bed")
     if bed and post["brand"] == "layer8culture" and (ROOT / bed).exists():
         shutil.copy2(ROOT / bed, tmp / Path(bed).name)
-        props["audio"] = f"_job/{Path(bed).name}"
+        props["audio"] = f"_jobs/{token}/{Path(bed).name}"
     props_file = tmp / "props.json"
     props_file.write_text(json.dumps(props), encoding="utf-8")
     mp4 = out / f"{post['id']}.mp4"
-    cmd = [_npx(), "remotion", "render", "src/index.jsx", "Reel", str(mp4), f"--props={props_file}",
+    temp_mp4 = out / f".{post['id']}-{token}.mp4"
+    cmd = [_npx(), "remotion", "render", "src/index.jsx", "Reel", str(temp_mp4), f"--props={props_file}",
            "--log=error", "--overwrite"]
     proc = subprocess.run(cmd, cwd=REMOTION, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=900)
-    if proc.returncode != 0 or not mp4.exists():
+    if proc.returncode != 0 or not temp_mp4.exists():
+        temp_mp4.unlink(missing_ok=True)
+        shutil.rmtree(tmp, ignore_errors=True)
         raise RuntimeError(f"remotion render failed for {post['id']}: {proc.stderr[-1500:] or proc.stdout[-1500:]}")
+    temp_mp4.replace(mp4)
     cover = out / f"{post['id']}-cover.png"
+    temp_cover = out / f".{post['id']}-{token}-cover.png"
     # Cover frame: end of the first beat, when its words have fully landed.
     first = float(((reel.get("beats") or [{}])[0]).get("seconds") or 3)
     t = max(0.8, min(first - 0.4, 2.5))
-    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{t:.2f}", "-i", str(mp4), "-frames:v", "1", str(cover)],
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{t:.2f}", "-i", str(mp4), "-frames:v", "1", str(temp_cover)],
                    check=True)
+    temp_cover.replace(cover)
     shutil.rmtree(tmp, ignore_errors=True)
     log(f"  rendered {post['id']} (reel{', loop clip' if props['bgVideo'] else ', hero' if props['hero'] else ''})")
     return {"files": [mp4.name, cover.name], "fit": [], "hero": bool(props["hero"]), "props": props}
@@ -213,17 +259,48 @@ def load_manifest(d: date) -> dict:
 def render_plan(plan: dict, d: date, cfg: dict, *, only: set[str] | None = None, log=print) -> dict:
     out = media_dir(d)
     out.mkdir(parents=True, exist_ok=True)
-    manifest = load_manifest(d)
-    posts = [p for p in plan["posts"] if not only or p["id"] in only]
-    stills = [p for p in posts if p["format"] != "reel"]
-    if stills:
-        manifest.update(render_stills(stills, d, cfg, log=log))
-    for p in posts:
-        if p["format"] == "reel":
-            try:
-                manifest[p["id"]] = render_reel(p, d, cfg, log=log)
-            except Exception as exc:  # noqa: BLE001 - one failed reel must not sink the day
-                log(f"  ! {exc}")
-                manifest[p["id"]] = {"files": [], "fit": [], "hero": False, "error": str(exc)[:500]}
-    manifest_path(d).write_text(json.dumps(manifest, indent=2), encoding="utf-8")
-    return manifest
+    with FileLock.acquire(out / ".media.lock", f"media-{d}", stale_seconds=30 * 60):
+        manifest = load_manifest(d)
+        requested = [p for p in plan["posts"] if not only or p["id"] in only]
+        revisions = {p["id"]: input_fingerprint(p, d, cfg) for p in requested}
+        posts = []
+        for post in requested:
+            current = manifest.get(post["id"]) or {}
+            revision, _ = revisions[post["id"]]
+            files_ok = current.get("files") and all((out / name).exists() for name in current["files"])
+            outputs_match = bool(
+                files_ok
+                and current.get("media_revision")
+                and media_fingerprint(current["files"], d) == current["media_revision"]
+            )
+            if current.get("input_revision") == revision and outputs_match and not current.get("error"):
+                log(f"  reused {post['id']} (inputs unchanged)")
+            else:
+                posts.append(post)
+        stills = [p for p in posts if p["format"] != "reel"]
+        if stills:
+            rendered = render_stills(stills, d, cfg, log=log)
+            for post in stills:
+                entry = rendered[post["id"]]
+                entry["input_revision"], entry["hero_revision"] = revisions[post["id"]]
+                entry["media_revision"] = media_fingerprint(entry["files"], d)
+                manifest[post["id"]] = entry
+        for post in posts:
+            if post["format"] == "reel":
+                try:
+                    entry = render_reel(post, d, cfg, log=log)
+                    entry["input_revision"], entry["hero_revision"] = revisions[post["id"]]
+                    entry["media_revision"] = media_fingerprint(entry["files"], d)
+                    manifest[post["id"]] = entry
+                except Exception as exc:  # noqa: BLE001 - one failed reel must not sink the day
+                    log(f"  ! {exc}")
+                    revision, hero_revision = revisions[post["id"]]
+                    manifest[post["id"]] = {
+                        "files": [], "fit": [], "hero": False, "error": str(exc)[:500],
+                        "input_revision": revision, "hero_revision": hero_revision,
+                    }
+        path = manifest_path(d)
+        tmp = path.with_suffix(".json.tmp")
+        tmp.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+        tmp.replace(path)
+        return manifest

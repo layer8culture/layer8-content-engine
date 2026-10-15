@@ -93,7 +93,8 @@ def test_daily_email_truthfully_reports_queue_status(monkeypatch, tmp_path):
     )
     body = FakeSMTP.sent[0].get_body().get_content()
     assert "POSTIZ QUEUE:" in body
-    assert "1/1 routes newly queued" in body
+    assert "Live reconciliation passed for all 1 expected routes" in body
+    assert "1 were newly scheduled or replaced" in body
 
 
 def test_authenticated_smtp_requires_app_password(monkeypatch):
@@ -105,6 +106,19 @@ def test_authenticated_smtp_requires_app_password(monkeypatch):
     settings, reason = notify._email_settings()
     assert settings is None
     assert reason == "SMTP_PASSWORD is required when SMTP_USER is configured"
+
+
+def test_publish_failure_email_is_fingerprint_deduplicated(monkeypatch, tmp_path):
+    _smtp_env(monkeypatch)
+    FakeSMTP.sent.clear()
+    monkeypatch.setattr(notify.smtplib, "SMTP", FakeSMTP)
+    monkeypatch.setattr(notify.health, "DATA", tmp_path)
+    error = RuntimeError("route needs attention")
+    assert notify.send_publish_failure("2026-10-15", error, log=lambda *_: None)
+    assert notify.send_publish_failure("2026-10-15", error, log=lambda *_: None)
+    assert len(FakeSMTP.sent) == 1
+    body = FakeSMTP.sent[0].get_body().get_content()
+    assert "not automatically cancelled" in body
 
 
 def test_email_test_sends_only_to_configured_recipient(monkeypatch):

@@ -190,7 +190,7 @@ def run_gates(plan: dict, d: date, cfg: dict, manifest: dict | None = None) -> d
         errs = schema.validate_post(p, compact)
         e2, warns = text_checks(p, cfg)
         errs += e2 + dups.get(p.get("id"), [])
-        if manifest is not None and not schema.validate_post(p, compact):
+        if manifest is not None:
             e3, w3 = media_checks(p, d, manifest, cfg)
             errs += e3
             warns += w3

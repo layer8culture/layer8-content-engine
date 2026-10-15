@@ -6,7 +6,8 @@ Registers the Layer8 Studio scheduled tasks for the current user (no admin neede
 
 Both use StartWhenAvailable, so a run missed while the laptop was off/asleep fires when it's back.
 Remove with:  .\install-schedule.ps1 -Uninstall
-Pause posting without touching tasks:  New-Item studio\PAUSE
+Pause new Studio Postiz creates/replacements without touching tasks:  New-Item studio\PAUSE
+Already queued Postiz posts remain scheduled.
 #>
 param(
     [switch]$Uninstall,
@@ -64,4 +65,5 @@ if (Test-Path $icon) { $sc.IconLocation = "$icon,0" }
 elseif ($keepIcon -and $keepIcon -notmatch '^,') { $sc.IconLocation = $keepIcon }
 $sc.Save()
 Write-Host "Desktop shortcut: $lnk"
-Write-Host "Installed. Logs: $Studio\data\logs\  |  Pause: New-Item '$Studio\PAUSE'"
+Write-Host "Installed. Logs: $Studio\data\logs\  |  Health: $Studio\data\health\"
+Write-Host "Pause new Studio changes: New-Item '$Studio\PAUSE' (already queued Postiz posts remain scheduled)"

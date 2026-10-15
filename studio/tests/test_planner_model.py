@@ -46,6 +46,25 @@ def test_run_copilot_timeout_is_bounded_and_logged(cfg, tmp_path, monkeypatch):
     assert "tool-free Copilot response timed out" in log
 
 
+def test_run_copilot_auth_outage_fails_without_a_repair_loop(cfg, tmp_path, monkeypatch):
+    monkeypatch.setattr(planner, "ROOT", tmp_path)
+    calls = []
+
+    def fake_run(args, **kw):
+        calls.append(args)
+
+        class R:
+            returncode = 1
+            stdout = "Authentication required. Run copilot login."
+
+        return R()
+
+    monkeypatch.setattr(planner.subprocess, "run", fake_run)
+    with pytest.raises(RuntimeError, match="Authentication required"):
+        planner.run_copilot("return json", cfg, "plan-auth.log")
+    assert len(calls) == 1
+
+
 def test_run_copilot_has_no_autonomous_tools_and_uses_stdin(cfg, tmp_path, monkeypatch):
     monkeypatch.setattr(planner, "ROOT", tmp_path)
     seen = {}
@@ -151,3 +170,24 @@ def test_assistant_content_extracts_json_from_event_stream():
         + "\n"
     )
     assert planner._assistant_content(stream) == '{"posts":[]}'
+
+
+def test_make_plan_uses_one_bounded_repair_for_malformed_output(cfg, tmp_path, monkeypatch):
+    monkeypatch.setattr(planner, "ROOT", tmp_path)
+    monkeypatch.setattr(planner, "PLANS", tmp_path / "data" / "plans")
+    monkeypatch.setattr(planner, "plan_path", lambda d: tmp_path / "data" / "plans" / f"{d}.json")
+    monkeypatch.setattr(planner.news, "fetch_news", lambda *_args, **_kwargs: None)
+    monkeypatch.setattr(planner.context, "write_history_context", lambda _d: "history.md")
+    monkeypatch.setattr(planner.context, "write_transcript_context", lambda: "transcript.md")
+    monkeypatch.setattr(planner, "write_context_bundle", lambda *_args, **_kwargs: "bundle.md")
+    monkeypatch.setattr(planner, "build_prompt", lambda *_args, **_kwargs: "prompt")
+    monkeypatch.setattr(planner, "_self_contained_request", lambda *_args, **_kwargs: "request")
+    monkeypatch.setattr(planner.schema, "validate_plan", lambda *_args: [])
+    monkeypatch.setattr(planner, "_slot_errors", lambda *_args: [])
+    monkeypatch.setattr(planner, "_content_gate_errors", lambda *_args: [])
+    responses = iter([(0, "not json"), (0, '{"summary":"fixed","posts":[]}')])
+    monkeypatch.setattr(planner, "run_copilot", lambda *_args, **_kwargs: next(responses))
+    monkeypatch.setattr(planner, "assign_schedule", lambda *_args, **_kwargs: None)
+    plan = planner.make_plan(date(2026, 12, 30), cfg, log=lambda *_: None)
+    assert plan["summary"] == "fixed"
+    assert json.loads((tmp_path / "data" / "plans" / "2026-12-30.json").read_text())["summary"] == "fixed"
