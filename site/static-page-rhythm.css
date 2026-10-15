@@ -1,0 +1,189 @@
+main:not(.fg):not(.l8-projects-page) > section:first-of-type {
+  padding: 96px 56px 32px !important;
+}
+
+main:not(.fg):not(.l8-projects-page) > section:first-of-type h1 {
+  font-size: 44px !important;
+  line-height: 1.08 !important;
+}
+
+main:not(.fg):not(.l8-projects-page) > section:nth-of-type(2) {
+  padding: 40px 56px 72px !important;
+}
+
+main:not(.fg):not(.l8-projects-page) > section:nth-of-type(2) p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.fg .fg-hero {
+  padding-top: 96px;
+  padding-bottom: 24px;
+}
+
+.fg .fg-hero h1 {
+  font-size: clamp(2rem, 3.3vw, 2.75rem);
+  line-height: 1.08;
+}
+
+.fg .fg-overview-heading h2,
+.fg .fg-resource-heading h2,
+.fg .fg-copy h2 {
+  font-size: 28px;
+  line-height: 1.15;
+}
+
+.fg .fg-overview-heading {
+  margin-bottom: 20px;
+}
+
+.fg .fg-copy {
+  padding: 24px;
+}
+
+.fg .fg-copy p,
+.fg .fg-resource-heading p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.fg .fg-card > span:last-child {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.fg .fg-resources {
+  margin-top: 28px;
+}
+
+.l8-projects-page {
+  padding-top: 6rem;
+}
+
+.l8-projects__inner {
+  padding: 3rem 3rem 4rem;
+}
+
+.l8-projects__intro {
+  padding: 2rem 0;
+}
+
+.l8-projects__intro h1,
+.l8-projects__intro h2 {
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  line-height: 1.08;
+  white-space: normal;
+}
+
+.l8-projects__count {
+  font-size: 4.25rem;
+}
+
+.l8-projects__count span {
+  font-size: 3.5rem;
+}
+
+.l8-projects__intro p,
+.l8-projects__closing > p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.l8-projects__closing {
+  margin-top: 2rem;
+  padding-block: 2rem;
+}
+
+.l8-projects__closing h3 {
+  font-size: 30px;
+  line-height: 1.15;
+}
+
+@media (max-width: 900px) {
+  main:not(.fg):not(.l8-projects-page) > section:first-of-type {
+    padding: 88px 32px 28px !important;
+  }
+
+  main:not(.fg):not(.l8-projects-page) > section:nth-of-type(2) {
+    padding: 32px 32px 64px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  main:not(.fg):not(.l8-projects-page) > section:first-of-type {
+    padding: 80px 24px 24px !important;
+  }
+
+  main:not(.fg):not(.l8-projects-page) > section:first-of-type h1 {
+    font-size: 32px !important;
+    line-height: 1.08 !important;
+  }
+
+  main:not(.fg):not(.l8-projects-page) > section:nth-of-type(2) {
+    padding: 24px 24px 56px !important;
+  }
+
+  .fg .fg-hero {
+    padding: 88px 24px 24px;
+  }
+
+  .fg .fg-hero h1 {
+    font-size: 32px;
+  }
+
+  .fg .fg-copy {
+    padding: 20px;
+  }
+
+  .fg .fg-copy h2,
+  .fg .fg-overview-heading h2,
+  .fg .fg-resource-heading h2 {
+    font-size: 24px;
+  }
+
+  .fg .fg-copy p,
+  .fg .fg-resource-heading p {
+    font-size: 16px;
+  }
+
+  .l8-projects-page {
+    padding-top: 5rem;
+  }
+
+  .l8-projects__inner {
+    padding: 2rem 1.5rem 3rem;
+  }
+
+  .l8-projects__intro {
+    padding: 1.5rem 0;
+    gap: 1rem;
+  }
+
+  .l8-projects__intro h1,
+  .l8-projects__intro h2 {
+    font-size: clamp(2rem, 7vw, 2.5rem);
+  }
+
+  .l8-projects__count {
+    font-size: 3.5rem;
+  }
+
+  .l8-projects__count span {
+    font-size: 3rem;
+  }
+
+  .l8-projects__closing h3 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 359px) {
+  main:not(.fg):not(.l8-projects-page) > section:first-of-type,
+  main:not(.fg):not(.l8-projects-page) > section:nth-of-type(2) {
+    padding-inline: 20px !important;
+  }
+
+  .l8-projects__inner {
+    padding-inline: 1.25rem;
+  }
+}
