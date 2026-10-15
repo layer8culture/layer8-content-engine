@@ -77,6 +77,15 @@ class ProjectsShowcaseTests(unittest.TestCase):
         self.assertIn('window.matchMedia("(prefers-reduced-motion: reduce)")', javascript)
         self.assertIn('window.location.hash === "#projects"', javascript)
 
+    def test_sonar_sweep_uses_its_svg_viewbox_center_as_the_pivot(self) -> None:
+        css = Path("site/projects/projects.css").read_text(encoding="utf-8")
+        self.assertRegex(
+            css,
+            r"\.l8-projects__radar-sweep\s*\{\s*"
+            r"transform-box:\s*view-box;\s*"
+            r"transform-origin:\s*350px 177px;",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

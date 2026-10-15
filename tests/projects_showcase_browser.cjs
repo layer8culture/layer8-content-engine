@@ -25,6 +25,36 @@ async function waitForProjectAnchor(page) {
   });
 }
 
+async function assertRadarSweep(page, width) {
+  let previousTransform;
+  for (let frame = 0; frame < 3; frame += 1) {
+    await page.waitForTimeout(750);
+    const sample = await page.locator(".l8-projects__radar-sweep").evaluate(sweep => {
+      const svg = sweep.ownerSVGElement;
+      const bounds = sweep.getBoundingClientRect();
+      const viewport = svg.getBoundingClientRect();
+      const center = new DOMPoint(350, 177).matrixTransform(sweep.getScreenCTM());
+      const expectedCenter = new DOMPoint(350, 177).matrixTransform(svg.getScreenCTM());
+      return {
+        transform: getComputedStyle(sweep).transform,
+        transformBox: getComputedStyle(sweep).transformBox,
+        centerDelta: Math.hypot(center.x - expectedCenter.x, center.y - expectedCenter.y),
+        contained: bounds.left >= viewport.left - 1 &&
+          bounds.top >= viewport.top - 1 &&
+          bounds.right <= viewport.right + 1 &&
+          bounds.bottom <= viewport.bottom + 1,
+      };
+    });
+    assert.equal(sample.transformBox, "view-box", `radar pivot uses the SVG viewBox at ${width}px`);
+    assert.ok(sample.centerDelta <= 1, `radar pivot remains centered at ${width}px: ${sample.centerDelta}px`);
+    assert.equal(sample.contained, true, `radar sweep stays inside the SVG at ${width}px`);
+    if (previousTransform !== undefined) {
+      assert.notEqual(sample.transform, previousTransform, `radar sweep rotates over time at ${width}px`);
+    }
+    previousTransform = sample.transform;
+  }
+}
+
 (async () => {
   const browser = await chromium.launch();
   try {
@@ -94,6 +124,7 @@ async function waitForProjectAnchor(page) {
       await page.waitForFunction(() =>
         getComputedStyle(document.querySelector(".l8-projects__radar-sweep")).animationName === "l8-radar-sweep"
       );
+      await assertRadarSweep(page, width);
       if (width < 768) {
         await page.locator('body > nav button[aria-expanded]').click();
         const menu = page.locator('[role="dialog"]');

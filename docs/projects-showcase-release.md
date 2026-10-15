@@ -18,9 +18,12 @@ integration after verifying the generated React payload.
 
 The supplied Radio GIF is used only while its card is visible and motion is
 enabled. Pausing or requesting reduced motion switches to the supplied poster;
-the Sonar radar also stops when offscreen or motion is paused. Keyboard behavior
-uses native links and a native button, and the existing responsive menu remains
-the owner of its open/closed state.
+the Sonar radar also stops when offscreen or motion is paused. The radar sweep's
+rotation origin is defined in the SVG viewBox coordinate system; keep its
+`transform-box` set to `view-box` so the `350 177` center pivot is not interpreted
+relative to the sweep group's smaller bounds. Keyboard behavior uses native
+links and a native button, and the existing responsive menu remains the owner
+of its open/closed state.
 
 ## Rebuild and validation
 
