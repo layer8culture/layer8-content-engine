@@ -8,6 +8,7 @@ from datetime import date, datetime, timedelta
 from .config import DATA, LEGACY_HISTORY, POSTED_LOG, ROOT
 
 TRANSCRIPTS = ROOT / "transcripts"
+RUNTIME_TRANSCRIPT_INDEX = DATA / "transcripts" / "index.json"
 STOP = set("a an the and or of to for in on with your you we our is are be it this that how what why when from at by as do don't not into vs".split())
 
 
@@ -28,23 +29,40 @@ def latest_transcript(show: str = "tech-thursday") -> dict | None:
     idx_path = TRANSCRIPTS / "index.json"
     rows = []
     if idx_path.exists():
-        rows = [r for r in json.loads(idx_path.read_text(encoding="utf-8-sig")).get("files", []) if r.get("show") == show]
+        rows = [
+            {**r, "_indexed": True}
+            for r in json.loads(idx_path.read_text(encoding="utf-8-sig")).get("files", [])
+            if r.get("show") == show
+        ]
+    if RUNTIME_TRANSCRIPT_INDEX.exists():
+        rows += [
+            {**r, "_indexed": True}
+            for r in json.loads(RUNTIME_TRANSCRIPT_INDEX.read_text(encoding="utf-8-sig")).get("files", [])
+            if r.get("show") == show
+        ]
     rows = [r for r in rows if (TRANSCRIPTS / r["file"]).exists()]
-    # Unindexed drops: date from a YYYY-MM-DD in the name, else file mtime.
+    # Unindexed drops are eligible only when the actual recording date is in the
+    # filename. Filesystem mtime is a download time, not an air date.
     known = {r["file"] for r in rows}
     if idx_path.exists():
         known |= {r["file"] for r in json.loads(idx_path.read_text(encoding="utf-8-sig")).get("files", [])}
+    if RUNTIME_TRANSCRIPT_INDEX.exists():
+        known |= {
+            r["file"]
+            for r in json.loads(RUNTIME_TRANSCRIPT_INDEX.read_text(encoding="utf-8-sig")).get("files", [])
+            if r.get("file")
+        }
     for f in TRANSCRIPTS.glob("*.vtt"):
         if f.name in known:
             continue
         m = re.search(r"(\d{4}-\d{2}-\d{2})", f.name)
-        d = m.group(1) if m else datetime.fromtimestamp(f.stat().st_mtime).strftime("%Y-%m-%d")
-        rows.append({"file": f.name, "date": d, "show": show})
+        if m:
+            rows.append({"file": f.name, "date": m.group(1), "show": show, "_indexed": False})
     if not rows:
         return None
-    row = sorted(rows, key=lambda r: (r["date"], r["file"]))[-1]
+    row = sorted(rows, key=lambda r: (r["date"], r.get("_indexed", False), r["file"]))[-1]
     text = vtt_to_text((TRANSCRIPTS / row["file"]).read_text(encoding="utf-8", errors="replace"))
-    return {**row, "text": text}
+    return {key: value for key, value in {**row, "text": text}.items() if key != "_indexed"}
 
 
 def write_transcript_context(max_chars: int = 45000) -> str | None:

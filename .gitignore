@@ -40,6 +40,10 @@ venv/
 .env
 *.env
 
+# StreamYard transcript imports are runtime artifacts. Recording metadata lives
+# in studio/data/transcripts/index.json so scheduled imports never dirty git.
+studio/transcripts/20??-??-??-*.vtt
+
 # --- OS / editor noise ---
 .DS_Store
 Thumbs.db

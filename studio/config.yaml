@@ -6,6 +6,14 @@ paused: false
 
 timezone: America/New_York
 
+streamyard:
+  # Supported browser UI only. Run `python studio.py streamyard-login` once to
+  # create the local authenticated browser profile; scheduled imports never ask
+  # for or log StreamYard credentials.
+  folder_url: "https://streamyard.com/workspaces/lSg1FjDiIk2NOQvhEuGm15vY/folder/zcuda6b47s/videos"
+  import_limit: 3
+  retries: 2
+
 # The "brains". Any model the Copilot CLI accepts.
 # claude-opus-5.5 was retired from the Copilot CLI's model list on/around 2026-10-08
 # (confirmed via `copilot --model claude-opus-5.5` -> "Model ... is not available"),

@@ -3,6 +3,7 @@ Registers the Layer8 Studio scheduled tasks for the current user (no admin neede
 
   LayerStudio-Daily    17:00 every day        python studio.py run-daily   (plan tomorrow, render, prompt pack, gates, preview)
   LayerStudio-Publish  every 30 min, 06:00-23:00  python studio.py publish  (ingest heroes, gates, push due posts to Postiz)
+  LayerStudio-Transcripts 08:00 every day     optional; add -IncludeStreamYard after explicit local login
 
 Both use StartWhenAvailable, so a run missed while the laptop was off/asleep fires when it's back.
 Remove with:  .\install-schedule.ps1 -Uninstall
@@ -11,13 +12,16 @@ Already queued Postiz posts remain scheduled.
 #>
 param(
     [switch]$Uninstall,
+    [switch]$IncludeStreamYard,
     [string]$DailyTime = "17:00",
+    [string]$TranscriptTime = "08:00",
     [string]$Python = (Get-Command python -ErrorAction Stop).Source
 )
 
 $ErrorActionPreference = "Stop"
 $Studio = $PSScriptRoot
 $Names = @("LayerStudio-Daily", "LayerStudio-Publish")
+if ($IncludeStreamYard -or $Uninstall) { $Names += "LayerStudio-Transcripts" }
 
 if ($Uninstall) {
     foreach ($n in $Names) { Unregister-ScheduledTask -TaskName $n -Confirm:$false -ErrorAction SilentlyContinue }
@@ -50,6 +54,16 @@ $pub.Repetition = (New-ScheduledTaskTrigger -Once -At "06:00" -RepetitionInterva
 $pub.Repetition.StopAtDurationEnd = $false
 Register-ScheduledTask -TaskName "LayerStudio-Publish" -Action (New-StudioAction "publish") -Trigger $pub `
     -Settings (New-StudioSettings 90) -Principal $principal -Description "Layer8 Studio: publish due posts to Postiz" -Force | Out-Null
+
+if ($IncludeStreamYard) {
+    $profile = Join-Path $Studio "data\browser\streamyard-profile"
+    if (-not (Test-Path $profile)) {
+        throw "StreamYard login profile is missing. Run 'python studio.py streamyard-login' interactively first."
+    }
+    $transcripts = New-ScheduledTaskTrigger -Daily -At $TranscriptTime
+    Register-ScheduledTask -TaskName "LayerStudio-Transcripts" -Action (New-StudioAction "import-transcripts") -Trigger $transcripts `
+        -Settings (New-StudioSettings 30) -Principal $principal -Description "Layer8 Studio: import StreamYard transcripts" -Force | Out-Null
+}
 
 Get-ScheduledTask -TaskName $Names | Select-Object TaskName, State | Format-Table
 
