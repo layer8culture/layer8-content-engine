@@ -177,3 +177,24 @@ def test_launch_context_uses_configured_installed_browser(monkeypatch, tmp_path)
         "accept_downloads": True,
         "channel": "chrome",
     }]
+
+
+def test_login_opens_normal_chrome_with_dedicated_profile(monkeypatch, tmp_path):
+    _paths(monkeypatch, tmp_path)
+    chrome = tmp_path / "chrome.exe"
+    chrome.write_bytes(b"")
+    calls = []
+    monkeypatch.setattr(streamyard, "_chrome_executable", lambda: chrome)
+    monkeypatch.setattr(
+        streamyard.subprocess, "Popen",
+        lambda args: calls.append(args) or object(),
+    )
+    streamyard._open_login_browser("https://streamyard.com/folder")
+    assert calls == [[
+        str(chrome),
+        f"--user-data-dir={streamyard.PROFILE}",
+        "--new-window",
+        "--no-first-run",
+        "--no-default-browser-check",
+        "https://streamyard.com/folder",
+    ]]

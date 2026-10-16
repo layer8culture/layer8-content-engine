@@ -5,6 +5,8 @@ import hashlib
 import json
 import os
 import re
+import shutil
+import subprocess
 import tempfile
 import time
 from dataclasses import dataclass
@@ -241,23 +243,59 @@ def _launch_context(playwright, *, headless: bool, channel: str | None):
     return playwright.chromium.launch_persistent_context(**kwargs)
 
 
+def _chrome_executable() -> Path:
+    found = shutil.which("chrome")
+    candidates = [
+        Path(found) if found else None,
+        Path(os.environ.get("PROGRAMFILES", "")) / "Google/Chrome/Application/chrome.exe",
+        Path(os.environ.get("PROGRAMFILES(X86)", "")) / "Google/Chrome/Application/chrome.exe",
+        Path(os.environ.get("LOCALAPPDATA", "")) / "Google/Chrome/Application/chrome.exe",
+    ]
+    for candidate in candidates:
+        if candidate and candidate.is_file():
+            return candidate
+    raise StreamYardError("Google Chrome is not installed in a supported Windows location")
+
+
+def _open_login_browser(folder_url: str):
+    PROFILE.mkdir(parents=True, exist_ok=True)
+    return subprocess.Popen([
+        str(_chrome_executable()),
+        f"--user-data-dir={PROFILE}",
+        "--new-window",
+        "--no-first-run",
+        "--no-default-browser-check",
+        folder_url,
+    ])
+
+
 def login(
     folder_url: str, *, timeout_minutes: int = 15,
     browser_channel: str | None = "chrome", log=print,
 ) -> None:
-    from playwright.sync_api import sync_playwright
+    from playwright.sync_api import Error as PlaywrightError, sync_playwright
 
     PROFILE.mkdir(parents=True, exist_ok=True)
-    log("Opening a dedicated local StreamYard browser profile.")
-    log("Sign in to StreamYard in that window. Studio never receives or logs your password.")
+    log("Opening a normal Chrome window with Studio's dedicated local profile.")
+    log("Sign in to StreamYard, open the recordings folder, then close that entire Chrome window.")
+    log("Studio never receives or logs your password.")
+    process = _open_login_browser(folder_url)
+    try:
+        process.wait(timeout=max(1, timeout_minutes) * 60)
+    except subprocess.TimeoutExpired as exc:
+        update_job("streamyard-login", "failed", error="setup Chrome window stayed open past timeout")
+        raise StreamYardLoginRequired(
+            "close the dedicated Chrome window after StreamYard is signed in, then rerun setup"
+        ) from exc
+    deadline = time.monotonic() + 2 * 60
     with sync_playwright() as playwright:
-        browser = _launch_context(
-            playwright, headless=False, channel=browser_channel,
-        )
-        page = browser.pages[0] if browser.pages else browser.new_page()
-        deadline = time.monotonic() + max(1, timeout_minutes) * 60
         while time.monotonic() < deadline:
+            browser = None
             try:
+                browser = _launch_context(
+                    playwright, headless=True, channel=browser_channel,
+                )
+                page = browser.pages[0] if browser.pages else browser.new_page()
                 recordings = _recordings(page, folder_url)
                 if recordings:
                     update_job(
@@ -265,11 +303,15 @@ def login(
                         recordings_visible=len(recordings),
                     )
                     log(f"StreamYard login verified; {len(recordings)} recording(s) are visible.")
-                    browser.close()
                     return
-            except StreamYardLoginRequired:
-                page.wait_for_timeout(2_000)
-        browser.close()
+            except (StreamYardError, PlaywrightError, OSError):
+                time.sleep(2)
+            finally:
+                if browser:
+                    try:
+                        browser.close()
+                    except PlaywrightError:
+                        pass
     update_job("streamyard-login", "failed", error="login was not verified before timeout")
     raise StreamYardLoginRequired("StreamYard login was not verified before the setup timeout")
 
