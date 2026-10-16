@@ -230,15 +230,29 @@ def _download_vtt(page, recording: Recording, download_dir: Path) -> Path:
     return target
 
 
-def login(folder_url: str, *, timeout_minutes: int = 15, log=print) -> None:
+def _launch_context(playwright, *, headless: bool, channel: str | None):
+    kwargs = {
+        "user_data_dir": str(PROFILE),
+        "headless": headless,
+        "accept_downloads": True,
+    }
+    if channel:
+        kwargs["channel"] = channel
+    return playwright.chromium.launch_persistent_context(**kwargs)
+
+
+def login(
+    folder_url: str, *, timeout_minutes: int = 15,
+    browser_channel: str | None = "chrome", log=print,
+) -> None:
     from playwright.sync_api import sync_playwright
 
     PROFILE.mkdir(parents=True, exist_ok=True)
     log("Opening a dedicated local StreamYard browser profile.")
     log("Sign in to StreamYard in that window. Studio never receives or logs your password.")
     with sync_playwright() as playwright:
-        browser = playwright.chromium.launch_persistent_context(
-            str(PROFILE), headless=False, accept_downloads=True,
+        browser = _launch_context(
+            playwright, headless=False, channel=browser_channel,
         )
         page = browser.pages[0] if browser.pages else browser.new_page()
         deadline = time.monotonic() + max(1, timeout_minutes) * 60
@@ -265,6 +279,7 @@ def _import_latest(cfg: dict, *, limit: int = 3, retries: int = 2, log=print) ->
 
     settings = cfg.get("streamyard") or {}
     folder_url = str(settings.get("folder_url") or "").strip()
+    browser_channel = str(settings.get("browser_channel") or "").strip() or None
     if not folder_url:
         raise StreamYardError("streamyard.folder_url is not configured")
     if not PROFILE.exists():
@@ -277,8 +292,8 @@ def _import_latest(cfg: dict, *, limit: int = 3, retries: int = 2, log=print) ->
     waiting = []
     last_error: Exception | None = None
     with sync_playwright() as playwright:
-        browser = playwright.chromium.launch_persistent_context(
-            str(PROFILE), headless=True, accept_downloads=True,
+        browser = _launch_context(
+            playwright, headless=True, channel=browser_channel,
         )
         page = browser.pages[0] if browser.pages else browser.new_page()
         try:

@@ -57,7 +57,8 @@ Dates default to tomorrow for plan/run-daily/dry-run and to today otherwise.
 
 Studio uses StreamYard's documented download UI, not a private API. It stores no StreamYard
 password and cannot reuse an unrelated browser session. The one-time `streamyard-login` command
-creates a dedicated local Playwright profile only after you sign in yourself. Scheduled access is
+opens the installed Google Chrome channel and creates a dedicated local profile only after you
+sign in yourself. Scheduled access is
 opt-in: `install-schedule.ps1` does not register `LayerStudio-Transcripts` unless
 `-IncludeStreamYard` is supplied and that profile exists.
 

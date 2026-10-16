@@ -450,6 +450,7 @@ def cmd_streamyard_login(a, cfg):
     streamyard.login(
         cfg["streamyard"]["folder_url"],
         timeout_minutes=a.timeout_minutes,
+        browser_channel=cfg["streamyard"].get("browser_channel"),
         log=log,
     )
 
