@@ -8,7 +8,7 @@ later task launch at process start: nothing logged and LastTaskResult 0x41306 (t
 Every run writes a start line and an end line with the real exit code to data\logs\task-<job>.log.
 #>
 param(
-    [Parameter(Mandatory)][ValidateSet("publish", "run-daily")][string]$Job,
+    [Parameter(Mandatory)][ValidateSet("publish", "run-daily", "import-transcripts")][string]$Job,
     [switch]$SelfUpdate,
     [string]$Python = "python"
 )

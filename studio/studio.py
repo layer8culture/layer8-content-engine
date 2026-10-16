@@ -6,6 +6,8 @@
   python studio.py ingest     [--date ...]        # pick up ChatGPT heroes from inbox/, re-render those posts
   python studio.py publish    [--now ISO]         # just-in-time push of due posts to Postiz (every 30 min)
   python studio.py run-daily  [--date ...]        # nightly: plan tomorrow, render, prompt pack, gates, preview
+  python studio.py streamyard-login               # one-time explicit local browser login
+  python studio.py import-transcripts             # supported-UI StreamYard VTT import
   python studio.py status     [--date ...]
   python studio.py dry-run    [--date ...] [--reuse-plan]   # everything except posting
 """
@@ -17,7 +19,7 @@ import os
 import sys
 from datetime import datetime, timedelta
 
-from studio_lib import config, gates, health, heroes, notify, planner, preview, render
+from studio_lib import config, context, gates, health, heroes, notify, planner, preview, render
 from studio_lib.locks import FileLock, LockBusy
 
 # Windows consoles / Task Scheduler redirects default to cp1252; never crash on a "→".
@@ -362,7 +364,18 @@ def cmd_status(a, cfg):
     log(f"Layer8 Studio — {'PAUSED' if config.is_paused(cfg) else 'active'} — model {cfg['model']}")
     if config.is_paused(cfg):
         log("PAUSE stops new Studio creates/replacements only; existing Postiz queue entries remain scheduled.")
-    for name in ("task-run-daily", "task-publish", "run-daily", "publish"):
+    latest_transcript = context.latest_transcript()
+    if latest_transcript:
+        log(
+            f"latest Tech Thursday transcript: {latest_transcript['date']} — "
+            f"{latest_transcript['file']}"
+        )
+    else:
+        log("latest Tech Thursday transcript: none with a verified recording date")
+    for name in (
+        "task-run-daily", "task-publish", "task-import-transcripts",
+        "run-daily", "publish", "import-transcripts", "streamyard-login",
+    ):
         path = DATA / "health" / f"{name}.json"
         if not path.exists():
             continue
@@ -431,6 +444,31 @@ def cmd_email_test(a, cfg):
     log(f"test email accepted for {recipient}")
 
 
+def cmd_streamyard_login(a, cfg):
+    from studio_lib import streamyard
+
+    streamyard.login(
+        cfg["streamyard"]["folder_url"],
+        timeout_minutes=a.timeout_minutes,
+        log=log,
+    )
+
+
+def cmd_import_transcripts(a, cfg):
+    from studio_lib import streamyard
+
+    imported = streamyard.import_latest(
+        cfg,
+        limit=a.limit or int(cfg["streamyard"].get("import_limit", 3)),
+        retries=int(cfg["streamyard"].get("retries", 2)),
+        log=log,
+    )
+    latest = context.latest_transcript()
+    if latest:
+        log(f"latest transcript: {latest['date']} — {latest['file']}")
+    log(f"StreamYard transcript import complete: {len(imported)} new file(s)")
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="studio.py", description="Layer8 Studio")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -464,14 +502,29 @@ def main(argv=None):
         help="after ingest, immediately reconcile this prepared date with Postiz",
     )
     sub.add_parser("email-test", help="send one recipient-only SMTP configuration test")
+    sp = sub.add_parser(
+        "streamyard-login",
+        help="one-time interactive login for the dedicated local StreamYard browser profile",
+    )
+    sp.add_argument("--timeout-minutes", type=int, default=15)
+    sp = sub.add_parser(
+        "import-transcripts",
+        help="download new StreamYard VTT transcripts through the supported browser UI",
+    )
+    sp.add_argument("--limit", type=int, help="maximum new recordings to inspect this run")
     a = ap.parse_args(argv)
     config.load_env()
     config.ensure_dirs()
     cfg = config.load_config()
     health.update_job(a.cmd, "running")
     try:
-        {"plan": cmd_plan, "render": cmd_render, "ingest": cmd_ingest, "publish": cmd_publish, "run-daily": cmd_run_daily,
-         "status": cmd_status, "dry-run": cmd_dry_run, "heroes": cmd_heroes, "email-test": cmd_email_test}[a.cmd](a, cfg)
+        {
+            "plan": cmd_plan, "render": cmd_render, "ingest": cmd_ingest,
+            "publish": cmd_publish, "run-daily": cmd_run_daily, "status": cmd_status,
+            "dry-run": cmd_dry_run, "heroes": cmd_heroes, "email-test": cmd_email_test,
+            "streamyard-login": cmd_streamyard_login,
+            "import-transcripts": cmd_import_transcripts,
+        }[a.cmd](a, cfg)
     except Exception as exc:
         health.update_job(a.cmd, "failed", error=f"{type(exc).__name__}: {exc}")
         if a.cmd == "publish":

@@ -24,6 +24,7 @@ There is **no human approval step**. Safety comes from the gates and the kill sw
 6. Fill in `facts:` in `config.yaml` (Tech Thursday time/URL, radio stream URL). The planner never states a fact that is blank there.
 7. Test run: `python studio.py dry-run`. This plans and renders tomorrow without publishing. Open `data\media\<date>\preview.html` to review it.
 8. Schedule it: `powershell -ExecutionPolicy Bypass -File install-schedule.ps1` (remove with `-Uninstall`).
+9. Optional StreamYard transcript automation: run `python studio.py streamyard-login`, sign in yourself in the dedicated local browser window, then rerun the installer with `-IncludeStreamYard`. This adds the 08:00 ET transcript task without exposing credentials to Studio.
 
 The tasks use *StartWhenAvailable*, so a run missed while the laptop was off fires when it wakes. If the 17:00 plan is still missing after 18:00 for any reason, the next publish run makes it (`publish.catch_up_daily_after_hour`).
 
@@ -46,9 +47,30 @@ For Gmail, enable 2-Step Verification and create an app password yourself at <ht
 | `python studio.py publish [--dry] [--date D] [--only ID..] [--ahead]` | Push due posts that passed the gates to Postiz (`--ahead`: schedule the whole day now at its planned times) |
 | `python studio.py run-daily [--date D]` | plan → render → prompt pack → gates → preview → queue all routes → completion email |
 | `python studio.py dry-run [--date D] [--reuse-plan]` | Same as run-daily, then a publish simulation (no network) |
+| `python studio.py streamyard-login` | One-time interactive login for Studio's dedicated local StreamYard browser profile |
+| `python studio.py import-transcripts [--limit N]` | Download and index new VTTs through StreamYard's supported browser UI |
 | `python studio.py status [--date D]` | Plan, gates, heroes, and what has been posted |
 
 Dates default to tomorrow for plan/run-daily/dry-run and to today otherwise.
+
+## StreamYard transcripts
+
+Studio uses StreamYard's documented download UI, not a private API. It stores no StreamYard
+password and cannot reuse an unrelated browser session. The one-time `streamyard-login` command
+creates a dedicated local Playwright profile only after you sign in yourself. Scheduled access is
+opt-in: `install-schedule.ps1` does not register `LayerStudio-Transcripts` unless
+`-IncludeStreamYard` is supplied and that profile exists.
+
+The 08:00 ET task uses `StartWhenAvailable`, validates `WEBVTT` plus timestamped cues, and indexes
+each recording by its actual StreamYard air date and recording ID. Duplicate IDs or transcript
+hashes are not imported twice. A transcript still being generated is reported as `waiting`, while
+login, parsing, and download failures are reported as failures in `data\health\`; none are treated
+as fresh transcript success. Imports never replan, replace, or publish existing content.
+
+StreamYard does not provide bulk transcript export and may take time to generate a VTT. Also,
+Thursday's 17:00 preparation occurs before the 21:00 show, so a Friday 08:00 import cannot
+retroactively change Friday posts already prepared Thursday evening. Same-show Friday recaps would
+require a separate scheduling/editorial change rather than a silent replan.
 
 ## Pause Studio changes
 
@@ -113,7 +135,7 @@ Each scheduled task writes authoritative health to `data\health\task-<job>.json`
 studio.py            CLI
 config.yaml          all tunables (cadence, facts, gates, channels, model)
 brand/               brand docs, voice digests, topics-*.md (edit these to steer)
-transcripts/         Tech Thursday .vtt (drop new ones here; newest is used for recaps)
+transcripts/         indexed Tech Thursday/workshop .vtt files (actual air date selects recaps)
 assets/fonts/ config/schedule-windows.json
 templates/           layer8.css, radio.css, plan-prompt.md, remotion/
 studio_lib/          planner, render, heroes, gates, publish, schedule, …
