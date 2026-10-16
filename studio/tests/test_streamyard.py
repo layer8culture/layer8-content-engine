@@ -158,3 +158,22 @@ def test_pending_transcript_is_waiting_not_failed(monkeypatch):
     with pytest.raises(streamyard.StreamYardTranscriptPending):
         streamyard.import_latest({"streamyard": {"folder_url": "https://streamyard.com/folder"}})
     assert [status for _job, status, _details in health] == ["running", "waiting"]
+
+
+def test_launch_context_uses_configured_installed_browser(monkeypatch, tmp_path):
+    _paths(monkeypatch, tmp_path)
+    calls = []
+
+    class Chromium:
+        def launch_persistent_context(self, **kwargs):
+            calls.append(kwargs)
+            return object()
+
+    playwright = type("Playwright", (), {"chromium": Chromium()})()
+    streamyard._launch_context(playwright, headless=False, channel="chrome")
+    assert calls == [{
+        "user_data_dir": str(streamyard.PROFILE),
+        "headless": False,
+        "accept_downloads": True,
+        "channel": "chrome",
+    }]

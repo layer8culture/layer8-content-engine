@@ -11,6 +11,7 @@ streamyard:
   # create the local authenticated browser profile; scheduled imports never ask
   # for or log StreamYard credentials.
   folder_url: "https://streamyard.com/workspaces/lSg1FjDiIk2NOQvhEuGm15vY/folder/zcuda6b47s/videos"
+  browser_channel: chrome
   import_limit: 3
   retries: 2
 
