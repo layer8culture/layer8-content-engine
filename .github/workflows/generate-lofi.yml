@@ -5,9 +5,15 @@ on:
     # Daily 02:00 UTC. Layer8Culture Radio now has a 24/7 livestream, so the lofi
     # pipeline runs every day with a more aggressive Instagram + YouTube Shorts funnel.
     - cron: "0 2 * * *"
-  workflow_dispatch: {}     # manual trigger button
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "Eastern posting date (YYYY-MM-DD); blank uses today's UTC date"
+        required: false
+        type: string
 
 permissions:
+  actions: read
   contents: write
   pull-requests: write
 
@@ -21,6 +27,18 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
+      - name: Resolve intended batch date once
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_EVENT: ${{ github.event_name }}
+          RUN_SCHEDULE: ${{ github.event.schedule }}
+          INPUT_DATE: ${{ inputs.date }}
+        run: |
+          RUN_CREATED_AT="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" --jq .created_at)"
+          python scripts/generation_date.py --lane lofi \
+            --event "$RUN_EVENT" --run-created-at "$RUN_CREATED_AT" \
+            --cron "$RUN_SCHEDULE" --date "$INPUT_DATE" --github-env "$GITHUB_ENV"
 
       - name: Refresh "Now Live" video promos from YouTube
         # Pull the latest Layer8CultureRadio uploads via the public YouTube RSS feed
@@ -40,13 +58,15 @@ jobs:
         # Lofi is evergreen brand content; no web research needed. Writes stay
         # scoped to queue/* (the agent only reads brand + steering files).
         run: |
-          copilot -p "$(cat scripts/generation-prompt-lofi.md)" \
+          copilot -p "$(cat scripts/generation-prompt-lofi.md)"$'\n\n'"$GENERATION_TARGET_INSTRUCTION" \
             -s \
             --allow-tool='read,write(queue/*)' \
             --no-ask-user
 
       - name: Verify and repair queue JSON
-        # The Copilot step above MUST write queue/lofi-<today>.json. If the agent
+        env:
+          GH_TOKEN: ${{ secrets.COPILOT_CLI_TOKEN }}
+        # The Copilot step above MUST write the resolved QUEUE_FILE. If the agent
         # instead prints the JSON to the log (a known intermittent miss where it
         # wrongly believes writes are blocked), nothing lands on disk. Fail loudly
         # here with an actionable message instead of letting the downstream visuals
@@ -54,7 +74,6 @@ jobs:
         # If the file exists but contains raw control characters in strings, repair
         # it. If repair fails, retry generation once before failing.
         run: |
-          QUEUE_FILE="queue/lofi-$(date +%F).json"
           if [ ! -f "$QUEUE_FILE" ]; then
             echo "::error::Copilot CLI did not write $QUEUE_FILE. The generation step produced no queue file (it likely printed the JSON to the run log instead of writing it). Re-run the workflow to regenerate."
             echo "queue/ currently contains:"
@@ -65,7 +84,7 @@ jobs:
           if ! python scripts/queue_json_guard.py "$QUEUE_FILE" --repair; then
             echo "::warning::$QUEUE_FILE was invalid and could not be repaired. Retrying lofi generation once."
             mv "$QUEUE_FILE" "$QUEUE_FILE.unrepaired"
-            copilot -p "$(cat scripts/generation-prompt-lofi.md)" \
+            copilot -p "$(cat scripts/generation-prompt-lofi.md)"$'\n\n'"$GENERATION_TARGET_INSTRUCTION" \
               -s \
               --allow-tool='read,write(queue/*)' \
               --no-ask-user
@@ -75,6 +94,11 @@ jobs:
             fi
             python scripts/queue_json_guard.py "$QUEUE_FILE" --repair
           fi
+
+      - name: Assign and validate posting schedule
+        run: |
+          python scripts/schedule_planner.py "$QUEUE_FILE" --date "$BATCH_DATE"
+          python scripts/schedule_planner.py "$QUEUE_FILE" --for-publish --date "$BATCH_DATE"
 
       - name: Install ffmpeg (for Reels)
         run: sudo apt-get update && sudo apt-get install -y ffmpeg
@@ -99,15 +123,18 @@ jobs:
           AZURE_OPENAI_VIDEO_SIZE: ${{ vars.AZURE_OPENAI_VIDEO_SIZE }}
         run: |
           pip install openai requests pillow
-          # Process this run's lofi queue (the file the Copilot step just generated).
-          # Fall back to the newest lofi queue file if the dated one is missing.
-          QUEUE_FILE="queue/lofi-$(date +%F).json"
-          [ -f "$QUEUE_FILE" ] || QUEUE_FILE=$(ls -t queue/lofi-*.json | head -n 1)
+          # Never fall back to a different batch when this run's queue is missing.
           echo "Generating images for $QUEUE_FILE"
           python scripts/openai_gen.py "$QUEUE_FILE"
           # Animate any format:"reel" posts into mp4s (uses the stills above).
           echo "Rendering reels for $QUEUE_FILE"
           python scripts/reel_gen.py "$QUEUE_FILE"
+
+      - name: Gate approval PR on schema, schedule, and final media
+        run: |
+          python scripts/queue_json_guard.py "$QUEUE_FILE"
+          python scripts/schedule_planner.py "$QUEUE_FILE" --for-publish --date "$BATCH_DATE"
+          python scripts/batch_readiness.py "$QUEUE_FILE"
 
       - name: Open approval PR
         # As with the main pipeline, the org disables Actions-created PRs, so we
@@ -116,7 +143,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.ENGINE_PR_TOKEN }}
         run: |
-          DATE=$(date +%F)
+          DATE="$BATCH_DATE"
           BRANCH="lofi/posts-$DATE-${GITHUB_RUN_ID}"
           git config user.name "layer8-engine"
           git config user.email "engine@layer8culture.io"
@@ -131,8 +158,6 @@ jobs:
           # Build a visual PR body (image(s) + exact caption + hashtags) so the
           # reviewer sees what will post, Postiz-style, right where they approve.
           SHA=$(git rev-parse HEAD)
-          QUEUE_FILE="queue/lofi-$DATE.json"
-          [ -f "$QUEUE_FILE" ] || QUEUE_FILE=$(ls -t queue/lofi-*.json | head -n 1)
           python scripts/build_pr_preview.py "$QUEUE_FILE" \
                  --repo "${{ github.repository }}" \
                  --sha "$SHA" \

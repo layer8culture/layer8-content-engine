@@ -76,6 +76,18 @@ Afrofuturistic LoFi stream.
   Insights. The digest steers generation — keep it in the prompt's READ FIRST list.
 - File naming for brand assets follows Section 27 of the guidelines.
 - Don't edit posted/log.json history; only append.
+- The local guided app is `scripts/adhoc_server.py` plus `webapp/`. Keep it
+  dependency-light and bound to localhost. `app_state.py` and `app_job.py` persist
+  local jobs under ignored `.local/`; queue JSON remains the content source of truth.
+- Share media planning and readiness between the app, approval checks, and the
+  publisher. A raw import, existing filename, successful render command, PR merge,
+  or Git push is not proof that a post is scheduled.
+- `ship_queue.py` prepares an exact-media-manifest approval PR. In-app approval
+  must bind to the reviewed revision/head and respect required checks and branch
+  protections. Never restore the former direct-to-main publishing shortcut.
+- Manual image generation stays user-driven. Import ZIPs or individual images,
+  preserve originals on replacement, and prepare only stale or missing outputs.
+  Do not put browser-driven ChatGPT automation into CI or the default app flow.
 
 ## When asked to modify the engine itself
 - Keep scripts dependency-light (Python: openai + requests + pillow only; ffmpeg is

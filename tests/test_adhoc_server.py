@@ -713,12 +713,7 @@ class PublishJobTests(unittest.TestCase):
         self.assertIn("ship_queue.py", str(ctx.exception))
 
 class PublishRouteTests(unittest.TestCase):
-    """POST /api/queue/<name>/publish and /publish-check over real HTTP.
-
-    start_job is stubbed, so no publish is ever attempted from the test run;
-    what is asserted is that the route picks the publish kind and that only
-    /publish-check adds --dry-run.
-    """
+    """Mutations require a current revision and local session; publishing needs a PR."""
 
     @classmethod
     def setUpClass(cls):
@@ -735,6 +730,24 @@ class PublishRouteTests(unittest.TestCase):
         cls.thread.join(timeout=5)
 
     def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        root = pathlib.Path(self.tmp.name)
+        queue = root / "queue"
+        queue.mkdir()
+        for name, value in (("REPO_ROOT", root), ("QUEUE_DIR", queue),
+                            ("OUT_DIR", root / "assets" / "generated"),
+                            ("INBOX_DIR", root / "assets" / "manual-inbox"),
+                            ("TRASH_DIR", root / ".trash")):
+            patcher = mock.patch.object(adhoc_server, name, value)
+            patcher.start()
+            self.addCleanup(patcher.stop)
+        patcher = mock.patch.object(adhoc_server, "readiness", return_value={
+            "revision": "fixture-revision", "ready": False, "media_ready": False,
+            "schedule_ready": False, "blockers": ["Missing media"], "warnings": [],
+        })
+        patcher.start()
+        self.addCleanup(patcher.stop)
         self.name = "zz-publish-route-test.json"
         self.path = adhoc_server.QUEUE_DIR / self.name
         self.path.write_text(json.dumps([{
@@ -746,51 +759,45 @@ class PublishRouteTests(unittest.TestCase):
             "text": "Caption",
             "visual": {"source": "openai", "openai_prompt": "a scene"},
         }]), encoding="utf-8")
-        self.addCleanup(self.path.unlink, True)
+        self.token = json.loads(urllib.request.urlopen(self.base + "/api/session").read())["csrf"]
 
-    def post(self, action):
-        captured = {}
+    def post(self, action, headers=None):
+        request_headers = {"X-Layer8-CSRF": self.token, "If-Match": "fixture-revision"}
+        request_headers.update(headers or {})
+        req = urllib.request.Request(
+            f"{self.base}/api/queue/{self.name}/{action}", data=b"{}",
+            headers=request_headers, method="POST")
+        return json.loads(urllib.request.urlopen(req, timeout=10).read())
 
-        def fake_start_job(kind, qpath, extra=None):
-            captured["kind"] = kind
-            captured["queue"] = qpath.name
-            captured["extra"] = list(extra or [])
-            return adhoc_server.start_command_job(
-                "publish", [sys.executable, "-c", "pass"], label="stub")
+    def test_direct_publish_is_disabled(self):
+        with self.assertRaises(urllib.error.HTTPError) as ctx:
+            self.post("publish")
+        self.assertEqual(ctx.exception.code, 400)
+        self.assertIn("Direct publishing is disabled", ctx.exception.read().decode())
 
-        with mock.patch.object(adhoc_server, "start_job", fake_start_job):
-            req = urllib.request.Request(
-                f"{self.base}/api/queue/{self.name}/{action}", data=b"",
-                method="POST")
-            body = json.loads(urllib.request.urlopen(req, timeout=10).read())
-        self.drain(body["job"]["id"])
-        return captured, body
+    def test_publish_check_reports_readiness_without_starting_job(self):
+        with mock.patch.object(adhoc_server, "start_guided_job") as spawn:
+            body = self.post("publish-check")
+        spawn.assert_not_called()
+        self.assertFalse(body["readiness"]["ready"])
 
-    def drain(self, job_id):
-        for _ in range(100):
-            if adhoc_server.job_payload(job_id)["status"] != "running":
-                return
-            time.sleep(0.05)
-        self.fail("stub job never finished")
+    def test_missing_session_is_forbidden(self):
+        with self.assertRaises(urllib.error.HTTPError) as ctx:
+            self.post("publish-check", {"X-Layer8-CSRF": ""})
+        self.assertEqual(ctx.exception.code, 403)
 
-    def test_publish_starts_the_publish_job_without_dry_run(self):
-        captured, body = self.post("publish")
+    def test_foreign_origin_is_forbidden(self):
+        with self.assertRaises(urllib.error.HTTPError) as ctx:
+            self.post("publish-check", {"Origin": "https://example.com"})
+        self.assertEqual(ctx.exception.code, 403)
 
-        self.assertEqual(captured["kind"], "publish")
-        self.assertEqual(captured["queue"], self.name)
-        self.assertEqual(captured["extra"], [])
-        self.assertEqual(body["job"]["kind"], "publish")
-
-    def test_publish_check_reuses_the_publish_job_with_dry_run(self):
-        captured, _ = self.post("publish-check")
-
-        self.assertEqual(captured["kind"], "publish")
-        self.assertEqual(captured["extra"], ["--dry-run"])
+    def test_stale_revision_is_rejected(self):
+        with self.assertRaises(urllib.error.HTTPError) as ctx:
+            self.post("delete", {"If-Match": "old-version"})
+        self.assertEqual(ctx.exception.code, 409)
+        self.assertTrue(self.path.exists())
 
     def test_an_unknown_action_is_still_a_404(self):
         with self.assertRaises(urllib.error.HTTPError) as ctx:
-            req = urllib.request.Request(
-                f"{self.base}/api/queue/{self.name}/publish-now", data=b"",
-                method="POST")
-            urllib.request.urlopen(req, timeout=10)
+            self.post("publish-now")
         self.assertEqual(ctx.exception.code, 404)

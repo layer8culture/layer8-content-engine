@@ -3,12 +3,15 @@
 from __future__ import annotations
 
 import argparse
+import os
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
 
 import requests
 
 import post_to_postiz
+from publish_helpers import load_delivery_records
 
 
 def post_integration_id(post: dict) -> str | None:
@@ -60,7 +63,7 @@ def find_duplicate_groups(posts: list[dict], integration_id: str | None = None) 
 def delete_post(post_id: str) -> None:
     r = requests.delete(
         f"{post_to_postiz.POSTIZ_URL}/api/public/v1/posts/{post_id}",
-        headers=post_to_postiz.HEADERS,
+        headers=post_to_postiz.request_headers(),
         timeout=60,
     )
     if r.status_code == 404:
@@ -90,11 +93,26 @@ def parse_args() -> argparse.Namespace:
         help="Optional Postiz integration ID to scan. Defaults to all integrations.",
     )
     parser.add_argument(
+        "--post-id",
+        action="append",
+        dest="post_ids",
+        default=[],
+        help="Explicit reviewed post IDs, including the retained post. Repeat for each ID.",
+    )
+    parser.add_argument(
+        "--repo-root", type=Path,
+        default=Path(os.environ.get("LAYER8_DATA_ROOT") or Path.cwd()),
+        help="Data repository containing posted/receipts (defaults to LAYER8_DATA_ROOT or cwd).",
+    )
+    parser.add_argument(
         "--apply",
         action="store_true",
         help="Delete duplicate queued posts. Default is dry-run.",
     )
-    return parser.parse_args()
+    args = parser.parse_args()
+    if args.apply and (not args.integration_id or not args.post_ids):
+        parser.error("--apply requires --integration-id and explicit reviewed --post-id values")
+    return args
 
 
 def main() -> None:
@@ -113,6 +131,20 @@ def main() -> None:
 
     posts = post_to_postiz.list_postiz_posts(start_dt, end_dt)
     duplicate_groups = find_duplicate_groups(posts, args.integration_id)
+    if args.apply:
+        owned = {
+            str(record["postiz_post_id"])
+            for record in load_delivery_records(args.repo_root.resolve())
+            if record.get("postiz_post_id")
+        }
+        allowed = owned & set(args.post_ids)
+        scoped = []
+        for group in duplicate_groups:
+            if {str(post.get("id")) for post in group} <= allowed:
+                scoped.append(group)
+            else:
+                print("Skipping group: every post must be explicitly reviewed and backed by an engine receipt.")
+        duplicate_groups = scoped
 
     if not duplicate_groups:
         scope = args.integration_id or "all integrations"
@@ -142,7 +174,7 @@ def main() -> None:
     if args.apply:
         print(f"Deleted {delete_count} duplicate queued Postiz post(s).")
     else:
-        print(f"Dry run only. Re-run with --apply to delete {delete_count} duplicate(s).")
+        print(f"Dry run only: {delete_count} candidate(s). Applying requires an integration and reviewed, receipt-owned post IDs.")
 
 
 if __name__ == "__main__":

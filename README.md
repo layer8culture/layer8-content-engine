@@ -65,12 +65,16 @@ Reels still render offline through the ffmpeg fallback. A normal run also falls 
 to this mode automatically when no credentials are configured. Full walkthrough:
 [`docs/manual-image-mode.md`](docs/manual-image-mode.md).
 
-Prefer clicking to typing? `python scripts/adhoc_server.py` serves a local web UI that
-runs the whole thing — generate a batch, copy one prompt block, drop the returned
-`.zip` back in, then ingest, render reels, prune the queue and publish from the
-browser: [`docs/adhoc-web-ui.md`](docs/adhoc-web-ui.md). Because you review every post
-in that UI, an ad-hoc batch publishes straight to `main` instead of going through the
-approval PR; the nightly workflows still open one.
+Prefer a guided workspace? In PowerShell, run `.\scripts\start-webapp.ps1`
+(or start the server directly with `python scripts/adhoc_server.py`). The local app
+walks through **Batches -> Get images -> Prepare previews -> Review & approve ->
+Delivery**: copy four-image prompt groups into ChatGPT yourself, import a ZIP or
+individual images, compare originals and final previews, edit captions and dates,
+then stage a PR and explicitly approve its displayed revision/head. **Every batch
+still requires a merged approval PR**; there is no direct-to-main shortcut.
+Prepared media or a PR merge does not mean posts are scheduled: the Delivery screen
+shows the separate provider evidence. Full walkthrough:
+[`docs/adhoc-web-ui.md`](docs/adhoc-web-ui.md).
 
 ## Setup (one-time)
 

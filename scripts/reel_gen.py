@@ -15,6 +15,8 @@ Sora-2 reel backend) requests. Reels render via Azure Sora-2 when the
 AZURE_OPENAI_* env is configured, falling back to the ffmpeg "motion" renderer —
 which also means reels still render with no API at all (manual image mode).
 """
+from __future__ import annotations
+
 import io
 import json
 import math
@@ -25,6 +27,7 @@ import shutil
 import subprocess
 import sys
 import time
+import uuid
 from dataclasses import dataclass
 from typing import Iterable
 
@@ -34,6 +37,7 @@ except ImportError:  # pragma: no cover - offline installs only need ffmpeg + Pi
     requests = None
 from PIL import Image, ImageOps
 
+import manual_media
 
 WIDTH = 1080
 HEIGHT = 1920
@@ -210,8 +214,8 @@ def run_ffmpeg(args: list[str], post_id: str, label: str) -> bool:
     try:
         subprocess.run(args, check=True, capture_output=True, text=True)
         return True
-    except subprocess.CalledProcessError as e:
-        stderr = (e.stderr or "").strip().splitlines()
+    except (subprocess.CalledProcessError, OSError) as e:
+        stderr = (getattr(e, "stderr", "") or "").strip().splitlines()
         tail = " | ".join(stderr[-4:]) if stderr else str(e)
         print(f"  x {post_id}: ffmpeg {label} failed ({tail})")
         return False
@@ -365,12 +369,12 @@ def motion_video_filter(duration: float, beats: list[str],
     return ",".join(filters)
 
 
-def typography_font_for(post: dict) -> pathlib.Path:
+def typography_font_for(post: dict, repo_root: pathlib.Path = pathlib.Path(".")) -> pathlib.Path:
     visual = post.get("visual") or {}
     preset = str(visual.get("typography_preset") or "").strip()
-    if (preset == "editorial_drop" or post.get("account") == "layer8culture") and DISPLAY_FONT_PATH.exists():
-        return DISPLAY_FONT_PATH
-    return FONT_PATH
+    if preset == "editorial_drop" or post.get("account") == "layer8culture":
+        return repo_root / DISPLAY_FONT_PATH
+    return repo_root / FONT_PATH
 
 
 def audio_filter(duration: float) -> str:
@@ -402,8 +406,9 @@ def export_cover(video_path: pathlib.Path, cover_path: pathlib.Path, post_id: st
     return run_ffmpeg(args, post_id, "cover export")
 
 
-def find_lofi_bed() -> pathlib.Path | None:
+def find_lofi_bed(repo_root: pathlib.Path = pathlib.Path(".")) -> pathlib.Path | None:
     for path in LOFI_BEDS:
+        path = repo_root / path
         if path.exists():
             return path
     return None
@@ -515,7 +520,8 @@ def overlay_beats_on_video(video_path: pathlib.Path, raw_beats,
     return run_ffmpeg(args, post_id, "viral overlay")
 
 
-def generate_motion(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None:
+def generate_motion(post: dict, out_dir: pathlib.Path,
+                    repo_root: pathlib.Path = pathlib.Path(".")) -> tuple[str, str] | None:
     post_id = str(post.get("id", "")).strip()
     visual = post.setdefault("visual", {})
     reel = visual.get("reel") or {}
@@ -526,7 +532,9 @@ def generate_motion(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None
 
     duration = clamp(float(reel.get("duration_sec", 8) or 8), 5.0, 15.0)
     beats = [str(beat) for beat in (reel.get("beats") or []) if str(beat).strip()]
-    font = typography_font_for(post)
+    font = typography_font_for(post, repo_root)
+    if (beats or reel.get("overlay_beats")) and not font.is_file():
+        raise RuntimeError(f"required reel typography font missing: {font}")
     overlay_filters = viral_overlay_filters(reel.get("overlay_beats"), font)
     if overlay_filters:
         # Viral format: the big burned-in arc drives the clip, so the render must run
@@ -537,7 +545,7 @@ def generate_motion(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None
     out_path = out_dir / f"{post_id}.mp4"
     cover_path = out_dir / f"{post_id}-cover.png"
     audio_choice = str(reel.get("audio", "lofi")).lower()
-    lofi_bed = find_lofi_bed() if audio_choice == "lofi" else None
+    lofi_bed = find_lofi_bed(repo_root) if audio_choice == "lofi" else None
 
     args = ["ffmpeg", "-y", "-i", str(still_path)]
     if lofi_bed:
@@ -593,8 +601,8 @@ def generate_motion(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None
     return str(out_path), str(cover_path)
 
 
-def clip_times_from_query(query: str) -> tuple[float, float] | None:
-    vtt = newest_vtt()
+def clip_times_from_query(query: str, repo_root: pathlib.Path = pathlib.Path(".")) -> tuple[float, float] | None:
+    vtt = newest_vtt(repo_root / TRANSCRIPTS_DIR)
     if not vtt:
         return None
     cues = parse_vtt(vtt)
@@ -606,7 +614,8 @@ def clip_times_from_query(query: str) -> tuple[float, float] | None:
     return start, end
 
 
-def clip_times(clip: dict, reel: dict) -> tuple[float, float] | None:
+def clip_times(clip: dict, reel: dict,
+               repo_root: pathlib.Path = pathlib.Path(".")) -> tuple[float, float] | None:
     start_value = clip.get("start")
     end_value = clip.get("end")
     if start_value and end_value:
@@ -616,7 +625,7 @@ def clip_times(clip: dict, reel: dict) -> tuple[float, float] | None:
         start = parse_timecode(str(start_value))
         end = start + clamp(float(reel.get("duration_sec", 30) or 30), 1.0, MAX_CLIP_SEC)
     elif clip.get("query"):
-        times = clip_times_from_query(str(clip["query"]))
+        times = clip_times_from_query(str(clip["query"]), repo_root)
         if not times:
             return None
         start, end = times
@@ -648,7 +657,8 @@ def clip_video_filter(headline: str | None,
     return ",".join(filters)
 
 
-def generate_clip(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None:
+def generate_clip(post: dict, out_dir: pathlib.Path,
+                  repo_root: pathlib.Path = pathlib.Path(".")) -> tuple[str, str] | None:
     post_id = str(post.get("id", "")).strip()
     visual = post.setdefault("visual", {})
     reel = visual.get("reel") or {}
@@ -658,13 +668,13 @@ def generate_clip(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None:
         print(f"  ! {post_id}: clip.source_file missing; reel skipped")
         return None
 
-    source_path = pathlib.Path(str(source_value))
+    source_path = repo_root / str(source_value)
     if not source_path.exists() or not source_path.is_file():
         print(f"  ! {post_id}: source video {source_path} missing; reel skipped")
         return None
 
     try:
-        times = clip_times(clip, reel)
+        times = clip_times(clip, reel, repo_root)
     except ValueError as e:
         print(f"  ! {post_id}: invalid clip timecode ({e}); reel skipped")
         return None
@@ -704,8 +714,11 @@ def generate_clip(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None:
             print(f"  ! {post_id}: could not probe audio; assuming source has audio")
         audio_chain = "[0:a]loudnorm=I=-16:TP=-1.5:LRA=11[a]"
 
+    font = typography_font_for(post, repo_root)
+    if visual.get("headline") and not font.is_file():
+        raise RuntimeError(f"required clip typography font missing: {font}")
     filter_complex = (
-        f"[0:v]{clip_video_filter(visual.get('headline'), typography_font_for(post))}[v];"
+        f"[0:v]{clip_video_filter(visual.get('headline'), font)}[v];"
         f"{audio_chain}"
     )
     args.extend([
@@ -820,7 +833,8 @@ def _sora_download(job_id: str, out_path: pathlib.Path) -> bool:
     return True
 
 
-def generate_sora(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None:
+def generate_sora(post: dict, out_dir: pathlib.Path,
+                  repo_root: pathlib.Path = pathlib.Path(".")) -> tuple[str, str] | None:
     """Render a reel via Azure Sora-2 (image+text when a still exists, else text).
 
     Returns ``(video_path, cover_path)`` on success, or ``None`` so the caller can
@@ -833,6 +847,8 @@ def generate_sora(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None:
     post_id = str(post.get("id", "")).strip()
     visual = post.setdefault("visual", {})
     reel = visual.get("reel") or {}
+    if reel.get("overlay_beats") and not typography_font_for(post, repo_root).is_file():
+        raise RuntimeError("required viral overlay font missing")
     prompt = reel.get("sora_prompt") or visual.get("openai_prompt")
     if not prompt:
         print(f"  ! {post_id}: no reel.sora_prompt/visual.openai_prompt; Sora skipped")
@@ -884,7 +900,7 @@ def generate_sora(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None:
                     beats,
                     tmp,
                     post_id,
-                    typography_font_for(post),
+                    typography_font_for(post, repo_root),
                 ):
                     tmp.replace(out_path)
                     coerced = _coerce_beats(beats)
@@ -892,7 +908,8 @@ def generate_sora(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None:
                         cover_ts = max(0.1, (coerced[0]["start"] + coerced[0]["end"]) / 2)
                     print(f"  + {post_id}: burned {len(coerced)} viral text beat(s)")
                 else:
-                    print(f"  ! {post_id}: viral overlay failed; using clean Sora clip")
+                    print(f"  x {post_id}: required viral typography overlay failed")
+                    return None
             if not export_cover(out_path, cover_path, post_id, timestamp=cover_ts):
                 return None
             print(f"  + {post_id} -> {out_path} (Sora {label})")
@@ -906,7 +923,9 @@ def generate_sora(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None:
     return None
 
 
-def generate(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None:
+def _generate(post: dict, out_dir: pathlib.Path, *, offline: bool = False,
+              repo_root: pathlib.Path = pathlib.Path("."),
+              render_info: dict | None = None) -> tuple[str, str] | None:
     post_id = str(post.get("id", "")).strip()
     if not post_id:
         print("  ! reel post missing id; skipped")
@@ -914,22 +933,81 @@ def generate(post: dict, out_dir: pathlib.Path) -> tuple[str, str] | None:
     visual = post.setdefault("visual", {})
     reel = visual.get("reel") or {}
     mode = str(reel.get("mode", "sora")).lower()
+    info = render_info if render_info is not None else {}
     try:
         if mode == "clip":
-            return generate_clip(post, out_dir)
-        if mode == "motion":
-            return generate_motion(post, out_dir)
+            info["backend"] = "clip"
+            return generate_clip(post, out_dir, repo_root)
+        if mode == "motion" or offline:
+            info["backend"] = "motion"
+            return generate_motion(post, out_dir, repo_root)
         if mode != "sora":
             print(f"  ! {post_id}: unknown reel mode {mode!r}; using sora")
-        result = generate_sora(post, out_dir)
+        result = generate_sora(post, out_dir, repo_root)
         if result:
+            info["backend"] = "sora"
             return result
         if sora_configured():
             print(f"  > {post_id}: Sora unavailable/failed; falling back to motion")
-        return generate_motion(post, out_dir)
-    except Exception as e:  # noqa: BLE001 - one bad reel must not abort the queue
+        info["backend"] = "motion"
+        return generate_motion(post, out_dir, repo_root)
+    except (OSError, ValueError, RuntimeError) as e:
         print(f"  x {post_id}: reel generation failed ({e})")
         return None
+
+
+def validate_video(path: pathlib.Path) -> None:
+    probe = ffprobe_path()
+    if not probe:
+        raise RuntimeError("ffprobe is required to verify rendered video")
+    result = subprocess.run(
+        [probe, "-v", "error", "-show_entries", "stream=codec_type,width,height",
+         "-of", "json", str(path)], check=True, capture_output=True, text=True)
+    streams = json.loads(result.stdout).get("streams", [])
+    if not any(s.get("codec_type") == "video" and s.get("width", 0) > 0
+               and s.get("height", 0) > 0 for s in streams):
+        raise ValueError(f"Rendered output has no usable video stream: {path}")
+
+
+def promote_outputs(paths: list[pathlib.Path], out_dir: pathlib.Path,
+                    repo_root: pathlib.Path, artifact_id: str) -> list[str]:
+    """Validate the complete set before replacing any published artifact."""
+    for path in paths:
+        if path.suffix == ".mp4":
+            validate_video(path)
+        else:
+            with Image.open(path) as image:
+                image.load()
+    for path in paths:
+        destination = out_dir / path.name
+        if destination.is_file():
+            manual_media.snapshot_file(
+                destination, repo_root / ".local" / "media" / "outputs" / artifact_id)
+    for path in paths:
+        path.replace(out_dir / path.name)
+    return [(out_dir / p.name).as_posix() for p in paths]
+
+
+def generate(post: dict, out_dir: pathlib.Path, *, offline: bool = False,
+             repo_root: pathlib.Path = pathlib.Path("."),
+             render_info: dict | None = None) -> tuple[str, str] | None:
+    """Render in isolation; failed renders never overwrite a previous good reel."""
+    post_id = str(post.get("id", "")).strip()
+    stage = out_dir / f".render-{uuid.uuid4().hex}"
+    stage.mkdir(parents=True)
+    try:
+        still = out_dir / f"{post_id}.png"
+        if still.is_file():
+            shutil.copyfile(still, stage / still.name)
+        result = _generate(post, stage, offline=offline, repo_root=repo_root,
+                           render_info=render_info)
+        if not result:
+            return None
+        paths = [pathlib.Path(p) for p in result]
+        video, cover = promote_outputs(paths, out_dir, repo_root, post_id)
+        return video, cover
+    finally:
+        shutil.rmtree(stage)
 
 
 def _carousel_canvas(aspect: str) -> tuple[int, int]:
@@ -938,8 +1016,8 @@ def _carousel_canvas(aspect: str) -> tuple[int, int]:
     return WIDTH, HEIGHT
 
 
-def render_carousel_video_slide(post: dict, slide: dict, index: int,
-                                out_dir: pathlib.Path) -> str | None:
+def _render_carousel_video_slide(post: dict, slide: dict, index: int,
+                                 out_dir: pathlib.Path) -> str | None:
     """Turn a rendered carousel still into an MP4 slide."""
     post_id = str(post.get("id", "")).strip()
     if not post_id:
@@ -973,6 +1051,28 @@ def render_carousel_video_slide(post: dict, slide: dict, index: int,
     return str(out_path)
 
 
+def render_carousel_video_slide(post: dict, slide: dict, index: int,
+                                out_dir: pathlib.Path, *,
+                                repo_root: pathlib.Path = pathlib.Path(".")) -> str | None:
+    slide_id = f"{post['id']}-{index}"
+    stage = out_dir / f".render-{uuid.uuid4().hex}"
+    stage.mkdir(parents=True)
+    try:
+        still = out_dir / f"{slide_id}.png"
+        if not still.is_file():
+            print(f"  x {slide_id}: carousel still missing")
+            return None
+        shutil.copyfile(still, stage / still.name)
+        result = _render_carousel_video_slide(post, slide, index, stage)
+        if not result:
+            return None
+        return promote_outputs(
+            [pathlib.Path(result), stage / f"{slide_id}-cover.png"],
+            out_dir, repo_root, slide_id)[0]
+    finally:
+        shutil.rmtree(stage)
+
+
 def render_carousel_video_slides(post: dict, out_dir: pathlib.Path) -> bool:
     """Replace selected carousel still paths with video paths in visual.files."""
     if post.get("format") != "carousel":
@@ -999,7 +1099,8 @@ def render_carousel_video_slides(post: dict, out_dir: pathlib.Path) -> bool:
     return changed
 
 
-def resolve_crosspost(post: dict, out_dir: pathlib.Path) -> bool:
+def resolve_crosspost(post: dict, out_dir: pathlib.Path, *,
+                      repo_root: pathlib.Path = pathlib.Path(".")) -> bool:
     """Reuse another post's rendered reel for a cross-post (e.g. TikTok).
 
     A cross-post sets ``visual.source == "reuse"`` and ``visual.of ==
@@ -1018,60 +1119,37 @@ def resolve_crosspost(post: dict, out_dir: pathlib.Path) -> bool:
         print(f"  ! {post_id}: cross-post has no visual.of source id; skipped")
         return False
     src_mp4 = out_dir / f"{source_id}.mp4"
-    if not src_mp4.exists():
+    src_cover = out_dir / f"{source_id}-cover.png"
+    if not src_mp4.is_file() or not src_cover.is_file() or source_id == post_id:
         print(f"  ! {post_id}: source reel {src_mp4} not found "
               f"(of={source_id!r}); cross-post skipped")
         return False
-    dst_mp4 = out_dir / f"{post_id}.mp4"
-    shutil.copyfile(src_mp4, dst_mp4)
-    visual["file"] = str(dst_mp4)
-    src_cover = out_dir / f"{source_id}-cover.png"
-    if src_cover.exists():
-        dst_cover = out_dir / f"{post_id}-cover.png"
-        shutil.copyfile(src_cover, dst_cover)
-        visual["cover"] = str(dst_cover)
+    stage = out_dir / f".render-{uuid.uuid4().hex}"
+    stage.mkdir(parents=True)
+    try:
+        paths = [stage / f"{post_id}.mp4", stage / f"{post_id}-cover.png"]
+        shutil.copyfile(src_mp4, paths[0])
+        shutil.copyfile(src_cover, paths[1])
+        video, cover = promote_outputs(paths, out_dir, repo_root, post_id)
+        visual["file"] = video
+        visual["cover"] = cover
+    finally:
+        shutil.rmtree(stage)
     print(f"  = {post_id} <- {source_id} (cross-post reuse)")
     return True
 
 
-def main(queue_file: str) -> None:
-    if not ffmpeg_available():
-        print("  x ffmpeg not found on PATH; reel generation skipped.")
-        return
-
-    qpath = pathlib.Path(queue_file)
-    posts = json.loads(qpath.read_text(encoding="utf-8"))
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-
-    def is_reuse(post: dict) -> bool:
-        return str((post.get("visual") or {}).get("source", "")).lower() == "reuse"
-
-    # Pass 1: render every reel that owns its media (source != "reuse").
-    for post in posts:
-        if post.get("format") == "reel" and not is_reuse(post):
-            result = generate(post, OUT_DIR)
-            if result:
-                file_path, cover_path = result
-                visual = post.setdefault("visual", {})
-                visual["file"] = file_path
-                visual["cover"] = cover_path
-
-    # Pass 1b: convert selected carousel slides into ordered MP4 slide files.
-    for post in posts:
-        render_carousel_video_slides(post, OUT_DIR)
-
-    # Pass 2: resolve cross-posts (e.g. TikTok) that reuse a pass-1 reel's mp4.
-    # Run second so it's independent of post order in the queue.
-    for post in posts:
-        if post.get("format") == "reel" and is_reuse(post):
-            resolve_crosspost(post, OUT_DIR)
-
-    qpath.write_text(json.dumps(posts, indent=2), encoding="utf-8")
-    print("Queue updated with generated reel paths.")
+def main(queue_file: str) -> int:
+    import prepare_media
+    report = prepare_media.prepare_videos(
+        pathlib.Path(queue_file), pathlib.Path.cwd(), offline=False)
+    for message in report["failed"]:
+        print(f"  x {message}")
+    return int(bool(report["failed"]))
 
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: python scripts\\reel_gen.py <queue_file>")
         sys.exit(2)
-    main(sys.argv[1])
+    sys.exit(main(sys.argv[1]))
