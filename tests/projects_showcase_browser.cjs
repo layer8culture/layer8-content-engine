@@ -15,6 +15,33 @@ async function waitForProjects(page) {
   await page.locator('body > nav a[data-projects-nav][href="/projects/"]').waitFor({ state: "attached" });
 }
 
+async function readHeaderAppearance(page) {
+  return page.locator("body > nav").evaluate(nav => {
+    const style = getComputedStyle(nav);
+    return {
+      transparent: nav.classList.contains("bg-transparent"),
+      scrolledBackground: nav.classList.contains("bg-ink-bg/70"),
+      scrolledBlur: nav.classList.contains("backdrop-blur-2xl"),
+      position: style.position,
+      height: nav.getBoundingClientRect().height,
+    };
+  });
+}
+
+async function assertStaticHeaderMatches(page, expected, route) {
+  await page.waitForTimeout(650);
+  const atTop = await readHeaderAppearance(page);
+  assert.deepEqual(atTop, expected.top, `${route} header matches homepage at top`);
+  await page.mouse.wheel(0, 420);
+  await page.waitForTimeout(650);
+  const scrolled = await readHeaderAppearance(page);
+  assert.deepEqual(scrolled, expected.scrolled, `${route} header matches homepage when scrolled`);
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.waitForTimeout(650);
+  assert.deepEqual(await readHeaderAppearance(page), expected.top,
+    `${route} header returns to the homepage's transparent state`);
+}
+
 async function waitForProjectAnchor(page) {
   await page.waitForFunction(() => {
     const section = document.querySelector("#projects");
@@ -177,6 +204,37 @@ async function assertRadarSweep(page, width) {
     assert.deepEqual(homeMobileErrors, []);
     await homeMobile.close();
     console.log("PASS homepage mobile navigation opens the standalone Projects page without hydration errors");
+
+    for (const width of [1440, 390]) {
+      const headerPage = await browser.newPage({ viewport: { width, height: 900 } });
+      await headerPage.goto(base, { waitUntil: "networkidle" });
+      await headerPage.waitForTimeout(1100);
+      const expected = { top: await readHeaderAppearance(headerPage) };
+      await headerPage.mouse.wheel(0, 420);
+      await headerPage.waitForTimeout(650);
+      expected.scrolled = await readHeaderAppearance(headerPage);
+      assert.equal(expected.top.transparent, true);
+      assert.equal(expected.top.scrolledBackground, false);
+      assert.equal(expected.scrolled.scrolledBackground, true);
+      assert.equal(expected.scrolled.scrolledBlur, true);
+      await headerPage.evaluate(() => window.scrollTo(0, 0));
+      await headerPage.waitForTimeout(650);
+
+      for (const route of [
+        "/guides/",
+        "/guides/ai-builder-workflow-map/",
+        "/guides/mcp-explained-without-the-hype/",
+        "/guides/build-your-ai-org-chart/",
+        "/guides/seven-prompting-habits-that-make-ai-useful/",
+        "/guides/ai-fluency-consumer-user-builder-operator/",
+        "/projects/",
+      ]) {
+        await headerPage.goto(`${base}${route}`, { waitUntil: "networkidle" });
+        await assertStaticHeaderMatches(headerPage, expected, `${route} (${width}px)`);
+      }
+      await headerPage.close();
+      console.log(`PASS matching homepage header styles across guides and Projects at ${width}px`);
+    }
 
     const reduced = await browser.newPage({ viewport: { width: 390, height: 900 } });
     const reducedErrors = [];

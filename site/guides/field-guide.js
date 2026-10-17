@@ -96,12 +96,4 @@
     });
     dialog.addEventListener("close", () => menuButton.setAttribute("aria-expanded", "false"));
   }
-  const nav = document.querySelector("body > nav");
-  function navBackground() {
-    nav.classList.toggle("bg-transparent", window.scrollY <= 24);
-    nav.classList.toggle("bg-ink-bg/70", window.scrollY > 24);
-    nav.classList.toggle("backdrop-blur-2xl", window.scrollY > 24);
-  }
-  window.addEventListener("scroll", navBackground, { passive: true });
-  navBackground();
 })();

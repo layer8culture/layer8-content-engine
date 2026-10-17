@@ -119,6 +119,20 @@
     observer.observe(document.body, { childList: true, subtree: true });
   };
 
+  const installStaticHeaderBackground = () => {
+    if (document.querySelector('script[src*="/_next/static/chunks/"]')) return;
+    const nav = document.querySelector("body > nav");
+    if (!nav) return;
+    const updateBackground = () => {
+      const scrolled = window.scrollY > 24;
+      nav.classList.toggle("bg-transparent", !scrolled);
+      nav.classList.toggle("bg-ink-bg/70", scrolled);
+      nav.classList.toggle("backdrop-blur-2xl", scrolled);
+    };
+    window.addEventListener("scroll", updateBackground, { passive: true });
+    updateBackground();
+  };
+
   const enableProjectMotion = section => {
     const motionButton = section.querySelector("[data-motion-toggle]");
     const motionLabel = section.querySelector("[data-motion-label]");
@@ -175,6 +189,7 @@
       return;
     }
     installNav();
+    installStaticHeaderBackground();
     const section = document.querySelector("#projects");
     if (section) enableProjectMotion(section);
   };
