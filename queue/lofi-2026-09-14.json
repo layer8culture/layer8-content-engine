@@ -1,0 +1,158 @@
+[
+  {
+    "id": "20260914-lofi-instagram-1",
+    "account": "lofi",
+    "category": "video-promo",
+    "platform": "instagram",
+    "format": "single",
+    "schedule_time": "2026-09-14T07:30:00-05:00",
+    "text": "The new session is live.\n\nAfrofuturist Culture Sessions: Havana Lofi \u2014 jazz-warmed guitar, soft rhythm, and a room built to vibe, create, and connect.\n\nPress play. Lock in. Build.\n\nWhere technology meets culture.\n\nNow live on YouTube. Link in bio.",
+    "hashtags": [
+      "#Layer8CultureRadio",
+      "#Layer8Culture",
+      "#JazzHop",
+      "#LateNightCoding",
+      "#CodingMusic",
+      "#lofihiphop",
+      "#ambientmusic",
+      "#Afrofuturism"
+    ],
+    "hashtags_in_first_comment": true,
+    "collaborators": [],
+    "visual": {
+      "source": "library",
+      "aspect": "1:1",
+      "quality": "medium",
+      "openai_prompt": "Create a cinematic lo-fi anime-inspired Afrofuturist coding studio scene for Layer8Culture Radio (not photorealistic), framed like a bold session thumbnail. A Black creator is seated FROM BEHIND at a premium coding workstation, calm and focused, wearing a black hoodie with a large number 8 on the back (no face reveal). Jazz Coding Lounge art style at night: warm brown wood desk and shelving, a vinyl record spinning softly nearby, a vintage Rhodes-style keyboard silhouette in the background, an amber desk lamp pooling Warm Gold #F5A524 light, a mug of coffee with slow steam, plants and hanging vines, books on system design, clean code, and algorithms, West African-inspired pottery and woven textiles on a shelf, multiple monitors showing code and a subtle line graph, a laptop with code, and a blank blue neon sign panel on the wall (an unlit, lettering-free glowing panel - do NOT render any text or letters; branding is composited in afterward). Through a large window a futuristic African city glows in Midnight Navy #07111F with Electric Blue #0047FF and Neon Cyan #00BFFF tower lights, one slow flying vehicle drifting past. The mood is warm, premium, unhurried, late-night lounge energy - a strong thumbnail-style cover frame for a live session. High-quality anime illustration, cinematic lighting, clean composition, no extra people, no copyrighted characters. Leave the lower third as clean negative space for a bold composited session headline and a NOW LIVE ON YOUTUBE subtext. Afrofuturist city view, Black coder seated from behind, warm desk lamp, calm study atmosphere, culturally intentional objects, futuristic but grounded, balanced electric-blue and warm gold lighting. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography. avoid photorealism, empty minimal rooms, sparse composition",
+      "headline": "HAVANA LOFI VOL. 1",
+      "subtext": "NOW LIVE ON YOUTUBE",
+      "accent": "HAVANA",
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20260914-lofi-instagram-2",
+    "account": "lofi",
+    "category": "loop-reel",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-09-14T12:00:00-05:00",
+    "text": "Rain on the glass. Focus in the room.\n\nNight Coding Radio \u2014 Afrofuturist lo-fi for the hours after everyone else logs off. Warm Rhodes chords, soft dusty drums, and a city blurred behind the rain.\n\nFor the ones building before the world gets loud.\n\nThe Focus Room is open \u2014 24/7 on YouTube. Link in bio.",
+    "hashtags": [
+      "#Layer8CultureRadio",
+      "#Layer8Culture",
+      "#RainyNight",
+      "#LateNightCoding",
+      "#LofiCoding",
+      "#DeepWork",
+      "#lofi",
+      "#chillbeats"
+    ],
+    "hashtags_in_first_comment": true,
+    "trial_reel": false,
+    "collaborators": [],
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "high",
+      "openai_prompt": "Create a cinematic lo-fi anime-inspired Afrofuturist coding studio scene for Layer8Culture Radio (not photorealistic), composed vertically 9:16. A Black creator is seated FROM BEHIND at a premium coding workstation, calm and focused, wearing a black hoodie with a large number 8 on the back (no face reveal). Rainy Night Coding art style: rain streaks softly down a large window, Midnight Navy #07111F sky, Electric Blue #0047FF and Neon Cyan #00BFFF reflections blurring across the wet glass from a futuristic African city skyline, a warm desk lamp glowing Warm Gold #F5A524 against the cool blue rain-light. Inside: a warm wood desk, a mug of tea with slow steam, plants and hanging vines, books on system design, clean code, and algorithms, West African-inspired pottery on a shelf, multiple monitors showing code and a subtle line graph, a laptop with code, and a blank blue neon sign panel on the wall (an unlit, lettering-free glowing panel - do NOT render any text or letters; branding is composited in afterward). One slow flying vehicle drifts through the rain-blurred skyline. The mood is calm, premium, focused, and loop-friendly - quiet late-night rain energy. High-quality anime illustration, cinematic lighting, clean composition, no extra people, no copyrighted characters. Keep the LOWER THIRD and UPPER THIRD calm and simple for composited minimal overlay text. Afrofuturist city view, Black coder seated from behind, warm desk lamp, calm study atmosphere, loopable visual, gentle motion potential, culturally intentional objects, futuristic but grounded, balanced electric-blue and warm gold lighting. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography. avoid photorealism, empty minimal rooms, sparse composition",
+      "headline": "NIGHT CODING RADIO",
+      "subtext": "THE FOCUS ROOM IS OPEN",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "A calm cinematic lo-fi loop of an anime-inspired Afrofuturist coding studio at night in the rain. A very slow push toward the rain-streaked window as droplets slide unhurried down the glass, the city's blue and cyan tower lights blur and ripple softly behind them, steam curls slowly from the mug, hanging plant leaves sway once, and one flying vehicle drifts gently through the rain-blurred skyline. The motion is smooth, quiet, and loopable - the unhurried stillness of a late-night rainy build session. Sora adds its own warm ambient lofi audio with soft rain texture. Clean output - no on-screen text.",
+        "seconds": 8,
+        "duration_sec": 10,
+        "beats": [
+          "NIGHT CODING RADIO",
+          "THE FOCUS ROOM IS OPEN"
+        ],
+        "audio": "lofi"
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20260914-lofi-youtube-1",
+    "account": "lofi",
+    "category": "loop-reel",
+    "platform": "youtube",
+    "format": "reel",
+    "schedule_time": "2026-09-14T12:05:00-05:00",
+    "youtube_title": "Rainy Night Coding Radio | Afrofuturist Lo-Fi Focus Beats #Shorts",
+    "text": "Afrofuturist lo-fi for the hours after everyone else logs off.\n\nRain on the glass, a warm lamp, and a city blurred behind the drops. No vocals, no spikes - just a steady loop built for deep work.\n\nTune in 24/7 on YouTube while you build.",
+    "hashtags": [
+      "#Shorts",
+      "#lofi",
+      "#studymusic",
+      "#RainyNight",
+      "#Layer8Culture"
+    ],
+    "pinned_comment": "What are you building tonight while it plays?",
+    "visual": {
+      "source": "reuse",
+      "of": "20260914-lofi-instagram-2",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20260914-lofi-instagram-3",
+    "account": "lofi",
+    "category": "quote",
+    "platform": "instagram",
+    "format": "single",
+    "schedule_time": "2026-09-14T16:30:00-05:00",
+    "text": "Your focus deserves a room.\n\nNot noise. Not notifications. Just a steady loop and enough quiet to hear your own thinking again.\n\nPut on the session.\nOpen the project.\nStart with one task.\n\nStudy. Build. Focus.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#Layer8CultureRadio",
+      "#DeepFocus",
+      "#FocusMusic",
+      "#ambientmusic",
+      "#StudyBeats",
+      "#lofihiphop"
+    ],
+    "hashtags_in_first_comment": true,
+    "collaborators": [],
+    "visual": {
+      "source": "library",
+      "aspect": "1:1",
+      "quality": "medium",
+      "openai_prompt": "Create a minimal cinematic lo-fi anime-inspired Afrofuturist quote card for Layer8Culture Radio (not photorealistic). Cosmic Focus palette: a Deep Black #030508 background fading into deep-space Midnight Navy #07111F, with faint stars and a soft moon glow, the coding studio softened and abstracted into a low-opacity silhouette - a Black creator seated from behind at a workstation, a barely-legible number 8 on the back of the hoodie, one small cool monitor glow, orbit-like faint circular UI shapes drifting through the negative space. Beyond the window the futuristic African city is only a few quiet Electric Blue #0047FF pinpoints against the navy and stars. The center and lower third stay completely clean and uncluttered so a HUGE short quote headline can dominate the composition - let the words carry the frame. Premium music-label quote card feel: calm, saveable, reflective, culturally intentional, high-contrast type on darkness. High-quality anime illustration, extremely minimal composition, low-stimulation cool-dark palette. Avoid cluttered scenes, bright corporate lighting, cheap gamer RGB, random neon colors, cartoon props, excessive sci-fi armor, robots, fake hologram overload, copyrighted franchise references, copied anime characters, garbled screen text, rendered text, signage lettering, and garbled typography. avoid photorealism, empty minimal rooms, sparse composition",
+      "headline": "YOUR FOCUS DESERVES A ROOM",
+      "subtext": "STUDY \u2022 BUILD \u2022 FOCUS",
+      "accent": "FOCUS",
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20260914-lofi-instagram-4",
+    "account": "lofi",
+    "category": "community",
+    "platform": "instagram",
+    "format": "single",
+    "schedule_time": "2026-09-14T20:30:00-05:00",
+    "text": "Help shape the next Layer8Culture Radio session.\n\nWhat should the next room sound like?\n\nRain\nJazz\nSunrise\nDeep Space\nAfrobeat\n\nDrop your vote in the comments \u2014 we're building the next session from this.",
+    "hashtags": [
+      "#Layer8CultureRadio",
+      "#Layer8Culture",
+      "#BuildInPublic",
+      "#StudyBeats",
+      "#CodingMusic",
+      "#MorningBeats",
+      "#ProductivityMusic"
+    ],
+    "hashtags_in_first_comment": true,
+    "first_comment": "Rain \u2022 Jazz \u2022 Sunrise \u2022 Deep Space \u2022 Afrobeat \u2014 which one first?",
+    "collaborators": [],
+    "visual": {
+      "source": "library",
+      "aspect": "1:1",
+      "quality": "medium",
+      "openai_prompt": "Create a cinematic lo-fi anime-inspired Afrofuturist coding studio scene for Layer8Culture Radio (not photorealistic), framed like a warm poll/card cover. A Black creator is seated FROM BEHIND at a premium coding workstation, calm and settled, wearing a black hoodie with a large number 8 on the back (no face reveal). Cozy Afrofuturist Focus Room art style in soft midday light: warm wood desk, a soft blanket draped on the chair, plants and hanging vines catching gentle daylight, a mug of tea with slow steam, books on system design, clean code, and algorithms stacked neatly, West African-inspired pottery and woven textiles on a shelf, a warm desk lamp left on out of habit, multiple monitors showing code and a subtle line graph, a laptop with code, and a blank blue neon sign panel on the wall (an unlit, lettering-free glowing panel - do NOT render any text or letters; branding is composited in afterward). Through a large window a futuristic African city sits calm under soft daylight haze, Electric Blue #0047FF accents understated against Soft White #F8F9FA sky-glow. The mood is cozy, premium, settled, and inviting - a comfortable everyday focus room. High-quality anime illustration, cinematic lighting, clean composition, no extra people, no copyrighted characters. Leave the lower third as clean negative space for a composited question headline. Afrofuturist city view, Black coder seated from behind, warm desk lamp, calm study atmosphere, culturally intentional objects, futuristic but grounded, balanced electric-blue and warm gold lighting. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography. avoid photorealism, empty minimal rooms, sparse composition",
+      "headline": "WHAT SHOULD WE BUILD NEXT?",
+      "subtext": "RAIN \u2022 JAZZ \u2022 SUNRISE \u2022 DEEP SPACE \u2022 AFROBEAT",
+      "library_hint": "default branded graphic"
+    }
+  }
+]
