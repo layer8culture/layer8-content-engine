@@ -43,7 +43,14 @@ def test_validate_vtt_requires_header_and_multiple_cues():
 def test_air_date_and_show_classification_are_source_grounded():
     parsed = streamyard._parse_air_date("Oct 15, 2026, 9:06 PM 1:06:13")
     assert parsed == datetime(2026, 10, 15, 21, 6)
-    assert streamyard._classify_show("Tech Thursday LIVE: Fable 5") == "tech-thursday"
+    card_text = (
+        "42:14\nGenerate clips\n"
+        "Tech Thursday LIVE: Claude Opus 5 and the New AI Builder Stack\n\n"
+        "Aug 6, 2026, 09:11 PM\n\nNo AI clips yet"
+    )
+    title = streamyard._parse_title(card_text, "Generate clips")
+    assert title == "Tech Thursday LIVE: Claude Opus 5 and the New AI Builder Stack"
+    assert streamyard._classify_show(title) == "tech-thursday"
     assert streamyard._classify_show("AI FOR BUSINESS WORKSHOP LIVE") == "workshop"
     assert streamyard._classify_show("An unrelated folder recording") == "other"
 
