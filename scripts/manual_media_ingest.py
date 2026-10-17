@@ -86,6 +86,39 @@ def normalize_resolution(im: Image.Image) -> Image.Image:
                      Image.LANCZOS)
 
 
+# A drop this dark has almost no tonal range left for typography to sit on. These
+# are warning thresholds, never rejection thresholds -- a batch must always ship.
+DARK_MEAN_LUM = 26.0      # mean luminance below this reads as near-black
+DARK_SHADOW_SHARE = 0.80  # ...and this share of pixels already crushed to shadow
+DARK_SHADOW_LEVEL = 32    # what counts as "shadow"
+
+
+def darkness_report(im: Image.Image) -> tuple[float, float]:
+    """Return ``(mean_luminance, share_of_near_black_pixels)`` for a drop."""
+    grey = im.convert("L")
+    hist = grey.histogram()
+    total = sum(hist) or 1
+    mean = sum(value * count for value, count in enumerate(hist)) / total
+    shadow = sum(hist[:DARK_SHADOW_LEVEL]) / total
+    return mean, shadow
+
+
+def warn_if_too_dark(image_id: str, im: Image.Image) -> bool:
+    """Flag a drop that is too dark to survive branding. Warns; never blocks.
+
+    Catching this at intake is the whole point: the alternative is discovering it
+    in the approval PR, after the batch has already been composited.
+    """
+    mean, shadow = darkness_report(im)
+    if mean >= DARK_MEAN_LUM and shadow <= DARK_SHADOW_SHARE:
+        return False
+    print(f"  ! {image_id}: very dark source (mean luminance {mean:.1f}, "
+          f"{shadow:.0%} of pixels near-black). Headline typography will still "
+          f"be legible, but the scene may read as an empty frame -- consider "
+          f"regenerating with more light in the prompt.")
+    return True
+
+
 def apply_branding(out_path: pathlib.Path, spec: manual_media.ImageSpec) -> None:
     """Composite brand typography (and the wordmark step) exactly like the API path."""
     visual = spec.visual
@@ -145,6 +178,7 @@ def ingest_image(spec: manual_media.ImageSpec, source: pathlib.Path,
         im.save(out_path)
         print(f"  + {spec.image_id}: {source.name} {original[0]}x{original[1]} "
               f"-> {out_path} {im.size[0]}x{im.size[1]} ({spec.aspect})")
+        warn_if_too_dark(spec.image_id, im)
     apply_branding(out_path, spec)
     return out_path
 
