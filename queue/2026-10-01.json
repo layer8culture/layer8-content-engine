@@ -1,0 +1,524 @@
+[
+  {
+    "id": "20261001-layer8culture-tiktok-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-10-01T07:15:00-04:00",
+    "text": "Nvidia just bought Hugging Face for $12.9 billion.\n\nSame week, Claude dropped Fable and Mythos, OpenAI shipped GPT-6 Astra, and Google put out Gemini 3.8 Flash Cyber. Fourteen models from major labs in one month.\n\nThe open web taught a whole generation of builders for free. Now the biggest hardware company on earth owns a piece of the library.\n\nWe're not waiting to see what happens to it. Own your stack before someone buys it for you.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AInews",
+      "#OpenSource",
+      "#BuildInPublic",
+      "#TechTok"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "ai-fluency",
+    "hook_score": 94,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "headline": "NVIDIA JUST BOUGHT THE OPEN WEB",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, high contrast. Scene: an immense dark plain scattered with thousands of small glowing electric-blue archive nodes stretching to the horizon like a distant galaxy of open knowledge, and directly overhead a colossal matte-black vault door has begun descending from the black sky, its underside rimmed in cold blue light, casting a vast shadow across the nearest third of the nodes as it closes in; no people at all, volumetric haze, enormous scale, documentary realism; upper third is dark sky with minimal detail so animated text stays legible; lower third is clean dark negative space for the cover headline; 9:16 vertical aspect. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16, vast and quiet. First beat (0-2s): a dark plain of thousands of small electric-blue archive lights stretching to the horizon, calm and steady, like a distant galaxy of open knowledge. Transformation (2-7s): overhead, an enormous matte-black vault door begins lowering out of the black sky, cold blue light rimming its underside, its shadow sweeping across a widening band of the nodes as it descends, some winking out under the shadow while the untouched ones keep glowing. Resolve (7-10s): the door holds just above the ground, a narrow strip of nodes still glowing free in the gap beneath it. Deep navy and electric blue, documentary realism, volumetric haze, enormous scale, no people, no text, no logos, a low mechanical groan resolving into a steady hum from the remaining lights.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "$12.9B DEAL",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "OPEN THEN SOLD",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "OWN YOUR STACK",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261001-layer8culture-tiktok-2",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-10-01T09:45:00-04:00",
+    "text": "Twenty-four hours straight. One website went live.\n\nOn this week's Tech Thursday the crew broke down their 24-hour build marathon \u2014 no sleep, just the terminal and momentum, one app shipping between naps. The lesson wasn't the tool. It's that nobody was coming to hold their hand through it.\n\nThe command line isn't the hard part. The twenty minutes before you open it is.\n\nStop researching. Start the terminal.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#BuildInPublic",
+      "#TechTok",
+      "#AIBuilders"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "build-in-public",
+    "hook_score": 92,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "headline": "24 HOURS STRAIGHT. ONE APP LIVE.",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, high contrast. Scene: an extreme macro over a confident Black creator's hands on a mechanical keyboard in a dark room at 2AM, a nearby monitor filling with a build log scrolling and a progress bar climbing toward completion, a half-empty mug of coffee catching the blue glow, everything lit only by the screen and one small warm desk lamp; engaged, intentional, real, not posed; upper third kept simple and dim so animated text stays legible; lower third is clean dark negative space for the cover headline; 9:16 vertical aspect. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16, intimate and raw. First beat (0-2s): extreme macro on hands moving fast across a mechanical keyboard in a dark room, a terminal's build log scrolling in blue light reflected on the fingers, 2AM stillness around them. Transformation (2-7s): the camera pulls back slowly as the terminal's progress bar climbs and the log resolves into a clean status shift from amber to steady blue, the room brightening faintly as a second monitor lights up with a live page loading. Resolve (7-10s): the creator leans back for one still beat, mug in hand, the live page glowing steady on the screen behind them. Deep navy and electric blue with warm lamp light, documentary realism, shallow depth of field, no text, no logos, quiet mechanical keyboard clicks giving way to one soft exhale.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "24 HOURS",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "APP WENT LIVE",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "JUST START",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261001-layer8culture-tiktok-3",
+    "account": "layer8culture",
+    "category": "Creator Systems",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-10-01T12:15:00-04:00",
+    "text": "One dashboard. Every video model in the building.\n\nWe've been testing a platform that puts Sora, Veo, and half a dozen other video models behind one login, each charging its own credits. The image models still lose to ChatGPT. The real skill is somewhere else: stitching short clips frame-to-frame into one continuous shot instead of praying for one perfect generation.\n\nDirect the shot. Don't just prompt it and hope.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AItools",
+      "#CreatorTech",
+      "#TechTok"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "cinematic-coding",
+    "hook_score": 88,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "headline": "EVERY VIDEO MODEL. ONE WORKFLOW.",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, minimal composition, strong negative space, high contrast. Scene: an extreme macro of a dark glass panel suspended in a void, across its surface six distinct frames of electric-blue light-trail motion held frozen mid-air like film cells about to be spliced, faint reflections of each frame bleeding into the glass, a single unlit cursor-shaped sliver of light hovering just above the seam where two frames nearly touch; no people, no faces, shallow depth of field, premium abstract texture; upper third kept simple and dim so animated text stays legible; lower third is clean dark negative space for the cover headline; 9:16 vertical aspect. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16, abstract and premium. First beat (0-2s): six frozen frames of electric-blue light trails hover mid-air on dark glass like film cells waiting to be spliced, motionless and precise. Transformation (2-7s): a thin cursor-shaped sliver of light glides between the seams, and one by one the frames pull together and melt into a single continuous ribbon of blue motion, the cuts disappearing as it becomes one fluid shot. Resolve (7-10s): the finished ribbon of light holds steady, whole and seamless, glass reflections settling calm around it. Deep navy and electric blue, documentary realism, shallow depth of field, no people, no text, no logos, a soft glass resonance building into one clean tone.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "PICK ANY MODEL",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "STITCH THE CLIP",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "DIRECT THE SHOT",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261001-layer8culture-tiktok-4",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-10-01T15:30:00-04:00",
+    "text": "Fourteen new models dropped this month. We didn't chase a single one.\n\nEvery lab is shipping like it's a race. Astra, Fable, Mythos, Flash Cyber \u2014 pick a week, there's a new name. That pace isn't the story.\n\nTechnology has seven layers. We stay the eighth \u2014 the layer that decides what actually gets built with all of it, not which name trends first.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#Afrofuturism",
+      "#TechCulture",
+      "#TechTok"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "black-tech-culture",
+    "hook_score": 90,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "headline": "FOURTEEN MODELS. ONE WEEK. WE STAYED STEADY.",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, high contrast. Scene: a luminous Afrofuturist cityscape at golden hour, bold sweeping architecture in dark stone and warm gold, with one towering standalone monument shaped like a numeral eight rising above the skyline and glowing steady electric blue while dozens of smaller structures around it flicker rapidly through countless competing colored lights like a noisy stock ticker; the eight monument alone stays calm and unchanging; no people in frame, wide establishing view, cultural and aspirational; upper third kept simple sky so animated text stays legible; lower third is clean dark negative space for the cover headline; 9:16 vertical aspect. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16, golden hour grandeur. First beat (0-2s): a sweeping Afrofuturist skyline at golden hour, dozens of towers flickering rapidly through competing colored lights like a noisy market board, restless and fast. Transformation (2-7s): the camera pushes past the flicker toward one towering monument shaped like a numeral eight, which holds a single steady electric-blue glow the entire time, unmoved by the chaos around it, the flickering towers blurring into soft bokeh behind it. Resolve (7-10s): the eight monument fills the frame alone, calm and steady against the warm gold sky. Deep navy, electric blue and warm gold, documentary realism, wide then macro, no people, no text, no logos, a busy shimmer of tones settling into one low steady hum.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "LABS WON'T STOP",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "WE DON'T CHASE",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "WE BUILD",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261001-layer8culture-tiktok-5",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-10-01T18:00:00-04:00",
+    "text": "Claude, GPT-6 Astra, Gemini Flash Cyber, an open model on your own machine. Four real options for the same task this week.\n\nThe skill nobody's teaching: knowing which one to reach for. Heavy reasoning goes to the flagship. Fast iteration goes to the small fast model. Cost-sensitive goes open-weight.\n\nBigger isn't the win. Right-sized is.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#PromptEngineering",
+      "#TechTok"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "transformation",
+    "hook_score": 87,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "headline": "STOP CHASING THE FLAGSHIP MODEL",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, high contrast. Scene: a lone confident Black creator stands at a threshold between two rooms; behind them a dim room scattered with four identical unlit screens each faintly glowing a different cold color, representing different AI models, no legible text; ahead of them a single lit doorway where one screen glows warm electric blue, sized exactly to the task at hand, calm and sufficient; the creator's silhouette caught mid-step from dim to lit; documentary realism, shallow depth of field; upper third kept simple and dim so animated text stays legible; lower third is clean dark negative space for the cover headline; 9:16 vertical aspect. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "sora_prompt": "Cinematic vertical 9:16, a clean before-after threshold. First beat (0-2s): a creator stands in a dim room surrounded by four identical unlit screens glowing faintly in different cold colors, overwhelmed by sameness, undecided. Transformation (2-7s): the creator steps forward and, one by one, three of the screens go fully dark while the fourth brightens and resizes itself smaller and sharper, exactly fitted to a single glowing task icon, the camera following the step from dim into a warmer lit doorway. Resolve (7-10s): the creator stands fully inside the lit doorway, one perfectly sized blue screen glowing calm beside them, the dim room gone behind. Deep navy and electric blue with warm doorway light, documentary realism, shallow depth of field, no text, no logos, a low ambient hum resolving into one clear tone.",
+        "seconds": 8,
+        "overlay_beats": [
+          {
+            "text": "SKILL NOT SIZE",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "PICK BY THE JOB",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "THAT'S FLUENCY",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261001-layer8culture-instagram-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-10-01T08:30:00-04:00",
+    "text": "Three AI labs shipped flagship models this week. Here's the only filter you need.\n\nWhat changed: OpenAI released GPT-6 Astra, Anthropic dropped Claude Fable 5.1 and Mythos 5.1, and Google pushed Gemini 3.8 Flash Cyber \u2014 all inside the same seven days.\n\nWhat it actually does: three different bets on the same problem. Astra leans into agentic workflows. Fable and Mythos split into a fast tier and a deeper reasoning tier. Flash Cyber trades some depth for near-instant multimodal speed.\n\nWhy builders should care: picking the \"best\" model by leaderboard is a trap. Picking the right model for the job in front of you is the actual skill, and it's the one nobody teaches you in a demo video.\n\nTry this this week: before you open any chat, name the job first \u2014 deep reasoning, fast iteration, or cheap high-volume \u2014 then pick the model for that job, not the one trending on your feed.\n\nThe bigger signal: the model war stopped being about who's smartest. It's about who fits your actual workflow.\n\nSave this for your AI stack.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#AIBuilders",
+      "#BuildWithAI",
+      "#CreatorTech",
+      "#ArtificialIntelligence",
+      "#AItools",
+      "#GenerativeAI",
+      "#ChatGPT",
+      "#Claude",
+      "#AInews",
+      "#LLM"
+    ],
+    "hashtags_in_first_comment": true,
+    "first_comment": "Which one are you actually using this week \u2014 Astra, Fable, Mythos, or Flash Cyber?",
+    "visual": {
+      "source": "library",
+      "aspect": "1:1",
+      "quality": "high",
+      "typography_preset": "editorial_drop",
+      "slides": [
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, minimal composition, strong negative space, high contrast. Scene: three tall matte-black monoliths rising from dark ground in a void, each igniting into a different shade of electric-blue-adjacent glow (cool blue, cyan-blue, deep violet-blue) at the exact same instant, their light beams crossing in the air above them into one bright convergence point; no people; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "THREE LABS SHIPPED. ONE WEEK.",
+          "subtext": "The only filter that matters",
+          "accent": "SHIPPED",
+          "kicker": "AI TOOL DROP",
+          "role": "cover",
+          "footer": "SWIPE FOR MORE"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast. Scene: three dark machined plates floating in a void, each freshly stamped with a different geometric mark made of electric blue light, wet-looking and still settling, like three separate release notices arriving at once; no people, shallow depth of field; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cheap gamer RGB, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "ASTRA. FABLE. MYTHOS. FLASH.",
+          "subtext": "Four names, one week, three labs",
+          "accent": "ASTRA",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast. Scene: three distinct paths of electric blue light diverging from one shared origin point across a dark floor, one running straight and fast, one curling into tight deliberate loops, one widening into a broad steady beam; each path clearly its own shape; no people, extreme macro to wide, shallow depth of field; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cheap gamer RGB, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "THREE DIFFERENT BETS",
+          "subtext": "Agentic. Tiered reasoning. Instant speed.",
+          "accent": "BETS",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, warm practical lighting, minimal composition, strong negative space, high contrast. Scene: an overhead macro of a single dark wooden workbench with one glowing blue task-shaped block resting at its center, and around it several unlit blocks of the same shape sit further back, out of reach and irrelevant to the task at hand; calm, deliberate, a decision already made; no people; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cheap gamer RGB, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "PICK BY THE JOB",
+          "subtext": "Not the leaderboard.",
+          "accent": "JOB",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, warm practical lighting, minimal composition, strong negative space, high contrast. Scene: a close warm-lit shot of a hand writing a single short label onto a small blank dark tag with an electric-blue-inked pen, the tag resting beside three unlabeled tools laid out in a row, the act of naming happening before anything is picked up; intimate, human; no face in frame, extreme shallow depth of field; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "NAME THE JOB FIRST",
+          "subtext": "Then choose the model.",
+          "accent": "FIRST",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast. Scene: a single dark puzzle-shaped socket in a wall of similar sockets, and one specific electric-blue piece gliding in and clicking into the one socket shaped exactly for it while every other socket around it stays dark and untouched; precise, satisfying fit; no people, shallow depth of field; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "FIT BEATS FAMOUS",
+          "subtext": "The model war is about workflow now.",
+          "accent": "FIT",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, extremely minimal composition, overwhelming negative space, high contrast. Scene: one clean horizontal line of electric blue light suspended across the middle of a vast empty black frame, perfectly level, nothing else present, the darkness around it soft and deep; absolute restraint; no people; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "SAVE THIS FOR YOUR STACK",
+          "subtext": "Follow @layer8culture for the build.",
+          "accent": "SAVE",
+          "role": "cta"
+        }
+      ],
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261001-layer8culture-instagram-2",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-10-01T11:00:00-04:00",
+    "text": "Nvidia just bought Hugging Face for $12.9 billion.\n\nThe same week, OpenAI shipped GPT-6 Astra, Anthropic dropped Claude Fable and Mythos, and Google put out Gemini 3.8 Flash Cyber \u2014 fourteen models from major labs in one month.\n\nThe open web taught a generation of builders for free. Now the largest hardware company on earth owns a piece of the library.\n\nWe built this entire content engine \u2014 copy, visuals, video \u2014 on tools anyone can pick up, in public, with a human still approving every post.\n\nOwn your stack before someone buys it for you.\n\nFollow @layer8culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#AInews",
+      "#Nvidia",
+      "#OpenSource",
+      "#BuildInPublic",
+      "#AIFluency",
+      "#ArtificialIntelligence",
+      "#AItools",
+      "#TechCreators"
+    ],
+    "hashtags_in_first_comment": true,
+    "trial_reel": true,
+    "visual": {
+      "source": "reuse",
+      "of": "20261001-layer8culture-tiktok-1",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20261001-layer8culture-instagram-3",
+    "account": "layer8culture",
+    "category": "Community Questions",
+    "platform": "instagram",
+    "format": "story",
+    "schedule_time": "2026-10-01T13:15:00-04:00",
+    "text": "Three labs shipped flagship models this week. Which one have you actually opened? Reply and tell us \u2014 Astra, Fable, Mythos, or Flash Cyber.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#TechThursday"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "headline": "WHICH ONE DID YOU OPEN?",
+      "subtext": "Astra \u2022 Fable \u2022 Mythos \u2022 Flash Cyber",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, minimal composition, strong negative space, high contrast. Scene: four small distinct orbs of light floating at chest height in a dark void, each a slightly different cool hue, and a confident Black creator's hand reaching in to gently touch just one of them, the touched orb brightening while the other three stay soft and dim; simple, direct, an honest choice being made; 9:16 vertical aspect, room left for an interactive sticker near the middle. Avoid rendered text, signage lettering, garbled typography, generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, robots, fake hologram overload, random neon colors.",
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261001-layer8culture-instagram-4",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-10-01T16:45:00-04:00",
+    "text": "You didn't get worse at learning. You just started measuring it in seconds.\n\nThis week on Tech Thursday the crew talked through the twenty-hour rule \u2014 the real, dedicated time it actually takes to learn something new. Then they named the trap: scroll twenty thirty-second AI clips on the same topic and it feels like expertise. It isn't. That's twenty minutes, not twenty hours.\n\nReal fluency looks boring from the outside. Sit with one tool. Break it. Fix it. Go back in.\n\nThat's the whole method behind this account. Show the work, not the highlight reel.\n\nComment BUILD and I will send you the workflow map.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#LearnInPublic",
+      "#BuildInPublic",
+      "#FutureBuilders",
+      "#AICommunity",
+      "#DevCommunity",
+      "#Automation",
+      "#PromptEngineering",
+      "#ArtificialIntelligence"
+    ],
+    "hashtags_in_first_comment": true,
+    "comment_to_dm": {
+      "campaign": "ig_comment_dm_build_map",
+      "keyword": "BUILD",
+      "offer": "AI Builder Workflow Map",
+      "dm_prompt": "Want the workflow map? Here it is: <approved public link>. What are you trying to build with AI right now?",
+      "public_reply": "Sent. Check your DMs.",
+      "route": "builder_nurture"
+    },
+    "visual": {
+      "source": "library",
+      "aspect": "1:1",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "slides": [
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, documentary realism, minimal composition, strong negative space, high contrast. Scene: a single dark hourglass suspended in a void, its falling sand rendered as fine electric-blue particles, with twenty small glowing marks etched faintly along its neck like hour lines, half already passed; calm, deliberate, patient; no people, shallow depth of field; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "20 HOURS TO LEARN",
+          "subtext": "Not 20 minutes of clips",
+          "accent": "20",
+          "role": "cover"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, minimal composition, strong negative space, high contrast. Scene: a phone-shaped slab of dark glass held at arm's length in a void, its surface showing a fast blur of a dozen overlapping electric-blue clip thumbnails scrolling past too quickly to focus on any single one; restless, shallow, a feeling of motion without progress; no faces; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cheap gamer RGB, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "SCROLLING FEELS LIKE PROGRESS",
+          "subtext": "It isn't.",
+          "accent": "PROGRESS",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, warm practical lighting, minimal composition, strong negative space, high contrast. Scene: a single confident Black creator's hands resting still on a keyboard at a warm-lit desk, one lone terminal window glowing steady blue, nothing else on the screen, a long quiet unhurried moment; calm, focused, unglamorous; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "REAL FLUENCY IS BORING",
+          "subtext": "Sit with one tool. Break it.",
+          "accent": "BORING",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, warm practical lighting, minimal composition, strong negative space, high contrast. Scene: an overhead macro of a single sheet of dark paper on a walnut desk under one warm lamp, torn in half and then a hand carefully taping the two halves back together with a thin strip of glowing electric blue tape; deliberate repair, quiet persistence; no faces; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "FIX IT. GO BACK IN.",
+          "subtext": "That's the whole method.",
+          "accent": "FIX",
+          "role": "value"
+        },
+        {
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, documentary realism, extremely minimal composition, overwhelming negative space, high contrast. Scene: one small glowing electric-blue envelope icon-shaped object resting alone at the center of a vast empty black frame, a faint soft light pulsing gently from within it as if waiting to be opened; no people; lower-left area is clean dark negative space for the headline; 1:1 aspect. Avoid rendered text, signage lettering, garbled typography, bright corporate lighting, cluttered composition, robots, fake hologram overload, random neon colors.",
+          "headline": "COMMENT BUILD",
+          "subtext": "Get the workflow map.",
+          "accent": "BUILD",
+          "role": "cta"
+        }
+      ],
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261001-layer8culture-instagram-5",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-10-01T19:15:00-04:00",
+    "text": "Twenty-four hours straight. One website went live before sunrise.\n\nOn this week's Tech Thursday, the crew broke down their 24-hour build marathon: no sleep, just the terminal and momentum, one app shipping between naps. The lesson wasn't the tool. It's that nobody's coming to hold your hand through it.\n\nThe command line isn't the hard part. The twenty minutes before you open it is.\n\nSave this for the night you finally start.\n\nFollow @layer8culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#BuildInPublic",
+      "#LearnInPublic",
+      "#AIBuilders",
+      "#CreatorTech",
+      "#DevCommunity",
+      "#FutureBuilders"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "reuse",
+      "of": "20261001-layer8culture-tiktok-2",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20261001-layer8culture-youtube-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "youtube",
+    "format": "reel",
+    "schedule_time": "2026-10-01T19:45:00-04:00",
+    "youtube_title": "Nvidia Bought Hugging Face for $12.9B \u2014 What Builders Do Now #Shorts",
+    "text": "Nvidia acquired Hugging Face for $12.9 billion the same week OpenAI, Anthropic, and Google all shipped new flagship models. The open web trained a generation of builders for free \u2014 here's why owning your own stack matters more now, not less.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Shorts",
+      "#Layer8Culture",
+      "#Nvidia",
+      "#AInews",
+      "#OpenSource",
+      "#BuildInPublic"
+    ],
+    "visual": {
+      "source": "reuse",
+      "of": "20261001-layer8culture-tiktok-1",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20261001-layer8culture-youtube-2",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "youtube",
+    "format": "reel",
+    "schedule_time": "2026-10-01T20:50:00-04:00",
+    "youtube_title": "We Built an App in 24 Hours Straight \u2014 No Sleep, Just Terminal #Shorts",
+    "text": "From this week's Tech Thursday: a 24-hour build marathon where one app shipped live between naps, powered by nothing but the terminal and momentum. The real barrier was never the command line \u2014 it was starting.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Shorts",
+      "#Layer8Culture",
+      "#BuildInPublic",
+      "#TechThursday",
+      "#LearnInPublic"
+    ],
+    "visual": {
+      "source": "reuse",
+      "of": "20261001-layer8culture-tiktok-2",
+      "aspect": "9:16"
+    }
+  }
+]
