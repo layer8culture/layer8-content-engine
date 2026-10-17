@@ -94,6 +94,22 @@ def _parse_air_date(text: str) -> datetime | None:
     return None
 
 
+_CARD_NOISE_RE = re.compile(
+    r"^(?:\d+(?::\d{2}){1,2}|generate clips|no ai clips yet|ai clips|download)$",
+    re.I,
+)
+
+
+def _parse_title(card_text: str, anchor_text: str = "") -> str:
+    for block in (card_text, anchor_text):
+        for raw_line in (block or "").splitlines():
+            line = raw_line.strip()
+            if not line or _CARD_NOISE_RE.fullmatch(line) or _parse_air_date(line):
+                continue
+            return line
+    return "Tech Thursday"
+
+
 def _load_index() -> dict:
     if not INDEX.exists():
         return {"files": []}
@@ -184,11 +200,16 @@ def _recordings(page, folder_url: str) -> list[Recording]:
     found: dict[str, Recording] = {}
     for index in range(anchors.count()):
         anchor = anchors.nth(index)
-        href = anchor.get_attribute("href") or ""
-        match = VIDEO_RE.search(href)
+        href = (anchor.get_attribute("href") or "").strip()
+        if "autoGenerateAIClips" in href:
+            continue
+        clean_href = href.split("?", 1)[0]
+        match = VIDEO_RE.search(clean_href)
         if not match:
             continue
         recording_id = match.group(1)
+        if recording_id in found:
+            continue
         text = anchor.evaluate(
             """el => {
                 let node = el;
@@ -202,8 +223,8 @@ def _recordings(page, folder_url: str) -> list[Recording]:
         aired_at = _parse_air_date(text)
         if not aired_at:
             continue
-        title = (anchor.inner_text() or text.splitlines()[0]).strip()
-        url = href if href.startswith("http") else f"https://streamyard.com{href}"
+        title = _parse_title(text, anchor.inner_text() or "")
+        url = clean_href if clean_href.startswith("http") else f"https://streamyard.com{clean_href}"
         show = _classify_show(title)
         found[recording_id] = Recording(recording_id, title, aired_at, url, show)
     if not found:
