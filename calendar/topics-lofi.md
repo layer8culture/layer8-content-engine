@@ -82,9 +82,9 @@
 # (the engine renders its own on-brand imagery; no YouTube footage is reposted).
 # Edit MOOD_RULES in the script or override entries by hand if needed.
 #
-  - title: Cosmic Focus | Afrofuturist Deep Space Coding Radio #Shorts
-    url: https://www.youtube.com/watch?v=D5JDTPZeDRQ
-    mood: night
+  - title: Rainy Morning Coffee | Afro-Jazz Lofi for Work & Study | 2 Hours
+    url: https://www.youtube.com/watch?v=vKVq7SqVpz0
+    mood: rainy night
     note: drive viewers to the full session; link in bio.
 
 ## Session focus / pillars to feature
