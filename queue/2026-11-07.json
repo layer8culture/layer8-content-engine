@@ -1,0 +1,565 @@
+[
+  {
+    "id": "20261107-layer8culture-tiktok-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-11-07T09:00:00-05:00",
+    "text": "GitHub Copilot can run in JetBrains Air. Who checks the work?\n\nThe November 3 release brings task delegation and in-context review into Air. Builders can track agent sessions without losing the project context.\n\nTech Thursday gave us the other half: Copilot CLI generated an image batch, but the look wasn't right. Execution isn't acceptance.\n\nTry one small test-writing task in Air. Inspect the diff and run the test before accepting it. AI is moving into workflows; judgment stays with you.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AI",
+      "#TechTok",
+      "#GitHubCopilot",
+      "#AIagents"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "ai-fluency",
+    "hook_score": 92,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "editorial_drop",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: AI orchestration expressed through a grounded physical systems metaphor, not floating user interfaces. Scene: vertical 9:16 overhead view of a precision black glass routing sculpture; three separate electric-blue light channels converge on a single translucent inspection gate that is visibly closed. One soft-white sample cube waits immediately before the gate, shallow depth of field, deep navy reflections, no people or screens. Reserve a calm dark upper third for huge burned-in video beats and clean dark lower-left / lower third for the composited cover headline. Palette: Deep Black #000000, Deep Navy Glow #050A1A, restrained Electric Blue #0047FF and Soft White #F5F5F5; blue is the only chromatic accent. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "headline": "COPILOT CAN RUN. WHO CHECKS?",
+      "viral_pillar": "ai-fluency",
+      "hook_score": 92,
+      "reel": {
+        "mode": "sora",
+        "seconds": 12,
+        "sora_prompt": "Vertical 9:16, 12-second cinematic physical routing sculpture, documentary realism, electric blue and deep navy, shallow depth of field. At 0-2 seconds, three light channels snap into alignment and send one soft-white sample cube toward a closed translucent gate: an instant pattern interrupt. At 2-7 seconds, a low tracking camera follows the cube as it stops at the gate; a narrow inspection beam slowly traverses its surface. At 7-10 seconds, the cube remains held while the inspection beam completes its pass, making the review boundary unmistakable; hold the composition through 12 seconds. This is a visual metaphor, not a literal product interface. Keep the upper third quiet and lower third uncluttered. Subtle original glass resonance, a restrained relay click and low ambient hum. Clean output: no rendered text, letters, numbers, logos, UI labels, voiceover or copyrighted music.",
+        "overlay_beats": [
+          {
+            "text": "COPILOT CAN RUN",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "WHO CHECKS?",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "TEST THEN TRUST",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261107-layer8culture-tiktok-2",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-11-07T11:30:00-05:00",
+    "text": "Copilot CLI made the images. We rejected the look.\n\nOn Tech Thursday, the host connected an image model through MCP and generated a batch. It ran. The images still didn't meet the visual standard.\n\nBefore your next batch, write three visible acceptance checks: subject, palette, composition. Review against those, not just whether the tool finished.\n\nFollow @layer8culture for real AI builds and the decisions behind them.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechTok",
+      "#BuildInPublic",
+      "#GitHubCopilot",
+      "#CreatorTech"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "build-in-public",
+    "hook_score": 94,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: real build-in-public evidence and an intentional human quality decision. Scene: vertical 9:16 extreme macro of a Black creator's hands inspecting three small unlettered photographic proof cards on a dark walnut light table; the cards depict different abstract blue architectural studies, one visibly overlit and one poorly framed. A hand is poised to slide the unsuitable proof aside; an unmarked matte-black review tray sits at the far right. No computer, no desk portrait, no printed labels or logos. Keep the upper third calm and reserve clean dark lower-left / lower third negative space for the cover headline. Deep Black #000000 and Deep Navy Glow #050A1A dominate, restrained Electric Blue #0047FF reflections, Soft White #F5F5F5 edges and subtle Warm Walnut #3B2416 surface warmth. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "headline": "COPILOT MADE IT. WE SAID NO.",
+      "viral_pillar": "build-in-public",
+      "hook_score": 94,
+      "reel": {
+        "mode": "sora",
+        "seconds": 12,
+        "sora_prompt": "Vertical 9:16, 12-second documentary macro of a Black creator's hands reviewing unlettered photographic proof cards on a dark walnut light table. At 0-2 seconds, one proof card slides sharply into frame and catches an electric-blue edge light. At 2-7 seconds, the camera makes a shallow lateral slide while the hand compares its overlit composition with two quieter architectural proofs, then deliberately moves the unsuitable card into an unmarked black review tray. At 7-10 seconds, the hand holds the remaining proof under a narrow practical light for closer inspection, then hold through 12 seconds. Tactile, specific, honest quality control; an illustrative reenactment, not original show footage. Deep navy and electric blue, shallow depth of field, subtle paper friction and one soft tray tap, no music imitation. Keep upper and lower thirds calm. Clean output with no text, numbers, logos, brand marks, voiceover or copyrighted music.",
+        "overlay_beats": [
+          {
+            "text": "AI MADE IT",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "WE SAID NO",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "KEEP YOUR TASTE",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261107-layer8culture-tiktok-3",
+    "account": "layer8culture",
+    "category": "Creator Systems",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-11-07T14:00:00-05:00",
+    "text": "Afrofuturism needs more than a blue glow.\n\nBefore generating, name the place, the materials and what people are making there. A community maker courtyard tells a different story than another anonymous server room.\n\nCulture belongs in the brief, not just the color grade.\n\nFollow Layer8Culture if you're building with AI and cultural intention.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechTok",
+      "#Afrofuturism",
+      "#TechCulture",
+      "#BuildWithAI"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "black-tech-culture",
+    "hook_score": 90,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: grounded Afrofuturist architecture and community making, culturally intentional materials rather than costume or generic cyberpunk. Scene: vertical 9:16 wide architectural view of an original future African city maker courtyard at blue hour, sculptural rammed-earth walls, contemporary woven shade panels and a precision glass fabrication pavilion. Two confident Black creators, engaged and intentional, examine a small physical prototype in the middle distance; no desk pose. Restrained electric-blue pathway inlays connect the courtyard to the skyline, practical warm light reveals the earthy texture. Low vantage, strong geometry, no signage. Keep the top band simple deep navy sky and the lower-left / lower third an uncluttered dark stone foreground for composited type. Palette mostly Deep Black #000000 and Deep Navy Glow #050A1A, Electric Blue #0047FF as the only chromatic lighting accent, Soft White #F5F5F5 reflections and muted natural walnut-brown material tones. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "headline": "AFROFUTURISM ISN'T A COLOR GRADE",
+      "viral_pillar": "black-tech-culture",
+      "hook_score": 90,
+      "reel": {
+        "mode": "sora",
+        "seconds": 12,
+        "sora_prompt": "Vertical 9:16, 12-second cinematic architectural reveal of an original Afrofuturist maker courtyard at blue hour. At 0-2 seconds, a close woven shade panel sweeps out of frame as the camera rises, instantly revealing a rammed-earth arch lit by a restrained electric-blue path. At 2-7 seconds, a smooth crane movement reveals a glass fabrication pavilion and two intentional Black creators examining a physical prototype; the path connects their courtyard to the distant future African skyline. At 7-10 seconds, settle on the architecture and human making together, then hold gently through 12 seconds. Grounded documentary realism, navy and electric blue, tactile earthy materials, no exoticized costume, no dystopian chaos. Quiet original courtyard ambience and soft wind, no voiceover or copyrighted music. Calm sky in the upper text band and dark foreground below. No text, logos, letters, numbers, signage or product UI.",
+        "overlay_beats": [
+          {
+            "text": "BLUE ISN'T ALL",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "NAME THE PLACE",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "BUILD WITH US",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261107-layer8culture-tiktok-4",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-11-07T17:00:00-05:00",
+    "text": "AI video continuity starts before you render.\n\nTech Thursday's frame-pair method: image one to two, then the same image two to three. A shared boundary frame gives adjacent clips a common anchor; it doesn't guarantee a clean join.\n\nTry two clips with matching end/start references in a tool that supports them. Check subject, light and camera direction at the cut.\n\nFollow @layer8culture if you're learning to build with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AI",
+      "#TechTok",
+      "#GenerativeAI",
+      "#CreatorTech"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "cinematic-coding",
+    "hook_score": 89,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: cinematic coding as optical craft, precision and continuity rather than readable code. Scene: vertical 9:16 extreme macro of two smoked-glass film segments suspended above a black optical rail; each contains a small photographic study of the same unlettered blue-lit doorway. Their adjacent boundary images match exactly, but the segments are separated by a narrow gap. Electric-blue edge reflections trace the shared image; soft-white light refracts through real glass, no screens, hands or floating interface. Diagonal composition, very shallow focus, tactile lens detail. Reserve quiet dark upper third and clean lower-left / lower third for composited type. Deep Black #000000 and Deep Navy Glow #050A1A dominate with restrained Electric Blue #0047FF and Soft White #F5F5F5. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "headline": "AI VIDEO: PLAN THE JOIN FIRST",
+      "viral_pillar": "cinematic-coding",
+      "hook_score": 89,
+      "reel": {
+        "mode": "sora",
+        "seconds": 12,
+        "sora_prompt": "Vertical 9:16, 12-second optical macro, code-as-craft visual metaphor rendered with real glass and light. At 0-2 seconds, a thin electric-blue reflection reveals a sharp gap between two smoked-glass film segments. At 2-7 seconds, a precise focus pull shows their matching doorway boundary images; the segments glide together along a physical black optical rail until the edges align. At 7-10 seconds, the reflected blue light passes continuously across the aligned join; linger through 12 seconds. This is an illustration of continuity planning, not a software demo. Documentary realism, deep navy, electric blue, soft-white refraction, very shallow depth of field, restrained original mechanical glide and glass tick. No people, screens, readable code, rendered text, logos, labels, voiceover or copyrighted music. Keep the upper third quiet and the lower third clean.",
+        "overlay_beats": [
+          {
+            "text": "BEFORE RENDER",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "MATCH THE FRAME",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "FOLLOW THE WORK",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261107-layer8culture-tiktok-5",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-11-07T20:00:00-05:00",
+    "text": "GitHub Copilot in Xcode: build the screen you keep sketching.\n\nThe November 4 public preview puts Copilot in Xcode's built-in coding assistant, starting with Xcode 27.3 beta. The separate extension still exists.\n\nOn a compatible Mac, set it up under Settings > Intelligence. Try one tiny SwiftUI screen, run it, then change one thing yourself. Less tool-switching. More time learning how the app works.\n\nThe signal: AI help is moving into the place you build, not just the place you ask.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechTok",
+      "#GitHubCopilot",
+      "#Xcode",
+      "#BuildWithAI"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "transformation",
+    "hook_score": 93,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "editorial_drop",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: a consumer-to-builder threshold, one modest working screen rather than an invented success story. Scene: vertical 9:16 moving-POV composition inside a dark architectural passage; a confident Black creator stands centrally at a narrow electric-blue-lit doorway, holding an unlettered paper wireframe in one hand and a small unbranded device in the other. The device shows only three simple blank interface shapes. Beyond the doorway is a small practical prototyping space, no desk portrait, no floating UI, no logos or recognizable app interface. The creator's engaged face is visible in three-quarter front view, not an anonymous side profile. Keep a quiet navy upper third above the subject and clean dark lower-left / lower third for the composited headline. Deep Black #000000 and Deep Navy Glow #050A1A dominate with restrained Electric Blue #0047FF and Soft White #F5F5F5. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "headline": "XCODE + COPILOT. ONE REAL SCREEN.",
+      "viral_pillar": "transformation",
+      "hook_score": 93,
+      "reel": {
+        "mode": "sora",
+        "seconds": 12,
+        "sora_prompt": "Vertical 9:16, 12-second cinematic threshold metaphor for learning to make a first app screen. At 0-2 seconds, a narrow electric-blue doorway lights abruptly in a dark passage, revealing an intentional Black creator holding an unlettered paper wireframe and an unbranded device. At 2-7 seconds, the camera makes a steady forward move as the creator crosses the threshold; focus travels from three blank wireframe shapes on paper to the same simple shapes on the device. At 7-10 seconds, the creator calmly taps one shape and it changes state, landing one small working interaction; hold through 12 seconds. Illustrative metaphor, not real Xcode footage or a claim of a shipped app. Documentary realism, deep navy and electric blue, subtle footsteps and a quiet original device tap, no voiceover or copyrighted music. Keep upper and lower thirds simple. Clean output: no readable text, letters, numbers, logos, brand marks or recognizable vendor UI.",
+        "overlay_beats": [
+          {
+            "text": "XCODE + COPILOT",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "ONE REAL SCREEN",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "START SMALL",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261107-layer8culture-instagram-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-11-07T10:00:00-05:00",
+    "text": "GitHub Copilot enters JetBrains Air. Give the agent a finish line.\n\nWhat changed: GitHub's November 3 release brings Copilot into Air's agent picker, with task delegation, parallel sessions and review beside your code.\n\nWhat it does: you can assign a coding task, guide execution and inspect the changes in project context. More sessions are useful only when their jobs are clear.\n\nBuilder value: keep the request, the diff and the evidence close together. Don't treat a completed agent session as a verified result.\n\nWe saw that gap on the latest Tech Thursday. At 28:11-29:24, the host used MCP with Copilot CLI to generate an image batch, then said the quality wasn't what he wanted. Different output, same lesson: the tool can finish before the work is acceptable.\n\nTry this week: install the Air plugin in a JetBrains IDE, select GitHub Copilot and connect your account. In a practice repository, ask it to add one edge-case test for an existing function. Inspect the diff, run the test, and check that it fails when the function is deliberately broken. Restore the function before accepting the change.\n\nThe signal: AI is moving from prompts into reviewable workflows. Builders define what counts as done.\n\nSave this for your next agent task.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#BuildInPublic",
+      "#AIBuilders",
+      "#CreatorTech",
+      "#AItools",
+      "#DevCommunity",
+      "#AIagents",
+      "#GitHubCopilot",
+      "#JetBrains",
+      "#Workflow",
+      "#AInews"
+    ],
+    "hashtags_in_first_comment": true,
+    "first_comment": "Release and setup details: https://github.blog/changelog/2026-11-03-github-copilot-is-now-available-in-jetbrains-air/ . The local Air plugin is listed as alpha; cloud tasks have additional Air Teams requirements.",
+    "visual": {
+      "source": "library",
+      "aspect": "1:1",
+      "quality": "high",
+      "typography_preset": "editorial_drop",
+      "slides": [
+        {
+          "role": "cover",
+          "headline": "COPILOT ENTERS JETBRAINS AIR",
+          "subtext": "Delegate. Inspect. Test. Then accept.",
+          "kicker": "AI TOOL DROP",
+          "accent_words": [
+            "COPILOT"
+          ],
+          "footer": "SWIPE FOR THE BUILDER MOVE",
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: premium creator-tech editorial product-drop atmosphere, physical workflow metaphor, no literal software branding. Scene: square 1:1 hero, low-angle close view of a polished black architectural bridge with three narrow branching paths that terminate at one illuminated inspection aperture. Electric-blue side lighting, crisp soft-white reflected edges, deep navy mist, no people or screens. Reserve clean dark LOWER-LEFT / lower third negative space for oversized composited typography. Palette mostly Deep Black #000000 and Deep Navy Glow #050A1A, restrained Electric Blue #0047FF as the only chromatic accent, Soft White #F5F5F5 highlights. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        },
+        {
+          "role": "value",
+          "headline": "A NEW PLACE TO DELEGATE",
+          "subtext": "Select Copilot in Air's agent picker.",
+          "kicker": "01 / WHAT CHANGED",
+          "accent_words": [
+            "DELEGATE"
+          ],
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: editorial tool-drop detail, task selection as a tactile metaphor. Scene: square 1:1 top-down macro of one small brushed-metal selector seated in a black precision socket, two unused sockets receding out of focus, one electric-blue indicator line. Entirely unlettered, no product interface, no hands or screen. Place the mechanism in the upper-right; leave the LOWER-LEFT / lower third clean, dark and uncluttered for composited typography. Deep Black #000000, Deep Navy Glow #050A1A, restrained Electric Blue #0047FF and Soft White #F5F5F5 reflections. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        },
+        {
+          "role": "value",
+          "headline": "TASKS, NOT JUST CHAT",
+          "subtext": "Guide execution. Review changes beside your code.",
+          "kicker": "02 / WHAT IT DOES",
+          "accent_words": [
+            "TASKS"
+          ],
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: structured task execution, physical stages instead of fake code. Scene: square 1:1 side-on view of a compact black modular assembly rail; one blank component sits at the input, a second is held by a precise tool fixture, a finished component waits in a transparent review enclosure. Three stages are clear through material and depth, not labels. Electric-blue rim light, documentary macro, no people or screens. Keep the LOWER-LEFT / lower third clean dark negative space for composited headlines. Deep Black #000000, Deep Navy Glow #050A1A, restrained Electric Blue #0047FF and Soft White #F5F5F5. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        },
+        {
+          "role": "value",
+          "headline": "KEEP REVIEW IN CONTEXT",
+          "subtext": "Multiple sessions. Changes you can inspect.",
+          "kicker": "03 / BUILDER VALUE",
+          "accent_words": [
+            "REVIEW"
+          ],
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: project context and comparison expressed through a material study. Scene: square 1:1 oblique close view of two translucent black architectural maquettes standing side by side; one original has a narrow open span, the revised version has a small new support, their difference caught by a single electric-blue grazing light. Precision real objects, no charts, no text, no screenshots. Keep both maquettes in the upper half and leave clean dark LOWER-LEFT / lower third negative space for composited typography. Deep Black #000000, Deep Navy Glow #050A1A, restrained Electric Blue #0047FF, Soft White #F5F5F5 reflections. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        },
+        {
+          "role": "value",
+          "headline": "TRY ONE TEST TASK",
+          "subtext": "Add an edge-case test. Prove it catches failure.",
+          "kicker": "04 / TRY THIS WEEK",
+          "accent_words": [
+            "TEST"
+          ],
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: hands-on testing, an edge case made physically visible. Scene: square 1:1 extreme close-up of a precision fit gauge encountering a tiny notch in a matte-black sample block; a Black creator's hand steadies the gauge, electric-blue edge light reveals the flaw, a soft practical light shows real material texture. No screen, no numeric scale or labels. Position the action upper-right and preserve clean dark LOWER-LEFT / lower third negative space for composited type. Deep Black #000000, Deep Navy Glow #050A1A, restrained Electric Blue #0047FF and Soft White #F5F5F5. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        },
+        {
+          "role": "value",
+          "headline": "PROMPTS BECOME WORKFLOWS",
+          "subtext": "Define the task, evidence and review gate.",
+          "kicker": "05 / THE SIGNAL",
+          "accent_words": [
+            "WORKFLOWS"
+          ],
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: evidence and human review as a connected workflow. Scene: square 1:1 wide still life of three unlettered physical objects on separate dark plinths: a folded blank brief, a transparent specimen enclosure and a closed black approval latch, joined by one restrained electric-blue light path. Strong negative space, atmospheric scale, no person, screen or icons. Leave the LOWER-LEFT / lower third clean and dark for composited typography. Deep Black #000000, Deep Navy Glow #050A1A, Electric Blue #0047FF as the only chromatic accent, Soft White #F5F5F5 edges. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        },
+        {
+          "role": "cta",
+          "headline": "SAVE THIS FOR YOUR AI STACK",
+          "subtext": "One task. One test. Your decision.",
+          "kicker": "BUILDER CHECK",
+          "accent_words": [
+            "SAVE"
+          ],
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: calm editorial closing frame, a reusable builder reference. Scene: square 1:1 minimal macro of one folded unlettered soft-white reference card tucked into a matte-black archival sleeve; a narrow electric-blue bookmark tab catches a grazing light in the upper-right, deep navy falloff, tactile premium paper. No logos, writing, people or screen. Leave a generous clean dark LOWER-LEFT / lower third for the composited CTA. Deep Black #000000, Deep Navy Glow #050A1A, restrained Electric Blue #0047FF and Soft White #F5F5F5. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        }
+      ],
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261107-layer8culture-instagram-2",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-11-07T12:15:00-05:00",
+    "text": "Copilot CLI finished the batch. Our visual standard said no.\n\nOn the latest Tech Thursday, the host described connecting an image model through MCP, generating images, then finding the look wasn't what he wanted.\n\nThat's the part an automation demo can leave out.\n\nA useful review brief names three things before generation: the subject, the palette and the composition. A completed task still has to pass them.\n\nHere, a human also approves the content batch before anything publishes. The video is a cinematic illustration of the review decision, not show footage.\n\nFollow @layer8culture for the human decisions behind AI builds.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#BuildInPublic",
+      "#AIFluency",
+      "#CreatorTech",
+      "#GenerativeAI",
+      "#Automation",
+      "#GitHubCopilot",
+      "#ContentCreation",
+      "#Workflow"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "reuse",
+      "of": "20261107-layer8culture-tiktok-2",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20261107-layer8culture-youtube-1",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "youtube",
+    "format": "reel",
+    "schedule_time": "2026-11-07T13:00:00-05:00",
+    "youtube_title": "Copilot CLI Generated the Images. Human Review Still Matters. #Shorts",
+    "text": "Copilot CLI + MCP generated an image batch on Tech Thursday; the host still rejected the visual quality. Cinematic illustration of why AI output needs acceptance checks.\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Shorts",
+      "#Layer8Culture",
+      "#GitHubCopilot",
+      "#BuildInPublic",
+      "#AI"
+    ],
+    "visual": {
+      "source": "reuse",
+      "of": "20261107-layer8culture-tiktok-2",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20261107-layer8culture-instagram-3",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-11-07T16:00:00-05:00",
+    "text": "AI video: check these 3 things before joining two clips.\n\nSubject. Light. Camera direction.\n\nOn the latest Tech Thursday, the host walked through planning six still frames for five clips. At 48:45-49:04, the hosts explained the shared-boundary approach: clip one goes from image one to two; clip two starts with that same image two and goes to three.\n\nA shared reference gives the clips a common anchor. It doesn't promise continuity. You still have to watch the cut.\n\nTry it with two clips in a generator that accepts start/end image references:\n1. Plan the subject position, light direction and camera move at the join.\n2. Use the same image for clip one's end reference and clip two's start reference.\n3. Put the clips beside each other in your editor. Compare the last and first frames, then play through at normal speed.\n\nIf the subject jumps, the light flips or the camera reverses, revise the affected clip. A fade can soften a transition; it can't fix the underlying mismatch.\n\nSave this for your next AI video edit.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#BuildWithAI",
+      "#LearnInPublic",
+      "#CreatorTech",
+      "#GenerativeAI",
+      "#TechCreators",
+      "#ContentCreation",
+      "#VideoEditing",
+      "#AIvideo"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "library",
+      "aspect": "1:1",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "slides": [
+        {
+          "role": "cover",
+          "headline": "AI VIDEO: FIX THE JOIN",
+          "subtext": "3 checks before you stitch clips.",
+          "accent": "JOIN",
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: AI filmmaking continuity as a specific editorial problem. Scene: square 1:1 close-up of two unlettered photographic contact images clipped to a dark physical editing rail, each showing the same original blue-lit staircase from slightly different camera positions; the boundary between the images catches a narrow electric-blue reflection. Real paper texture, soft-white edges, no screens, hands or readable labels. Place the images above the midpoint and keep the LOWER-LEFT / lower third clean dark negative space for composited type. Deep Black #000000, Deep Navy Glow #050A1A, restrained Electric Blue #0047FF and Soft White #F5F5F5. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        },
+        {
+          "role": "value",
+          "headline": "PLAN TWO ANCHORS",
+          "subtext": "Same subject. Light. Camera direction.",
+          "accent": "ANCHORS",
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: practical previsualization before video generation. Scene: square 1:1 overhead view of two small original physical storyboard maquettes of the same staircase, with identical human-shaped scale silhouettes at the same landing, one narrow practical light casting the same shadow direction on each. A simple camera lens rests beside them, no drawings, writing or arrows. Confident Black creator's hand carefully aligns the second maquette. Warm walnut support surface, electric-blue rim light. Reserve clean dark LOWER-LEFT / lower third for composited headline and subtext. Deep Black #000000, Deep Navy Glow #050A1A, restrained Electric Blue #0047FF, Soft White #F5F5F5 and subtle Warm Walnut #3B2416. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        },
+        {
+          "role": "value",
+          "headline": "REUSE THE END FRAME",
+          "subtext": "Clip one's end becomes clip two's start.",
+          "accent": "REUSE",
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: a shared visual anchor, not a repeated library asset. Scene: square 1:1 tight side view of a single unlettered original photographic image of a blue-lit staircase held centrally between two adjacent black film reels; a restrained electric-blue light travels along the physical film strip to the shared image. Precision real materials, soft-white photographic border, no abstract floating UI, no people or printed numerals. Place the shared image in the upper-middle and keep clean dark LOWER-LEFT / lower third negative space for composited typography. Deep Black #000000, Deep Navy Glow #050A1A, Electric Blue #0047FF as the only chromatic accent, Soft White #F5F5F5. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        },
+        {
+          "role": "value",
+          "headline": "CHECK BEFORE EXPORT",
+          "subtext": "Compare boundary frames. Play the cut.",
+          "accent": "CHECK",
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: deliberate editor inspection, cinematic craft and evidence. Scene: square 1:1 oblique macro of a small physical loupe over two photographic stills of the same blue-lit staircase, one shadow visibly pointing the wrong way, a narrow soft-white inspection light revealing the mismatch. No hands, screens, logos or written annotations. Focus on the loupe and shadow in the upper-right; reserve clean dark LOWER-LEFT / lower third negative space for composited headlines. Deep Black #000000, Deep Navy Glow #050A1A, restrained Electric Blue #0047FF and Soft White #F5F5F5. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        },
+        {
+          "role": "cta",
+          "headline": "SAVE THE JOIN CHECK",
+          "subtext": "Subject. Light. Camera direction.",
+          "accent": "SAVE",
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: a calm reusable filmmaking checkpoint. Scene: square 1:1 minimal wide still life of a closed black editing case with three precise unlettered inset compartments holding a small photographic subject reference, a miniature practical light and a camera lens; a restrained electric-blue light line crosses the case rim. Real materials, not cartoon props, mostly dark atmosphere, no screen or person. Keep the objects in the upper third and reserve expansive clean dark LOWER-LEFT / lower third negative space for the composited CTA. Deep Black #000000, Deep Navy Glow #050A1A, restrained Electric Blue #0047FF and Soft White #F5F5F5. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        }
+      ],
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261107-layer8culture-instagram-4",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-11-07T20:15:00-05:00",
+    "text": "GitHub Copilot in Xcode: your first test doesn't need to be a whole app.\n\nGitHub's November 4 announcement puts Copilot inside Xcode's built-in coding assistant in public preview. It starts with Xcode 27.3 beta on macOS Tahoe 26.6 or later; all Copilot plans are supported. The existing extension remains a separate option.\n\nThe useful change is where the help lives: in your native build workflow, rather than another chat to shuttle between.\n\nTry one small SwiftUI screen in a practice project. On a compatible Mac, open Xcode > Settings > Intelligence to connect Copilot. Ask for one button and one state change. Run it, inspect what changed, then make a small edit yourself.\n\nThat's the builder move: not just collecting AI answers, understanding something you can operate.\n\nCinematic illustration, not a recording of the Xcode interface.\n\nFollow @layer8culture if you're turning AI experiments into real builds.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#BuildWithAI",
+      "#FutureBuilders",
+      "#AIFluency",
+      "#AItools",
+      "#DevCommunity",
+      "#CodingLife",
+      "#GitHubCopilot",
+      "#Xcode",
+      "#SwiftUI",
+      "#AInews"
+    ],
+    "hashtags_in_first_comment": true,
+    "first_comment": "Public-preview requirements and setup: https://github.blog/changelog/2026-11-04-github-copilot-is-now-available-in-xcodes-coding-assistant/ . Keep beta experiments separate from your main project.",
+    "visual": {
+      "source": "reuse",
+      "of": "20261107-layer8culture-tiktok-5",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20261107-layer8culture-youtube-2",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "youtube",
+    "format": "reel",
+    "schedule_time": "2026-11-07T20:45:00-05:00",
+    "youtube_title": "GitHub Copilot in Xcode: Try One SwiftUI Screen #Shorts",
+    "text": "GitHub Copilot joins Xcode's built-in coding assistant in public preview: Xcode 27.3 beta, macOS Tahoe 26.6+. Try one SwiftUI screen and verify the interaction. Cinematic illustration, not interface footage.\nRelease: https://github.blog/changelog/2026-11-04-github-copilot-is-now-available-in-xcodes-coding-assistant/\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Shorts",
+      "#Layer8Culture",
+      "#GitHubCopilot",
+      "#Xcode",
+      "#BuildWithAI"
+    ],
+    "visual": {
+      "source": "reuse",
+      "of": "20261107-layer8culture-tiktok-5",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20261107-layer8culture-instagram-5",
+    "account": "layer8culture",
+    "category": "Community Questions",
+    "platform": "instagram",
+    "format": "story",
+    "schedule_time": "2026-11-07T21:15:00-05:00",
+    "text": "AI builders: what's your next acceptance check?\n\nTech Thursday's image batch ran, but the look wasn't right. Today's carousel gives agent tasks a finish line.\n\nWhich check would you add to your next build: VISUAL FIT or WORKING TEST?\n\nReply with your pick.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#AICommunity",
+      "#AIBuilders",
+      "#BuildInPublic",
+      "#GenerativeAI",
+      "#Automation",
+      "#Workflow"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "headline": "WHAT'S YOUR NEXT CHECK?",
+      "subtext": "Visual fit or working test?",
+      "accent": "CHECK",
+      "overlay_position": "lower-left",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: a lightweight community decision frame, two meaningful review choices. Scene: vertical 9:16 quiet still life of two different small objects in the upper quarter: a matte-black color-and-material sample tile with restrained electric-blue edge light, and a precision steel test gauge resting on a dark block. No text, symbols, screen or hands. Use distinct shapes rather than literal poll graphics. Leave the center spacious and dark for a human-added interaction sticker and the LOWER-LEFT / lower third clean dark negative space for the composited headline. Keep top and bottom UI margins clear. Deep Black #000000 and Deep Navy Glow #050A1A dominate, restrained Electric Blue #0047FF as the only chromatic accent and Soft White #F5F5F5 reflections. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "library_hint": "default branded graphic"
+    }
+  }
+]
