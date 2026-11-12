@@ -1,0 +1,478 @@
+[
+  {
+    "id": "20261113-layer8culture-tiktok-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-11-13T09:00:00-05:00",
+    "text": "Gemini 4 Carbon: test one bug, not the announcement.\n\nNew in Copilot Nov 10: a model for complex coding and agent tasks. Builder value: another option inside your existing workflow.\n\nOn Tech Thursday, Copilot CLI connected to an image model and made a batch. We still had to judge the result. Different task. Same lesson.\n\nTry this week: give Carbon one reproducible bug in a public sample repo. Compare the patch against your current model using the same failing test. Access depends on plan, rollout and policy; check usage pricing.\n\nThe signal: prompts become work when the output has an acceptance test.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AI",
+      "#TechTok",
+      "#BuildWithAI",
+      "#AItools"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "ai-fluency",
+    "hook_score": 94,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "editorial_drop",
+      "headline": "TEST ONE BUG",
+      "viral_pillar": "ai-fluency",
+      "hook_score": 94,
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Vary the composition from post to post so the feed does not repeat \u2014 the SCENE SPECIFICS for THIS post decide the subject. Draw from a range of premium looks (do NOT default to the same person-at-a-desk shot every time), for example: a confident Black creator/host presenting direct-to-camera; a close detail of premium creator gear (mic, stream deck, dark walnut desk, the standalone 8 motif on a hoodie or mug); an over-the-shoulder build session; an abstract Afrofuturistic tech or data-visualization environment with glowing electric-blue nodes and grids; or an atmospheric branded studio space. Recurring brand cues when a scene fits: a blank neon sign panel on the wall (an unlit, lettering-free glowing panel - do NOT render any text or letters), the standalone 8 motif, a bookshelf washed in blue accent lighting. When a person appears they are a confident Black creator, engaged and intentional, never anonymous side profiles. The image should feel like a premium technology documentary and creative studio brand. COMPOSITION FOR TYPOGRAPHY: leave the LOWER-LEFT / lower third of the frame as clean, uncluttered negative space (a dark, simple area with no faces, fine detail, or busy elements there) so a branded headline can be composited over it. Add-on: AI-fluency orchestration world, vertical 9:16, deep navy #050A1A and Electric Blue #0047FF. Scene: a physically photographed smoked-glass branching circuit sculpture with one visibly broken connection at its center, viewed in a wide overhead diagonal; two separate paths approach the same gap. No person, no interface, no lettering. Keep the upper-center overlay band calm, the top 12 percent and bottom 20 percent free of essential detail. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "seconds": 12,
+        "sora_prompt": "Vertical 9:16, 12 seconds, photoreal cinematic abstraction of a model acceptance test, not product footage. 0-2s: an electric-blue pulse strikes a broken connection in the smoked-glass circuit and stops abruptly. 2-7s: overhead camera orbits slowly as two alternative routes attempt the identical gap; one forms a solid bridge, the other remains disconnected. 7-10s: the completed route carries a pulse all the way to a physical endpoint, making success visible. 10-12s: hold the finished endpoint for a clean landing. Deep navy, black, restrained electric blue, shallow depth of field. No people, logos, text, letters, readable code or floating UI. Preserve a quiet upper-center overlay band and clean lower third. Subtle original glass taps and electrical ambience, no speech or copyrighted music. All readable words are added later.",
+        "overlay_beats": [
+          {
+            "text": "NEW MODEL?",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "SAME BUG.",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "TEST THE FIX",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261113-layer8culture-tiktok-2",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-11-13T11:30:00-05:00",
+    "text": "Copilot CLI made the images. We still rejected the batch.\n\nOn Tech Thursday, the image connection worked. The output missed the quality we wanted.\n\nThat's two different checks: did the tool run, and did the result meet the brief?\n\nOur rule for the next batch: inspect a small sample before expanding the run. Completion isn't approval.\n\nFollow @layer8culture for the build.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#BuildInPublic",
+      "#CreatorTech",
+      "#AI",
+      "#TechTok"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "build-in-public",
+    "hook_score": 91,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "headline": "DONE ISN'T READY",
+      "viral_pillar": "build-in-public",
+      "hook_score": 91,
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Vary the composition from post to post so the feed does not repeat \u2014 the SCENE SPECIFICS for THIS post decide the subject. Draw from a range of premium looks (do NOT default to the same person-at-a-desk shot every time), for example: a confident Black creator/host presenting direct-to-camera; a close detail of premium creator gear (mic, stream deck, dark walnut desk, the standalone 8 motif on a hoodie or mug); an over-the-shoulder build session; an abstract Afrofuturistic tech or data-visualization environment with glowing electric-blue nodes and grids; or an atmospheric branded studio space. Recurring brand cues when a scene fits: a blank neon sign panel on the wall (an unlit, lettering-free glowing panel - do NOT render any text or letters), the standalone 8 motif, a bookshelf washed in blue accent lighting. When a person appears they are a confident Black creator, engaged and intentional, never anonymous side profiles. The image should feel like a premium technology documentary and creative studio brand. COMPOSITION FOR TYPOGRAPHY: leave the LOWER-LEFT / lower third of the frame as clean, uncluttered negative space (a dark, simple area with no faces, fine detail, or busy elements there) so a branded headline can be composited over it. Add-on: build-in-public physical quality-review metaphor, 9:16, Electric Blue #0047FF against Deep Navy #050A1A. Scene: extreme close-up of a Black creator's hands inspecting three small photographic contact prints on a dark walnut light table; one print is visibly washed out, another lacks subject focus, the third has intentional light. Crop to hands and prints, no seated person, no computer, no writing. Keep the upper third plain black and the lower-left empty for compositing. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "seconds": 12,
+        "sora_prompt": "Vertical 9:16, 12 seconds, documentary realism, physical metaphor rather than a recording of the show. 0-2s: rack focus sharply from a finished stack of prints to an obviously washed-out first print. 2-7s: a Black creator's hands slide the poor samples aside and place one carefully lit sample into a separate review tray; macro lateral dolly along the walnut surface, no faces or desk workstation. 7-10s: the hand pauses over the tray instead of automatically passing it onward. 10-12s: hold that deliberate human decision. Black, deep navy, restrained electric-blue rim light, warm practical light. Upper-center quiet for overlays, lower third uncluttered. No text, numbers, logos or readable interfaces. Original soft paper sounds and room tone, no narration or copyrighted music.",
+        "overlay_beats": [
+          {
+            "text": "BATCH RAN.",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "BRIEF MISSED.",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "REVIEW FIRST",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261113-layer8culture-tiktok-3",
+    "account": "layer8culture",
+    "category": "Creator Systems",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-11-13T14:30:00-05:00",
+    "text": "Your AI experiment needs a stop rule.\n\nTech Thursday got specific about watching generation credits instead of letting the bill run.\n\nA rule worth borrowing: one sample, a fixed spend cap, one review. If it misses, diagnose before buying more attempts.\n\nA cheaper failed run is still a failed run.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AI",
+      "#Automation",
+      "#CreatorTech",
+      "#BuildInPublic"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "cinematic-coding",
+    "hook_score": 89,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "editorial_drop",
+      "headline": "SET A STOP RULE",
+      "viral_pillar": "cinematic-coding",
+      "hook_score": 89,
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Vary the composition from post to post so the feed does not repeat \u2014 the SCENE SPECIFICS for THIS post decide the subject. Draw from a range of premium looks (do NOT default to the same person-at-a-desk shot every time), for example: a confident Black creator/host presenting direct-to-camera; a close detail of premium creator gear (mic, stream deck, dark walnut desk, the standalone 8 motif on a hoodie or mug); an over-the-shoulder build session; an abstract Afrofuturistic tech or data-visualization environment with glowing electric-blue nodes and grids; or an atmospheric branded studio space. Recurring brand cues when a scene fits: a blank neon sign panel on the wall (an unlit, lettering-free glowing panel - do NOT render any text or letters), the standalone 8 motif, a bookshelf washed in blue accent lighting. When a person appears they are a confident Black creator, engaged and intentional, never anonymous side profiles. The image should feel like a premium technology documentary and creative studio brand. COMPOSITION FOR TYPOGRAPHY: leave the LOWER-LEFT / lower third of the frame as clean, uncluttered negative space (a dark, simple area with no faces, fine detail, or busy elements there) so a branded headline can be composited over it. Add-on: cinematic-coding optical sculpture, vertical 9:16, Deep Navy #050A1A, Electric Blue #0047FF. Scene: extreme macro side view of a single fiber-optic light trail passing through a precision mechanical aperture inside smoked glass; a small finite reservoir of soft-white light particles feeds the trail. Physical photographed materials, not a financial dashboard, no person, no screen, no symbols. Place all intricate detail in the middle band; keep upper-center and lower-left simple dark space. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "seconds": 12,
+        "sora_prompt": "Vertical 9:16, 12-second cinematic macro, shallow depth of field, no people. 0-2s: a rapid rush of white light particles pours from a finite glass reservoir into an electric-blue optical channel. 2-7s: camera tracks sideways through the glass as a mechanical aperture narrows, reducing the stream to one controlled test pulse. 7-10s: the aperture closes cleanly before the reservoir empties; remaining particles settle. 10-12s: hold the preserved reservoir. Premium photographed black glass, deep navy, one electric-blue light, no additional neon. Keep upper-center calm and lower third empty. No text, numbers, logos, code or UI. Subtle original relay click and low room hum, no speech or copyrighted music.",
+        "overlay_beats": [
+          {
+            "text": "CREDITS GO.",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "SET A LIMIT.",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "THEN RUN ONE",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261113-layer8culture-tiktok-4",
+    "account": "layer8culture",
+    "category": "AI Fluency Education",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-11-13T17:00:00-05:00",
+    "text": "Black tech creativity needs more than a preset.\n\nAn AI image can be polished and still miss the people, place and feeling you meant.\n\nWrite those three things into the brief before choosing a style. Then judge the output against them, not just its gloss.\n\nTechnology has seven layers. We're the eighth.\n\nFollow @layer8culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#Afrofuturism",
+      "#TechCulture",
+      "#BuildWithAI",
+      "#GenerativeAI"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "black-tech-culture",
+    "hook_score": 90,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "headline": "CULTURE NEEDS INTENT",
+      "viral_pillar": "black-tech-culture",
+      "hook_score": 90,
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Vary the composition from post to post so the feed does not repeat \u2014 the SCENE SPECIFICS for THIS post decide the subject. Draw from a range of premium looks (do NOT default to the same person-at-a-desk shot every time), for example: a confident Black creator/host presenting direct-to-camera; a close detail of premium creator gear (mic, stream deck, dark walnut desk, the standalone 8 motif on a hoodie or mug); an over-the-shoulder build session; an abstract Afrofuturistic tech or data-visualization environment with glowing electric-blue nodes and grids; or an atmospheric branded studio space. Recurring brand cues when a scene fits: a blank neon sign panel on the wall (an unlit, lettering-free glowing panel - do NOT render any text or letters), the standalone 8 motif, a bookshelf washed in blue accent lighting. When a person appears they are a confident Black creator, engaged and intentional, never anonymous side profiles. The image should feel like a premium technology documentary and creative studio brand. COMPOSITION FOR TYPOGRAPHY: leave the LOWER-LEFT / lower third of the frame as clean, uncluttered negative space (a dark, simple area with no faces, fine detail, or busy elements there) so a branded headline can be composited over it. Add-on: Black-tech-culture Afrofuturist architectural world, vertical 9:16, Electric Blue #0047FF in Deep Navy #050A1A with tiny warm-gold practical highlights. Scene: a wide low-angle view across a futuristic African city's public maker courtyard, sculptural earthen architecture, finely crafted timber canopies, an illuminated footbridge and a distant small group of Black creators collaborating around a physical architectural model. No costume spectacle, no stereotyped props, no seated computer workstation. Empty dark sky in the upper band; shaded stone foreground remains clean lower-left. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "seconds": 12,
+        "sora_prompt": "Vertical 9:16, 12-second cinematic Afrofuturist city, documentary realism, aspirational and grounded. 0-2s: begin low behind a dark sculptural courtyard wall; one electric-blue light reveals a precise hand-carved architectural edge. 2-7s: a rising crane move reveals the maker courtyard, warm timber canopies and a futuristic African skyline; Black creators collaboratively reposition a physical architectural model in the middle distance. 7-10s: blue pathway lights trace from their model's direction toward a real footbridge, a visual metaphor for intention shaping place. 10-12s: hold the city reveal. Mostly black and deep navy, restrained blue, small warm-gold practical highlights. No text, numbers, logos, screens or holograms. Calm sky for upper-center overlays; clean lower third. Original soft city ambience, footsteps and wind, no speech or copyrighted music.",
+        "overlay_beats": [
+          {
+            "text": "A PRESET?",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "NOT CULTURE.",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "NAME THE PEOPLE",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261113-layer8culture-tiktok-5",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-11-13T19:30:00-05:00",
+    "text": "Copilot CLI looked intimidating. Cam built anyway.\n\nIn the latest Tech Thursday recap, Cam described freezing when learning alone. Having someone walk through the build changed that.\n\nThen came the reminder: one thing at a time.\n\nFor your first CLI session: one small change in a practice repo, inspect the diff, run the check. Confidence gets something concrete to stand on.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechTok",
+      "#LearnInPublic",
+      "#BuildWithAI",
+      "#AI"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "transformation",
+    "hook_score": 93,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "headline": "START WITH SOMEONE",
+      "viral_pillar": "transformation",
+      "hook_score": 93,
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Vary the composition from post to post so the feed does not repeat \u2014 the SCENE SPECIFICS for THIS post decide the subject. Draw from a range of premium looks (do NOT default to the same person-at-a-desk shot every time), for example: a confident Black creator/host presenting direct-to-camera; a close detail of premium creator gear (mic, stream deck, dark walnut desk, the standalone 8 motif on a hoodie or mug); an over-the-shoulder build session; an abstract Afrofuturistic tech or data-visualization environment with glowing electric-blue nodes and grids; or an atmospheric branded studio space. Recurring brand cues when a scene fits: a blank neon sign panel on the wall (an unlit, lettering-free glowing panel - do NOT render any text or letters), the standalone 8 motif, a bookshelf washed in blue accent lighting. When a person appears they are a confident Black creator, engaged and intentional, never anonymous side profiles. The image should feel like a premium technology documentary and creative studio brand. COMPOSITION FOR TYPOGRAPHY: leave the LOWER-LEFT / lower third of the frame as clean, uncluttered negative space (a dark, simple area with no faces, fine detail, or busy elements there) so a branded headline can be composited over it. Add-on: transformation threshold metaphor, not a likeness or reenactment of either host, vertical 9:16, Electric Blue #0047FF and Deep Navy #050A1A. Scene: one confident Black creator stands facing a closed heavy workshop doorway, three-quarter frontal view with face engaged and intentional, another Black creator visible inside through a narrow strip of warm practical light. No computers or desk. Position people in the middle-right, leaving the upper-center wall plain and the lower-left shadow uncluttered. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "seconds": 12,
+        "sora_prompt": "Vertical 9:16, 12-second documentary-real cinematic metaphor, not footage of the hosts. 0-2s: a workshop door stops just short of opening, a narrow electric-blue seam sharply visible in darkness. A confident Black creator faces it in a three-quarter frontal composition. 2-7s: a second Black creator opens the door from inside and gestures calmly toward a single clear work surface; the first creator takes one deliberate step through. Camera tracks backward into the room, no seated workstation and no floating interface. 7-10s: both stand side by side examining one small physical prototype under a practical lamp. 10-12s: hold the shared focus. Deep black, navy, restrained electric blue and a small warm lamp. Keep faces outside the upper-center overlay band and lower third clean. No text, logos, readable screens, speech or copyrighted music; original hinge, footstep and room sounds.",
+        "overlay_beats": [
+          {
+            "text": "CLI FEELS BIG?",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "ONE SMALL FIX.",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "BUILD TOGETHER",
+            "start": 7,
+            "end": 10
+          }
+        ]
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261113-layer8culture-instagram-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-11-13T12:15:00-05:00",
+    "text": "Gemini 4 Carbon is in Copilot. Your tests still decide.\n\nGitHub added it Nov 10 for complex coding, reasoning and agent tasks. The useful change: another model to evaluate without leaving your build surface.\n\nOn the latest Tech Thursday, Copilot CLI connected to an image model and generated a batch. The connection worked; the images still needed human judgment. That was an earlier image experiment, not a Carbon test.\n\nTry this week: use a public sample repo, one reproducible bug and the same failing test for Carbon and your current model. Compare passing checks, diff clarity and cost. Don't expand access or permissions just for the experiment.\n\nPlan, rollout and organization policy affect access. Usage pricing applies.\n\nThe signal isn't a longer model menu. It's AI output entering a workflow you can check.\n\nFollow @layer8culture for practical AI builds.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#AIBuilders",
+      "#AItools",
+      "#AIagents",
+      "#DevCommunity",
+      "#AInews",
+      "#Workflow"
+    ],
+    "hashtags_in_first_comment": true,
+    "trial_reel": true,
+    "visual": {
+      "source": "reuse",
+      "of": "20261113-layer8culture-tiktok-1",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20261113-layer8culture-youtube-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "youtube",
+    "format": "reel",
+    "schedule_time": "2026-11-13T12:45:00-05:00",
+    "youtube_title": "Gemini 4 Carbon in GitHub Copilot: Test One Bug First #Shorts",
+    "text": "Gemini 4 Carbon joined GitHub Copilot Nov 10 for coding and agent tasks; access varies and usage pricing applies.\nTry one bug in a public sample repo with the same failing test as your current model. Tech Thursday's earlier CLI image batch showed why working tools still need output review: prompts become workflows when results are checked.\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Shorts",
+      "#Layer8Culture",
+      "#AI",
+      "#BuildWithAI",
+      "#AItools"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "reuse",
+      "of": "20261113-layer8culture-tiktok-1",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20261113-layer8culture-instagram-2",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-11-13T20:00:00-05:00",
+    "text": "Copilot CLI gets less intimidating when the first build isn't solo.\n\nCam put it plainly in our latest Tech Thursday recap: learning alone can make you freeze. Someone walking through it with you makes starting feel possible.\n\nThe useful detail wasn't the length of the sprint. It was the scope: one thing at a time.\n\nA first-session brief you can borrow: make one small change in a practice repo, explain the diff, run the check. Keep the result small enough to understand.\n\nThat's a builder move, not a confidence test.\n\nFollow @layer8culture for the build.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#LearnInPublic",
+      "#BuildInPublic",
+      "#AICommunity",
+      "#CodingLife",
+      "#DevCommunity",
+      "#SideProject"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "reuse",
+      "of": "20261113-layer8culture-tiktok-5",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20261113-layer8culture-youtube-2",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "youtube",
+    "format": "reel",
+    "schedule_time": "2026-11-13T20:30:00-05:00",
+    "youtube_title": "Copilot CLI for Beginners: One Small Change, One Check #Shorts",
+    "text": "Copilot CLI beginner lesson from Tech Thursday: Cam described how guided building helped him get started.\nUse a practice repo, make one small change, inspect the diff and run the check before expanding the task.\nFollow @layer8culture if you're building with AI.",
+    "hashtags": [
+      "#Shorts",
+      "#Layer8Culture",
+      "#AI",
+      "#LearnInPublic",
+      "#BuildWithAI"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "reuse",
+      "of": "20261113-layer8culture-tiktok-5",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20261113-layer8culture-instagram-3",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-11-13T16:00:00-05:00",
+    "text": "Claude Fable 5.2 in Copilot: check the data rule before the code.\n\nGitHub added Fable 5.2 on Nov 9 for complex, multistep coding across large codebases. For builders, that's another candidate for a bounded maintenance task, not a reason to hand over the whole stack.\n\nThe part worth keeping beside your model picker: Fable 5.2 requires data retention by default for Anthropic's safety classifiers. GitHub says retained data isn't used to train Anthropic's models. Certain eligible enterprises can get zero-data-retention access under specific conditions; don't assume that applies to your account.\n\nTry this week: use a public sample repo containing no personal data or secrets. Give the model one failing test and ask for the smallest fix. Read the diff, run the test and record usage cost before expanding.\n\nCopilot Pro+, Max, Business and Enterprise access is rolling out gradually. Business and Enterprise admins must enable the model policy, which is off by default. Check provider-list usage pricing too.\n\nThe bigger signal: choosing an AI coding model is becoming a workflow decision about data, permissions, checks and spend, not just capability.\n\nSave this before your next model switch.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIBuilders",
+      "#AIFluency",
+      "#ArtificialIntelligence",
+      "#AItools",
+      "#DevCommunity",
+      "#Claude",
+      "#Anthropic",
+      "#AInews",
+      "#Workflow"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "library",
+      "aspect": "1:1",
+      "quality": "high",
+      "typography_preset": "editorial_drop",
+      "slides": [
+        {
+          "role": "cover",
+          "headline": "FABLE 5.2: CHECK THE DATA RULE",
+          "subtext": "Before the first coding task.",
+          "kicker": "AI TOOL DROP",
+          "accent": "DATA",
+          "footer": "SWIPE FOR THE CHECKLIST",
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Vary the composition from post to post so the feed does not repeat \u2014 the SCENE SPECIFICS for THIS post decide the subject. Draw from a range of premium looks (do NOT default to the same person-at-a-desk shot every time), for example: a confident Black creator/host presenting direct-to-camera; a close detail of premium creator gear (mic, stream deck, dark walnut desk, the standalone 8 motif on a hoodie or mug); an over-the-shoulder build session; an abstract Afrofuturistic tech or data-visualization environment with glowing electric-blue nodes and grids; or an atmospheric branded studio space. Recurring brand cues when a scene fits: a blank neon sign panel on the wall (an unlit, lettering-free glowing panel - do NOT render any text or letters), the standalone 8 motif, a bookshelf washed in blue accent lighting. When a person appears they are a confident Black creator, engaged and intentional, never anonymous side profiles. The image should feel like a premium technology documentary and creative studio brand. COMPOSITION FOR TYPOGRAPHY: leave the LOWER-LEFT / lower third of the frame as clean, uncluttered negative space (a dark, simple area with no faces, fine detail, or busy elements there) so a branded headline can be composited over it. Add-on: square Editorial Drop product-news photography, Deep Navy #050A1A, Electric Blue #0047FF as the only accent. Scene: monumental close-up of a precision-machined black access gate partly open, with a sealed frosted-glass data cartridge waiting outside its threshold; oblique perspective, one blue edge light, no padlock icon, no product branding. Entire lower third is quiet black. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        },
+        {
+          "role": "value",
+          "headline": "NEW IN COPILOT",
+          "subtext": "Fable 5.2 arrived November 9.",
+          "kicker": "WHAT CHANGED",
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Vary the composition from post to post so the feed does not repeat \u2014 the SCENE SPECIFICS for THIS post decide the subject. Draw from a range of premium looks (do NOT default to the same person-at-a-desk shot every time), for example: a confident Black creator/host presenting direct-to-camera; a close detail of premium creator gear (mic, stream deck, dark walnut desk, the standalone 8 motif on a hoodie or mug); an over-the-shoulder build session; an abstract Afrofuturistic tech or data-visualization environment with glowing electric-blue nodes and grids; or an atmospheric branded studio space. Recurring brand cues when a scene fits: a blank neon sign panel on the wall (an unlit, lettering-free glowing panel - do NOT render any text or letters), the standalone 8 motif, a bookshelf washed in blue accent lighting. When a person appears they are a confident Black creator, engaged and intentional, never anonymous side profiles. The image should feel like a premium technology documentary and creative studio brand. COMPOSITION FOR TYPOGRAPHY: leave the LOWER-LEFT / lower third of the frame as clean, uncluttered negative space (a dark, simple area with no faces, fine detail, or busy elements there) so a branded headline can be composited over it. Add-on: square Editorial Drop, black/navy with a single electric-blue accent. Scene: a new unmarked black lens module precisely fitted into an existing modular camera rail, side-on product-detail shot, no hands or labels; a familiar physical system gaining one interchangeable component. Keep lower-left dark and empty. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        },
+        {
+          "role": "value",
+          "headline": "MULTISTEP CODE WORK",
+          "subtext": "Built for complex tasks across large codebases.",
+          "kicker": "WHAT IT DOES",
+          "accent": "CODE",
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Vary the composition from post to post so the feed does not repeat \u2014 the SCENE SPECIFICS for THIS post decide the subject. Draw from a range of premium looks (do NOT default to the same person-at-a-desk shot every time), for example: a confident Black creator/host presenting direct-to-camera; a close detail of premium creator gear (mic, stream deck, dark walnut desk, the standalone 8 motif on a hoodie or mug); an over-the-shoulder build session; an abstract Afrofuturistic tech or data-visualization environment with glowing electric-blue nodes and grids; or an atmospheric branded studio space. Recurring brand cues when a scene fits: a blank neon sign panel on the wall (an unlit, lettering-free glowing panel - do NOT render any text or letters), the standalone 8 motif, a bookshelf washed in blue accent lighting. When a person appears they are a confident Black creator, engaged and intentional, never anonymous side profiles. The image should feel like a premium technology documentary and creative studio brand. COMPOSITION FOR TYPOGRAPHY: leave the LOWER-LEFT / lower third of the frame as clean, uncluttered negative space (a dark, simple area with no faces, fine detail, or busy elements there) so a branded headline can be composited over it. Add-on: square Editorial Drop physical systems metaphor. Scene: top-down view of three separate matte-black architectural floorplates connected by one fine electric-blue cable through precise openings, suggesting dependencies across a codebase; crisp documentary product photography, no holograms, no writing, no people. Detail confined to upper-right; lower-left is plain deep navy. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        },
+        {
+          "role": "value",
+          "headline": "DATA RETAINED BY DEFAULT",
+          "subtext": "Safety checks; not model training. Exceptions vary.",
+          "kicker": "WHY BUILDERS SHOULD CARE",
+          "accent": "DATA",
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Vary the composition from post to post so the feed does not repeat \u2014 the SCENE SPECIFICS for THIS post decide the subject. Draw from a range of premium looks (do NOT default to the same person-at-a-desk shot every time), for example: a confident Black creator/host presenting direct-to-camera; a close detail of premium creator gear (mic, stream deck, dark walnut desk, the standalone 8 motif on a hoodie or mug); an over-the-shoulder build session; an abstract Afrofuturistic tech or data-visualization environment with glowing electric-blue nodes and grids; or an atmospheric branded studio space. Recurring brand cues when a scene fits: a blank neon sign panel on the wall (an unlit, lettering-free glowing panel - do NOT render any text or letters), the standalone 8 motif, a bookshelf washed in blue accent lighting. When a person appears they are a confident Black creator, engaged and intentional, never anonymous side profiles. The image should feel like a premium technology documentary and creative studio brand. COMPOSITION FOR TYPOGRAPHY: leave the LOWER-LEFT / lower third of the frame as clean, uncluttered negative space (a dark, simple area with no faces, fine detail, or busy elements there) so a branded headline can be composited over it. Add-on: square Editorial Drop retention metaphor, Electric Blue #0047FF on Deep Navy #050A1A. Scene: a small dark glass archival drawer holds a single illuminated abstract data wafer after an optical beam has passed through it; close low-angle view, grounded physical materials, no promise of privacy, no lock symbol or badge. Lower-left and lower third empty black. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        },
+        {
+          "role": "value",
+          "headline": "PUBLIC REPO. ONE FAILING TEST.",
+          "subtext": "No secrets. Request the smallest fix.",
+          "kicker": "TRY THIS WEEK",
+          "accent": "ONE",
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Vary the composition from post to post so the feed does not repeat \u2014 the SCENE SPECIFICS for THIS post decide the subject. Draw from a range of premium looks (do NOT default to the same person-at-a-desk shot every time), for example: a confident Black creator/host presenting direct-to-camera; a close detail of premium creator gear (mic, stream deck, dark walnut desk, the standalone 8 motif on a hoodie or mug); an over-the-shoulder build session; an abstract Afrofuturistic tech or data-visualization environment with glowing electric-blue nodes and grids; or an atmospheric branded studio space. Recurring brand cues when a scene fits: a blank neon sign panel on the wall (an unlit, lettering-free glowing panel - do NOT render any text or letters), the standalone 8 motif, a bookshelf washed in blue accent lighting. When a person appears they are a confident Black creator, engaged and intentional, never anonymous side profiles. The image should feel like a premium technology documentary and creative studio brand. COMPOSITION FOR TYPOGRAPHY: leave the LOWER-LEFT / lower third of the frame as clean, uncluttered negative space (a dark, simple area with no faces, fine detail, or busy elements there) so a branded headline can be composited over it. Add-on: square Editorial Drop test fixture metaphor. Scene: a single unmarked black mechanical puzzle piece suspended just above the only missing notch in a small precision test jig, photographed at eye-level with very shallow depth of field; blue rim light reveals the exact fit, no hands, no computer, no lettering. Lower third is a smooth black gradient. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        },
+        {
+          "role": "value",
+          "headline": "MODEL CHOICE IS WORKFLOW DESIGN",
+          "subtext": "Data. Permissions. Checks. Spend.",
+          "kicker": "THE BIGGER SIGNAL",
+          "accent": "WORKFLOW",
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Vary the composition from post to post so the feed does not repeat \u2014 the SCENE SPECIFICS for THIS post decide the subject. Draw from a range of premium looks (do NOT default to the same person-at-a-desk shot every time), for example: a confident Black creator/host presenting direct-to-camera; a close detail of premium creator gear (mic, stream deck, dark walnut desk, the standalone 8 motif on a hoodie or mug); an over-the-shoulder build session; an abstract Afrofuturistic tech or data-visualization environment with glowing electric-blue nodes and grids; or an atmospheric branded studio space. Recurring brand cues when a scene fits: a blank neon sign panel on the wall (an unlit, lettering-free glowing panel - do NOT render any text or letters), the standalone 8 motif, a bookshelf washed in blue accent lighting. When a person appears they are a confident Black creator, engaged and intentional, never anonymous side profiles. The image should feel like a premium technology documentary and creative studio brand. COMPOSITION FOR TYPOGRAPHY: leave the LOWER-LEFT / lower third of the frame as clean, uncluttered negative space (a dark, simple area with no faces, fine detail, or busy elements there) so a branded headline can be composited over it. Add-on: square Editorial Drop workflow architecture photograph. Scene: four distinct precision control rings arranged in a sparse stepped sequence, each ring regulating the same electric-blue fiber passing through it; wide side composition, black anodized metal, deliberate engineering rather than glowing UI. No letters, no symbols, no people; lower-left completely uncluttered. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        },
+        {
+          "role": "cta",
+          "headline": "SAVE BEFORE YOU SWITCH",
+          "subtext": "Check access, data rules and usage pricing.",
+          "kicker": "YOUR AI STACK CHECKLIST",
+          "accent": "SAVE",
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Vary the composition from post to post so the feed does not repeat \u2014 the SCENE SPECIFICS for THIS post decide the subject. Draw from a range of premium looks (do NOT default to the same person-at-a-desk shot every time), for example: a confident Black creator/host presenting direct-to-camera; a close detail of premium creator gear (mic, stream deck, dark walnut desk, the standalone 8 motif on a hoodie or mug); an over-the-shoulder build session; an abstract Afrofuturistic tech or data-visualization environment with glowing electric-blue nodes and grids; or an atmospheric branded studio space. Recurring brand cues when a scene fits: a blank neon sign panel on the wall (an unlit, lettering-free glowing panel - do NOT render any text or letters), the standalone 8 motif, a bookshelf washed in blue accent lighting. When a person appears they are a confident Black creator, engaged and intentional, never anonymous side profiles. The image should feel like a premium technology documentary and creative studio brand. COMPOSITION FOR TYPOGRAPHY: leave the LOWER-LEFT / lower third of the frame as clean, uncluttered negative space (a dark, simple area with no faces, fine detail, or busy elements there) so a branded headline can be composited over it. Add-on: square Editorial Drop quiet final card, deep black and navy with electric-blue edge light. Scene: a single closed premium black field notebook with a blue fabric bookmark on a narrow stone shelf in the upper-right, tactile documentary still life, no writing or logos. Most of the frame, especially the lower third, is untouched dark negative space. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        }
+      ],
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261113-layer8culture-instagram-4",
+    "account": "layer8culture",
+    "category": "Community Questions",
+    "platform": "instagram",
+    "format": "story",
+    "schedule_time": "2026-11-13T21:00:00-05:00",
+    "text": "Copilot CLI: what would help you start?\n\nCam's Tech Thursday takeaway: a guided first build made the terminal less overwhelming. One thing at a time.\n\nReply with your pick: a setup walkthrough or a tiny first task?",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#LearnInPublic",
+      "#AICommunity",
+      "#BuildWithAI",
+      "#CodingLife",
+      "#DevCommunity",
+      "#SideProject"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "headline": "WHAT HELPS YOU START?",
+      "subtext": "Setup walkthrough or tiny first task?",
+      "accent": "START",
+      "overlay_position": "lower-left",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. Vary the composition from post to post so the feed does not repeat \u2014 the SCENE SPECIFICS for THIS post decide the subject. Draw from a range of premium looks (do NOT default to the same person-at-a-desk shot every time), for example: a confident Black creator/host presenting direct-to-camera; a close detail of premium creator gear (mic, stream deck, dark walnut desk, the standalone 8 motif on a hoodie or mug); an over-the-shoulder build session; an abstract Afrofuturistic tech or data-visualization environment with glowing electric-blue nodes and grids; or an atmospheric branded studio space. Recurring brand cues when a scene fits: a blank neon sign panel on the wall (an unlit, lettering-free glowing panel - do NOT render any text or letters), the standalone 8 motif, a bookshelf washed in blue accent lighting. When a person appears they are a confident Black creator, engaged and intentional, never anonymous side profiles. The image should feel like a premium technology documentary and creative studio brand. COMPOSITION FOR TYPOGRAPHY: leave the LOWER-LEFT / lower third of the frame as clean, uncluttered negative space (a dark, simple area with no faces, fine detail, or busy elements there) so a branded headline can be composited over it. Add-on: vertical 9:16 lightweight community Story, Deep Navy #050A1A, Electric Blue #0047FF as the only accent. Scene: two unmarked physical keyboard keys beside a neatly coiled connection cable on a narrow black shelf in the upper-right, a tactile invitation to begin rather than another computer desk. Reserve the middle band for a human-added question sticker if desired, with no generated sticker or text. Keep the entire lower third dark for the composited headline and supporting question; no faces, logos or writing. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "library_hint": "default branded graphic"
+    }
+  }
+]
