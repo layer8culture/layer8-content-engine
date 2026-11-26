@@ -1,0 +1,525 @@
+[
+  {
+    "id": "20261127-layer8culture-tiktok-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-11-27T10:30:00-05:00",
+    "text": "Shirudo: test the shield before you trust it.\n\nOpenAI and Cisco released an open-source runtime on Nov. 23 for temporary Linux protections while patches are prepared. It uses eBPF to target vulnerable behavior on a running system; operators decide what deploys.\n\nBuilder value: protection becomes a workflow you can inspect, not just a promise. Try the official browser lab this week, not your production server. The signal: AI can propose a defense; people still own the decision.\n\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AI",
+      "#TechTok",
+      "#OpenAI",
+      "#AIagents"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "ai-fluency",
+    "hook_score": 94,
+    "hook_candidates": [
+      {
+        "text": "Shirudo: test the shield before you trust it.",
+        "score": 94
+      },
+      {
+        "text": "AI can shield a live server. Humans still deploy it.",
+        "score": 90
+      },
+      {
+        "text": "Your AI security demo needs a normal-traffic test.",
+        "score": 88
+      }
+    ],
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "editorial_drop",
+      "headline": "TEST THE SHIELD",
+      "viral_pillar": "ai-fluency",
+      "hook_score": 94,
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: AI-fluency orchestration metaphor, deep navy #050A1A and black #000000 dominate, Electric Blue #0047FF is the only chromatic accent, restrained practical warmth and white-gray reflections. Scene: vertical 9:16, no person; a single branching channel machined into smoked glass occupies the middle of the frame, with blue light flowing through two paths and a precise metal iris positioned over just one branch. A miniature running-system metaphor, not a literal software interface or a claim of guaranteed protection. Extreme low-angle macro, crisp glass refraction, one intentional blue pulse. Keep the upper third calm for large burned-in video beats, the top 12 percent and bottom 20 percent nonessential, and the lower-left/lower third clean dark negative space for the composited cover headline. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "seconds": 12,
+        "sora_prompt": "Vertical 9:16 cinematic macro, documentary material realism, deep navy and electric blue, no people. First beat 0-2s: a sharp blue pulse forks inside a smoked-glass channel as a small metal iris snaps into focus over one branch. Transformation 2-7s: track sideways in one continuous macro move; the iris narrows that branch while the other keeps its steady flow, a visual metaphor for targeted protection rather than a literal security demonstration. Payoff 7-10s: reveal the iris is removable and the steady channel continues; hold the resolved composition 10-12s. Keep the upper-center band empty for renderer-added words, all essential action between the safe margins. Subtle original glass resonance and a restrained mechanical click, no speech, no copyrighted music, no logos, no text, no letters, no captions.",
+        "overlay_beats": [
+          {
+            "text": "SHIRUDO",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "TEST THE SHIELD",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "KEEP THE PATCH",
+            "start": 7,
+            "end": 10
+          }
+        ],
+        "duration_sec": 12,
+        "beats": [
+          "SHIRUDO",
+          "TEST THE SHIELD",
+          "KEEP THE PATCH"
+        ],
+        "audio": "none"
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261127-layer8culture-tiktok-2",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-11-27T12:40:00-05:00",
+    "text": "Copilot CLI made the images. We rejected them.\n\nOn Tech Thursday, an MCP-connected image batch ran, but the host said the quality wasn't what he wanted. Connected is not accepted.\n\nOpenAI's Nov. 19 Performance Factory breakdown shows the same missing step at another scale: agents propose fixes, engineers review, then agents check recovery.\n\nFor your next AI batch, write one pass/fail rule before generating it.\n\nFollow @layer8culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AI",
+      "#TechTok",
+      "#BuildInPublic",
+      "#GitHubCopilot"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "build-in-public",
+    "hook_score": 96,
+    "hook_candidates": [
+      {
+        "text": "Copilot CLI made the images. We rejected them.",
+        "score": 96
+      },
+      {
+        "text": "AI finished the batch. The batch still failed.",
+        "score": 91
+      },
+      {
+        "text": "The missing agent skill is accepting a no.",
+        "score": 86
+      }
+    ],
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "headline": "DONE ISN'T GOOD",
+      "viral_pillar": "build-in-public",
+      "hook_score": 96,
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: build-in-public editorial inspection, tactile creator workflow, Electric Blue #0047FF only accent against black #000000 and deep navy #050A1A with a restrained warm walnut surface. Scene: vertical 9:16, tight overhead macro of a Black creator's hands reviewing three unlettered photographic proof cards on a small walnut inspection tray, a simple loupe and one blue task light. Each card contains a different abstract blue-black architecture composition, no legible interface or branding. A fingertip rests on a visibly inconsistent proof, about to turn it face down; the gesture conveys human judgment, not an automatic approval. This is a cinematic metaphor, not a fabricated screenshot of the show. Frame the hands and cards in the central band; upper third calm, lower-left/lower third dark and uncluttered for composited typography, no essential objects in the top 12 percent or bottom 20 percent. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "seconds": 12,
+        "sora_prompt": "Vertical 9:16, overhead tactile documentary macro of a Black creator's hands reviewing three unlettered image proof cards on a walnut inspection tray, blue-black palette. First beat 0-2s: a fingertip abruptly stops a proof card sliding into the tray. Transformation 2-7s: slow lateral camera slide as the hand turns the inconsistent card face down, compares the remaining two with a loupe, and pulls one forward for closer inspection. No automatic approval gesture. Payoff 7-10s: pause on the deliberate human review, with the rejected card still face down; hold 10-12s. Keep upper-center clear for burned-in text and lower third dark for platform UI. Original quiet paper friction and a soft inspection-lamp click, no speech, no music, no logos, no readable text, no letters, no generated captions.",
+        "overlay_beats": [
+          {
+            "text": "COPILOT CLI",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "DONE ISN'T GOOD",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "SET A STANDARD",
+            "start": 7,
+            "end": 10
+          }
+        ],
+        "duration_sec": 12,
+        "beats": [
+          "COPILOT CLI",
+          "DONE ISN'T GOOD",
+          "SET A STANDARD"
+        ],
+        "audio": "none"
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261127-layer8culture-tiktok-3",
+    "account": "layer8culture",
+    "category": "Creator Systems",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-11-27T17:10:00-05:00",
+    "text": "AI video continuity breaks between clips, not just inside them.\n\nThe Tech Thursday fix: clip one uses images 1 and 2; clip two starts from that same image 2 and moves to image 3.\n\nTry a two-clip sequence with one shared boundary frame. Check the join before adding music.\n\nFollow Layer8Culture for the next AI build.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechTok",
+      "#BuildWithAI",
+      "#GenerativeAI",
+      "#ContentCreation"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "cinematic-coding",
+    "hook_score": 92,
+    "hook_candidates": [
+      {
+        "text": "AI video continuity breaks between clips, not just inside them.",
+        "score": 92
+      },
+      {
+        "text": "Your last frame is your next prompt.",
+        "score": 88
+      },
+      {
+        "text": "One reference can save your next AI clip.",
+        "score": 86
+      }
+    ],
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "editorial_drop",
+      "headline": "FIX THE JOIN",
+      "viral_pillar": "cinematic-coding",
+      "hook_score": 92,
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: cinematic-coding craft as art, precise optical reflections, deep black #000000 and navy #050A1A with one Electric Blue #0047FF line. Scene: vertical 9:16, no person, two thin smoked-glass optical plates suspended by discreet grounded metal supports in a black optical bench environment. A single blue light trail crosses both plates but is visibly misaligned at their shared edge. Extreme edge-on macro, shallow depth of field, premium glass and brushed-metal textures, not a software screenshot, not a hologram. Subject stays in the middle of the frame; upper third is calm black and the lower-left/lower third is clean dark negative space for the renderer's headline. Keep top 12 percent and bottom 20 percent free of essential action. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "seconds": 12,
+        "sora_prompt": "Vertical 9:16 extreme edge-on macro of two smoked-glass optical plates on a precise black optical bench. First beat 0-2s: a single electric-blue light trail hits a misaligned shared edge and breaks visibly. Transformation 2-7s: slow lens orbit reveals the same reflection on both boundary surfaces as the second plate shifts a few millimeters; the trail connects into one continuous line. Payoff 7-10s: follow the unbroken trail across the join, then hold the matching edge 10-12s. Documentary glass and metal realism, shallow depth of field, deep navy and black, no person, no interface. Keep upper-center and lower third quiet for post-render text and UI. Subtle original glass tap and continuous low electrical hum, no copyrighted music, no logos, no text, no letters, no captions.",
+        "overlay_beats": [
+          {
+            "text": "BROKEN CLIPS",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "SHARE A FRAME",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "FIX THE JOIN",
+            "start": 7,
+            "end": 10
+          }
+        ],
+        "duration_sec": 12,
+        "beats": [
+          "BROKEN CLIPS",
+          "SHARE A FRAME",
+          "FIX THE JOIN"
+        ],
+        "audio": "none"
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261127-layer8culture-tiktok-4",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "tiktok",
+    "format": "reel",
+    "schedule_time": "2026-11-27T20:30:00-05:00",
+    "text": "AI game design starts with your child's story, not a model.\n\nOn Tech Thursday, the host showed his son's storyboards for a game they're working on. A work in progress, not a finished-game claim.\n\nStart your own brief with one place, one character, one choice. Let AI help develop the world without replacing its author.\n\nFollow @layer8culture for human-first AI builds.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechTok",
+      "#Afrofuturism",
+      "#BuildInPublic",
+      "#CreatorTech"
+    ],
+    "hashtags_in_first_comment": true,
+    "viral_pillar": "black-tech-culture",
+    "hook_score": 89,
+    "hook_candidates": [
+      {
+        "text": "AI game design starts with your child's story, not a model.",
+        "score": 89
+      },
+      {
+        "text": "Our next game started with a storyboard.",
+        "score": 83
+      },
+      {
+        "text": "Culture isn't the skin. It's the brief.",
+        "score": 85
+      }
+    ],
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "headline": "THE STORY IS YOURS",
+      "viral_pillar": "black-tech-culture",
+      "hook_score": 89,
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: Black tech culture, grounded Afrofuturist architecture, restrained warm practical highlights with Electric Blue #0047FF as the sole chromatic accent, black #000000 and deep navy #050A1A dominate. Scene: vertical 9:16 wide architectural world, an original African-futurist city model rises from the center of a large unlettered storyboard sketchbook on a dark display plinth. Buildings feature original woven geometric facades and welcoming public courtyards, blue illumination traces human pathways rather than machines. A confident Black adult creator is visible at the far side of the plinth facing camera, intentionally engaged with the model, not seated at a computer; no children, no recognizable game characters. Present this as a cinematic metaphor for authorship, not footage or assets from the family's actual game. Leave the upper third calm deep navy sky and lower-left/lower third uncluttered black for composited typography; essential city and person in the middle band. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "reel": {
+        "mode": "sora",
+        "seconds": 12,
+        "sora_prompt": "Vertical 9:16, cinematic original Afrofuturist city model on an unlettered storyboard sketchbook, a confident Black adult creator engaged across the display plinth. First beat 0-2s: a graphite architectural line becomes a tiny electric-blue illuminated pathway at the center of the page. Transformation 2-7s: a low crane move rises from the sketchbook as the original woven-facade city unfolds into a grounded physical model; pathways connect welcoming courtyards, the creator stays present as its author. Payoff 7-10s: settle wide with the open sketchbook still visible underneath the city, then hold 10-12s. A metaphor, not a depiction of the actual game. Deep navy, black, restrained practical warmth, only blue chromatic accent, documentary material realism. Keep upper-center sky clean for burned-in words, platform safe margins clear. Original faint pencil sound and spacious ambient air, no speech, no copyrighted music, no logos, no text, no letters, no captions.",
+        "overlay_beats": [
+          {
+            "text": "AI GAME DESIGN",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "START WITH YOU",
+            "start": 2,
+            "end": 7
+          },
+          {
+            "text": "WRITE THE WORLD",
+            "start": 7,
+            "end": 10
+          }
+        ],
+        "duration_sec": 12,
+        "beats": [
+          "AI GAME DESIGN",
+          "START WITH YOU",
+          "WRITE THE WORLD"
+        ],
+        "audio": "none"
+      },
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261127-layer8culture-instagram-1",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "instagram",
+    "format": "carousel",
+    "schedule_time": "2026-11-27T11:15:00-05:00",
+    "text": "Shirudo adds a Linux shield. It doesn't replace your patch.\n\nWHAT CHANGED\nOpenAI and Cisco announced Shirudo on Nov. 23: an open-source runtime for temporary protections on running Linux systems.\n\nWHAT IT DOES\nIt uses eBPF, small programs attached at specific operating-system points, to target vulnerable behavior. Operators can evaluate a shield's impact before enforcing it. Security teams control deployment.\n\nBUILDER VALUE\nA blocked test is not the whole job. Normal requests still need to work, and the permanent patch still needs to ship. This is infrastructure work, not a browser extension for everyone.\n\nTRY THIS\nOpen the official getting-started browser lab at https://labs.isovalent.com/#/lab/shirudo-getting-started this week. Follow the exercise and note what its verification proves. Don't start on production. For a deeper test, the VM quickstart walks through signing, loading, checking and unloading a protection.\n\nTHE SIGNAL\nAI is moving into operational workflows. The human layer defines what safe and useful mean.\n\nSource: OpenAI, Nov. 23: https://openai.com/index/introducing-shirudo/\n\nSave this before your next AI infrastructure experiment.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIFluency",
+      "#AIBuilders",
+      "#BuildWithAI",
+      "#ArtificialIntelligence",
+      "#AIagents",
+      "#OpenAI",
+      "#AInews",
+      "#Workflow"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "library",
+      "aspect": "1:1",
+      "quality": "high",
+      "typography_preset": "editorial_drop",
+      "slides": [
+        {
+          "role": "cover",
+          "headline": "SHIRUDO ADDS A SHIELD",
+          "subtext": "Your patch still matters.",
+          "kicker": "AI TOOL DROP",
+          "accent_words": [
+            "SHIELD"
+          ],
+          "footer": "SWIPE FOR THE BUILDER MOVE",
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: premium creator-tech editorial product drop, black #000000 and deep navy #050A1A dominate, Electric Blue #0047FF is the only chromatic accent, soft white-gray material reflections. Scene: square 1:1 hero, a sculptural precision-cut smoked-glass protective canopy floats just above a grounded matte-black server chassis on the right side; the canopy has an intentionally open seam, making protection temporary rather than invincible. Dramatic close three-quarter view, strong blue edge reflection, no logos or literal UI, not a screenshot of Shirudo. Reserve the lower-left/lower third as clean uncluttered dark negative space with no fine detail so Bebas Neue headline typography can be composited afterward. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        },
+        {
+          "role": "value",
+          "headline": "A TEMPORARY LINUX PROTECTION",
+          "subtext": "Open-source runtime. Announced November 23.",
+          "kicker": "01 / WHAT CHANGED",
+          "accent_words": [
+            "TEMPORARY"
+          ],
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: AI Tool Drop engineering editorial, Electric Blue #0047FF only accent, deep black #000000 and deep navy #050A1A with restrained white-gray reflections. Scene: square 1:1, documentary side detail of an open black server service drawer in a dark equipment bay, a removable translucent blue-edged insert rests beside it on a clean shelf, signaling temporary protection rather than a permanent replacement. No people, no displays, no text; close lateral composition noticeably different from the cover's sculptural canopy. Keep the lower-left/lower third clean dark negative space for the composited editorial headline. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        },
+        {
+          "role": "value",
+          "headline": "TARGET THE VULNERABLE BEHAVIOR",
+          "subtext": "eBPF acts at specific Linux execution points.",
+          "kicker": "02 / WHAT IT DOES",
+          "accent_words": [
+            "TARGET"
+          ],
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: precise orchestration abstraction for a creator-tech editorial explainer, Electric Blue #0047FF only chromatic accent, black #000000 and navy #050A1A dominate. Scene: square 1:1, top-down macro of a single matte-black circuit-like path with a small adjustable mechanical contact positioned at one specific junction; other paths remain untouched. Use physical ceramic and metal materials, one tiny blue indication light, not floating holograms or literal software diagrams. Subject sits upper-right, with the lower-left/lower third calm dark negative space for composited typography. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        },
+        {
+          "role": "value",
+          "headline": "NORMAL REQUESTS STILL MATTER",
+          "subtext": "Check impact before enforcing a shield.",
+          "kicker": "03 / BUILDER VALUE",
+          "accent_words": [
+            "NORMAL"
+          ],
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: human-first reliability editorial, Electric Blue #0047FF only accent, deep navy #050A1A and black #000000, soft white-gray fixtures. Scene: square 1:1, a confident Black adult infrastructure operator stands facing the camera at a premium equipment-bay threshold, engaged and intentional, one hand held beside an open narrow passage through an unlettered physical screening gate; the passage remains usable. Wide mid-distance composition, not a person at a desk, no armored security costume, a grounded metaphor for preserving normal traffic rather than a security guarantee. Leave lower-left/lower third dark and uncluttered with the face in the upper-right for composited headline type. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        },
+        {
+          "role": "value",
+          "headline": "TRY THE BROWSER LAB",
+          "subtext": "Use the official lab. Not production.",
+          "kicker": "04 / THIS WEEK",
+          "accent_words": [
+            "LAB"
+          ],
+          "footer": "OFFICIAL LINK IN THE CAPTION",
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: hands-on builder learning, Electric Blue #0047FF only chromatic accent with black #000000, navy #050A1A and restrained practical warmth. Scene: square 1:1 close diagonal view of a small isolated test appliance inside a clear acrylic bench enclosure, a blue-edged observation window and one disconnected external cable visibly separate it from a larger blurred server bay in the distance. A tactile metaphor for practicing in a lab, not a depiction of browser UI or actual Shirudo hardware. No people, no screens, no symbols. Keep lower-left/lower third clean dark negative space for renderer-composited editorial typography. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        },
+        {
+          "role": "value",
+          "headline": "AI PROPOSES. PEOPLE DEPLOY.",
+          "subtext": "Test, review, approve. Then verify.",
+          "kicker": "05 / THE SIGNAL",
+          "accent_words": [
+            "PEOPLE"
+          ],
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: human judgment inside an AI workflow, Electric Blue #0047FF only accent, black #000000 and deep navy #050A1A dominate, warm walnut #3B2416 used sparingly. Scene: square 1:1, low oblique macro of a Black adult operator's hand poised beside a recessed unlettered physical control under a transparent safety cover; the cover is still closed, and a narrow blue light path ends before the control. The action waits for a person, never implying unsupervised deployment. Focus on the control and hand upper-right, lower-left/lower third clean dark negative space for the composited headline; no monitors, no button labels, no readable UI. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        },
+        {
+          "role": "cta",
+          "headline": "SAVE THE TEST PLAN",
+          "subtext": "A shield buys time. Keep patching.",
+          "kicker": "KEEP FOR YOUR AI STACK",
+          "accent_words": [
+            "SAVE"
+          ],
+          "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: calm premium editorial closing card, Electric Blue #0047FF only chromatic accent, deep black #000000 and navy #050A1A with restrained white-gray reflections. Scene: square 1:1, minimal close view of a matte-black archive folio held open by a single blue-edged metal page clip in the upper-right, one blank cream-gray plan sheet visible, a tiny replacement component rests alongside as a reminder that temporary protection does not replace the fix. No writing or checklist marks, no person; large architectural shadows and generous lower-left/lower third uncluttered dark negative space for the explicit save CTA composited afterward. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography."
+        }
+      ],
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261127-layer8culture-instagram-2",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-11-27T13:10:00-05:00",
+    "text": "GitHub Copilot CLI connected the image workflow. It didn't settle the quality question.\n\nIn the latest Tech Thursday, the host described an MCP-driven image batch, then said the results weren't the quality he wanted. That's useful build-in-public evidence: a running integration is not a finished creative system.\n\nOpenAI's Nov. 19 Performance Factory article makes the parallel concrete. Codex agents investigate and propose a fix; an engineer reviews it; another agent checks recovery after deployment. Different work. The same need for acceptance criteria.\n\nBorrow the pattern for a content workflow: name the visual standard, inspect the output, approve the change, check the result. Our engine keeps the human approval gate before publishing.\n\nSource: https://openai.com/index/how-openai-performance-factory-keeps-chatgpt-fast/\n\nFollow @layer8culture if you're building with AI.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#BuildInPublic",
+      "#CreatorTech",
+      "#AIFluency",
+      "#Automation",
+      "#AIagents",
+      "#Workflow",
+      "#ContentCreation",
+      "#GitHubCopilot"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "reuse",
+      "of": "20261127-layer8culture-tiktok-2",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20261127-layer8culture-youtube-1",
+    "account": "layer8culture",
+    "category": "Build in Public",
+    "platform": "youtube",
+    "format": "reel",
+    "schedule_time": "2026-11-27T13:25:00-05:00",
+    "youtube_title": "Copilot CLI Generated the Images. Human Review Said No. #Shorts",
+    "text": "GitHub Copilot CLI and MCP connected an image-generation batch on Tech Thursday; the host still rejected the quality.\nOpenAI's Nov. 19 Performance Factory breakdown reinforces the lesson: proposed output needs review and verification, not just a completed run.\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Shorts",
+      "#Layer8Culture",
+      "#GitHubCopilot",
+      "#BuildInPublic",
+      "#AIagents"
+    ],
+    "visual": {
+      "source": "reuse",
+      "of": "20261127-layer8culture-tiktok-2",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20261127-layer8culture-instagram-3",
+    "account": "layer8culture",
+    "category": "Community Questions",
+    "platform": "instagram",
+    "format": "story",
+    "schedule_time": "2026-11-27T18:30:00-05:00",
+    "text": "AI output arrived. Would you accept it?\n\nOn Tech Thursday, the image batch ran, but the host wasn't satisfied with its quality. Today's Shirudo carousel asks the same practical question in a different workflow: what does the test actually prove?\n\nReply with your stricter rule: A) matches the brief, or B) survives a real test.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#TechThursday",
+      "#AICommunity",
+      "#LearnInPublic",
+      "#AIFluency",
+      "#AItools",
+      "#TechCreators",
+      "#Workflow"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "library",
+      "aspect": "9:16",
+      "quality": "medium",
+      "typography_preset": "brand_title_card",
+      "headline": "WHAT EARNS YOUR YES?",
+      "subtext": "A: Brief fit / B: Real test",
+      "accent": "YES?",
+      "overlay_position": "lower-left",
+      "openai_prompt": "Create a cinematic Layer8Culture visual in a deep black environment with electric blue accent lighting, premium creator-tech atmosphere, late-night builder energy, documentary realism, human-centered AI themes, Black tech futurism, minimal composition, strong negative space, warm practical lighting, and high contrast. The image should feel like a premium technology documentary and creative studio brand. Add-on: calm human-first daily community question, Electric Blue #0047FF only chromatic accent, black #000000 and deep navy #050A1A dominate, restrained warm practical lighting. Scene: vertical 9:16, an original sculptural black balance beam occupies the middle-right, holding an unlettered blank creative brief folio on one side and a precise small testing gauge on the other; neither wins, inviting a genuine choice between brief fit and tested behavior. No person, no labels, no UI, not a literal voting system. Clean upper-middle space for a human-added reply sticker if desired; lower-left/lower third generous dark negative space for the composited headline and two-option subtext. Keep all essentials out of the top 12 percent and bottom 20 percent. Avoid generic startup office, bright corporate lighting, cheap gamer RGB, cluttered composition, cartoon props, excessive sci-fi armor, robots, fake hologram overload, random neon colors, copyrighted franchise references, garbled screen text, random figurines, tripod-mounted monitors, makeshift setups, rendered text, signage lettering, and garbled typography.",
+      "library_hint": "default branded graphic"
+    }
+  },
+  {
+    "id": "20261127-layer8culture-instagram-4",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "instagram",
+    "format": "reel",
+    "schedule_time": "2026-11-27T19:40:00-05:00",
+    "text": "Shirudo makes temporary Linux protection testable. A permanent patch is still the destination.\n\nWHAT CHANGED: OpenAI and Cisco announced an open-source runtime on Nov. 23.\nWHAT IT DOES: eBPF shields target vulnerable behavior on running systems; operators can inspect the impact before enforcing them.\nBUILDER VALUE: You need both protection and working legitimate traffic. A successful demo is not a production guarantee.\nTRY THIS: Follow the official browser lab at https://labs.isovalent.com/#/lab/shirudo-getting-started this week, and write down what the verification checks. Keep the first experiment out of production.\nSIGNAL: AI can help develop a defense. The operator still decides what deploys.\n\nSource: https://openai.com/index/introducing-shirudo/\n\nFollow @layer8culture for practical AI workflows.",
+    "hashtags": [
+      "#Layer8Culture",
+      "#AIBuilders",
+      "#BuildWithAI",
+      "#AIFluency",
+      "#ArtificialIntelligence",
+      "#AIagents",
+      "#OpenAI",
+      "#AInews",
+      "#Workflow"
+    ],
+    "hashtags_in_first_comment": true,
+    "visual": {
+      "source": "reuse",
+      "of": "20261127-layer8culture-tiktok-1",
+      "aspect": "9:16"
+    }
+  },
+  {
+    "id": "20261127-layer8culture-youtube-2",
+    "account": "layer8culture",
+    "category": "AI Tool Experiments",
+    "platform": "youtube",
+    "format": "reel",
+    "schedule_time": "2026-11-27T19:55:00-05:00",
+    "youtube_title": "Shirudo: OpenAI and Cisco's Temporary Linux Shields, Explained #Shorts",
+    "text": "Shirudo, announced Nov. 23 by OpenAI and Cisco, uses eBPF for temporary Linux protections while teams prepare patches. Operators control deployment.\nTry the official browser lab, not production: https://labs.isovalent.com/#/lab/shirudo-getting-started . The builder lesson: test the protection, review its impact, keep the permanent patch moving.\nFollow Layer8Culture if you're building with AI.",
+    "hashtags": [
+      "#Shorts",
+      "#Layer8Culture",
+      "#OpenAI",
+      "#AIagents",
+      "#AInews"
+    ],
+    "visual": {
+      "source": "reuse",
+      "of": "20261127-layer8culture-tiktok-1",
+      "aspect": "9:16"
+    }
+  }
+]
